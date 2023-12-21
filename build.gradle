@@ -205,6 +205,15 @@ dependencies {
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "io.dropwizard.metrics:metrics-core"
     // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+    // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
+    implementation 'org.springframework.kafka:spring-kafka:3.1.1'
+    // https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams
+    implementation 'org.apache.kafka:kafka-streams:3.6.1'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.10.1'
+
 }
 
 if (project.hasProperty("gae")) {

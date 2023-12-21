@@ -1,5 +1,7 @@
 package com.sbm.sevenroomstohub.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
@@ -208,6 +210,7 @@ public class Client implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
+    @JsonIgnore
     private Set<ClientVenueStats> clientVenueStats = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
