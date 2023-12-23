@@ -21,6 +21,10 @@ public class WordCountProcessor {
             "data-7rooms-client-create",
             Consumed.with(STRING_SERDE, CLIENT_SERDE)
         );
+        messageStream.foreach((k, v) -> {
+            v.setTechComment(("helloooooo"));
+            System.out.println(v);
+        });
 
         //        KStream<String, String> messageStream = streamsBuilder
         //            .stream("data-7rooms-client-create", Consumed.with(STRING_SERDE, STRING_SERDE));

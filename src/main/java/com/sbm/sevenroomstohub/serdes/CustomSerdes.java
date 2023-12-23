@@ -9,8 +9,8 @@ public final class CustomSerdes {
     private CustomSerdes() {}
 
     public static Serde<Client> Client() {
-        JsonSerializer<Client> serializer = new JsonSerializer<>();
-        JsonDeserializer<Client> deserializer = new JsonDeserializer<>(Client.class);
+        JacksonSerializer<Client> serializer = new JacksonSerializer<>();
+        JacksonDeserializer<Client> deserializer = new JacksonDeserializer<>(Client.class);
         return Serdes.serdeFrom(serializer, deserializer);
     }
 }
