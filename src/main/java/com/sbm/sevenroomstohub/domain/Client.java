@@ -1,13 +1,11 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -976,6 +974,13 @@ public class Client implements Serializable {
     public Client userName(String userName) {
         this.setUserName(userName);
         return this;
+    }
+
+    @JsonProperty("user")
+    @JsonSetter
+    public void setUserIdName(Map<String, String> user) {
+        this.userId = user.get("id");
+        this.userName = user.get("name");
     }
 
     public void setUserName(String userName) {
