@@ -20,10 +20,7 @@ public class streamsProcessor {
 
     @Autowired
     void buildPipeline(StreamsBuilder streamsBuilder) {
-        KStream<String, Client> clientStream = streamsBuilder.stream(
-            "data-7rooms-client-create",
-            Consumed.with(STRING_SERDE, CLIENT_SERDE)
-        );
+        KStream<String, Client> clientStream = streamsBuilder.stream("data-7rooms-client", Consumed.with(STRING_SERDE, CLIENT_SERDE));
         clientStream.foreach((k, v) -> {
             v.setTechComment(("helloooooo"));
             System.out.println(v);

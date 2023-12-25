@@ -17,6 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "client")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -1060,6 +1061,15 @@ public class Client implements Serializable {
         this.clientPhoto = clientPhoto;
     }
 
+    @JsonProperty("photo_crop_info")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
+    public void setCropInfo(Map<String, String> crop) {
+        this.clientPhoto.setCropx(crop.get("x") == null ? null : Integer.valueOf(crop.get("x")));
+        this.clientPhoto.setCropy(crop.get("y") == null ? null : Integer.valueOf(crop.get("y")));
+        this.clientPhoto.setCropHeight(crop.get("height") == null ? null : Double.valueOf(crop.get("height")));
+        this.clientPhoto.setCropHeight(crop.get("width") == null ? null : Double.valueOf(crop.get("width")));
+    }
+
     public Client clientPhoto(ClientPhoto clientPhoto) {
         this.setClientPhoto(clientPhoto);
         return this;
@@ -1302,6 +1312,10 @@ public class Client implements Serializable {
             ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
             ", techMapping='" + getTechMapping() + "'" +
             ", techComment='" + getTechComment() + "'" +
+            ", clientPhoto='" + getClientPhoto() + "'" +
+            ", clientTags='" + getClientTags() + "'" +
+            ", customField ='" + getCustomFields() + "'" +
+            ", clientVenueStats ='" + getClientVenueStats() + "'" +
             "}";
     }
 }
