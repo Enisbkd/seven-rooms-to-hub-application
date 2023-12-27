@@ -1,9 +1,12 @@
 package com.sbm.sevenroomstohub.domain;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,6 +26,9 @@ public class ClientVenueStats implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
     private Long id;
+
+    //    @Transient
+    //    private Map<String, Object> unknownFields = new HashMap<>();
 
     @Column(name = "venue_id")
     private String venueId;
@@ -111,6 +117,15 @@ public class ClientVenueStats implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    //    @JsonAnySetter
+    //    public void setUnknownField(String name, Object value) {
+    //        unknownFields.put(name, value);
+    //    }
+    //
+    //    public Map<String, Object> getUnknownFields() {
+    //        return this.unknownFields;
+    //    }
 
     public String getVenueId() {
         return this.venueId;
@@ -457,6 +472,7 @@ public class ClientVenueStats implements Serializable {
             ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
             ", techMapping='" + getTechMapping() + "'" +
             ", techComment='" + getTechComment() + "'" +
+//            ", unknownFields='" + getUnknownFields() + "'" +
             "}";
     }
 }

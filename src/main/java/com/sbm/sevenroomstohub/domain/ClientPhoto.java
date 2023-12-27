@@ -29,7 +29,7 @@ public class ClientPhoto implements Serializable {
     @Column(name = "client_id")
     private String clientId;
 
-    @Column(name = "large")
+    @Column(name = "large", length = 1000)
     private String large;
 
     @Column(name = "large_height")
@@ -40,10 +40,10 @@ public class ClientPhoto implements Serializable {
     @JsonProperty("large_width")
     private Integer largeWidth;
 
-    @Column(name = "medium")
+    @Column(name = "medium", length = 1000)
     private String medium;
 
-    @Column(name = "medium_height")
+    @Column(name = "medium_height", length = 1000)
     @JsonProperty("medium_height")
     private Integer mediumHeight;
 
@@ -51,7 +51,7 @@ public class ClientPhoto implements Serializable {
     @JsonProperty("medium_width")
     private Integer mediumWidth;
 
-    @Column(name = "small")
+    @Column(name = "small", length = 1000)
     private String small;
 
     @Column(name = "small_height")
@@ -62,7 +62,7 @@ public class ClientPhoto implements Serializable {
     @JsonProperty("small_width")
     private Integer smallWidth;
 
-    @Column(name = "jhi_raw")
+    @Column(name = "photo_raw", length = 1000)
     private String raw;
 
     @Column(name = "cropx")
@@ -100,7 +100,8 @@ public class ClientPhoto implements Serializable {
         value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
         allowSetters = true
     )
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "clientPhoto")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "clientPhoto")
+    @JoinColumn(unique = true)
     private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

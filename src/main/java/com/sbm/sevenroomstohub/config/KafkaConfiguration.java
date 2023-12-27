@@ -1,12 +1,10 @@
 package com.sbm.sevenroomstohub.config;
 
-import static org.apache.kafka.streams.StreamsConfig.*;
+import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
 
-import com.sbm.sevenroomstohub.serdes.CustomSerdes;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.kafka.common.config.SaslConfigs;
-import org.apache.kafka.common.serialization.Serdes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,9 +41,6 @@ public class KafkaConfiguration {
         //        props.put(SECURITY_PROTOCOL_CONFIG, protocolConfig);
         //        props.put(SaslConfigs.SASL_JAAS_CONFIG, saslJaasConfig);
         //        props.put(SaslConfigs.SASL_MECHANISM, saslMechanism);
-        props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-        //        props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-        props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, CustomSerdes.Client().getClass().getName());
 
         return new KafkaStreamsConfiguration(props);
     }

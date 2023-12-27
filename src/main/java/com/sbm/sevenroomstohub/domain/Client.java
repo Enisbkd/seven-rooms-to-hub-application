@@ -222,11 +222,9 @@ public class Client implements Serializable {
     private Integer birthdayAltDay;
 
     @Column(name = "user_id")
-    //    @JsonProperty("user.id")
     private String userId;
 
     @Column(name = "user_name")
-    //    @JsonProperty("user.name")
     private String userName;
 
     @Column(name = "tech_lineage")
@@ -245,16 +243,16 @@ public class Client implements Serializable {
     private String techComment;
 
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "clientPhoto", unique = true)
     @JsonProperty("photo")
     private ClientPhoto clientPhoto;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
-    @JsonIgnore
-    private Set<ClientVenueStats> clientVenueStats = new HashSet<>();
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    @JsonProperty("venue_stats")
+    private ClientVenueStats clientVenueStats;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -1064,10 +1062,12 @@ public class Client implements Serializable {
     @JsonProperty("photo_crop_info")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     public void setCropInfo(Map<String, String> crop) {
-        this.clientPhoto.setCropx(crop.get("x") == null ? null : Integer.valueOf(crop.get("x")));
-        this.clientPhoto.setCropy(crop.get("y") == null ? null : Integer.valueOf(crop.get("y")));
-        this.clientPhoto.setCropHeight(crop.get("height") == null ? null : Double.valueOf(crop.get("height")));
-        this.clientPhoto.setCropHeight(crop.get("width") == null ? null : Double.valueOf(crop.get("width")));
+        if (this.clientPhoto != null && crop != null) {
+            this.clientPhoto.setCropx(crop.get("x") == null ? null : Integer.valueOf(crop.get("x")));
+            this.clientPhoto.setCropy(crop.get("y") == null ? null : Integer.valueOf(crop.get("y")));
+            this.clientPhoto.setCropHeight(crop.get("height") == null ? null : Double.valueOf(crop.get("height")));
+            this.clientPhoto.setCropHeight(crop.get("width") == null ? null : Double.valueOf(crop.get("width")));
+        }
     }
 
     public Client clientPhoto(ClientPhoto clientPhoto) {
@@ -1075,34 +1075,16 @@ public class Client implements Serializable {
         return this;
     }
 
-    public Set<ClientVenueStats> getClientVenueStats() {
+    public ClientVenueStats getClientVenueStats() {
         return this.clientVenueStats;
     }
 
-    public void setClientVenueStats(Set<ClientVenueStats> clientVenueStats) {
-        if (this.clientVenueStats != null) {
-            this.clientVenueStats.forEach(i -> i.setClient(null));
-        }
-        if (clientVenueStats != null) {
-            clientVenueStats.forEach(i -> i.setClient(this));
-        }
+    public void setClientVenueStats(ClientVenueStats clientVenueStats) {
         this.clientVenueStats = clientVenueStats;
     }
 
-    public Client clientVenueStats(Set<ClientVenueStats> clientVenueStats) {
+    public Client clientVenueStats(ClientVenueStats clientVenueStats) {
         this.setClientVenueStats(clientVenueStats);
-        return this;
-    }
-
-    public Client addClientVenueStats(ClientVenueStats clientVenueStats) {
-        this.clientVenueStats.add(clientVenueStats);
-        clientVenueStats.setClient(this);
-        return this;
-    }
-
-    public Client removeClientVenueStats(ClientVenueStats clientVenueStats) {
-        this.clientVenueStats.remove(clientVenueStats);
-        clientVenueStats.setClient(null);
         return this;
     }
 

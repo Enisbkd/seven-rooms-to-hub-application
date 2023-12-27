@@ -45,23 +45,13 @@ class ClientTest {
     @Test
     void clientVenueStatsTest() throws Exception {
         Client client = getClientRandomSampleGenerator();
-        ClientVenueStats clientVenueStatsBack = getClientVenueStatsRandomSampleGenerator();
+        ClientVenueStats clientVenueStatsBack = getClientVenueStatsSample1();
 
-        client.addClientVenueStats(clientVenueStatsBack);
-        assertThat(client.getClientVenueStats()).containsOnly(clientVenueStatsBack);
-        assertThat(clientVenueStatsBack.getClient()).isEqualTo(client);
+        client.setClientVenueStats(clientVenueStatsBack);
+        assertThat(client.getClientPhoto()).isEqualTo(clientVenueStatsBack);
 
-        client.removeClientVenueStats(clientVenueStatsBack);
-        assertThat(client.getClientVenueStats()).doesNotContain(clientVenueStatsBack);
-        assertThat(clientVenueStatsBack.getClient()).isNull();
-
-        client.clientVenueStats(new HashSet<>(Set.of(clientVenueStatsBack)));
-        assertThat(client.getClientVenueStats()).containsOnly(clientVenueStatsBack);
-        assertThat(clientVenueStatsBack.getClient()).isEqualTo(client);
-
-        client.setClientVenueStats(new HashSet<>());
-        assertThat(client.getClientVenueStats()).doesNotContain(clientVenueStatsBack);
-        assertThat(clientVenueStatsBack.getClient()).isNull();
+        client.clientPhoto(null);
+        assertThat(client.getClientPhoto()).isNull();
     }
 
     @Test
