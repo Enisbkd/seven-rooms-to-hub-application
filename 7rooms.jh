@@ -289,3 +289,22 @@ relationship OneToMany {
   Reservation to ResCustomField
 }
 
+paginate MemberGroup with pagination
+paginate ClientTag with pagination
+paginate CustomField with pagination
+paginate ClientVenueStats with pagination
+paginate ClientPhoto with pagination
+paginate Reservation with pagination
+paginate ResCustomField with pagination
+paginate ResPosTicket with pagination
+paginate ResPosticketsItem with pagination
+paginate ResTag with pagination
+paginate Client with pagination
+
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
