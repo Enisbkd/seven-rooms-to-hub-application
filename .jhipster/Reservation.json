@@ -3,6 +3,7 @@
     "changelogDate": "20231220092607"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "reservation",
   "fields": [
     {
@@ -311,6 +312,7 @@
     }
   ],
   "name": "Reservation",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "resTag",
@@ -348,5 +350,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

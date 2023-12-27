@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.MemberGroup;
 import com.sbm.sevenroomstohub.repository.MemberGroupRepository;
+import com.sbm.sevenroomstohub.service.dto.MemberGroupDTO;
+import com.sbm.sevenroomstohub.service.mapper.MemberGroupMapper;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +39,9 @@ class MemberGroupResourceIT {
 
     @Autowired
     private MemberGroupRepository memberGroupRepository;
+
+    @Autowired
+    private MemberGroupMapper memberGroupMapper;
 
     @Autowired
     private EntityManager em;
@@ -78,8 +83,11 @@ class MemberGroupResourceIT {
     void createMemberGroup() throws Exception {
         int databaseSizeBeforeCreate = memberGroupRepository.findAll().size();
         // Create the MemberGroup
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(memberGroup);
         restMemberGroupMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(memberGroup)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(memberGroupDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the MemberGroup in the database
@@ -93,12 +101,15 @@ class MemberGroupResourceIT {
     void createMemberGroupWithExistingId() throws Exception {
         // Create the MemberGroup with an existing ID
         memberGroup.setId(1L);
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(memberGroup);
 
         int databaseSizeBeforeCreate = memberGroupRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restMemberGroupMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(memberGroup)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(memberGroupDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the MemberGroup in the database
@@ -153,12 +164,13 @@ class MemberGroupResourceIT {
         MemberGroup updatedMemberGroup = memberGroupRepository.findById(memberGroup.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedMemberGroup are not directly saved in db
         em.detach(updatedMemberGroup);
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(updatedMemberGroup);
 
         restMemberGroupMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedMemberGroup.getId())
+                put(ENTITY_API_URL_ID, memberGroupDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedMemberGroup))
+                    .content(TestUtil.convertObjectToJsonBytes(memberGroupDTO))
             )
             .andExpect(status().isOk());
 
@@ -174,12 +186,15 @@ class MemberGroupResourceIT {
         int databaseSizeBeforeUpdate = memberGroupRepository.findAll().size();
         memberGroup.setId(longCount.incrementAndGet());
 
+        // Create the MemberGroup
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(memberGroup);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restMemberGroupMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, memberGroup.getId())
+                put(ENTITY_API_URL_ID, memberGroupDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(memberGroup))
+                    .content(TestUtil.convertObjectToJsonBytes(memberGroupDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -194,12 +209,15 @@ class MemberGroupResourceIT {
         int databaseSizeBeforeUpdate = memberGroupRepository.findAll().size();
         memberGroup.setId(longCount.incrementAndGet());
 
+        // Create the MemberGroup
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(memberGroup);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMemberGroupMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(memberGroup))
+                    .content(TestUtil.convertObjectToJsonBytes(memberGroupDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -214,9 +232,12 @@ class MemberGroupResourceIT {
         int databaseSizeBeforeUpdate = memberGroupRepository.findAll().size();
         memberGroup.setId(longCount.incrementAndGet());
 
+        // Create the MemberGroup
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(memberGroup);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMemberGroupMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(memberGroup)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(memberGroupDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the MemberGroup in the database
@@ -282,12 +303,15 @@ class MemberGroupResourceIT {
         int databaseSizeBeforeUpdate = memberGroupRepository.findAll().size();
         memberGroup.setId(longCount.incrementAndGet());
 
+        // Create the MemberGroup
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(memberGroup);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restMemberGroupMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, memberGroup.getId())
+                patch(ENTITY_API_URL_ID, memberGroupDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(memberGroup))
+                    .content(TestUtil.convertObjectToJsonBytes(memberGroupDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -302,12 +326,15 @@ class MemberGroupResourceIT {
         int databaseSizeBeforeUpdate = memberGroupRepository.findAll().size();
         memberGroup.setId(longCount.incrementAndGet());
 
+        // Create the MemberGroup
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(memberGroup);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMemberGroupMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(memberGroup))
+                    .content(TestUtil.convertObjectToJsonBytes(memberGroupDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -322,10 +349,13 @@ class MemberGroupResourceIT {
         int databaseSizeBeforeUpdate = memberGroupRepository.findAll().size();
         memberGroup.setId(longCount.incrementAndGet());
 
+        // Create the MemberGroup
+        MemberGroupDTO memberGroupDTO = memberGroupMapper.toDto(memberGroup);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMemberGroupMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(memberGroup))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(memberGroupDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

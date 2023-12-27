@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.ClientTag;
 import com.sbm.sevenroomstohub.repository.ClientTagRepository;
+import com.sbm.sevenroomstohub.service.dto.ClientTagDTO;
+import com.sbm.sevenroomstohub.service.mapper.ClientTagMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -74,6 +76,9 @@ class ClientTagResourceIT {
     private ClientTagRepository clientTagRepository;
 
     @Autowired
+    private ClientTagMapper clientTagMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -133,8 +138,9 @@ class ClientTagResourceIT {
     void createClientTag() throws Exception {
         int databaseSizeBeforeCreate = clientTagRepository.findAll().size();
         // Create the ClientTag
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(clientTag);
         restClientTagMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientTag)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientTagDTO)))
             .andExpect(status().isCreated());
 
         // Validate the ClientTag in the database
@@ -158,12 +164,13 @@ class ClientTagResourceIT {
     void createClientTagWithExistingId() throws Exception {
         // Create the ClientTag with an existing ID
         clientTag.setId(1L);
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(clientTag);
 
         int databaseSizeBeforeCreate = clientTagRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restClientTagMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientTag)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientTagDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the ClientTag in the database
@@ -249,12 +256,13 @@ class ClientTagResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(updatedClientTag);
 
         restClientTagMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedClientTag.getId())
+                put(ENTITY_API_URL_ID, clientTagDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedClientTag))
+                    .content(TestUtil.convertObjectToJsonBytes(clientTagDTO))
             )
             .andExpect(status().isOk());
 
@@ -280,12 +288,15 @@ class ClientTagResourceIT {
         int databaseSizeBeforeUpdate = clientTagRepository.findAll().size();
         clientTag.setId(longCount.incrementAndGet());
 
+        // Create the ClientTag
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(clientTag);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restClientTagMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, clientTag.getId())
+                put(ENTITY_API_URL_ID, clientTagDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(clientTag))
+                    .content(TestUtil.convertObjectToJsonBytes(clientTagDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -300,12 +311,15 @@ class ClientTagResourceIT {
         int databaseSizeBeforeUpdate = clientTagRepository.findAll().size();
         clientTag.setId(longCount.incrementAndGet());
 
+        // Create the ClientTag
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(clientTag);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientTagMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(clientTag))
+                    .content(TestUtil.convertObjectToJsonBytes(clientTagDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -320,9 +334,12 @@ class ClientTagResourceIT {
         int databaseSizeBeforeUpdate = clientTagRepository.findAll().size();
         clientTag.setId(longCount.incrementAndGet());
 
+        // Create the ClientTag
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(clientTag);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientTagMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientTag)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientTagDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the ClientTag in the database
@@ -426,12 +443,15 @@ class ClientTagResourceIT {
         int databaseSizeBeforeUpdate = clientTagRepository.findAll().size();
         clientTag.setId(longCount.incrementAndGet());
 
+        // Create the ClientTag
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(clientTag);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restClientTagMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, clientTag.getId())
+                patch(ENTITY_API_URL_ID, clientTagDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(clientTag))
+                    .content(TestUtil.convertObjectToJsonBytes(clientTagDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -446,12 +466,15 @@ class ClientTagResourceIT {
         int databaseSizeBeforeUpdate = clientTagRepository.findAll().size();
         clientTag.setId(longCount.incrementAndGet());
 
+        // Create the ClientTag
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(clientTag);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientTagMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(clientTag))
+                    .content(TestUtil.convertObjectToJsonBytes(clientTagDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -466,10 +489,13 @@ class ClientTagResourceIT {
         int databaseSizeBeforeUpdate = clientTagRepository.findAll().size();
         clientTag.setId(longCount.incrementAndGet());
 
+        // Create the ClientTag
+        ClientTagDTO clientTagDTO = clientTagMapper.toDto(clientTag);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientTagMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(clientTag))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(clientTagDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

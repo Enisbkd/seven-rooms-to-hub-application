@@ -3,6 +3,7 @@
     "changelogDate": "20231220092407"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "client_venue_stats",
   "fields": [
     {
@@ -95,6 +96,7 @@
     }
   ],
   "name": "ClientVenueStats",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "client",
@@ -104,5 +106,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

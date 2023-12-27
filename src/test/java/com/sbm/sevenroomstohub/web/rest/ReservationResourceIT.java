@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.repository.ReservationRepository;
+import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
+import com.sbm.sevenroomstohub.service.mapper.ReservationMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -272,6 +274,9 @@ class ReservationResourceIT {
     private ReservationRepository reservationRepository;
 
     @Autowired
+    private ReservationMapper reservationMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -463,8 +468,11 @@ class ReservationResourceIT {
     void createReservation() throws Exception {
         int databaseSizeBeforeCreate = reservationRepository.findAll().size();
         // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
         restReservationMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservation)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the Reservation in the database
@@ -554,12 +562,15 @@ class ReservationResourceIT {
     void createReservationWithExistingId() throws Exception {
         // Create the Reservation with an existing ID
         reservation.setId(1L);
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
 
         int databaseSizeBeforeCreate = reservationRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restReservationMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservation)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Reservation in the database
@@ -843,12 +854,13 @@ class ReservationResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ReservationDTO reservationDTO = reservationMapper.toDto(updatedReservation);
 
         restReservationMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedReservation.getId())
+                put(ENTITY_API_URL_ID, reservationDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedReservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isOk());
 
@@ -940,12 +952,15 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, reservation.getId())
+                put(ENTITY_API_URL_ID, reservationDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(reservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -960,12 +975,15 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(reservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -980,9 +998,12 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restReservationMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservation)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Reservation in the database
@@ -1319,12 +1340,15 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, reservation.getId())
+                patch(ENTITY_API_URL_ID, reservationDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(reservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -1339,12 +1363,15 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(reservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -1359,10 +1386,13 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(reservation))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

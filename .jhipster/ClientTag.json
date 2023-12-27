@@ -3,6 +3,7 @@
     "changelogDate": "20231220092207"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "client_tag",
   "fields": [
     {
@@ -47,6 +48,7 @@
     }
   ],
   "name": "ClientTag",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "client",
@@ -56,5 +58,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

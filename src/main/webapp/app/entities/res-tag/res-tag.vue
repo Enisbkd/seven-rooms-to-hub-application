@@ -28,18 +28,54 @@
       <table class="table table-striped" aria-describedby="resTags">
         <thead>
           <tr>
-            <th scope="row"><span v-text="t$('global.field.id')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.tag')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.tagDisplay')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.group')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.groupDisplay')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.color')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techLineage')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techCreatedDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techUpdatedDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techMapping')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techComment')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.resTag.reservation')"></span></th>
+            <th scope="row" v-on:click="changeOrder('id')">
+              <span v-text="t$('global.field.id')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('tag')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.tag')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'tag'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('tagDisplay')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.tagDisplay')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'tagDisplay'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('group')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.group')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'group'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('groupDisplay')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.groupDisplay')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'groupDisplay'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('color')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.color')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'color'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techLineage')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techLineage')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techCreatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techUpdatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techMapping')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techMapping')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techComment')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techComment')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('reservation.id')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.reservation')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'reservation.id'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -120,6 +156,14 @@
         </div>
       </template>
     </b-modal>
+    <div v-show="resTags && resTags.length > 0">
+      <div class="row justify-content-center">
+        <jhi-item-count :page="page" :total="queryCount" :itemsPerPage="itemsPerPage"></jhi-item-count>
+      </div>
+      <div class="row justify-content-center">
+        <b-pagination size="md" :total-rows="totalItems" v-model="page" :per-page="itemsPerPage"></b-pagination>
+      </div>
+    </div>
   </div>
 </template>
 

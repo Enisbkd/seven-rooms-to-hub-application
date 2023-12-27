@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.ResPosTicket;
 import com.sbm.sevenroomstohub.repository.ResPosTicketRepository;
+import com.sbm.sevenroomstohub.service.dto.ResPosTicketDTO;
+import com.sbm.sevenroomstohub.service.mapper.ResPosTicketMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -98,6 +100,9 @@ class ResPosTicketResourceIT {
     private ResPosTicketRepository resPosTicketRepository;
 
     @Autowired
+    private ResPosTicketMapper resPosTicketMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -173,8 +178,11 @@ class ResPosTicketResourceIT {
     void createResPosTicket() throws Exception {
         int databaseSizeBeforeCreate = resPosTicketRepository.findAll().size();
         // Create the ResPosTicket
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(resPosTicket);
         restResPosTicketMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosTicket)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the ResPosTicket in the database
@@ -206,12 +214,15 @@ class ResPosTicketResourceIT {
     void createResPosTicketWithExistingId() throws Exception {
         // Create the ResPosTicket with an existing ID
         resPosTicket.setId(1L);
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(resPosTicket);
 
         int databaseSizeBeforeCreate = resPosTicketRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restResPosTicketMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosTicket)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the ResPosTicket in the database
@@ -321,12 +332,13 @@ class ResPosTicketResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(updatedResPosTicket);
 
         restResPosTicketMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedResPosTicket.getId())
+                put(ENTITY_API_URL_ID, resPosTicketDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedResPosTicket))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
             )
             .andExpect(status().isOk());
 
@@ -360,12 +372,15 @@ class ResPosTicketResourceIT {
         int databaseSizeBeforeUpdate = resPosTicketRepository.findAll().size();
         resPosTicket.setId(longCount.incrementAndGet());
 
+        // Create the ResPosTicket
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(resPosTicket);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResPosTicketMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, resPosTicket.getId())
+                put(ENTITY_API_URL_ID, resPosTicketDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resPosTicket))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -380,12 +395,15 @@ class ResPosTicketResourceIT {
         int databaseSizeBeforeUpdate = resPosTicketRepository.findAll().size();
         resPosTicket.setId(longCount.incrementAndGet());
 
+        // Create the ResPosTicket
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(resPosTicket);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResPosTicketMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resPosTicket))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -400,9 +418,14 @@ class ResPosTicketResourceIT {
         int databaseSizeBeforeUpdate = resPosTicketRepository.findAll().size();
         resPosTicket.setId(longCount.incrementAndGet());
 
+        // Create the ResPosTicket
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(resPosTicket);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResPosTicketMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosTicket)))
+            .perform(
+                put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the ResPosTicket in the database
@@ -533,12 +556,15 @@ class ResPosTicketResourceIT {
         int databaseSizeBeforeUpdate = resPosTicketRepository.findAll().size();
         resPosTicket.setId(longCount.incrementAndGet());
 
+        // Create the ResPosTicket
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(resPosTicket);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResPosTicketMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, resPosTicket.getId())
+                patch(ENTITY_API_URL_ID, resPosTicketDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resPosTicket))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -553,12 +579,15 @@ class ResPosTicketResourceIT {
         int databaseSizeBeforeUpdate = resPosTicketRepository.findAll().size();
         resPosTicket.setId(longCount.incrementAndGet());
 
+        // Create the ResPosTicket
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(resPosTicket);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResPosTicketMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resPosTicket))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -573,10 +602,15 @@ class ResPosTicketResourceIT {
         int databaseSizeBeforeUpdate = resPosTicketRepository.findAll().size();
         resPosTicket.setId(longCount.incrementAndGet());
 
+        // Create the ResPosTicket
+        ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(resPosTicket);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResPosTicketMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(resPosTicket))
+                patch(ENTITY_API_URL)
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(resPosTicketDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

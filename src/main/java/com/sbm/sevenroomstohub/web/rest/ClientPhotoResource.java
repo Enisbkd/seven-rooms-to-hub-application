@@ -1,21 +1,26 @@
 package com.sbm.sevenroomstohub.web.rest;
 
-import com.sbm.sevenroomstohub.domain.ClientPhoto;
 import com.sbm.sevenroomstohub.repository.ClientPhotoRepository;
+import com.sbm.sevenroomstohub.service.ClientPhotoService;
+import com.sbm.sevenroomstohub.service.dto.ClientPhotoDTO;
 import com.sbm.sevenroomstohub.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -23,7 +28,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/client-photos")
-@Transactional
 public class ClientPhotoResource {
 
     private final Logger log = LoggerFactory.getLogger(ClientPhotoResource.class);
@@ -33,26 +37,29 @@ public class ClientPhotoResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ClientPhotoService clientPhotoService;
+
     private final ClientPhotoRepository clientPhotoRepository;
 
-    public ClientPhotoResource(ClientPhotoRepository clientPhotoRepository) {
+    public ClientPhotoResource(ClientPhotoService clientPhotoService, ClientPhotoRepository clientPhotoRepository) {
+        this.clientPhotoService = clientPhotoService;
         this.clientPhotoRepository = clientPhotoRepository;
     }
 
     /**
      * {@code POST  /client-photos} : Create a new clientPhoto.
      *
-     * @param clientPhoto the clientPhoto to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new clientPhoto, or with status {@code 400 (Bad Request)} if the clientPhoto has already an ID.
+     * @param clientPhotoDTO the clientPhotoDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new clientPhotoDTO, or with status {@code 400 (Bad Request)} if the clientPhoto has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<ClientPhoto> createClientPhoto(@RequestBody ClientPhoto clientPhoto) throws URISyntaxException {
-        log.debug("REST request to save ClientPhoto : {}", clientPhoto);
-        if (clientPhoto.getId() != null) {
+    public ResponseEntity<ClientPhotoDTO> createClientPhoto(@RequestBody ClientPhotoDTO clientPhotoDTO) throws URISyntaxException {
+        log.debug("REST request to save ClientPhoto : {}", clientPhotoDTO);
+        if (clientPhotoDTO.getId() != null) {
             throw new BadRequestAlertException("A new clientPhoto cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ClientPhoto result = clientPhotoRepository.save(clientPhoto);
+        ClientPhotoDTO result = clientPhotoService.save(clientPhotoDTO);
         return ResponseEntity
             .created(new URI("/api/client-photos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -62,23 +69,23 @@ public class ClientPhotoResource {
     /**
      * {@code PUT  /client-photos/:id} : Updates an existing clientPhoto.
      *
-     * @param id the id of the clientPhoto to save.
-     * @param clientPhoto the clientPhoto to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clientPhoto,
-     * or with status {@code 400 (Bad Request)} if the clientPhoto is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the clientPhoto couldn't be updated.
+     * @param id the id of the clientPhotoDTO to save.
+     * @param clientPhotoDTO the clientPhotoDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clientPhotoDTO,
+     * or with status {@code 400 (Bad Request)} if the clientPhotoDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the clientPhotoDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<ClientPhoto> updateClientPhoto(
+    public ResponseEntity<ClientPhotoDTO> updateClientPhoto(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody ClientPhoto clientPhoto
+        @RequestBody ClientPhotoDTO clientPhotoDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update ClientPhoto : {}, {}", id, clientPhoto);
-        if (clientPhoto.getId() == null) {
+        log.debug("REST request to update ClientPhoto : {}, {}", id, clientPhotoDTO);
+        if (clientPhotoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, clientPhoto.getId())) {
+        if (!Objects.equals(id, clientPhotoDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -86,34 +93,34 @@ public class ClientPhotoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ClientPhoto result = clientPhotoRepository.save(clientPhoto);
+        ClientPhotoDTO result = clientPhotoService.update(clientPhotoDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clientPhoto.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clientPhotoDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /client-photos/:id} : Partial updates given fields of an existing clientPhoto, field will ignore if it is null
      *
-     * @param id the id of the clientPhoto to save.
-     * @param clientPhoto the clientPhoto to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clientPhoto,
-     * or with status {@code 400 (Bad Request)} if the clientPhoto is not valid,
-     * or with status {@code 404 (Not Found)} if the clientPhoto is not found,
-     * or with status {@code 500 (Internal Server Error)} if the clientPhoto couldn't be updated.
+     * @param id the id of the clientPhotoDTO to save.
+     * @param clientPhotoDTO the clientPhotoDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clientPhotoDTO,
+     * or with status {@code 400 (Bad Request)} if the clientPhotoDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the clientPhotoDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the clientPhotoDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<ClientPhoto> partialUpdateClientPhoto(
+    public ResponseEntity<ClientPhotoDTO> partialUpdateClientPhoto(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody ClientPhoto clientPhoto
+        @RequestBody ClientPhotoDTO clientPhotoDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update ClientPhoto partially : {}, {}", id, clientPhoto);
-        if (clientPhoto.getId() == null) {
+        log.debug("REST request to partial update ClientPhoto partially : {}, {}", id, clientPhotoDTO);
+        if (clientPhotoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, clientPhoto.getId())) {
+        if (!Objects.equals(id, clientPhotoDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -121,122 +128,59 @@ public class ClientPhotoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ClientPhoto> result = clientPhotoRepository
-            .findById(clientPhoto.getId())
-            .map(existingClientPhoto -> {
-                if (clientPhoto.getClientId() != null) {
-                    existingClientPhoto.setClientId(clientPhoto.getClientId());
-                }
-                if (clientPhoto.getLarge() != null) {
-                    existingClientPhoto.setLarge(clientPhoto.getLarge());
-                }
-                if (clientPhoto.getLargeHeight() != null) {
-                    existingClientPhoto.setLargeHeight(clientPhoto.getLargeHeight());
-                }
-                if (clientPhoto.getLargeWidth() != null) {
-                    existingClientPhoto.setLargeWidth(clientPhoto.getLargeWidth());
-                }
-                if (clientPhoto.getMedium() != null) {
-                    existingClientPhoto.setMedium(clientPhoto.getMedium());
-                }
-                if (clientPhoto.getMediumHeight() != null) {
-                    existingClientPhoto.setMediumHeight(clientPhoto.getMediumHeight());
-                }
-                if (clientPhoto.getMediumWidth() != null) {
-                    existingClientPhoto.setMediumWidth(clientPhoto.getMediumWidth());
-                }
-                if (clientPhoto.getSmall() != null) {
-                    existingClientPhoto.setSmall(clientPhoto.getSmall());
-                }
-                if (clientPhoto.getSmallHeight() != null) {
-                    existingClientPhoto.setSmallHeight(clientPhoto.getSmallHeight());
-                }
-                if (clientPhoto.getSmallWidth() != null) {
-                    existingClientPhoto.setSmallWidth(clientPhoto.getSmallWidth());
-                }
-                if (clientPhoto.getRaw() != null) {
-                    existingClientPhoto.setRaw(clientPhoto.getRaw());
-                }
-                if (clientPhoto.getCropx() != null) {
-                    existingClientPhoto.setCropx(clientPhoto.getCropx());
-                }
-                if (clientPhoto.getCropy() != null) {
-                    existingClientPhoto.setCropy(clientPhoto.getCropy());
-                }
-                if (clientPhoto.getCropHeight() != null) {
-                    existingClientPhoto.setCropHeight(clientPhoto.getCropHeight());
-                }
-                if (clientPhoto.getCropWidth() != null) {
-                    existingClientPhoto.setCropWidth(clientPhoto.getCropWidth());
-                }
-                if (clientPhoto.getTechLineage() != null) {
-                    existingClientPhoto.setTechLineage(clientPhoto.getTechLineage());
-                }
-                if (clientPhoto.getTechCreatedDate() != null) {
-                    existingClientPhoto.setTechCreatedDate(clientPhoto.getTechCreatedDate());
-                }
-                if (clientPhoto.getTechUpdatedDate() != null) {
-                    existingClientPhoto.setTechUpdatedDate(clientPhoto.getTechUpdatedDate());
-                }
-                if (clientPhoto.getTechMapping() != null) {
-                    existingClientPhoto.setTechMapping(clientPhoto.getTechMapping());
-                }
-                if (clientPhoto.getTechComment() != null) {
-                    existingClientPhoto.setTechComment(clientPhoto.getTechComment());
-                }
-
-                return existingClientPhoto;
-            })
-            .map(clientPhotoRepository::save);
+        Optional<ClientPhotoDTO> result = clientPhotoService.partialUpdate(clientPhotoDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clientPhoto.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clientPhotoDTO.getId().toString())
         );
     }
 
     /**
      * {@code GET  /client-photos} : get all the clientPhotos.
      *
+     * @param pageable the pagination information.
      * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientPhotos in body.
      */
     @GetMapping("")
-    public List<ClientPhoto> getAllClientPhotos(@RequestParam(name = "filter", required = false) String filter) {
+    public ResponseEntity<List<ClientPhotoDTO>> getAllClientPhotos(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @RequestParam(name = "filter", required = false) String filter
+    ) {
         if ("client-is-null".equals(filter)) {
             log.debug("REST request to get all ClientPhotos where client is null");
-            return StreamSupport
-                .stream(clientPhotoRepository.findAll().spliterator(), false)
-                .filter(clientPhoto -> clientPhoto.getClient() == null)
-                .toList();
+            return new ResponseEntity<>(clientPhotoService.findAllWhereClientIsNull(), HttpStatus.OK);
         }
-        log.debug("REST request to get all ClientPhotos");
-        return clientPhotoRepository.findAll();
+        log.debug("REST request to get a page of ClientPhotos");
+        Page<ClientPhotoDTO> page = clientPhotoService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
      * {@code GET  /client-photos/:id} : get the "id" clientPhoto.
      *
-     * @param id the id of the clientPhoto to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the clientPhoto, or with status {@code 404 (Not Found)}.
+     * @param id the id of the clientPhotoDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the clientPhotoDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ClientPhoto> getClientPhoto(@PathVariable("id") Long id) {
+    public ResponseEntity<ClientPhotoDTO> getClientPhoto(@PathVariable("id") Long id) {
         log.debug("REST request to get ClientPhoto : {}", id);
-        Optional<ClientPhoto> clientPhoto = clientPhotoRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(clientPhoto);
+        Optional<ClientPhotoDTO> clientPhotoDTO = clientPhotoService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(clientPhotoDTO);
     }
 
     /**
      * {@code DELETE  /client-photos/:id} : delete the "id" clientPhoto.
      *
-     * @param id the id of the clientPhoto to delete.
+     * @param id the id of the clientPhotoDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClientPhoto(@PathVariable("id") Long id) {
         log.debug("REST request to delete ClientPhoto : {}", id);
-        clientPhotoRepository.deleteById(id);
+        clientPhotoService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

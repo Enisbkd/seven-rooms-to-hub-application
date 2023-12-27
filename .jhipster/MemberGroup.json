@@ -3,9 +3,11 @@
     "changelogDate": "20231220092107"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "member_group",
   "fields": [],
   "name": "MemberGroup",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "client",
@@ -15,5 +17,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }
