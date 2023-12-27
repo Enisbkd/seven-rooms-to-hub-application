@@ -34,6 +34,7 @@ entity Client {
 	loyaltyTier String
 	marketingOptin Boolean
 	marketingOptints String
+    marketingOptOutts String
 	hasBillingProfile Boolean
 	notes String
 	privateNotes String
@@ -52,6 +53,8 @@ entity Client {
 	birthdayAltDay Integer
 	userId String
 	userName String
+    totalOrderCount Integer
+    preferredLanguageCode String
 	techLineage String
 	techCreatedDate ZonedDateTime
 	techUpdatedDate ZonedDateTime
@@ -165,12 +168,9 @@ entity Reservation{
 	statusDisplay String
 	statusSimple String
 	tableNumbers String
-	venueSeatingAreaId String
-	venueSeatingAreaName String
 	accessPersistentId String
 	arrivedGuests Integer
 	isvip  Boolean
-	iswalkin  Boolean
 	bookedby String
 	clientReferenceCode String
 	lastname String
@@ -217,6 +217,7 @@ entity Reservation{
 	sourceClientId String
 	userId String
 	userName String
+    accessPersistentId String
 	techLineage String
 	techCreatedDate ZonedDateTime
 	techUpdatedDate ZonedDateTime
@@ -280,6 +281,9 @@ entity ResTag{
 	techMapping String
 	techComment String
 }
+entity TableNumber{
+	tableNum Integer
+}
 
 
 relationship OneToMany {
@@ -287,5 +291,25 @@ relationship OneToMany {
   Reservation to ResPosticketsItem
   Reservation to ResPosTicket
   Reservation to ResCustomField
+  Reservation to TableNumber
 }
+
+paginate MemberGroup with pagination
+paginate ClientTag with pagination
+paginate CustomField with pagination
+paginate ClientVenueStats with pagination
+paginate ClientPhoto with pagination
+paginate Reservation with pagination
+paginate ResCustomField with pagination
+paginate ResPosTicket with pagination
+paginate ResPosticketsItem with pagination
+paginate ResTag with pagination
+paginate Client with pagination
+
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
 
