@@ -3,6 +3,7 @@
     "changelogDate": "20231220092807"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "res_pos_ticket",
   "fields": [
     {
@@ -79,6 +80,7 @@
     }
   ],
   "name": "ResPosTicket",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "reservation",
@@ -88,5 +90,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

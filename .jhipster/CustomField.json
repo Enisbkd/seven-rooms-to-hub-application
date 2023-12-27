@@ -3,6 +3,7 @@
     "changelogDate": "20231220092307"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "custom_field",
   "fields": [
     {
@@ -43,6 +44,7 @@
     }
   ],
   "name": "CustomField",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "client",
@@ -52,5 +54,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

@@ -1,5 +1,6 @@
 import { defineComponent, provide } from 'vue';
 
+import TableNumberService from './table-number/table-number.service';
 import ClientService from './client/client.service';
 import MemberGroupService from './member-group/member-group.service';
 import ClientTagService from './client-tag/client-tag.service';
@@ -19,6 +20,7 @@ export default defineComponent({
   name: 'Entities',
   setup() {
     provide('userService', () => new UserService());
+    provide('tableNumberService', () => new TableNumberService());
     provide('clientService', () => new ClientService());
     provide('memberGroupService', () => new MemberGroupService());
     provide('clientTagService', () => new ClientTagService());

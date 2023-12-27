@@ -18,7 +18,8 @@
         "resCustomField": "Res Custom Field",
         "resPosTicket": "Res Pos Ticket",
         "resPosticketsItem": "Res Postickets Item",
-        "resTag": "Res Tag"
+        "resTag": "Res Tag",
+        "tableNumber": "Table Number"
       },
       "account": {
         "main": "Account",

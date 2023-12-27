@@ -42,6 +42,7 @@ export interface IClient {
   loyaltyTier?: string | null;
   marketingOptin?: boolean | null;
   marketingOptints?: string | null;
+  marketingOptOutts?: string | null;
   hasBillingProfile?: boolean | null;
   notes?: string | null;
   privateNotes?: string | null;
@@ -60,13 +61,15 @@ export interface IClient {
   birthdayAltDay?: number | null;
   userId?: string | null;
   userName?: string | null;
+  totalOrderCount?: number | null;
+  preferredLanguageCode?: string | null;
   techLineage?: string | null;
   techCreatedDate?: Date | null;
   techUpdatedDate?: Date | null;
   techMapping?: string | null;
   techComment?: string | null;
   clientPhoto?: IClientPhoto | null;
-  clientVenueStats?: IClientVenueStats[] | null;
+  clientVenueStats?: IClientVenueStats | null;
   customFields?: ICustomField[] | null;
   clientTags?: IClientTag[] | null;
   reservations?: IReservation[] | null;
@@ -111,6 +114,7 @@ export class Client implements IClient {
     public loyaltyTier?: string | null,
     public marketingOptin?: boolean | null,
     public marketingOptints?: string | null,
+    public marketingOptOutts?: string | null,
     public hasBillingProfile?: boolean | null,
     public notes?: string | null,
     public privateNotes?: string | null,
@@ -129,13 +133,15 @@ export class Client implements IClient {
     public birthdayAltDay?: number | null,
     public userId?: string | null,
     public userName?: string | null,
+    public totalOrderCount?: number | null,
+    public preferredLanguageCode?: string | null,
     public techLineage?: string | null,
     public techCreatedDate?: Date | null,
     public techUpdatedDate?: Date | null,
     public techMapping?: string | null,
     public techComment?: string | null,
     public clientPhoto?: IClientPhoto | null,
-    public clientVenueStats?: IClientVenueStats[] | null,
+    public clientVenueStats?: IClientVenueStats | null,
     public customFields?: ICustomField[] | null,
     public clientTags?: IClientTag[] | null,
     public reservations?: IReservation[] | null,

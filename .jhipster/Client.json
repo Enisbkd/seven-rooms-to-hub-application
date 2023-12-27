@@ -3,6 +3,7 @@
     "changelogDate": "20231220092007"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "client",
   "fields": [
     {
@@ -146,6 +147,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "marketingOptOutts",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "hasBillingProfile",
       "fieldType": "Boolean"
     },
@@ -218,6 +223,14 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "totalOrderCount",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "preferredLanguageCode",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "techLineage",
       "fieldType": "String"
     },
@@ -239,6 +252,7 @@
     }
   ],
   "name": "Client",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "clientPhoto",
@@ -252,7 +266,7 @@
       "otherEntityRelationshipName": "client",
       "relationshipName": "clientVenueStats",
       "relationshipSide": "left",
-      "relationshipType": "one-to-many"
+      "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "customField",
@@ -283,5 +297,6 @@
       "relationshipType": "one-to-many"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

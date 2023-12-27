@@ -14,5 +14,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="client_photo"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="client_venue_stats_id"
+                                 baseTableName="client"
+                                 constraintName="fk_client__client_venue_stats_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="client_venue_stats"
+                                 />
     </changeSet>
 </databaseChangeLog>

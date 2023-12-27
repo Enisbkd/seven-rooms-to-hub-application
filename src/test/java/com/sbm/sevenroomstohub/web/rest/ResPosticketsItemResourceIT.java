@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.ResPosticketsItem;
 import com.sbm.sevenroomstohub.repository.ResPosticketsItemRepository;
+import com.sbm.sevenroomstohub.service.dto.ResPosticketsItemDTO;
+import com.sbm.sevenroomstohub.service.mapper.ResPosticketsItemMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -68,6 +70,9 @@ class ResPosticketsItemResourceIT {
     private ResPosticketsItemRepository resPosticketsItemRepository;
 
     @Autowired
+    private ResPosticketsItemMapper resPosticketsItemMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -123,9 +128,12 @@ class ResPosticketsItemResourceIT {
     void createResPosticketsItem() throws Exception {
         int databaseSizeBeforeCreate = resPosticketsItemRepository.findAll().size();
         // Create the ResPosticketsItem
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(resPosticketsItem);
         restResPosticketsItemMockMvc
             .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosticketsItem))
+                post(ENTITY_API_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isCreated());
 
@@ -148,13 +156,16 @@ class ResPosticketsItemResourceIT {
     void createResPosticketsItemWithExistingId() throws Exception {
         // Create the ResPosticketsItem with an existing ID
         resPosticketsItem.setId(1L);
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(resPosticketsItem);
 
         int databaseSizeBeforeCreate = resPosticketsItemRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restResPosticketsItemMockMvc
             .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosticketsItem))
+                post(ENTITY_API_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -235,12 +246,13 @@ class ResPosticketsItemResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(updatedResPosticketsItem);
 
         restResPosticketsItemMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedResPosticketsItem.getId())
+                put(ENTITY_API_URL_ID, resPosticketsItemDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedResPosticketsItem))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isOk());
 
@@ -264,12 +276,15 @@ class ResPosticketsItemResourceIT {
         int databaseSizeBeforeUpdate = resPosticketsItemRepository.findAll().size();
         resPosticketsItem.setId(longCount.incrementAndGet());
 
+        // Create the ResPosticketsItem
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(resPosticketsItem);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResPosticketsItemMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, resPosticketsItem.getId())
+                put(ENTITY_API_URL_ID, resPosticketsItemDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItem))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -284,12 +299,15 @@ class ResPosticketsItemResourceIT {
         int databaseSizeBeforeUpdate = resPosticketsItemRepository.findAll().size();
         resPosticketsItem.setId(longCount.incrementAndGet());
 
+        // Create the ResPosticketsItem
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(resPosticketsItem);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResPosticketsItemMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItem))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -304,10 +322,13 @@ class ResPosticketsItemResourceIT {
         int databaseSizeBeforeUpdate = resPosticketsItemRepository.findAll().size();
         resPosticketsItem.setId(longCount.incrementAndGet());
 
+        // Create the ResPosticketsItem
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(resPosticketsItem);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResPosticketsItemMockMvc
             .perform(
-                put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosticketsItem))
+                put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
@@ -405,12 +426,15 @@ class ResPosticketsItemResourceIT {
         int databaseSizeBeforeUpdate = resPosticketsItemRepository.findAll().size();
         resPosticketsItem.setId(longCount.incrementAndGet());
 
+        // Create the ResPosticketsItem
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(resPosticketsItem);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResPosticketsItemMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, resPosticketsItem.getId())
+                patch(ENTITY_API_URL_ID, resPosticketsItemDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItem))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -425,12 +449,15 @@ class ResPosticketsItemResourceIT {
         int databaseSizeBeforeUpdate = resPosticketsItemRepository.findAll().size();
         resPosticketsItem.setId(longCount.incrementAndGet());
 
+        // Create the ResPosticketsItem
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(resPosticketsItem);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResPosticketsItemMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItem))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -445,12 +472,15 @@ class ResPosticketsItemResourceIT {
         int databaseSizeBeforeUpdate = resPosticketsItemRepository.findAll().size();
         resPosticketsItem.setId(longCount.incrementAndGet());
 
+        // Create the ResPosticketsItem
+        ResPosticketsItemDTO resPosticketsItemDTO = resPosticketsItemMapper.toDto(resPosticketsItem);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResPosticketsItemMockMvc
             .perform(
                 patch(ENTITY_API_URL)
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItem))
+                    .content(TestUtil.convertObjectToJsonBytes(resPosticketsItemDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

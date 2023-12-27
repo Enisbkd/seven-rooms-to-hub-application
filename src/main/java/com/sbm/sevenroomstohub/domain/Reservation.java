@@ -83,12 +83,6 @@ public class Reservation implements Serializable {
     @Column(name = "table_numbers")
     private String tableNumbers;
 
-    @Column(name = "venue_seating_area_id")
-    private String venueSeatingAreaId;
-
-    @Column(name = "venue_seating_area_name")
-    private String venueSeatingAreaName;
-
     @Column(name = "access_persistent_id")
     private String accessPersistentId;
 
@@ -97,9 +91,6 @@ public class Reservation implements Serializable {
 
     @Column(name = "isvip")
     private Boolean isvip;
-
-    @Column(name = "iswalkin")
-    private Boolean iswalkin;
 
     @Column(name = "bookedby")
     private String bookedby;
@@ -543,32 +534,6 @@ public class Reservation implements Serializable {
         this.tableNumbers = tableNumbers;
     }
 
-    public String getVenueSeatingAreaId() {
-        return this.venueSeatingAreaId;
-    }
-
-    public Reservation venueSeatingAreaId(String venueSeatingAreaId) {
-        this.setVenueSeatingAreaId(venueSeatingAreaId);
-        return this;
-    }
-
-    public void setVenueSeatingAreaId(String venueSeatingAreaId) {
-        this.venueSeatingAreaId = venueSeatingAreaId;
-    }
-
-    public String getVenueSeatingAreaName() {
-        return this.venueSeatingAreaName;
-    }
-
-    public Reservation venueSeatingAreaName(String venueSeatingAreaName) {
-        this.setVenueSeatingAreaName(venueSeatingAreaName);
-        return this;
-    }
-
-    public void setVenueSeatingAreaName(String venueSeatingAreaName) {
-        this.venueSeatingAreaName = venueSeatingAreaName;
-    }
-
     public String getAccessPersistentId() {
         return this.accessPersistentId;
     }
@@ -606,19 +571,6 @@ public class Reservation implements Serializable {
 
     public void setIsvip(Boolean isvip) {
         this.isvip = isvip;
-    }
-
-    public Boolean getIswalkin() {
-        return this.iswalkin;
-    }
-
-    public Reservation iswalkin(Boolean iswalkin) {
-        this.setIswalkin(iswalkin);
-        return this;
-    }
-
-    public void setIswalkin(Boolean iswalkin) {
-        this.iswalkin = iswalkin;
     }
 
     public String getBookedby() {
@@ -1464,12 +1416,9 @@ public class Reservation implements Serializable {
             ", statusDisplay='" + getStatusDisplay() + "'" +
             ", statusSimple='" + getStatusSimple() + "'" +
             ", tableNumbers='" + getTableNumbers() + "'" +
-            ", venueSeatingAreaId='" + getVenueSeatingAreaId() + "'" +
-            ", venueSeatingAreaName='" + getVenueSeatingAreaName() + "'" +
             ", accessPersistentId='" + getAccessPersistentId() + "'" +
             ", arrivedGuests=" + getArrivedGuests() +
             ", isvip='" + getIsvip() + "'" +
-            ", iswalkin='" + getIswalkin() + "'" +
             ", bookedby='" + getBookedby() + "'" +
             ", clientReferenceCode='" + getClientReferenceCode() + "'" +
             ", lastname='" + getLastname() + "'" +

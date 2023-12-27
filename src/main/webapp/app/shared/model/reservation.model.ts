@@ -25,12 +25,9 @@ export interface IReservation {
   statusDisplay?: string | null;
   statusSimple?: string | null;
   tableNumbers?: string | null;
-  venueSeatingAreaId?: string | null;
-  venueSeatingAreaName?: string | null;
   accessPersistentId?: string | null;
   arrivedGuests?: number | null;
   isvip?: boolean | null;
-  iswalkin?: boolean | null;
   bookedby?: string | null;
   clientReferenceCode?: string | null;
   lastname?: string | null;
@@ -111,12 +108,9 @@ export class Reservation implements IReservation {
     public statusDisplay?: string | null,
     public statusSimple?: string | null,
     public tableNumbers?: string | null,
-    public venueSeatingAreaId?: string | null,
-    public venueSeatingAreaName?: string | null,
     public accessPersistentId?: string | null,
     public arrivedGuests?: number | null,
     public isvip?: boolean | null,
-    public iswalkin?: boolean | null,
     public bookedby?: string | null,
     public clientReferenceCode?: string | null,
     public lastname?: string | null,
@@ -175,7 +169,6 @@ export class Reservation implements IReservation {
     public client?: IClient | null,
   ) {
     this.isvip = this.isvip ?? false;
-    this.iswalkin = this.iswalkin ?? false;
     this.reservationSmsOptin = this.reservationSmsOptin ?? false;
     this.sendReminderEmail = this.sendReminderEmail ?? false;
     this.sendreminderSms = this.sendreminderSms ?? false;

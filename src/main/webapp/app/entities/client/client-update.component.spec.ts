@@ -11,6 +11,7 @@ import { DATE_TIME_LONG_FORMAT } from '@/shared/composables/date-format';
 import AlertService from '@/shared/alert/alert.service';
 
 import ClientPhotoService from '@/entities/client-photo/client-photo.service';
+import ClientVenueStatsService from '@/entities/client-venue-stats/client-venue-stats.service';
 
 type ClientUpdateComponentType = InstanceType<typeof ClientUpdate>;
 
@@ -57,6 +58,10 @@ describe('Component Tests', () => {
           clientService: () => clientServiceStub,
           clientPhotoService: () =>
             sinon.createStubInstance<ClientPhotoService>(ClientPhotoService, {
+              retrieve: sinon.stub().resolves({}),
+            } as any),
+          clientVenueStatsService: () =>
+            sinon.createStubInstance<ClientVenueStatsService>(ClientVenueStatsService, {
               retrieve: sinon.stub().resolves({}),
             } as any),
         },

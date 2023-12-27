@@ -16,6 +16,7 @@
     "enableSwaggerCodegen": false,
     "enableTranslation": true,
     "entities": [
+      "TableNumber",
       "Client",
       "MemberGroup",
       "ClientTag",

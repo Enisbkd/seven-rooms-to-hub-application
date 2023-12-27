@@ -315,38 +315,6 @@
           <div class="form-group">
             <label
               class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.reservation.venueSeatingAreaId')"
-              for="reservation-venueSeatingAreaId"
-            ></label>
-            <input
-              type="text"
-              class="form-control"
-              name="venueSeatingAreaId"
-              id="reservation-venueSeatingAreaId"
-              data-cy="venueSeatingAreaId"
-              :class="{ valid: !v$.venueSeatingAreaId.$invalid, invalid: v$.venueSeatingAreaId.$invalid }"
-              v-model="v$.venueSeatingAreaId.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.reservation.venueSeatingAreaName')"
-              for="reservation-venueSeatingAreaName"
-            ></label>
-            <input
-              type="text"
-              class="form-control"
-              name="venueSeatingAreaName"
-              id="reservation-venueSeatingAreaName"
-              data-cy="venueSeatingAreaName"
-              :class="{ valid: !v$.venueSeatingAreaName.$invalid, invalid: v$.venueSeatingAreaName.$invalid }"
-              v-model="v$.venueSeatingAreaName.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
               v-text="t$('sevenRoomsToHubApplicationApp.reservation.accessPersistentId')"
               for="reservation-accessPersistentId"
             ></label>
@@ -390,22 +358,6 @@
               data-cy="isvip"
               :class="{ valid: !v$.isvip.$invalid, invalid: v$.isvip.$invalid }"
               v-model="v$.isvip.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.reservation.iswalkin')"
-              for="reservation-iswalkin"
-            ></label>
-            <input
-              type="checkbox"
-              class="form-check"
-              name="iswalkin"
-              id="reservation-iswalkin"
-              data-cy="iswalkin"
-              :class="{ valid: !v$.iswalkin.$invalid, invalid: v$.iswalkin.$invalid }"
-              v-model="v$.iswalkin.$model"
             />
           </div>
           <div class="form-group">

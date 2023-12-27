@@ -3,6 +3,10 @@ import { Authority } from '@/shared/security/authority';
 // prettier-ignore
 const Entities = () => import('@/entities/entities.vue');
 
+const TableNumber = () => import('@/entities/table-number/table-number.vue');
+const TableNumberUpdate = () => import('@/entities/table-number/table-number-update.vue');
+const TableNumberDetails = () => import('@/entities/table-number/table-number-details.vue');
+
 const Client = () => import('@/entities/client/client.vue');
 const ClientUpdate = () => import('@/entities/client/client-update.vue');
 const ClientDetails = () => import('@/entities/client/client-details.vue');
@@ -53,6 +57,30 @@ export default {
   path: '/',
   component: Entities,
   children: [
+    {
+      path: 'table-number',
+      name: 'TableNumber',
+      component: TableNumber,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'table-number/new',
+      name: 'TableNumberCreate',
+      component: TableNumberUpdate,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'table-number/:tableNumberId/edit',
+      name: 'TableNumberEdit',
+      component: TableNumberUpdate,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'table-number/:tableNumberId/view',
+      name: 'TableNumberView',
+      component: TableNumberDetails,
+      meta: { authorities: [Authority.USER] },
+    },
     {
       path: 'client',
       name: 'Client',

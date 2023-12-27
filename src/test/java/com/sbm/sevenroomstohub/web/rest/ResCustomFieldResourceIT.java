@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.ResCustomField;
 import com.sbm.sevenroomstohub.repository.ResCustomFieldRepository;
+import com.sbm.sevenroomstohub.service.dto.ResCustomFieldDTO;
+import com.sbm.sevenroomstohub.service.mapper.ResCustomFieldMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -71,6 +73,9 @@ class ResCustomFieldResourceIT {
     private ResCustomFieldRepository resCustomFieldRepository;
 
     @Autowired
+    private ResCustomFieldMapper resCustomFieldMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -128,9 +133,10 @@ class ResCustomFieldResourceIT {
     void createResCustomField() throws Exception {
         int databaseSizeBeforeCreate = resCustomFieldRepository.findAll().size();
         // Create the ResCustomField
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(resCustomField);
         restResCustomFieldMockMvc
             .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resCustomField))
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
             )
             .andExpect(status().isCreated());
 
@@ -154,13 +160,14 @@ class ResCustomFieldResourceIT {
     void createResCustomFieldWithExistingId() throws Exception {
         // Create the ResCustomField with an existing ID
         resCustomField.setId(1L);
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(resCustomField);
 
         int databaseSizeBeforeCreate = resCustomFieldRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restResCustomFieldMockMvc
             .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resCustomField))
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -244,12 +251,13 @@ class ResCustomFieldResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(updatedResCustomField);
 
         restResCustomFieldMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedResCustomField.getId())
+                put(ENTITY_API_URL_ID, resCustomFieldDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedResCustomField))
+                    .content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
             )
             .andExpect(status().isOk());
 
@@ -274,12 +282,15 @@ class ResCustomFieldResourceIT {
         int databaseSizeBeforeUpdate = resCustomFieldRepository.findAll().size();
         resCustomField.setId(longCount.incrementAndGet());
 
+        // Create the ResCustomField
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(resCustomField);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResCustomFieldMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, resCustomField.getId())
+                put(ENTITY_API_URL_ID, resCustomFieldDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resCustomField))
+                    .content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -294,12 +305,15 @@ class ResCustomFieldResourceIT {
         int databaseSizeBeforeUpdate = resCustomFieldRepository.findAll().size();
         resCustomField.setId(longCount.incrementAndGet());
 
+        // Create the ResCustomField
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(resCustomField);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResCustomFieldMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resCustomField))
+                    .content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -314,9 +328,14 @@ class ResCustomFieldResourceIT {
         int databaseSizeBeforeUpdate = resCustomFieldRepository.findAll().size();
         resCustomField.setId(longCount.incrementAndGet());
 
+        // Create the ResCustomField
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(resCustomField);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResCustomFieldMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resCustomField)))
+            .perform(
+                put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the ResCustomField in the database
@@ -419,12 +438,15 @@ class ResCustomFieldResourceIT {
         int databaseSizeBeforeUpdate = resCustomFieldRepository.findAll().size();
         resCustomField.setId(longCount.incrementAndGet());
 
+        // Create the ResCustomField
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(resCustomField);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResCustomFieldMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, resCustomField.getId())
+                patch(ENTITY_API_URL_ID, resCustomFieldDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resCustomField))
+                    .content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -439,12 +461,15 @@ class ResCustomFieldResourceIT {
         int databaseSizeBeforeUpdate = resCustomFieldRepository.findAll().size();
         resCustomField.setId(longCount.incrementAndGet());
 
+        // Create the ResCustomField
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(resCustomField);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResCustomFieldMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resCustomField))
+                    .content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -459,10 +484,15 @@ class ResCustomFieldResourceIT {
         int databaseSizeBeforeUpdate = resCustomFieldRepository.findAll().size();
         resCustomField.setId(longCount.incrementAndGet());
 
+        // Create the ResCustomField
+        ResCustomFieldDTO resCustomFieldDTO = resCustomFieldMapper.toDto(resCustomField);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResCustomFieldMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(resCustomField))
+                patch(ENTITY_API_URL)
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(resCustomFieldDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
