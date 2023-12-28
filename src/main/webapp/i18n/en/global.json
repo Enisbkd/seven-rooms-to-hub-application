@@ -19,7 +19,8 @@
         "resPosTicket": "Res Pos Ticket",
         "resPosticketsItem": "Res Postickets Item",
         "resTag": "Res Tag",
-        "table": "Table"
+        "table": "Table",
+        "resTable": "Res Table"
       },
       "account": {
         "main": "Account",

@@ -1,0 +1,25 @@
+{
+  "sevenRoomsToHubApplicationApp": {
+    "resTable": {
+      "home": {
+        "title": "ResTables",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Res Table",
+        "createOrEditLabel": "Créer ou éditer un Res Table",
+        "notFound": "Aucun Res Table trouvé"
+      },
+      "created": "Un nouveau Res Table a été créé avec l'identifiant { param }",
+      "updated": "Le Res Table avec l'identifiant { param } a été mis à jour",
+      "deleted": "Le Res Table avec l'identifiant { param } a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Res Table { id } ?"
+      },
+      "detail": {
+        "title": "Res Table"
+      },
+      "id": "ID",
+      "tableNumber": "Table Number",
+      "reservation": "Reservation"
+    }
+  }
+}

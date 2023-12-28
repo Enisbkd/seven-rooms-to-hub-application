@@ -3,9 +3,9 @@ import { Authority } from '@/shared/security/authority';
 // prettier-ignore
 const Entities = () => import('@/entities/entities.vue');
 
-const Table = () => import('@/entities/table/table.vue');
-const TableUpdate = () => import('@/entities/table/table-update.vue');
-const TableDetails = () => import('@/entities/table/table-details.vue');
+const ResTable = () => import('@/entities/res-table/res-table.vue');
+const ResTableUpdate = () => import('@/entities/res-table/res-table-update.vue');
+const ResTableDetails = () => import('@/entities/res-table/res-table-details.vue');
 
 const Client = () => import('@/entities/client/client.vue');
 const ClientUpdate = () => import('@/entities/client/client-update.vue');
@@ -58,27 +58,27 @@ export default {
   component: Entities,
   children: [
     {
-      path: 'table',
-      name: 'Table',
-      component: Table,
+      path: 'res-table',
+      name: 'ResTable',
+      component: ResTable,
       meta: { authorities: [Authority.USER] },
     },
     {
-      path: 'table/new',
-      name: 'TableCreate',
-      component: TableUpdate,
+      path: 'res-table/new',
+      name: 'ResTableCreate',
+      component: ResTableUpdate,
       meta: { authorities: [Authority.USER] },
     },
     {
-      path: 'table/:tableId/edit',
-      name: 'TableEdit',
-      component: TableUpdate,
+      path: 'res-table/:resTableId/edit',
+      name: 'ResTableEdit',
+      component: ResTableUpdate,
       meta: { authorities: [Authority.USER] },
     },
     {
-      path: 'table/:tableId/view',
-      name: 'TableView',
-      component: TableDetails,
+      path: 'res-table/:resTableId/view',
+      name: 'ResTableView',
+      component: ResTableDetails,
       meta: { authorities: [Authority.USER] },
     },
     {

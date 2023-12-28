@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-dropdown-item to="/table">
+    <b-dropdown-item to="/res-table">
       <font-awesome-icon icon="asterisk" />
-      <span v-text="t$('global.menu.entities.table')"></span>
+      <span v-text="t$('global.menu.entities.resTable')"></span>
     </b-dropdown-item>
     <b-dropdown-item to="/client">
       <font-awesome-icon icon="asterisk" />

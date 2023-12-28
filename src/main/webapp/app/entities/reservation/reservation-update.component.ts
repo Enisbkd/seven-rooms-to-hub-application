@@ -135,8 +135,9 @@ export default defineComponent({
       resTags: {},
       resPosTickets: {},
       resCustomFields: {},
-      tables: {},
+      resTables: {},
       client: {},
+      tables: {},
     };
     const v$ = useVuelidate(validationRules, reservation as any);
     v$.value.$validate();

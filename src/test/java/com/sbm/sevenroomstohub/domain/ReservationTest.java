@@ -3,6 +3,7 @@ package com.sbm.sevenroomstohub.domain;
 import static com.sbm.sevenroomstohub.domain.ClientTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResCustomFieldTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResPosTicketTestSamples.*;
+import static com.sbm.sevenroomstohub.domain.ResTableTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResTagTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ReservationTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.TableTestSamples.*;
@@ -96,6 +97,40 @@ class ReservationTest {
     }
 
     @Test
+    void resTableTest() throws Exception {
+        Reservation reservation = getReservationRandomSampleGenerator();
+        ResTable resTableBack = getResTableRandomSampleGenerator();
+
+        reservation.addResTable(resTableBack);
+        assertThat(reservation.getResTables()).containsOnly(resTableBack);
+        assertThat(resTableBack.getReservation()).isEqualTo(reservation);
+
+        reservation.removeResTable(resTableBack);
+        assertThat(reservation.getResTables()).doesNotContain(resTableBack);
+        assertThat(resTableBack.getReservation()).isNull();
+
+        reservation.resTables(new HashSet<>(Set.of(resTableBack)));
+        assertThat(reservation.getResTables()).containsOnly(resTableBack);
+        assertThat(resTableBack.getReservation()).isEqualTo(reservation);
+
+        reservation.setResTables(new HashSet<>());
+        assertThat(reservation.getResTables()).doesNotContain(resTableBack);
+        assertThat(resTableBack.getReservation()).isNull();
+    }
+
+    @Test
+    void clientTest() throws Exception {
+        Reservation reservation = getReservationRandomSampleGenerator();
+        Client clientBack = getClientRandomSampleGenerator();
+
+        reservation.setClient(clientBack);
+        assertThat(reservation.getClient()).isEqualTo(clientBack);
+
+        reservation.client(null);
+        assertThat(reservation.getClient()).isNull();
+    }
+
+    @Test
     void tableTest() throws Exception {
         Reservation reservation = getReservationRandomSampleGenerator();
         Table tableBack = getTableRandomSampleGenerator();
@@ -115,17 +150,5 @@ class ReservationTest {
         reservation.setTables(new HashSet<>());
         assertThat(reservation.getTables()).doesNotContain(tableBack);
         assertThat(tableBack.getReservation()).isNull();
-    }
-
-    @Test
-    void clientTest() throws Exception {
-        Reservation reservation = getReservationRandomSampleGenerator();
-        Client clientBack = getClientRandomSampleGenerator();
-
-        reservation.setClient(clientBack);
-        assertThat(reservation.getClient()).isEqualTo(clientBack);
-
-        reservation.client(null);
-        assertThat(reservation.getClient()).isNull();
     }
 }

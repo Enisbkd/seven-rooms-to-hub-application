@@ -263,7 +263,7 @@ public class Reservation implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
-    private Set<Table> tables = new HashSet<>();
+    private Set<ResTable> resTables = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
@@ -271,6 +271,11 @@ public class Reservation implements Serializable {
         allowSetters = true
     )
     private Client client;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
+    private Set<Table> tables = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -1329,6 +1334,50 @@ public class Reservation implements Serializable {
         return this;
     }
 
+    public Set<ResTable> getResTables() {
+        return this.resTables;
+    }
+
+    public void setResTables(Set<ResTable> resTables) {
+        if (this.resTables != null) {
+            this.resTables.forEach(i -> i.setReservation(null));
+        }
+        if (resTables != null) {
+            resTables.forEach(i -> i.setReservation(this));
+        }
+        this.resTables = resTables;
+    }
+
+    public Reservation resTables(Set<ResTable> resTables) {
+        this.setResTables(resTables);
+        return this;
+    }
+
+    public Reservation addResTable(ResTable resTable) {
+        this.resTables.add(resTable);
+        resTable.setReservation(this);
+        return this;
+    }
+
+    public Reservation removeResTable(ResTable resTable) {
+        this.resTables.remove(resTable);
+        resTable.setReservation(null);
+        return this;
+    }
+
+    public Client getClient() {
+        return this.client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Reservation client(Client client) {
+        this.setClient(client);
+        return this;
+    }
+
     public Set<Table> getTables() {
         return this.tables;
     }
@@ -1357,19 +1406,6 @@ public class Reservation implements Serializable {
     public Reservation removeTable(Table table) {
         this.tables.remove(table);
         table.setReservation(null);
-        return this;
-    }
-
-    public Client getClient() {
-        return this.client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Reservation client(Client client) {
-        this.setClient(client);
         return this;
     }
 

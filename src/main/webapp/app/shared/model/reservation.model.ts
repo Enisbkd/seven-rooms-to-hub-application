@@ -1,8 +1,9 @@
 import { type IResTag } from '@/shared/model/res-tag.model';
 import { type IResPosTicket } from '@/shared/model/res-pos-ticket.model';
 import { type IResCustomField } from '@/shared/model/res-custom-field.model';
-import { type ITable } from '@/shared/model/table.model';
+import { type IResTable } from '@/shared/model/res-table.model';
 import { type IClient } from '@/shared/model/client.model';
+import { type ITable } from '@/shared/model/table.model';
 
 export interface IReservation {
   id?: number;
@@ -82,8 +83,9 @@ export interface IReservation {
   resTags?: IResTag[] | null;
   resPosTickets?: IResPosTicket[] | null;
   resCustomFields?: IResCustomField[] | null;
-  tables?: ITable[] | null;
+  resTables?: IResTable[] | null;
   client?: IClient | null;
+  tables?: ITable[] | null;
 }
 
 export class Reservation implements IReservation {
@@ -165,8 +167,9 @@ export class Reservation implements IReservation {
     public resTags?: IResTag[] | null,
     public resPosTickets?: IResPosTicket[] | null,
     public resCustomFields?: IResCustomField[] | null,
-    public tables?: ITable[] | null,
+    public resTables?: IResTable[] | null,
     public client?: IClient | null,
+    public tables?: ITable[] | null,
   ) {
     this.isvip = this.isvip ?? false;
     this.reservationSmsOptin = this.reservationSmsOptin ?? false;

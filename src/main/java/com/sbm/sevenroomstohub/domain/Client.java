@@ -231,7 +231,7 @@ public class Client implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "tables", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client", "tables" }, allowSetters = true)
     private Set<Reservation> reservations = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")

@@ -324,9 +324,9 @@
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "table",
+      "otherEntityName": "resTable",
       "otherEntityRelationshipName": "reservation",
-      "relationshipName": "table",
+      "relationshipName": "resTable",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },

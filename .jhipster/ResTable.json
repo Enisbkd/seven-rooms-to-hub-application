@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20231220092007"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "res_table",
+  "fields": [
+    {
+      "fieldName": "tableNumber",
+      "fieldType": "Integer"
+    }
+  ],
+  "name": "ResTable",
+  "relationships": [
+    {
+      "otherEntityName": "reservation",
+      "otherEntityRelationshipName": "resTable",
+      "relationshipName": "reservation",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

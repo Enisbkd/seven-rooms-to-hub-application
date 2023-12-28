@@ -94,8 +94,9 @@
       "resTag": "Res Tag",
       "resPosTicket": "Res Pos Ticket",
       "resCustomField": "Res Custom Field",
-      "table": "Table",
-      "client": "Client"
+      "resTable": "Res Table",
+      "client": "Client",
+      "table": "Table"
     }
   }
 }
