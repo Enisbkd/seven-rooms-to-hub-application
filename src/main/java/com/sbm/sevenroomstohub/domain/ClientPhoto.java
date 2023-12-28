@@ -1,9 +1,10 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Map;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,46 +28,56 @@ public class ClientPhoto implements Serializable {
     @Column(name = "client_id")
     private String clientId;
 
-    @Column(name = "large")
+    @Column(name = "large", length = 1000)
     private String large;
 
     @Column(name = "large_height")
+    @JsonProperty("large_height")
     private Integer largeHeight;
 
     @Column(name = "large_width")
+    @JsonProperty("large_width")
     private Integer largeWidth;
 
-    @Column(name = "medium")
+    @Column(name = "medium", length = 1000)
     private String medium;
 
-    @Column(name = "medium_height")
+    @Column(name = "medium_height", length = 1000)
+    @JsonProperty("medium_height")
     private Integer mediumHeight;
 
     @Column(name = "medium_width")
+    @JsonProperty("medium_width")
     private Integer mediumWidth;
 
-    @Column(name = "small")
+    @Column(name = "small", length = 1000)
     private String small;
 
     @Column(name = "small_height")
+    @JsonProperty("small_height")
     private Integer smallHeight;
 
     @Column(name = "small_width")
+    @JsonProperty("small_width")
     private Integer smallWidth;
 
-    @Column(name = "jhi_raw")
+    @Column(name = "photo_raw", length = 1000)
     private String raw;
 
     @Column(name = "cropx")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Integer cropx;
 
     @Column(name = "cropy")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Integer cropy;
 
     @Column(name = "crop_height")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Double cropHeight;
 
     @Column(name = "crop_width")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Double cropWidth;
 
     @Column(name = "tech_lineage")
@@ -299,6 +310,15 @@ public class ClientPhoto implements Serializable {
 
     public void setCropWidth(Double cropWidth) {
         this.cropWidth = cropWidth;
+    }
+
+    @JsonProperty("photo_crop_info")
+    @JsonSetter
+    public void setCropInfo(Map<String, String> crop) {
+        this.cropx = Integer.valueOf(crop.get("x"));
+        this.cropy = Integer.valueOf(crop.get("y"));
+        this.cropHeight = Double.valueOf(crop.get("height"));
+        this.cropWidth = Double.valueOf(crop.get("width"));
     }
 
     public String getTechLineage() {
