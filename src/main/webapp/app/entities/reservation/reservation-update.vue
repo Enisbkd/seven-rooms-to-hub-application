@@ -299,22 +299,6 @@
           <div class="form-group">
             <label
               class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.reservation.tableNumbers')"
-              for="reservation-tableNumbers"
-            ></label>
-            <input
-              type="text"
-              class="form-control"
-              name="tableNumbers"
-              id="reservation-tableNumbers"
-              data-cy="tableNumbers"
-              :class="{ valid: !v$.tableNumbers.$invalid, invalid: v$.tableNumbers.$invalid }"
-              v-model="v$.tableNumbers.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
               v-text="t$('sevenRoomsToHubApplicationApp.reservation.accessPersistentId')"
               for="reservation-accessPersistentId"
             ></label>

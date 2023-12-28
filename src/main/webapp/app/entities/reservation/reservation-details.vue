@@ -115,12 +115,6 @@
             <span>{{ reservation.statusSimple }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.tableNumbers')"></span>
-          </dt>
-          <dd>
-            <span>{{ reservation.tableNumbers }}</span>
-          </dd>
-          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.accessPersistentId')"></span>
           </dt>
           <dd>

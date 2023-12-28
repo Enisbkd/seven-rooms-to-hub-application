@@ -90,9 +90,6 @@ class ReservationResourceIT {
     private static final String DEFAULT_STATUS_SIMPLE = "AAAAAAAAAA";
     private static final String UPDATED_STATUS_SIMPLE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TABLE_NUMBERS = "AAAAAAAAAA";
-    private static final String UPDATED_TABLE_NUMBERS = "BBBBBBBBBB";
-
     private static final String DEFAULT_ACCESS_PERSISTENT_ID = "AAAAAAAAAA";
     private static final String UPDATED_ACCESS_PERSISTENT_ID = "BBBBBBBBBB";
 
@@ -301,7 +298,6 @@ class ReservationResourceIT {
             .status(DEFAULT_STATUS)
             .statusDisplay(DEFAULT_STATUS_DISPLAY)
             .statusSimple(DEFAULT_STATUS_SIMPLE)
-            .tableNumbers(DEFAULT_TABLE_NUMBERS)
             .accessPersistentId(DEFAULT_ACCESS_PERSISTENT_ID)
             .arrivedGuests(DEFAULT_ARRIVED_GUESTS)
             .isvip(DEFAULT_ISVIP)
@@ -385,7 +381,6 @@ class ReservationResourceIT {
             .status(UPDATED_STATUS)
             .statusDisplay(UPDATED_STATUS_DISPLAY)
             .statusSimple(UPDATED_STATUS_SIMPLE)
-            .tableNumbers(UPDATED_TABLE_NUMBERS)
             .accessPersistentId(UPDATED_ACCESS_PERSISTENT_ID)
             .arrivedGuests(UPDATED_ARRIVED_GUESTS)
             .isvip(UPDATED_ISVIP)
@@ -482,7 +477,6 @@ class ReservationResourceIT {
         assertThat(testReservation.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testReservation.getStatusDisplay()).isEqualTo(DEFAULT_STATUS_DISPLAY);
         assertThat(testReservation.getStatusSimple()).isEqualTo(DEFAULT_STATUS_SIMPLE);
-        assertThat(testReservation.getTableNumbers()).isEqualTo(DEFAULT_TABLE_NUMBERS);
         assertThat(testReservation.getAccessPersistentId()).isEqualTo(DEFAULT_ACCESS_PERSISTENT_ID);
         assertThat(testReservation.getArrivedGuests()).isEqualTo(DEFAULT_ARRIVED_GUESTS);
         assertThat(testReservation.getIsvip()).isEqualTo(DEFAULT_ISVIP);
@@ -590,7 +584,6 @@ class ReservationResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
             .andExpect(jsonPath("$.[*].statusDisplay").value(hasItem(DEFAULT_STATUS_DISPLAY)))
             .andExpect(jsonPath("$.[*].statusSimple").value(hasItem(DEFAULT_STATUS_SIMPLE)))
-            .andExpect(jsonPath("$.[*].tableNumbers").value(hasItem(DEFAULT_TABLE_NUMBERS)))
             .andExpect(jsonPath("$.[*].accessPersistentId").value(hasItem(DEFAULT_ACCESS_PERSISTENT_ID)))
             .andExpect(jsonPath("$.[*].arrivedGuests").value(hasItem(DEFAULT_ARRIVED_GUESTS)))
             .andExpect(jsonPath("$.[*].isvip").value(hasItem(DEFAULT_ISVIP.booleanValue())))
@@ -677,7 +670,6 @@ class ReservationResourceIT {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
             .andExpect(jsonPath("$.statusDisplay").value(DEFAULT_STATUS_DISPLAY))
             .andExpect(jsonPath("$.statusSimple").value(DEFAULT_STATUS_SIMPLE))
-            .andExpect(jsonPath("$.tableNumbers").value(DEFAULT_TABLE_NUMBERS))
             .andExpect(jsonPath("$.accessPersistentId").value(DEFAULT_ACCESS_PERSISTENT_ID))
             .andExpect(jsonPath("$.arrivedGuests").value(DEFAULT_ARRIVED_GUESTS))
             .andExpect(jsonPath("$.isvip").value(DEFAULT_ISVIP.booleanValue()))
@@ -772,7 +764,6 @@ class ReservationResourceIT {
             .status(UPDATED_STATUS)
             .statusDisplay(UPDATED_STATUS_DISPLAY)
             .statusSimple(UPDATED_STATUS_SIMPLE)
-            .tableNumbers(UPDATED_TABLE_NUMBERS)
             .accessPersistentId(UPDATED_ACCESS_PERSISTENT_ID)
             .arrivedGuests(UPDATED_ARRIVED_GUESTS)
             .isvip(UPDATED_ISVIP)
@@ -859,7 +850,6 @@ class ReservationResourceIT {
         assertThat(testReservation.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testReservation.getStatusDisplay()).isEqualTo(UPDATED_STATUS_DISPLAY);
         assertThat(testReservation.getStatusSimple()).isEqualTo(UPDATED_STATUS_SIMPLE);
-        assertThat(testReservation.getTableNumbers()).isEqualTo(UPDATED_TABLE_NUMBERS);
         assertThat(testReservation.getAccessPersistentId()).isEqualTo(UPDATED_ACCESS_PERSISTENT_ID);
         assertThat(testReservation.getArrivedGuests()).isEqualTo(UPDATED_ARRIVED_GUESTS);
         assertThat(testReservation.getIsvip()).isEqualTo(UPDATED_ISVIP);
@@ -1003,27 +993,27 @@ class ReservationResourceIT {
             .mfratioFemale(UPDATED_MFRATIO_FEMALE)
             .status(UPDATED_STATUS)
             .statusDisplay(UPDATED_STATUS_DISPLAY)
-            .accessPersistentId(UPDATED_ACCESS_PERSISTENT_ID)
-            .bookedby(UPDATED_BOOKEDBY)
-            .email(UPDATED_EMAIL)
+            .arrivedGuests(UPDATED_ARRIVED_GUESTS)
+            .clientReferenceCode(UPDATED_CLIENT_REFERENCE_CODE)
             .phoneNumber(UPDATED_PHONE_NUMBER)
-            .address2(UPDATED_ADDRESS_2)
+            .address(UPDATED_ADDRESS)
             .city(UPDATED_CITY)
-            .state(UPDATED_STATE)
-            .clientRequests(UPDATED_CLIENT_REQUESTS)
-            .compsPriceType(UPDATED_COMPS_PRICE_TYPE)
-            .minPrice(UPDATED_MIN_PRICE)
-            .totalPayment(UPDATED_TOTAL_PAYMENT)
-            .rating(UPDATED_RATING)
+            .postalCode(UPDATED_POSTAL_CODE)
+            .country(UPDATED_COUNTRY)
+            .comps(UPDATED_COMPS)
+            .costOption(UPDATED_COST_OPTION)
+            .prePayment(UPDATED_PRE_PAYMENT)
+            .paidBy(UPDATED_PAID_BY)
             .problems(UPDATED_PROBLEMS)
-            .externalClientId(UPDATED_EXTERNAL_CLIENT_ID)
-            .reservationSmsOptin(UPDATED_RESERVATION_SMS_OPTIN)
+            .autoAssignments(UPDATED_AUTO_ASSIGNMENTS)
+            .externalId(UPDATED_EXTERNAL_ID)
             .reservationType(UPDATED_RESERVATION_TYPE)
-            .sendreminderSms(UPDATED_SENDREMINDER_SMS)
+            .sendReminderEmail(UPDATED_SEND_REMINDER_EMAIL)
             .sourceClientId(UPDATED_SOURCE_CLIENT_ID)
             .userId(UPDATED_USER_ID)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING);
+            .userName(UPDATED_USER_NAME)
+            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
+            .techComment(UPDATED_TECH_COMMENT);
 
         restReservationMockMvc
             .perform(
@@ -1055,22 +1045,21 @@ class ReservationResourceIT {
         assertThat(testReservation.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testReservation.getStatusDisplay()).isEqualTo(UPDATED_STATUS_DISPLAY);
         assertThat(testReservation.getStatusSimple()).isEqualTo(DEFAULT_STATUS_SIMPLE);
-        assertThat(testReservation.getTableNumbers()).isEqualTo(DEFAULT_TABLE_NUMBERS);
-        assertThat(testReservation.getAccessPersistentId()).isEqualTo(UPDATED_ACCESS_PERSISTENT_ID);
-        assertThat(testReservation.getArrivedGuests()).isEqualTo(DEFAULT_ARRIVED_GUESTS);
+        assertThat(testReservation.getAccessPersistentId()).isEqualTo(DEFAULT_ACCESS_PERSISTENT_ID);
+        assertThat(testReservation.getArrivedGuests()).isEqualTo(UPDATED_ARRIVED_GUESTS);
         assertThat(testReservation.getIsvip()).isEqualTo(DEFAULT_ISVIP);
-        assertThat(testReservation.getBookedby()).isEqualTo(UPDATED_BOOKEDBY);
-        assertThat(testReservation.getClientReferenceCode()).isEqualTo(DEFAULT_CLIENT_REFERENCE_CODE);
+        assertThat(testReservation.getBookedby()).isEqualTo(DEFAULT_BOOKEDBY);
+        assertThat(testReservation.getClientReferenceCode()).isEqualTo(UPDATED_CLIENT_REFERENCE_CODE);
         assertThat(testReservation.getLastname()).isEqualTo(DEFAULT_LASTNAME);
         assertThat(testReservation.getFirstname()).isEqualTo(DEFAULT_FIRSTNAME);
-        assertThat(testReservation.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testReservation.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testReservation.getPhoneNumber()).isEqualTo(UPDATED_PHONE_NUMBER);
-        assertThat(testReservation.getAddress()).isEqualTo(DEFAULT_ADDRESS);
-        assertThat(testReservation.getAddress2()).isEqualTo(UPDATED_ADDRESS_2);
+        assertThat(testReservation.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testReservation.getAddress2()).isEqualTo(DEFAULT_ADDRESS_2);
         assertThat(testReservation.getCity()).isEqualTo(UPDATED_CITY);
-        assertThat(testReservation.getPostalCode()).isEqualTo(DEFAULT_POSTAL_CODE);
-        assertThat(testReservation.getState()).isEqualTo(UPDATED_STATE);
-        assertThat(testReservation.getCountry()).isEqualTo(DEFAULT_COUNTRY);
+        assertThat(testReservation.getPostalCode()).isEqualTo(UPDATED_POSTAL_CODE);
+        assertThat(testReservation.getState()).isEqualTo(DEFAULT_STATE);
+        assertThat(testReservation.getCountry()).isEqualTo(UPDATED_COUNTRY);
         assertThat(testReservation.getLoyaltyId()).isEqualTo(DEFAULT_LOYALTY_ID);
         assertThat(testReservation.getLoyaltyRank()).isEqualTo(DEFAULT_LOYALTY_RANK);
         assertThat(testReservation.getLoyaltyTier()).isEqualTo(DEFAULT_LOYALTY_TIER);
@@ -1078,38 +1067,38 @@ class ReservationResourceIT {
         assertThat(testReservation.getArrivalTime()).isEqualTo(DEFAULT_ARRIVAL_TIME);
         assertThat(testReservation.getSeatedTime()).isEqualTo(DEFAULT_SEATED_TIME);
         assertThat(testReservation.getLeftTime()).isEqualTo(DEFAULT_LEFT_TIME);
-        assertThat(testReservation.getClientRequests()).isEqualTo(UPDATED_CLIENT_REQUESTS);
-        assertThat(testReservation.getComps()).isEqualTo(DEFAULT_COMPS);
-        assertThat(testReservation.getCompsPriceType()).isEqualTo(UPDATED_COMPS_PRICE_TYPE);
-        assertThat(testReservation.getCostOption()).isEqualTo(DEFAULT_COST_OPTION);
+        assertThat(testReservation.getClientRequests()).isEqualTo(DEFAULT_CLIENT_REQUESTS);
+        assertThat(testReservation.getComps()).isEqualTo(UPDATED_COMPS);
+        assertThat(testReservation.getCompsPriceType()).isEqualTo(DEFAULT_COMPS_PRICE_TYPE);
+        assertThat(testReservation.getCostOption()).isEqualTo(UPDATED_COST_OPTION);
         assertThat(testReservation.getPolicy()).isEqualTo(DEFAULT_POLICY);
-        assertThat(testReservation.getMinPrice()).isEqualTo(UPDATED_MIN_PRICE);
-        assertThat(testReservation.getPrePayment()).isEqualTo(DEFAULT_PRE_PAYMENT);
+        assertThat(testReservation.getMinPrice()).isEqualTo(DEFAULT_MIN_PRICE);
+        assertThat(testReservation.getPrePayment()).isEqualTo(UPDATED_PRE_PAYMENT);
         assertThat(testReservation.getOnsitePayment()).isEqualTo(DEFAULT_ONSITE_PAYMENT);
-        assertThat(testReservation.getTotalPayment()).isEqualTo(UPDATED_TOTAL_PAYMENT);
-        assertThat(testReservation.getPaidBy()).isEqualTo(DEFAULT_PAID_BY);
+        assertThat(testReservation.getTotalPayment()).isEqualTo(DEFAULT_TOTAL_PAYMENT);
+        assertThat(testReservation.getPaidBy()).isEqualTo(UPDATED_PAID_BY);
         assertThat(testReservation.getServedBy()).isEqualTo(DEFAULT_SERVED_BY);
-        assertThat(testReservation.getRating()).isEqualTo(UPDATED_RATING);
+        assertThat(testReservation.getRating()).isEqualTo(DEFAULT_RATING);
         assertThat(testReservation.getProblems()).isEqualTo(UPDATED_PROBLEMS);
-        assertThat(testReservation.getAutoAssignments()).isEqualTo(DEFAULT_AUTO_ASSIGNMENTS);
-        assertThat(testReservation.getExternalClientId()).isEqualTo(UPDATED_EXTERNAL_CLIENT_ID);
-        assertThat(testReservation.getExternalId()).isEqualTo(DEFAULT_EXTERNAL_ID);
+        assertThat(testReservation.getAutoAssignments()).isEqualTo(UPDATED_AUTO_ASSIGNMENTS);
+        assertThat(testReservation.getExternalClientId()).isEqualTo(DEFAULT_EXTERNAL_CLIENT_ID);
+        assertThat(testReservation.getExternalId()).isEqualTo(UPDATED_EXTERNAL_ID);
         assertThat(testReservation.getExternalReferenceCode()).isEqualTo(DEFAULT_EXTERNAL_REFERENCE_CODE);
         assertThat(testReservation.getExternalUserId()).isEqualTo(DEFAULT_EXTERNAL_USER_ID);
         assertThat(testReservation.getModifyReservationLink()).isEqualTo(DEFAULT_MODIFY_RESERVATION_LINK);
         assertThat(testReservation.getReferenceCode()).isEqualTo(DEFAULT_REFERENCE_CODE);
-        assertThat(testReservation.getReservationSmsOptin()).isEqualTo(UPDATED_RESERVATION_SMS_OPTIN);
+        assertThat(testReservation.getReservationSmsOptin()).isEqualTo(DEFAULT_RESERVATION_SMS_OPTIN);
         assertThat(testReservation.getReservationType()).isEqualTo(UPDATED_RESERVATION_TYPE);
-        assertThat(testReservation.getSendReminderEmail()).isEqualTo(DEFAULT_SEND_REMINDER_EMAIL);
-        assertThat(testReservation.getSendreminderSms()).isEqualTo(UPDATED_SENDREMINDER_SMS);
+        assertThat(testReservation.getSendReminderEmail()).isEqualTo(UPDATED_SEND_REMINDER_EMAIL);
+        assertThat(testReservation.getSendreminderSms()).isEqualTo(DEFAULT_SENDREMINDER_SMS);
         assertThat(testReservation.getSourceClientId()).isEqualTo(UPDATED_SOURCE_CLIENT_ID);
         assertThat(testReservation.getUserId()).isEqualTo(UPDATED_USER_ID);
-        assertThat(testReservation.getUserName()).isEqualTo(DEFAULT_USER_NAME);
+        assertThat(testReservation.getUserName()).isEqualTo(UPDATED_USER_NAME);
         assertThat(testReservation.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testReservation.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testReservation.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testReservation.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testReservation.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
+        assertThat(testReservation.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
+        assertThat(testReservation.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
+        assertThat(testReservation.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
+        assertThat(testReservation.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -1143,7 +1132,6 @@ class ReservationResourceIT {
             .status(UPDATED_STATUS)
             .statusDisplay(UPDATED_STATUS_DISPLAY)
             .statusSimple(UPDATED_STATUS_SIMPLE)
-            .tableNumbers(UPDATED_TABLE_NUMBERS)
             .accessPersistentId(UPDATED_ACCESS_PERSISTENT_ID)
             .arrivedGuests(UPDATED_ARRIVED_GUESTS)
             .isvip(UPDATED_ISVIP)
@@ -1229,7 +1217,6 @@ class ReservationResourceIT {
         assertThat(testReservation.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testReservation.getStatusDisplay()).isEqualTo(UPDATED_STATUS_DISPLAY);
         assertThat(testReservation.getStatusSimple()).isEqualTo(UPDATED_STATUS_SIMPLE);
-        assertThat(testReservation.getTableNumbers()).isEqualTo(UPDATED_TABLE_NUMBERS);
         assertThat(testReservation.getAccessPersistentId()).isEqualTo(UPDATED_ACCESS_PERSISTENT_ID);
         assertThat(testReservation.getArrivedGuests()).isEqualTo(UPDATED_ARRIVED_GUESTS);
         assertThat(testReservation.getIsvip()).isEqualTo(UPDATED_ISVIP);

@@ -24,7 +24,6 @@ export interface IReservation {
   status?: string | null;
   statusDisplay?: string | null;
   statusSimple?: string | null;
-  tableNumbers?: string | null;
   accessPersistentId?: string | null;
   arrivedGuests?: number | null;
   isvip?: boolean | null;
@@ -107,7 +106,6 @@ export class Reservation implements IReservation {
     public status?: string | null,
     public statusDisplay?: string | null,
     public statusSimple?: string | null,
-    public tableNumbers?: string | null,
     public accessPersistentId?: string | null,
     public arrivedGuests?: number | null,
     public isvip?: boolean | null,

@@ -1,7 +1,6 @@
 package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -29,14 +28,12 @@ public class ResTag implements Serializable {
     private String tag;
 
     @Column(name = "tag_display")
-    @JsonProperty("tag_display")
     private String tagDisplay;
 
     @Column(name = "jhi_group")
     private String group;
 
     @Column(name = "group_display")
-    @JsonProperty("group_display")
     private String groupDisplay;
 
     @Column(name = "color")

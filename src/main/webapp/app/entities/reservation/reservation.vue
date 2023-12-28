@@ -104,10 +104,6 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.statusSimple')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'statusSimple'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('tableNumbers')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.tableNumbers')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'tableNumbers'"></jhi-sort-indicator>
-            </th>
             <th scope="row" v-on:click="changeOrder('accessPersistentId')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.accessPersistentId')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'accessPersistentId'"></jhi-sort-indicator>
@@ -354,7 +350,6 @@
             <td>{{ reservation.status }}</td>
             <td>{{ reservation.statusDisplay }}</td>
             <td>{{ reservation.statusSimple }}</td>
-            <td>{{ reservation.tableNumbers }}</td>
             <td>{{ reservation.accessPersistentId }}</td>
             <td>{{ reservation.arrivedGuests }}</td>
             <td>{{ reservation.isvip }}</td>

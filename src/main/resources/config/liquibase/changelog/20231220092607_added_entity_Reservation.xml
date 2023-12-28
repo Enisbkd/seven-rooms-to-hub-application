@@ -68,9 +68,6 @@
             <column name="status_simple" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="table_numbers" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="access_persistent_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -277,7 +274,6 @@
             <column name="status" type="string"/>
             <column name="status_display" type="string"/>
             <column name="status_simple" type="string"/>
-            <column name="table_numbers" type="string"/>
             <column name="access_persistent_id" type="string"/>
             <column name="arrived_guests" type="numeric"/>
             <column name="isvip" type="boolean"/>
