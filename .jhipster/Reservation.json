@@ -79,10 +79,6 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "tableNumbers",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "accessPersistentId",
       "fieldType": "String"
     },

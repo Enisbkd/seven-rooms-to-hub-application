@@ -48,8 +48,6 @@ public class ReservationDTO implements Serializable {
 
     private String statusSimple;
 
-    private String tableNumbers;
-
     private String accessPersistentId;
 
     private Integer arrivedGuests;
@@ -310,14 +308,6 @@ public class ReservationDTO implements Serializable {
 
     public void setStatusSimple(String statusSimple) {
         this.statusSimple = statusSimple;
-    }
-
-    public String getTableNumbers() {
-        return tableNumbers;
-    }
-
-    public void setTableNumbers(String tableNumbers) {
-        this.tableNumbers = tableNumbers;
     }
 
     public String getAccessPersistentId() {
@@ -804,7 +794,6 @@ public class ReservationDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", statusDisplay='" + getStatusDisplay() + "'" +
             ", statusSimple='" + getStatusSimple() + "'" +
-            ", tableNumbers='" + getTableNumbers() + "'" +
             ", accessPersistentId='" + getAccessPersistentId() + "'" +
             ", arrivedGuests=" + getArrivedGuests() +
             ", isvip='" + getIsvip() + "'" +

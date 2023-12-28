@@ -77,7 +77,6 @@ export default defineComponent({
       status: {},
       statusDisplay: {},
       statusSimple: {},
-      tableNumbers: {},
       accessPersistentId: {},
       arrivedGuests: {},
       isvip: {},

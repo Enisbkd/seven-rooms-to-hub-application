@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -95,10 +96,6 @@ public class Reservation implements Serializable {
     @Column(name = "status_simple")
     @JsonProperty("status_simple")
     private String statusSimple;
-
-    @Column(name = "table_numbers")
-    @JsonProperty("table_numbers")
-    private String tableNumbers;
 
     @Column(name = "access_persistent_id")
     @JsonProperty("access_persistent_id")
@@ -573,19 +570,6 @@ public class Reservation implements Serializable {
 
     public void setStatusSimple(String statusSimple) {
         this.statusSimple = statusSimple;
-    }
-
-    public String getTableNumbers() {
-        return this.tableNumbers;
-    }
-
-    public Reservation tableNumbers(String tableNumbers) {
-        this.setTableNumbers(tableNumbers);
-        return this;
-    }
-
-    public void setTableNumbers(String tableNumbers) {
-        this.tableNumbers = tableNumbers;
     }
 
     public String getAccessPersistentId() {
@@ -1199,6 +1183,13 @@ public class Reservation implements Serializable {
         this.sourceClientId = sourceClientId;
     }
 
+    @JsonProperty("user")
+    @JsonSetter
+    public void setUserIdName(Map<String, String> user) {
+        this.userId = user.get("id");
+        this.userName = user.get("name");
+    }
+
     public String getUserId() {
         return this.userId;
     }
@@ -1469,7 +1460,6 @@ public class Reservation implements Serializable {
             ", status='" + getStatus() + "'" +
             ", statusDisplay='" + getStatusDisplay() + "'" +
             ", statusSimple='" + getStatusSimple() + "'" +
-            ", tableNumbers='" + getTableNumbers() + "'" +
             ", accessPersistentId='" + getAccessPersistentId() + "'" +
             ", arrivedGuests=" + getArrivedGuests() +
             ", isvip='" + getIsvip() + "'" +

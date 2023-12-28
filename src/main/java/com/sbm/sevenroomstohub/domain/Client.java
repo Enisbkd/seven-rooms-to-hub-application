@@ -230,9 +230,11 @@ public class Client implements Serializable {
     private String userName;
 
     @Column(name = "total_order_count")
+    @JsonProperty("total_order_count")
     private Integer totalOrderCount;
 
     @Column(name = "preferred_language_code")
+    @JsonProperty("preferred_language_code")
     private String preferredLanguageCode;
 
     @Column(name = "tech_lineage")
@@ -253,6 +255,7 @@ public class Client implements Serializable {
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
+    @JsonProperty("photo")
     private ClientPhoto clientPhoto;
 
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
@@ -263,12 +266,13 @@ public class Client implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
+    @JsonProperty("custom_fields")
     private Set<CustomField> customFields = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
+    @JsonProperty("client_tags")
     private Set<ClientTag> clientTags = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
@@ -279,6 +283,7 @@ public class Client implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
+    @JsonProperty("member_groups")
     private Set<MemberGroup> memberGroups = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

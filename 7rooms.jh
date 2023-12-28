@@ -168,7 +168,6 @@ entity Reservation{
 	status String
 	statusDisplay String
 	statusSimple String
-	tableNumbers String
 	accessPersistentId String
 	arrivedGuests Integer
 	isvip  Boolean
