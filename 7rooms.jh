@@ -283,7 +283,7 @@ entity ResTag{
 	techComment String
 }
 
-entity Table{
+entity ResTable{
 	tableNumber Integer
 }
 
@@ -295,7 +295,7 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-  Reservation to Table
+  Reservation to ResTable
 }
 
 paginate MemberGroup with pagination
