@@ -37,12 +37,9 @@
       "statusDisplay": "Status Display",
       "statusSimple": "Status Simple",
       "tableNumbers": "Table Numbers",
-      "venueSeatingAreaId": "Venue Seating Area Id",
-      "venueSeatingAreaName": "Venue Seating Area Name",
       "accessPersistentId": "Access Persistent Id",
       "arrivedGuests": "Arrived Guests",
       "isvip": "Isvip",
-      "iswalkin": "Iswalkin",
       "bookedby": "Bookedby",
       "clientReferenceCode": "Client Reference Code",
       "lastname": "Lastname",
@@ -95,9 +92,9 @@
       "techMapping": "Tech Mapping",
       "techComment": "Tech Comment",
       "resTag": "Res Tag",
-      "resPosticketsItem": "Res Postickets Item",
       "resPosTicket": "Res Pos Ticket",
       "resCustomField": "Res Custom Field",
+      "table": "Table",
       "client": "Client"
     }
   }

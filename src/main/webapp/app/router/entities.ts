@@ -3,6 +3,10 @@ import { Authority } from '@/shared/security/authority';
 // prettier-ignore
 const Entities = () => import('@/entities/entities.vue');
 
+const Table = () => import('@/entities/table/table.vue');
+const TableUpdate = () => import('@/entities/table/table-update.vue');
+const TableDetails = () => import('@/entities/table/table-details.vue');
+
 const Client = () => import('@/entities/client/client.vue');
 const ClientUpdate = () => import('@/entities/client/client-update.vue');
 const ClientDetails = () => import('@/entities/client/client-details.vue');
@@ -53,6 +57,30 @@ export default {
   path: '/',
   component: Entities,
   children: [
+    {
+      path: 'table',
+      name: 'Table',
+      component: Table,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'table/new',
+      name: 'TableCreate',
+      component: TableUpdate,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'table/:tableId/edit',
+      name: 'TableEdit',
+      component: TableUpdate,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'table/:tableId/view',
+      name: 'TableView',
+      component: TableDetails,
+      meta: { authorities: [Authority.USER] },
+    },
     {
       path: 'client',
       name: 'Client',

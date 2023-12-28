@@ -10,8 +10,6 @@ import ClientVenueStatsService from './client-venue-stats.service';
 import { DATE_TIME_LONG_FORMAT } from '@/shared/composables/date-format';
 import AlertService from '@/shared/alert/alert.service';
 
-import ClientService from '@/entities/client/client.service';
-
 type ClientVenueStatsUpdateComponentType = InstanceType<typeof ClientVenueStatsUpdate>;
 
 let route: Partial<RouteLocation>;
@@ -55,10 +53,6 @@ describe('Component Tests', () => {
         provide: {
           alertService,
           clientVenueStatsService: () => clientVenueStatsServiceStub,
-          clientService: () =>
-            sinon.createStubInstance<ClientService>(ClientService, {
-              retrieve: sinon.stub().resolves({}),
-            } as any),
         },
       };
     });

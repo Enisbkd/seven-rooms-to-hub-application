@@ -9,6 +9,8 @@ import { useAlertService } from '@/shared/alert/alert.service';
 
 import ClientPhotoService from '@/entities/client-photo/client-photo.service';
 import { type IClientPhoto } from '@/shared/model/client-photo.model';
+import ClientVenueStatsService from '@/entities/client-venue-stats/client-venue-stats.service';
+import { type IClientVenueStats } from '@/shared/model/client-venue-stats.model';
 import { type IClient, Client } from '@/shared/model/client.model';
 
 export default defineComponent({
@@ -23,6 +25,10 @@ export default defineComponent({
     const clientPhotoService = inject('clientPhotoService', () => new ClientPhotoService());
 
     const clientPhotos: Ref<IClientPhoto[]> = ref([]);
+
+    const clientVenueStatsService = inject('clientVenueStatsService', () => new ClientVenueStatsService());
+
+    const clientVenueStats: Ref<IClientVenueStats[]> = ref([]);
     const isSaving = ref(false);
     const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? 'en'), true);
 
@@ -51,6 +57,11 @@ export default defineComponent({
         .retrieve()
         .then(res => {
           clientPhotos.value = res.data;
+        });
+      clientVenueStatsService()
+        .retrieve()
+        .then(res => {
+          clientVenueStats.value = res.data;
         });
     };
 
@@ -94,6 +105,7 @@ export default defineComponent({
       loyaltyTier: {},
       marketingOptin: {},
       marketingOptints: {},
+      marketingOptOutts: {},
       hasBillingProfile: {},
       notes: {},
       privateNotes: {},
@@ -112,6 +124,8 @@ export default defineComponent({
       birthdayAltDay: {},
       userId: {},
       userName: {},
+      totalOrderCount: {},
+      preferredLanguageCode: {},
       techLineage: {},
       techCreatedDate: {},
       techUpdatedDate: {},
@@ -135,6 +149,7 @@ export default defineComponent({
       isSaving,
       currentLanguage,
       clientPhotos,
+      clientVenueStats,
       v$,
       ...useDateFormat({ entityRef: client }),
       t$,

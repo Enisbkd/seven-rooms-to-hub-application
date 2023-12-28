@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.repository.ReservationRepository;
+import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
+import com.sbm.sevenroomstohub.service.mapper.ReservationMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -91,12 +93,6 @@ class ReservationResourceIT {
     private static final String DEFAULT_TABLE_NUMBERS = "AAAAAAAAAA";
     private static final String UPDATED_TABLE_NUMBERS = "BBBBBBBBBB";
 
-    private static final String DEFAULT_VENUE_SEATING_AREA_ID = "AAAAAAAAAA";
-    private static final String UPDATED_VENUE_SEATING_AREA_ID = "BBBBBBBBBB";
-
-    private static final String DEFAULT_VENUE_SEATING_AREA_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_VENUE_SEATING_AREA_NAME = "BBBBBBBBBB";
-
     private static final String DEFAULT_ACCESS_PERSISTENT_ID = "AAAAAAAAAA";
     private static final String UPDATED_ACCESS_PERSISTENT_ID = "BBBBBBBBBB";
 
@@ -105,9 +101,6 @@ class ReservationResourceIT {
 
     private static final Boolean DEFAULT_ISVIP = false;
     private static final Boolean UPDATED_ISVIP = true;
-
-    private static final Boolean DEFAULT_ISWALKIN = false;
-    private static final Boolean UPDATED_ISWALKIN = true;
 
     private static final String DEFAULT_BOOKEDBY = "AAAAAAAAAA";
     private static final String UPDATED_BOOKEDBY = "BBBBBBBBBB";
@@ -272,6 +265,9 @@ class ReservationResourceIT {
     private ReservationRepository reservationRepository;
 
     @Autowired
+    private ReservationMapper reservationMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -306,12 +302,9 @@ class ReservationResourceIT {
             .statusDisplay(DEFAULT_STATUS_DISPLAY)
             .statusSimple(DEFAULT_STATUS_SIMPLE)
             .tableNumbers(DEFAULT_TABLE_NUMBERS)
-            .venueSeatingAreaId(DEFAULT_VENUE_SEATING_AREA_ID)
-            .venueSeatingAreaName(DEFAULT_VENUE_SEATING_AREA_NAME)
             .accessPersistentId(DEFAULT_ACCESS_PERSISTENT_ID)
             .arrivedGuests(DEFAULT_ARRIVED_GUESTS)
             .isvip(DEFAULT_ISVIP)
-            .iswalkin(DEFAULT_ISWALKIN)
             .bookedby(DEFAULT_BOOKEDBY)
             .clientReferenceCode(DEFAULT_CLIENT_REFERENCE_CODE)
             .lastname(DEFAULT_LASTNAME)
@@ -393,12 +386,9 @@ class ReservationResourceIT {
             .statusDisplay(UPDATED_STATUS_DISPLAY)
             .statusSimple(UPDATED_STATUS_SIMPLE)
             .tableNumbers(UPDATED_TABLE_NUMBERS)
-            .venueSeatingAreaId(UPDATED_VENUE_SEATING_AREA_ID)
-            .venueSeatingAreaName(UPDATED_VENUE_SEATING_AREA_NAME)
             .accessPersistentId(UPDATED_ACCESS_PERSISTENT_ID)
             .arrivedGuests(UPDATED_ARRIVED_GUESTS)
             .isvip(UPDATED_ISVIP)
-            .iswalkin(UPDATED_ISWALKIN)
             .bookedby(UPDATED_BOOKEDBY)
             .clientReferenceCode(UPDATED_CLIENT_REFERENCE_CODE)
             .lastname(UPDATED_LASTNAME)
@@ -463,8 +453,11 @@ class ReservationResourceIT {
     void createReservation() throws Exception {
         int databaseSizeBeforeCreate = reservationRepository.findAll().size();
         // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
         restReservationMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservation)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the Reservation in the database
@@ -490,12 +483,9 @@ class ReservationResourceIT {
         assertThat(testReservation.getStatusDisplay()).isEqualTo(DEFAULT_STATUS_DISPLAY);
         assertThat(testReservation.getStatusSimple()).isEqualTo(DEFAULT_STATUS_SIMPLE);
         assertThat(testReservation.getTableNumbers()).isEqualTo(DEFAULT_TABLE_NUMBERS);
-        assertThat(testReservation.getVenueSeatingAreaId()).isEqualTo(DEFAULT_VENUE_SEATING_AREA_ID);
-        assertThat(testReservation.getVenueSeatingAreaName()).isEqualTo(DEFAULT_VENUE_SEATING_AREA_NAME);
         assertThat(testReservation.getAccessPersistentId()).isEqualTo(DEFAULT_ACCESS_PERSISTENT_ID);
         assertThat(testReservation.getArrivedGuests()).isEqualTo(DEFAULT_ARRIVED_GUESTS);
         assertThat(testReservation.getIsvip()).isEqualTo(DEFAULT_ISVIP);
-        assertThat(testReservation.getIswalkin()).isEqualTo(DEFAULT_ISWALKIN);
         assertThat(testReservation.getBookedby()).isEqualTo(DEFAULT_BOOKEDBY);
         assertThat(testReservation.getClientReferenceCode()).isEqualTo(DEFAULT_CLIENT_REFERENCE_CODE);
         assertThat(testReservation.getLastname()).isEqualTo(DEFAULT_LASTNAME);
@@ -554,12 +544,15 @@ class ReservationResourceIT {
     void createReservationWithExistingId() throws Exception {
         // Create the Reservation with an existing ID
         reservation.setId(1L);
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
 
         int databaseSizeBeforeCreate = reservationRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restReservationMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservation)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Reservation in the database
@@ -598,12 +591,9 @@ class ReservationResourceIT {
             .andExpect(jsonPath("$.[*].statusDisplay").value(hasItem(DEFAULT_STATUS_DISPLAY)))
             .andExpect(jsonPath("$.[*].statusSimple").value(hasItem(DEFAULT_STATUS_SIMPLE)))
             .andExpect(jsonPath("$.[*].tableNumbers").value(hasItem(DEFAULT_TABLE_NUMBERS)))
-            .andExpect(jsonPath("$.[*].venueSeatingAreaId").value(hasItem(DEFAULT_VENUE_SEATING_AREA_ID)))
-            .andExpect(jsonPath("$.[*].venueSeatingAreaName").value(hasItem(DEFAULT_VENUE_SEATING_AREA_NAME)))
             .andExpect(jsonPath("$.[*].accessPersistentId").value(hasItem(DEFAULT_ACCESS_PERSISTENT_ID)))
             .andExpect(jsonPath("$.[*].arrivedGuests").value(hasItem(DEFAULT_ARRIVED_GUESTS)))
             .andExpect(jsonPath("$.[*].isvip").value(hasItem(DEFAULT_ISVIP.booleanValue())))
-            .andExpect(jsonPath("$.[*].iswalkin").value(hasItem(DEFAULT_ISWALKIN.booleanValue())))
             .andExpect(jsonPath("$.[*].bookedby").value(hasItem(DEFAULT_BOOKEDBY)))
             .andExpect(jsonPath("$.[*].clientReferenceCode").value(hasItem(DEFAULT_CLIENT_REFERENCE_CODE)))
             .andExpect(jsonPath("$.[*].lastname").value(hasItem(DEFAULT_LASTNAME)))
@@ -688,12 +678,9 @@ class ReservationResourceIT {
             .andExpect(jsonPath("$.statusDisplay").value(DEFAULT_STATUS_DISPLAY))
             .andExpect(jsonPath("$.statusSimple").value(DEFAULT_STATUS_SIMPLE))
             .andExpect(jsonPath("$.tableNumbers").value(DEFAULT_TABLE_NUMBERS))
-            .andExpect(jsonPath("$.venueSeatingAreaId").value(DEFAULT_VENUE_SEATING_AREA_ID))
-            .andExpect(jsonPath("$.venueSeatingAreaName").value(DEFAULT_VENUE_SEATING_AREA_NAME))
             .andExpect(jsonPath("$.accessPersistentId").value(DEFAULT_ACCESS_PERSISTENT_ID))
             .andExpect(jsonPath("$.arrivedGuests").value(DEFAULT_ARRIVED_GUESTS))
             .andExpect(jsonPath("$.isvip").value(DEFAULT_ISVIP.booleanValue()))
-            .andExpect(jsonPath("$.iswalkin").value(DEFAULT_ISWALKIN.booleanValue()))
             .andExpect(jsonPath("$.bookedby").value(DEFAULT_BOOKEDBY))
             .andExpect(jsonPath("$.clientReferenceCode").value(DEFAULT_CLIENT_REFERENCE_CODE))
             .andExpect(jsonPath("$.lastname").value(DEFAULT_LASTNAME))
@@ -786,12 +773,9 @@ class ReservationResourceIT {
             .statusDisplay(UPDATED_STATUS_DISPLAY)
             .statusSimple(UPDATED_STATUS_SIMPLE)
             .tableNumbers(UPDATED_TABLE_NUMBERS)
-            .venueSeatingAreaId(UPDATED_VENUE_SEATING_AREA_ID)
-            .venueSeatingAreaName(UPDATED_VENUE_SEATING_AREA_NAME)
             .accessPersistentId(UPDATED_ACCESS_PERSISTENT_ID)
             .arrivedGuests(UPDATED_ARRIVED_GUESTS)
             .isvip(UPDATED_ISVIP)
-            .iswalkin(UPDATED_ISWALKIN)
             .bookedby(UPDATED_BOOKEDBY)
             .clientReferenceCode(UPDATED_CLIENT_REFERENCE_CODE)
             .lastname(UPDATED_LASTNAME)
@@ -843,12 +827,13 @@ class ReservationResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ReservationDTO reservationDTO = reservationMapper.toDto(updatedReservation);
 
         restReservationMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedReservation.getId())
+                put(ENTITY_API_URL_ID, reservationDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedReservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isOk());
 
@@ -875,12 +860,9 @@ class ReservationResourceIT {
         assertThat(testReservation.getStatusDisplay()).isEqualTo(UPDATED_STATUS_DISPLAY);
         assertThat(testReservation.getStatusSimple()).isEqualTo(UPDATED_STATUS_SIMPLE);
         assertThat(testReservation.getTableNumbers()).isEqualTo(UPDATED_TABLE_NUMBERS);
-        assertThat(testReservation.getVenueSeatingAreaId()).isEqualTo(UPDATED_VENUE_SEATING_AREA_ID);
-        assertThat(testReservation.getVenueSeatingAreaName()).isEqualTo(UPDATED_VENUE_SEATING_AREA_NAME);
         assertThat(testReservation.getAccessPersistentId()).isEqualTo(UPDATED_ACCESS_PERSISTENT_ID);
         assertThat(testReservation.getArrivedGuests()).isEqualTo(UPDATED_ARRIVED_GUESTS);
         assertThat(testReservation.getIsvip()).isEqualTo(UPDATED_ISVIP);
-        assertThat(testReservation.getIswalkin()).isEqualTo(UPDATED_ISWALKIN);
         assertThat(testReservation.getBookedby()).isEqualTo(UPDATED_BOOKEDBY);
         assertThat(testReservation.getClientReferenceCode()).isEqualTo(UPDATED_CLIENT_REFERENCE_CODE);
         assertThat(testReservation.getLastname()).isEqualTo(UPDATED_LASTNAME);
@@ -940,12 +922,15 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, reservation.getId())
+                put(ENTITY_API_URL_ID, reservationDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(reservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -960,12 +945,15 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(reservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -980,9 +968,12 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restReservationMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservation)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Reservation in the database
@@ -1012,35 +1003,33 @@ class ReservationResourceIT {
             .status(UPDATED_STATUS)
             .statusDisplay(UPDATED_STATUS_DISPLAY)
             .tableNumbers(UPDATED_TABLE_NUMBERS)
-            .venueSeatingAreaId(UPDATED_VENUE_SEATING_AREA_ID)
-            .venueSeatingAreaName(UPDATED_VENUE_SEATING_AREA_NAME)
             .accessPersistentId(UPDATED_ACCESS_PERSISTENT_ID)
+            .arrivedGuests(UPDATED_ARRIVED_GUESTS)
             .isvip(UPDATED_ISVIP)
-            .lastname(UPDATED_LASTNAME)
-            .city(UPDATED_CITY)
-            .postalCode(UPDATED_POSTAL_CODE)
+            .clientReferenceCode(UPDATED_CLIENT_REFERENCE_CODE)
+            .phoneNumber(UPDATED_PHONE_NUMBER)
+            .country(UPDATED_COUNTRY)
             .loyaltyId(UPDATED_LOYALTY_ID)
-            .loyaltyRank(UPDATED_LOYALTY_RANK)
-            .loyaltyTier(UPDATED_LOYALTY_TIER)
             .notes(UPDATED_NOTES)
-            .clientRequests(UPDATED_CLIENT_REQUESTS)
-            .comps(UPDATED_COMPS)
+            .arrivalTime(UPDATED_ARRIVAL_TIME)
+            .seatedTime(UPDATED_SEATED_TIME)
+            .leftTime(UPDATED_LEFT_TIME)
             .costOption(UPDATED_COST_OPTION)
-            .minPrice(UPDATED_MIN_PRICE)
-            .servedBy(UPDATED_SERVED_BY)
-            .rating(UPDATED_RATING)
-            .problems(UPDATED_PROBLEMS)
+            .policy(UPDATED_POLICY)
+            .prePayment(UPDATED_PRE_PAYMENT)
+            .totalPayment(UPDATED_TOTAL_PAYMENT)
             .autoAssignments(UPDATED_AUTO_ASSIGNMENTS)
             .externalClientId(UPDATED_EXTERNAL_CLIENT_ID)
             .externalId(UPDATED_EXTERNAL_ID)
             .externalReferenceCode(UPDATED_EXTERNAL_REFERENCE_CODE)
             .externalUserId(UPDATED_EXTERNAL_USER_ID)
+            .modifyReservationLink(UPDATED_MODIFY_RESERVATION_LINK)
             .referenceCode(UPDATED_REFERENCE_CODE)
             .reservationSmsOptin(UPDATED_RESERVATION_SMS_OPTIN)
-            .userName(UPDATED_USER_NAME)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
+            .sendReminderEmail(UPDATED_SEND_REMINDER_EMAIL)
+            .sendreminderSms(UPDATED_SENDREMINDER_SMS)
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
+            .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
 
         restReservationMockMvc
@@ -1074,62 +1063,59 @@ class ReservationResourceIT {
         assertThat(testReservation.getStatusDisplay()).isEqualTo(UPDATED_STATUS_DISPLAY);
         assertThat(testReservation.getStatusSimple()).isEqualTo(DEFAULT_STATUS_SIMPLE);
         assertThat(testReservation.getTableNumbers()).isEqualTo(UPDATED_TABLE_NUMBERS);
-        assertThat(testReservation.getVenueSeatingAreaId()).isEqualTo(UPDATED_VENUE_SEATING_AREA_ID);
-        assertThat(testReservation.getVenueSeatingAreaName()).isEqualTo(UPDATED_VENUE_SEATING_AREA_NAME);
         assertThat(testReservation.getAccessPersistentId()).isEqualTo(UPDATED_ACCESS_PERSISTENT_ID);
-        assertThat(testReservation.getArrivedGuests()).isEqualTo(DEFAULT_ARRIVED_GUESTS);
+        assertThat(testReservation.getArrivedGuests()).isEqualTo(UPDATED_ARRIVED_GUESTS);
         assertThat(testReservation.getIsvip()).isEqualTo(UPDATED_ISVIP);
-        assertThat(testReservation.getIswalkin()).isEqualTo(DEFAULT_ISWALKIN);
         assertThat(testReservation.getBookedby()).isEqualTo(DEFAULT_BOOKEDBY);
-        assertThat(testReservation.getClientReferenceCode()).isEqualTo(DEFAULT_CLIENT_REFERENCE_CODE);
-        assertThat(testReservation.getLastname()).isEqualTo(UPDATED_LASTNAME);
+        assertThat(testReservation.getClientReferenceCode()).isEqualTo(UPDATED_CLIENT_REFERENCE_CODE);
+        assertThat(testReservation.getLastname()).isEqualTo(DEFAULT_LASTNAME);
         assertThat(testReservation.getFirstname()).isEqualTo(DEFAULT_FIRSTNAME);
         assertThat(testReservation.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testReservation.getPhoneNumber()).isEqualTo(DEFAULT_PHONE_NUMBER);
+        assertThat(testReservation.getPhoneNumber()).isEqualTo(UPDATED_PHONE_NUMBER);
         assertThat(testReservation.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testReservation.getAddress2()).isEqualTo(DEFAULT_ADDRESS_2);
-        assertThat(testReservation.getCity()).isEqualTo(UPDATED_CITY);
-        assertThat(testReservation.getPostalCode()).isEqualTo(UPDATED_POSTAL_CODE);
+        assertThat(testReservation.getCity()).isEqualTo(DEFAULT_CITY);
+        assertThat(testReservation.getPostalCode()).isEqualTo(DEFAULT_POSTAL_CODE);
         assertThat(testReservation.getState()).isEqualTo(DEFAULT_STATE);
-        assertThat(testReservation.getCountry()).isEqualTo(DEFAULT_COUNTRY);
+        assertThat(testReservation.getCountry()).isEqualTo(UPDATED_COUNTRY);
         assertThat(testReservation.getLoyaltyId()).isEqualTo(UPDATED_LOYALTY_ID);
-        assertThat(testReservation.getLoyaltyRank()).isEqualTo(UPDATED_LOYALTY_RANK);
-        assertThat(testReservation.getLoyaltyTier()).isEqualTo(UPDATED_LOYALTY_TIER);
+        assertThat(testReservation.getLoyaltyRank()).isEqualTo(DEFAULT_LOYALTY_RANK);
+        assertThat(testReservation.getLoyaltyTier()).isEqualTo(DEFAULT_LOYALTY_TIER);
         assertThat(testReservation.getNotes()).isEqualTo(UPDATED_NOTES);
-        assertThat(testReservation.getArrivalTime()).isEqualTo(DEFAULT_ARRIVAL_TIME);
-        assertThat(testReservation.getSeatedTime()).isEqualTo(DEFAULT_SEATED_TIME);
-        assertThat(testReservation.getLeftTime()).isEqualTo(DEFAULT_LEFT_TIME);
-        assertThat(testReservation.getClientRequests()).isEqualTo(UPDATED_CLIENT_REQUESTS);
-        assertThat(testReservation.getComps()).isEqualTo(UPDATED_COMPS);
+        assertThat(testReservation.getArrivalTime()).isEqualTo(UPDATED_ARRIVAL_TIME);
+        assertThat(testReservation.getSeatedTime()).isEqualTo(UPDATED_SEATED_TIME);
+        assertThat(testReservation.getLeftTime()).isEqualTo(UPDATED_LEFT_TIME);
+        assertThat(testReservation.getClientRequests()).isEqualTo(DEFAULT_CLIENT_REQUESTS);
+        assertThat(testReservation.getComps()).isEqualTo(DEFAULT_COMPS);
         assertThat(testReservation.getCompsPriceType()).isEqualTo(DEFAULT_COMPS_PRICE_TYPE);
         assertThat(testReservation.getCostOption()).isEqualTo(UPDATED_COST_OPTION);
-        assertThat(testReservation.getPolicy()).isEqualTo(DEFAULT_POLICY);
-        assertThat(testReservation.getMinPrice()).isEqualTo(UPDATED_MIN_PRICE);
-        assertThat(testReservation.getPrePayment()).isEqualTo(DEFAULT_PRE_PAYMENT);
+        assertThat(testReservation.getPolicy()).isEqualTo(UPDATED_POLICY);
+        assertThat(testReservation.getMinPrice()).isEqualTo(DEFAULT_MIN_PRICE);
+        assertThat(testReservation.getPrePayment()).isEqualTo(UPDATED_PRE_PAYMENT);
         assertThat(testReservation.getOnsitePayment()).isEqualTo(DEFAULT_ONSITE_PAYMENT);
-        assertThat(testReservation.getTotalPayment()).isEqualTo(DEFAULT_TOTAL_PAYMENT);
+        assertThat(testReservation.getTotalPayment()).isEqualTo(UPDATED_TOTAL_PAYMENT);
         assertThat(testReservation.getPaidBy()).isEqualTo(DEFAULT_PAID_BY);
-        assertThat(testReservation.getServedBy()).isEqualTo(UPDATED_SERVED_BY);
-        assertThat(testReservation.getRating()).isEqualTo(UPDATED_RATING);
-        assertThat(testReservation.getProblems()).isEqualTo(UPDATED_PROBLEMS);
+        assertThat(testReservation.getServedBy()).isEqualTo(DEFAULT_SERVED_BY);
+        assertThat(testReservation.getRating()).isEqualTo(DEFAULT_RATING);
+        assertThat(testReservation.getProblems()).isEqualTo(DEFAULT_PROBLEMS);
         assertThat(testReservation.getAutoAssignments()).isEqualTo(UPDATED_AUTO_ASSIGNMENTS);
         assertThat(testReservation.getExternalClientId()).isEqualTo(UPDATED_EXTERNAL_CLIENT_ID);
         assertThat(testReservation.getExternalId()).isEqualTo(UPDATED_EXTERNAL_ID);
         assertThat(testReservation.getExternalReferenceCode()).isEqualTo(UPDATED_EXTERNAL_REFERENCE_CODE);
         assertThat(testReservation.getExternalUserId()).isEqualTo(UPDATED_EXTERNAL_USER_ID);
-        assertThat(testReservation.getModifyReservationLink()).isEqualTo(DEFAULT_MODIFY_RESERVATION_LINK);
+        assertThat(testReservation.getModifyReservationLink()).isEqualTo(UPDATED_MODIFY_RESERVATION_LINK);
         assertThat(testReservation.getReferenceCode()).isEqualTo(UPDATED_REFERENCE_CODE);
         assertThat(testReservation.getReservationSmsOptin()).isEqualTo(UPDATED_RESERVATION_SMS_OPTIN);
         assertThat(testReservation.getReservationType()).isEqualTo(DEFAULT_RESERVATION_TYPE);
-        assertThat(testReservation.getSendReminderEmail()).isEqualTo(DEFAULT_SEND_REMINDER_EMAIL);
-        assertThat(testReservation.getSendreminderSms()).isEqualTo(DEFAULT_SENDREMINDER_SMS);
+        assertThat(testReservation.getSendReminderEmail()).isEqualTo(UPDATED_SEND_REMINDER_EMAIL);
+        assertThat(testReservation.getSendreminderSms()).isEqualTo(UPDATED_SENDREMINDER_SMS);
         assertThat(testReservation.getSourceClientId()).isEqualTo(DEFAULT_SOURCE_CLIENT_ID);
         assertThat(testReservation.getUserId()).isEqualTo(DEFAULT_USER_ID);
-        assertThat(testReservation.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testReservation.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testReservation.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
+        assertThat(testReservation.getUserName()).isEqualTo(DEFAULT_USER_NAME);
+        assertThat(testReservation.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
+        assertThat(testReservation.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
         assertThat(testReservation.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testReservation.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
+        assertThat(testReservation.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
         assertThat(testReservation.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
@@ -1165,12 +1151,9 @@ class ReservationResourceIT {
             .statusDisplay(UPDATED_STATUS_DISPLAY)
             .statusSimple(UPDATED_STATUS_SIMPLE)
             .tableNumbers(UPDATED_TABLE_NUMBERS)
-            .venueSeatingAreaId(UPDATED_VENUE_SEATING_AREA_ID)
-            .venueSeatingAreaName(UPDATED_VENUE_SEATING_AREA_NAME)
             .accessPersistentId(UPDATED_ACCESS_PERSISTENT_ID)
             .arrivedGuests(UPDATED_ARRIVED_GUESTS)
             .isvip(UPDATED_ISVIP)
-            .iswalkin(UPDATED_ISWALKIN)
             .bookedby(UPDATED_BOOKEDBY)
             .clientReferenceCode(UPDATED_CLIENT_REFERENCE_CODE)
             .lastname(UPDATED_LASTNAME)
@@ -1254,12 +1237,9 @@ class ReservationResourceIT {
         assertThat(testReservation.getStatusDisplay()).isEqualTo(UPDATED_STATUS_DISPLAY);
         assertThat(testReservation.getStatusSimple()).isEqualTo(UPDATED_STATUS_SIMPLE);
         assertThat(testReservation.getTableNumbers()).isEqualTo(UPDATED_TABLE_NUMBERS);
-        assertThat(testReservation.getVenueSeatingAreaId()).isEqualTo(UPDATED_VENUE_SEATING_AREA_ID);
-        assertThat(testReservation.getVenueSeatingAreaName()).isEqualTo(UPDATED_VENUE_SEATING_AREA_NAME);
         assertThat(testReservation.getAccessPersistentId()).isEqualTo(UPDATED_ACCESS_PERSISTENT_ID);
         assertThat(testReservation.getArrivedGuests()).isEqualTo(UPDATED_ARRIVED_GUESTS);
         assertThat(testReservation.getIsvip()).isEqualTo(UPDATED_ISVIP);
-        assertThat(testReservation.getIswalkin()).isEqualTo(UPDATED_ISWALKIN);
         assertThat(testReservation.getBookedby()).isEqualTo(UPDATED_BOOKEDBY);
         assertThat(testReservation.getClientReferenceCode()).isEqualTo(UPDATED_CLIENT_REFERENCE_CODE);
         assertThat(testReservation.getLastname()).isEqualTo(UPDATED_LASTNAME);
@@ -1319,12 +1299,15 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, reservation.getId())
+                patch(ENTITY_API_URL_ID, reservationDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(reservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -1339,12 +1322,15 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(reservation))
+                    .content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -1359,10 +1345,13 @@ class ReservationResourceIT {
         int databaseSizeBeforeUpdate = reservationRepository.findAll().size();
         reservation.setId(longCount.incrementAndGet());
 
+        // Create the Reservation
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restReservationMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(reservation))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(reservationDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

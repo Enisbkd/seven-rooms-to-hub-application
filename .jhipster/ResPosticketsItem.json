@@ -3,6 +3,7 @@
     "changelogDate": "20231220092907"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "res_postickets_item",
   "fields": [
     {
@@ -39,14 +40,16 @@
     }
   ],
   "name": "ResPosticketsItem",
+  "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "reservation",
+      "otherEntityName": "resPosTicket",
       "otherEntityRelationshipName": "resPosticketsItem",
-      "relationshipName": "reservation",
+      "relationshipName": "resPosTicket",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

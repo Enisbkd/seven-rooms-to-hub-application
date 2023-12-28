@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.ResTag;
 import com.sbm.sevenroomstohub.repository.ResTagRepository;
+import com.sbm.sevenroomstohub.service.dto.ResTagDTO;
+import com.sbm.sevenroomstohub.service.mapper.ResTagMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -74,6 +76,9 @@ class ResTagResourceIT {
     private ResTagRepository resTagRepository;
 
     @Autowired
+    private ResTagMapper resTagMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -133,8 +138,9 @@ class ResTagResourceIT {
     void createResTag() throws Exception {
         int databaseSizeBeforeCreate = resTagRepository.findAll().size();
         // Create the ResTag
+        ResTagDTO resTagDTO = resTagMapper.toDto(resTag);
         restResTagMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resTag)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resTagDTO)))
             .andExpect(status().isCreated());
 
         // Validate the ResTag in the database
@@ -158,12 +164,13 @@ class ResTagResourceIT {
     void createResTagWithExistingId() throws Exception {
         // Create the ResTag with an existing ID
         resTag.setId(1L);
+        ResTagDTO resTagDTO = resTagMapper.toDto(resTag);
 
         int databaseSizeBeforeCreate = resTagRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restResTagMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resTag)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resTagDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the ResTag in the database
@@ -249,12 +256,13 @@ class ResTagResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ResTagDTO resTagDTO = resTagMapper.toDto(updatedResTag);
 
         restResTagMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedResTag.getId())
+                put(ENTITY_API_URL_ID, resTagDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedResTag))
+                    .content(TestUtil.convertObjectToJsonBytes(resTagDTO))
             )
             .andExpect(status().isOk());
 
@@ -280,12 +288,15 @@ class ResTagResourceIT {
         int databaseSizeBeforeUpdate = resTagRepository.findAll().size();
         resTag.setId(longCount.incrementAndGet());
 
+        // Create the ResTag
+        ResTagDTO resTagDTO = resTagMapper.toDto(resTag);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResTagMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, resTag.getId())
+                put(ENTITY_API_URL_ID, resTagDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resTag))
+                    .content(TestUtil.convertObjectToJsonBytes(resTagDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -300,12 +311,15 @@ class ResTagResourceIT {
         int databaseSizeBeforeUpdate = resTagRepository.findAll().size();
         resTag.setId(longCount.incrementAndGet());
 
+        // Create the ResTag
+        ResTagDTO resTagDTO = resTagMapper.toDto(resTag);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResTagMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resTag))
+                    .content(TestUtil.convertObjectToJsonBytes(resTagDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -320,9 +334,12 @@ class ResTagResourceIT {
         int databaseSizeBeforeUpdate = resTagRepository.findAll().size();
         resTag.setId(longCount.incrementAndGet());
 
+        // Create the ResTag
+        ResTagDTO resTagDTO = resTagMapper.toDto(resTag);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResTagMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resTag)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resTagDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the ResTag in the database
@@ -422,12 +439,15 @@ class ResTagResourceIT {
         int databaseSizeBeforeUpdate = resTagRepository.findAll().size();
         resTag.setId(longCount.incrementAndGet());
 
+        // Create the ResTag
+        ResTagDTO resTagDTO = resTagMapper.toDto(resTag);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResTagMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, resTag.getId())
+                patch(ENTITY_API_URL_ID, resTagDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resTag))
+                    .content(TestUtil.convertObjectToJsonBytes(resTagDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -442,12 +462,15 @@ class ResTagResourceIT {
         int databaseSizeBeforeUpdate = resTagRepository.findAll().size();
         resTag.setId(longCount.incrementAndGet());
 
+        // Create the ResTag
+        ResTagDTO resTagDTO = resTagMapper.toDto(resTag);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResTagMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resTag))
+                    .content(TestUtil.convertObjectToJsonBytes(resTagDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -462,9 +485,14 @@ class ResTagResourceIT {
         int databaseSizeBeforeUpdate = resTagRepository.findAll().size();
         resTag.setId(longCount.incrementAndGet());
 
+        // Create the ResTag
+        ResTagDTO resTagDTO = resTagMapper.toDto(resTag);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResTagMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(resTag)))
+            .perform(
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(resTagDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the ResTag in the database

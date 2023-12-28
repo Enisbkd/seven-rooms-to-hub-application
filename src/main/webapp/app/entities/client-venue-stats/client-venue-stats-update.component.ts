@@ -7,8 +7,6 @@ import ClientVenueStatsService from './client-venue-stats.service';
 import { useValidation, useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
-import ClientService from '@/entities/client/client.service';
-import { type IClient } from '@/shared/model/client.model';
 import { type IClientVenueStats, ClientVenueStats } from '@/shared/model/client-venue-stats.model';
 
 export default defineComponent({
@@ -19,10 +17,6 @@ export default defineComponent({
     const alertService = inject('alertService', () => useAlertService(), true);
 
     const clientVenueStats: Ref<IClientVenueStats> = ref(new ClientVenueStats());
-
-    const clientService = inject('clientService', () => new ClientService());
-
-    const clients: Ref<IClient[]> = ref([]);
     const isSaving = ref(false);
     const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? 'en'), true);
 
@@ -46,13 +40,7 @@ export default defineComponent({
       retrieveClientVenueStats(route.params.clientVenueStatsId);
     }
 
-    const initRelationships = () => {
-      clientService()
-        .retrieve()
-        .then(res => {
-          clients.value = res.data;
-        });
-    };
+    const initRelationships = () => {};
 
     initRelationships();
 
@@ -93,7 +81,6 @@ export default defineComponent({
       previousState,
       isSaving,
       currentLanguage,
-      clients,
       v$,
       ...useDateFormat({ entityRef: clientVenueStats }),
       t$,

@@ -10,7 +10,7 @@ import ResPosticketsItemService from './res-postickets-item.service';
 import { DATE_TIME_LONG_FORMAT } from '@/shared/composables/date-format';
 import AlertService from '@/shared/alert/alert.service';
 
-import ReservationService from '@/entities/reservation/reservation.service';
+import ResPosTicketService from '@/entities/res-pos-ticket/res-pos-ticket.service';
 
 type ResPosticketsItemUpdateComponentType = InstanceType<typeof ResPosticketsItemUpdate>;
 
@@ -55,8 +55,8 @@ describe('Component Tests', () => {
         provide: {
           alertService,
           resPosticketsItemService: () => resPosticketsItemServiceStub,
-          reservationService: () =>
-            sinon.createStubInstance<ReservationService>(ReservationService, {
+          resPosTicketService: () =>
+            sinon.createStubInstance<ResPosTicketService>(ResPosTicketService, {
               retrieve: sinon.stub().resolves({}),
             } as any),
         },

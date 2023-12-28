@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.CustomField;
 import com.sbm.sevenroomstohub.repository.CustomFieldRepository;
+import com.sbm.sevenroomstohub.service.dto.CustomFieldDTO;
+import com.sbm.sevenroomstohub.service.mapper.CustomFieldMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -71,6 +73,9 @@ class CustomFieldResourceIT {
     private CustomFieldRepository customFieldRepository;
 
     @Autowired
+    private CustomFieldMapper customFieldMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -128,8 +133,11 @@ class CustomFieldResourceIT {
     void createCustomField() throws Exception {
         int databaseSizeBeforeCreate = customFieldRepository.findAll().size();
         // Create the CustomField
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(customField);
         restCustomFieldMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(customField)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(customFieldDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the CustomField in the database
@@ -152,12 +160,15 @@ class CustomFieldResourceIT {
     void createCustomFieldWithExistingId() throws Exception {
         // Create the CustomField with an existing ID
         customField.setId(1L);
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(customField);
 
         int databaseSizeBeforeCreate = customFieldRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCustomFieldMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(customField)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(customFieldDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the CustomField in the database
@@ -240,12 +251,13 @@ class CustomFieldResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(updatedCustomField);
 
         restCustomFieldMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedCustomField.getId())
+                put(ENTITY_API_URL_ID, customFieldDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedCustomField))
+                    .content(TestUtil.convertObjectToJsonBytes(customFieldDTO))
             )
             .andExpect(status().isOk());
 
@@ -270,12 +282,15 @@ class CustomFieldResourceIT {
         int databaseSizeBeforeUpdate = customFieldRepository.findAll().size();
         customField.setId(longCount.incrementAndGet());
 
+        // Create the CustomField
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(customField);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCustomFieldMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, customField.getId())
+                put(ENTITY_API_URL_ID, customFieldDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(customField))
+                    .content(TestUtil.convertObjectToJsonBytes(customFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -290,12 +305,15 @@ class CustomFieldResourceIT {
         int databaseSizeBeforeUpdate = customFieldRepository.findAll().size();
         customField.setId(longCount.incrementAndGet());
 
+        // Create the CustomField
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(customField);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCustomFieldMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(customField))
+                    .content(TestUtil.convertObjectToJsonBytes(customFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -310,9 +328,12 @@ class CustomFieldResourceIT {
         int databaseSizeBeforeUpdate = customFieldRepository.findAll().size();
         customField.setId(longCount.incrementAndGet());
 
+        // Create the CustomField
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(customField);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCustomFieldMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(customField)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(customFieldDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the CustomField in the database
@@ -414,12 +435,15 @@ class CustomFieldResourceIT {
         int databaseSizeBeforeUpdate = customFieldRepository.findAll().size();
         customField.setId(longCount.incrementAndGet());
 
+        // Create the CustomField
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(customField);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCustomFieldMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, customField.getId())
+                patch(ENTITY_API_URL_ID, customFieldDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(customField))
+                    .content(TestUtil.convertObjectToJsonBytes(customFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -434,12 +458,15 @@ class CustomFieldResourceIT {
         int databaseSizeBeforeUpdate = customFieldRepository.findAll().size();
         customField.setId(longCount.incrementAndGet());
 
+        // Create the CustomField
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(customField);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCustomFieldMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(customField))
+                    .content(TestUtil.convertObjectToJsonBytes(customFieldDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -454,10 +481,13 @@ class CustomFieldResourceIT {
         int databaseSizeBeforeUpdate = customFieldRepository.findAll().size();
         customField.setId(longCount.incrementAndGet());
 
+        // Create the CustomField
+        CustomFieldDTO customFieldDTO = customFieldMapper.toDto(customField);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCustomFieldMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(customField))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(customFieldDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

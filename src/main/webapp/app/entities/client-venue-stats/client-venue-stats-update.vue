@@ -370,25 +370,6 @@
               v-model="v$.techComment.$model"
             />
           </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.client')"
-              for="client-venue-stats-client"
-            ></label>
-            <select class="form-control" id="client-venue-stats-client" data-cy="client" name="client" v-model="clientVenueStats.client">
-              <option v-bind:value="null"></option>
-              <option
-                v-bind:value="
-                  clientVenueStats.client && clientOption.id === clientVenueStats.client.id ? clientVenueStats.client : clientOption
-                "
-                v-for="clientOption in clients"
-                :key="clientOption.id"
-              >
-                {{ clientOption.id }}
-              </option>
-            </select>
-          </div>
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" v-on:click="previousState()">

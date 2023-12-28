@@ -3,6 +3,7 @@
     "changelogDate": "20231220092507"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "client_photo",
   "fields": [
     {
@@ -87,6 +88,7 @@
     }
   ],
   "name": "ClientPhoto",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "client",
@@ -96,5 +98,6 @@
       "relationshipType": "one-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

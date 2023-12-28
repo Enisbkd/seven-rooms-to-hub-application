@@ -83,12 +83,6 @@ public class Reservation implements Serializable {
     @Column(name = "table_numbers")
     private String tableNumbers;
 
-    @Column(name = "venue_seating_area_id")
-    private String venueSeatingAreaId;
-
-    @Column(name = "venue_seating_area_name")
-    private String venueSeatingAreaName;
-
     @Column(name = "access_persistent_id")
     private String accessPersistentId;
 
@@ -97,9 +91,6 @@ public class Reservation implements Serializable {
 
     @Column(name = "isvip")
     private Boolean isvip;
-
-    @Column(name = "iswalkin")
-    private Boolean iswalkin;
 
     @Column(name = "bookedby")
     private String bookedby;
@@ -261,18 +252,18 @@ public class Reservation implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
-    private Set<ResPosticketsItem> resPosticketsItems = new HashSet<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resPosticketsItems", "reservation" }, allowSetters = true)
     private Set<ResPosTicket> resPosTickets = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
     private Set<ResCustomField> resCustomFields = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
+    private Set<Table> tables = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
@@ -543,32 +534,6 @@ public class Reservation implements Serializable {
         this.tableNumbers = tableNumbers;
     }
 
-    public String getVenueSeatingAreaId() {
-        return this.venueSeatingAreaId;
-    }
-
-    public Reservation venueSeatingAreaId(String venueSeatingAreaId) {
-        this.setVenueSeatingAreaId(venueSeatingAreaId);
-        return this;
-    }
-
-    public void setVenueSeatingAreaId(String venueSeatingAreaId) {
-        this.venueSeatingAreaId = venueSeatingAreaId;
-    }
-
-    public String getVenueSeatingAreaName() {
-        return this.venueSeatingAreaName;
-    }
-
-    public Reservation venueSeatingAreaName(String venueSeatingAreaName) {
-        this.setVenueSeatingAreaName(venueSeatingAreaName);
-        return this;
-    }
-
-    public void setVenueSeatingAreaName(String venueSeatingAreaName) {
-        this.venueSeatingAreaName = venueSeatingAreaName;
-    }
-
     public String getAccessPersistentId() {
         return this.accessPersistentId;
     }
@@ -606,19 +571,6 @@ public class Reservation implements Serializable {
 
     public void setIsvip(Boolean isvip) {
         this.isvip = isvip;
-    }
-
-    public Boolean getIswalkin() {
-        return this.iswalkin;
-    }
-
-    public Reservation iswalkin(Boolean iswalkin) {
-        this.setIswalkin(iswalkin);
-        return this;
-    }
-
-    public void setIswalkin(Boolean iswalkin) {
-        this.iswalkin = iswalkin;
     }
 
     public String getBookedby() {
@@ -1315,37 +1267,6 @@ public class Reservation implements Serializable {
         return this;
     }
 
-    public Set<ResPosticketsItem> getResPosticketsItems() {
-        return this.resPosticketsItems;
-    }
-
-    public void setResPosticketsItems(Set<ResPosticketsItem> resPosticketsItems) {
-        if (this.resPosticketsItems != null) {
-            this.resPosticketsItems.forEach(i -> i.setReservation(null));
-        }
-        if (resPosticketsItems != null) {
-            resPosticketsItems.forEach(i -> i.setReservation(this));
-        }
-        this.resPosticketsItems = resPosticketsItems;
-    }
-
-    public Reservation resPosticketsItems(Set<ResPosticketsItem> resPosticketsItems) {
-        this.setResPosticketsItems(resPosticketsItems);
-        return this;
-    }
-
-    public Reservation addResPosticketsItem(ResPosticketsItem resPosticketsItem) {
-        this.resPosticketsItems.add(resPosticketsItem);
-        resPosticketsItem.setReservation(this);
-        return this;
-    }
-
-    public Reservation removeResPosticketsItem(ResPosticketsItem resPosticketsItem) {
-        this.resPosticketsItems.remove(resPosticketsItem);
-        resPosticketsItem.setReservation(null);
-        return this;
-    }
-
     public Set<ResPosTicket> getResPosTickets() {
         return this.resPosTickets;
     }
@@ -1408,6 +1329,37 @@ public class Reservation implements Serializable {
         return this;
     }
 
+    public Set<Table> getTables() {
+        return this.tables;
+    }
+
+    public void setTables(Set<Table> tables) {
+        if (this.tables != null) {
+            this.tables.forEach(i -> i.setReservation(null));
+        }
+        if (tables != null) {
+            tables.forEach(i -> i.setReservation(this));
+        }
+        this.tables = tables;
+    }
+
+    public Reservation tables(Set<Table> tables) {
+        this.setTables(tables);
+        return this;
+    }
+
+    public Reservation addTable(Table table) {
+        this.tables.add(table);
+        table.setReservation(this);
+        return this;
+    }
+
+    public Reservation removeTable(Table table) {
+        this.tables.remove(table);
+        table.setReservation(null);
+        return this;
+    }
+
     public Client getClient() {
         return this.client;
     }
@@ -1464,12 +1416,9 @@ public class Reservation implements Serializable {
             ", statusDisplay='" + getStatusDisplay() + "'" +
             ", statusSimple='" + getStatusSimple() + "'" +
             ", tableNumbers='" + getTableNumbers() + "'" +
-            ", venueSeatingAreaId='" + getVenueSeatingAreaId() + "'" +
-            ", venueSeatingAreaName='" + getVenueSeatingAreaName() + "'" +
             ", accessPersistentId='" + getAccessPersistentId() + "'" +
             ", arrivedGuests=" + getArrivedGuests() +
             ", isvip='" + getIsvip() + "'" +
-            ", iswalkin='" + getIswalkin() + "'" +
             ", bookedby='" + getBookedby() + "'" +
             ", clientReferenceCode='" + getClientReferenceCode() + "'" +
             ", lastname='" + getLastname() + "'" +

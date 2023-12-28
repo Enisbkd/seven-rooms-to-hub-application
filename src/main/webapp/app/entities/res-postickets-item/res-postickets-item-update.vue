@@ -149,27 +149,27 @@
           <div class="form-group">
             <label
               class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.reservation')"
-              for="res-postickets-item-reservation"
+              v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.resPosTicket')"
+              for="res-postickets-item-resPosTicket"
             ></label>
             <select
               class="form-control"
-              id="res-postickets-item-reservation"
-              data-cy="reservation"
-              name="reservation"
-              v-model="resPosticketsItem.reservation"
+              id="res-postickets-item-resPosTicket"
+              data-cy="resPosTicket"
+              name="resPosTicket"
+              v-model="resPosticketsItem.resPosTicket"
             >
               <option v-bind:value="null"></option>
               <option
                 v-bind:value="
-                  resPosticketsItem.reservation && reservationOption.id === resPosticketsItem.reservation.id
-                    ? resPosticketsItem.reservation
-                    : reservationOption
+                  resPosticketsItem.resPosTicket && resPosTicketOption.id === resPosticketsItem.resPosTicket.id
+                    ? resPosticketsItem.resPosTicket
+                    : resPosTicketOption
                 "
-                v-for="reservationOption in reservations"
-                :key="reservationOption.id"
+                v-for="resPosTicketOption in resPosTickets"
+                :key="resPosTicketOption.id"
               >
-                {{ reservationOption.id }}
+                {{ resPosTicketOption.id }}
               </option>
             </select>
           </div>

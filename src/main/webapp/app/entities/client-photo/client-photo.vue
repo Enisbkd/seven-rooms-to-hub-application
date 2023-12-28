@@ -28,27 +28,90 @@
       <table class="table table-striped" aria-describedby="clientPhotos">
         <thead>
           <tr>
-            <th scope="row"><span v-text="t$('global.field.id')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.clientId')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.large')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.largeHeight')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.largeWidth')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.medium')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.mediumHeight')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.mediumWidth')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.small')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.smallHeight')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.smallWidth')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.raw')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropx')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropy')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropHeight')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropWidth')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techLineage')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techCreatedDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techUpdatedDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techMapping')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techComment')"></span></th>
+            <th scope="row" v-on:click="changeOrder('id')">
+              <span v-text="t$('global.field.id')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('clientId')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.clientId')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'clientId'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('large')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.large')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'large'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('largeHeight')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.largeHeight')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'largeHeight'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('largeWidth')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.largeWidth')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'largeWidth'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('medium')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.medium')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'medium'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('mediumHeight')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.mediumHeight')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'mediumHeight'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('mediumWidth')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.mediumWidth')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'mediumWidth'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('small')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.small')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'small'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('smallHeight')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.smallHeight')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'smallHeight'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('smallWidth')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.smallWidth')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'smallWidth'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('raw')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.raw')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'raw'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('cropx')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropx')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'cropx'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('cropy')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropy')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'cropy'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('cropHeight')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropHeight')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'cropHeight'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('cropWidth')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropWidth')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'cropWidth'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techLineage')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techLineage')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techCreatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techUpdatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techMapping')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techMapping')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techComment')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techComment')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -135,6 +198,14 @@
         </div>
       </template>
     </b-modal>
+    <div v-show="clientPhotos && clientPhotos.length > 0">
+      <div class="row justify-content-center">
+        <jhi-item-count :page="page" :total="queryCount" :itemsPerPage="itemsPerPage"></jhi-item-count>
+      </div>
+      <div class="row justify-content-center">
+        <b-pagination size="md" :total-rows="totalItems" v-model="page" :per-page="itemsPerPage"></b-pagination>
+      </div>
+    </div>
   </div>
 </template>
 

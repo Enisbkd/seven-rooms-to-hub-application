@@ -52,7 +52,7 @@ public class ResCustomField implements Serializable {
     private String techComment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "resTags", "resPosticketsItems", "resPosTickets", "resCustomFields", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "tables", "client" }, allowSetters = true)
     private Reservation reservation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -47,21 +47,11 @@ class ClientTest {
         Client client = getClientRandomSampleGenerator();
         ClientVenueStats clientVenueStatsBack = getClientVenueStatsRandomSampleGenerator();
 
-        client.addClientVenueStats(clientVenueStatsBack);
-        assertThat(client.getClientVenueStats()).containsOnly(clientVenueStatsBack);
-        assertThat(clientVenueStatsBack.getClient()).isEqualTo(client);
+        client.setClientVenueStats(clientVenueStatsBack);
+        assertThat(client.getClientVenueStats()).isEqualTo(clientVenueStatsBack);
 
-        client.removeClientVenueStats(clientVenueStatsBack);
-        assertThat(client.getClientVenueStats()).doesNotContain(clientVenueStatsBack);
-        assertThat(clientVenueStatsBack.getClient()).isNull();
-
-        client.clientVenueStats(new HashSet<>(Set.of(clientVenueStatsBack)));
-        assertThat(client.getClientVenueStats()).containsOnly(clientVenueStatsBack);
-        assertThat(clientVenueStatsBack.getClient()).isEqualTo(client);
-
-        client.setClientVenueStats(new HashSet<>());
-        assertThat(client.getClientVenueStats()).doesNotContain(clientVenueStatsBack);
-        assertThat(clientVenueStatsBack.getClient()).isNull();
+        client.clientVenueStats(null);
+        assertThat(client.getClientVenueStats()).isNull();
     }
 
     @Test

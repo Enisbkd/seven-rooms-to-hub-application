@@ -1,0 +1,39 @@
+package com.sbm.sevenroomstohub.service;
+
+import com.sbm.sevenroomstohub.domain.Client;
+import com.sbm.sevenroomstohub.serdes.CustomSerdes;
+import org.apache.kafka.common.serialization.Serde;
+import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.kstream.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class WordCountProcessor {
+
+    private static final Serde<String> STRING_SERDE = Serdes.String();
+    private static final Serde<Client> CLIENT_SERDE = CustomSerdes.Client();
+
+    @Autowired
+    void buildPipeline(StreamsBuilder streamsBuilder) {
+        KStream<String, Client> messageStream = streamsBuilder.stream(
+            "data-7rooms-client-create",
+            Consumed.with(STRING_SERDE, CLIENT_SERDE)
+        );
+
+        //        KStream<String, String> messageStream = streamsBuilder
+        //            .stream("data-7rooms-client-create", Consumed.with(STRING_SERDE, STRING_SERDE));
+
+        Printed sysout = Printed.toSysOut().withLabel("messageStream");
+
+        messageStream.print(sysout);
+        //        KTable<String, Long> wordCounts = messageStream
+        //            .mapValues((ValueMapper<String, String>) String::toLowerCase)
+        //            .flatMapValues(value -> Arrays.asList(value.split("\\W+")))
+        //            .groupBy((key, word) -> word, Grouped.with(STRING_SERDE, STRING_SERDE))
+        //            .count(Materialized.as("counts"));
+
+        //        wordCounts.toStream().to("output-topic");
+    }
+}

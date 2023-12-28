@@ -121,18 +121,6 @@
             <span>{{ reservation.tableNumbers }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.venueSeatingAreaId')"></span>
-          </dt>
-          <dd>
-            <span>{{ reservation.venueSeatingAreaId }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.venueSeatingAreaName')"></span>
-          </dt>
-          <dd>
-            <span>{{ reservation.venueSeatingAreaName }}</span>
-          </dd>
-          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.accessPersistentId')"></span>
           </dt>
           <dd>
@@ -149,12 +137,6 @@
           </dt>
           <dd>
             <span>{{ reservation.isvip }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.iswalkin')"></span>
-          </dt>
-          <dd>
-            <span>{{ reservation.iswalkin }}</span>
           </dd>
           <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.bookedby')"></span>

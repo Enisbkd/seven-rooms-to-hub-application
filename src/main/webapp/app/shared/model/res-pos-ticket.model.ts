@@ -1,3 +1,4 @@
+import { type IResPosticketsItem } from '@/shared/model/res-postickets-item.model';
 import { type IReservation } from '@/shared/model/reservation.model';
 
 export interface IResPosTicket {
@@ -20,6 +21,7 @@ export interface IResPosTicket {
   techUpdatedDate?: Date | null;
   techMapping?: string | null;
   techComment?: string | null;
+  resPosticketsItems?: IResPosticketsItem[] | null;
   reservation?: IReservation | null;
 }
 
@@ -44,6 +46,7 @@ export class ResPosTicket implements IResPosTicket {
     public techUpdatedDate?: Date | null,
     public techMapping?: string | null,
     public techComment?: string | null,
+    public resPosticketsItems?: IResPosticketsItem[] | null,
     public reservation?: IReservation | null,
   ) {}
 }

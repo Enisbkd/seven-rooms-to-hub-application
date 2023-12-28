@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -78,8 +80,13 @@ public class ResPosTicket implements Serializable {
     @Column(name = "tech_comment")
     private String techComment;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resPosTicket")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "resPosTicket" }, allowSetters = true)
+    private Set<ResPosticketsItem> resPosticketsItems = new HashSet<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "resTags", "resPosticketsItems", "resPosTickets", "resCustomFields", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "tables", "client" }, allowSetters = true)
     private Reservation reservation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -329,6 +336,37 @@ public class ResPosTicket implements Serializable {
 
     public void setTechComment(String techComment) {
         this.techComment = techComment;
+    }
+
+    public Set<ResPosticketsItem> getResPosticketsItems() {
+        return this.resPosticketsItems;
+    }
+
+    public void setResPosticketsItems(Set<ResPosticketsItem> resPosticketsItems) {
+        if (this.resPosticketsItems != null) {
+            this.resPosticketsItems.forEach(i -> i.setResPosTicket(null));
+        }
+        if (resPosticketsItems != null) {
+            resPosticketsItems.forEach(i -> i.setResPosTicket(this));
+        }
+        this.resPosticketsItems = resPosticketsItems;
+    }
+
+    public ResPosTicket resPosticketsItems(Set<ResPosticketsItem> resPosticketsItems) {
+        this.setResPosticketsItems(resPosticketsItems);
+        return this;
+    }
+
+    public ResPosTicket addResPosticketsItem(ResPosticketsItem resPosticketsItem) {
+        this.resPosticketsItems.add(resPosticketsItem);
+        resPosticketsItem.setResPosTicket(this);
+        return this;
+    }
+
+    public ResPosTicket removeResPosticketsItem(ResPosticketsItem resPosticketsItem) {
+        this.resPosticketsItems.remove(resPosticketsItem);
+        resPosticketsItem.setResPosTicket(null);
+        return this;
     }
 
     public Reservation getReservation() {

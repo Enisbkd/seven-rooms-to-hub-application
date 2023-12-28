@@ -90,11 +90,11 @@ public class ClientVenueStats implements Serializable {
     @Column(name = "tech_comment")
     private String techComment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
         value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
         allowSetters = true
     )
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "clientVenueStats")
     private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -403,6 +403,12 @@ public class ClientVenueStats implements Serializable {
     }
 
     public void setClient(Client client) {
+        if (this.client != null) {
+            this.client.setClientVenueStats(null);
+        }
+        if (client != null) {
+            client.setClientVenueStats(this);
+        }
         this.client = client;
     }
 

@@ -77,6 +77,7 @@ export default defineComponent({
       techUpdatedDate: {},
       techMapping: {},
       techComment: {},
+      resPosticketsItems: {},
       reservation: {},
     };
     const v$ = useVuelidate(validationRules, resPosTicket as any);

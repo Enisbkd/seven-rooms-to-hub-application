@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.ClientVenueStats;
 import com.sbm.sevenroomstohub.repository.ClientVenueStatsRepository;
+import com.sbm.sevenroomstohub.service.dto.ClientVenueStatsDTO;
+import com.sbm.sevenroomstohub.service.mapper.ClientVenueStatsMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -110,6 +112,9 @@ class ClientVenueStatsResourceIT {
     private ClientVenueStatsRepository clientVenueStatsRepository;
 
     @Autowired
+    private ClientVenueStatsMapper clientVenueStatsMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -193,9 +198,10 @@ class ClientVenueStatsResourceIT {
     void createClientVenueStats() throws Exception {
         int databaseSizeBeforeCreate = clientVenueStatsRepository.findAll().size();
         // Create the ClientVenueStats
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(clientVenueStats);
         restClientVenueStatsMockMvc
             .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientVenueStats))
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isCreated());
 
@@ -232,13 +238,14 @@ class ClientVenueStatsResourceIT {
     void createClientVenueStatsWithExistingId() throws Exception {
         // Create the ClientVenueStats with an existing ID
         clientVenueStats.setId(1L);
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(clientVenueStats);
 
         int databaseSizeBeforeCreate = clientVenueStatsRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restClientVenueStatsMockMvc
             .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientVenueStats))
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -361,12 +368,13 @@ class ClientVenueStatsResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(updatedClientVenueStats);
 
         restClientVenueStatsMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedClientVenueStats.getId())
+                put(ENTITY_API_URL_ID, clientVenueStatsDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedClientVenueStats))
+                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isOk());
 
@@ -404,12 +412,15 @@ class ClientVenueStatsResourceIT {
         int databaseSizeBeforeUpdate = clientVenueStatsRepository.findAll().size();
         clientVenueStats.setId(longCount.incrementAndGet());
 
+        // Create the ClientVenueStats
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(clientVenueStats);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restClientVenueStatsMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, clientVenueStats.getId())
+                put(ENTITY_API_URL_ID, clientVenueStatsDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStats))
+                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -424,12 +435,15 @@ class ClientVenueStatsResourceIT {
         int databaseSizeBeforeUpdate = clientVenueStatsRepository.findAll().size();
         clientVenueStats.setId(longCount.incrementAndGet());
 
+        // Create the ClientVenueStats
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(clientVenueStats);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientVenueStatsMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStats))
+                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -444,10 +458,13 @@ class ClientVenueStatsResourceIT {
         int databaseSizeBeforeUpdate = clientVenueStatsRepository.findAll().size();
         clientVenueStats.setId(longCount.incrementAndGet());
 
+        // Create the ClientVenueStats
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(clientVenueStats);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientVenueStatsMockMvc
             .perform(
-                put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientVenueStats))
+                put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
@@ -597,12 +614,15 @@ class ClientVenueStatsResourceIT {
         int databaseSizeBeforeUpdate = clientVenueStatsRepository.findAll().size();
         clientVenueStats.setId(longCount.incrementAndGet());
 
+        // Create the ClientVenueStats
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(clientVenueStats);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restClientVenueStatsMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, clientVenueStats.getId())
+                patch(ENTITY_API_URL_ID, clientVenueStatsDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStats))
+                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -617,12 +637,15 @@ class ClientVenueStatsResourceIT {
         int databaseSizeBeforeUpdate = clientVenueStatsRepository.findAll().size();
         clientVenueStats.setId(longCount.incrementAndGet());
 
+        // Create the ClientVenueStats
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(clientVenueStats);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientVenueStatsMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStats))
+                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -637,12 +660,15 @@ class ClientVenueStatsResourceIT {
         int databaseSizeBeforeUpdate = clientVenueStatsRepository.findAll().size();
         clientVenueStats.setId(longCount.incrementAndGet());
 
+        // Create the ClientVenueStats
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(clientVenueStats);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientVenueStatsMockMvc
             .perform(
                 patch(ENTITY_API_URL)
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStats))
+                    .content(TestUtil.convertObjectToJsonBytes(clientVenueStatsDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
