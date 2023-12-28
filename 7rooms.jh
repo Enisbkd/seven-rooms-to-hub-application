@@ -283,7 +283,7 @@ entity ResTag{
 	techComment String
 }
 
-entity Table{
+entity ResTable{
 	tableNumber Integer
 }
 
