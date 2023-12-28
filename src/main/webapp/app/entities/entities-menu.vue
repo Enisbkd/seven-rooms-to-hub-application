@@ -1,5 +1,9 @@
 <template>
   <div>
+    <b-dropdown-item to="/table">
+      <font-awesome-icon icon="asterisk" />
+      <span v-text="t$('global.menu.entities.table')"></span>
+    </b-dropdown-item>
     <b-dropdown-item to="/client">
       <font-awesome-icon icon="asterisk" />
       <span v-text="t$('global.menu.entities.client')"></span>

@@ -55,12 +55,12 @@
             <span>{{ resPosticketsItem.techComment }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.reservation')"></span>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.resPosTicket')"></span>
           </dt>
           <dd>
-            <div v-if="resPosticketsItem.reservation">
-              <router-link :to="{ name: 'ReservationView', params: { reservationId: resPosticketsItem.reservation.id } }">{{
-                resPosticketsItem.reservation.id
+            <div v-if="resPosticketsItem.resPosTicket">
+              <router-link :to="{ name: 'ResPosTicketView', params: { resPosTicketId: resPosticketsItem.resPosTicket.id } }">{{
+                resPosticketsItem.resPosTicket.id
               }}</router-link>
             </div>
           </dd>

@@ -515,6 +515,22 @@
           <div class="form-group">
             <label
               class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.client.marketingOptOutts')"
+              for="client-marketingOptOutts"
+            ></label>
+            <input
+              type="text"
+              class="form-control"
+              name="marketingOptOutts"
+              id="client-marketingOptOutts"
+              data-cy="marketingOptOutts"
+              :class="{ valid: !v$.marketingOptOutts.$invalid, invalid: v$.marketingOptOutts.$invalid }"
+              v-model="v$.marketingOptOutts.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
               v-text="t$('sevenRoomsToHubApplicationApp.client.hasBillingProfile')"
               for="client-hasBillingProfile"
             ></label>
@@ -783,6 +799,38 @@
           <div class="form-group">
             <label
               class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.client.totalOrderCount')"
+              for="client-totalOrderCount"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalOrderCount"
+              id="client-totalOrderCount"
+              data-cy="totalOrderCount"
+              :class="{ valid: !v$.totalOrderCount.$invalid, invalid: v$.totalOrderCount.$invalid }"
+              v-model.number="v$.totalOrderCount.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.client.preferredLanguageCode')"
+              for="client-preferredLanguageCode"
+            ></label>
+            <input
+              type="text"
+              class="form-control"
+              name="preferredLanguageCode"
+              id="client-preferredLanguageCode"
+              data-cy="preferredLanguageCode"
+              :class="{ valid: !v$.preferredLanguageCode.$invalid, invalid: v$.preferredLanguageCode.$invalid }"
+              v-model="v$.preferredLanguageCode.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
               v-text="t$('sevenRoomsToHubApplicationApp.client.techLineage')"
               for="client-techLineage"
             ></label>
@@ -880,6 +928,33 @@
                 :key="clientPhotoOption.id"
               >
                 {{ clientPhotoOption.id }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.client.clientVenueStats')"
+              for="client-clientVenueStats"
+            ></label>
+            <select
+              class="form-control"
+              id="client-clientVenueStats"
+              data-cy="clientVenueStats"
+              name="clientVenueStats"
+              v-model="client.clientVenueStats"
+            >
+              <option v-bind:value="null"></option>
+              <option
+                v-bind:value="
+                  client.clientVenueStats && clientVenueStatsOption.id === client.clientVenueStats.id
+                    ? client.clientVenueStats
+                    : clientVenueStatsOption
+                "
+                v-for="clientVenueStatsOption in clientVenueStats"
+                :key="clientVenueStatsOption.id"
+              >
+                {{ clientVenueStatsOption.id }}
               </option>
             </select>
           </div>

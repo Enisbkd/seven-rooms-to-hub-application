@@ -119,6 +119,9 @@
             <column name="marketing_optints" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="marketing_opt_outts" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="has_billing_profile" type="boolean">
                 <constraints nullable="true" />
             </column>
@@ -173,6 +176,12 @@
             <column name="user_name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="total_order_count" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="preferred_language_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="tech_lineage" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -190,6 +199,9 @@
             </column>
             <column name="client_photo_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_client__client_photo_id" />
+            </column>
+            <column name="client_venue_stats_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_client__client_venue_stats_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -249,6 +261,7 @@
             <column name="loyalty_tier" type="string"/>
             <column name="marketing_optin" type="boolean"/>
             <column name="marketing_optints" type="string"/>
+            <column name="marketing_opt_outts" type="string"/>
             <column name="has_billing_profile" type="boolean"/>
             <column name="notes" type="string"/>
             <column name="private_notes" type="string"/>
@@ -267,6 +280,8 @@
             <column name="birthday_alt_day" type="numeric"/>
             <column name="user_id" type="string"/>
             <column name="user_name" type="string"/>
+            <column name="total_order_count" type="numeric"/>
+            <column name="preferred_language_code" type="string"/>
             <column name="tech_lineage" type="string"/>
             <column name="tech_created_date" type="date"/>
             <column name="tech_updated_date" type="date"/>

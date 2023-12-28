@@ -3,6 +3,7 @@
     "changelogDate": "20231220092707"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "entityTableName": "res_custom_field",
   "fields": [
     {
@@ -43,6 +44,7 @@
     }
   ],
   "name": "ResCustomField",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "reservation",
@@ -52,5 +54,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

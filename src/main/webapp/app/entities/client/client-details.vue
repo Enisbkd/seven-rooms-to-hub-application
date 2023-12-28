@@ -217,6 +217,12 @@
             <span>{{ client.marketingOptints }}</span>
           </dd>
           <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.marketingOptOutts')"></span>
+          </dt>
+          <dd>
+            <span>{{ client.marketingOptOutts }}</span>
+          </dd>
+          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.client.hasBillingProfile')"></span>
           </dt>
           <dd>
@@ -325,6 +331,18 @@
             <span>{{ client.userName }}</span>
           </dd>
           <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalOrderCount')"></span>
+          </dt>
+          <dd>
+            <span>{{ client.totalOrderCount }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.preferredLanguageCode')"></span>
+          </dt>
+          <dd>
+            <span>{{ client.preferredLanguageCode }}</span>
+          </dd>
+          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.client.techLineage')"></span>
           </dt>
           <dd>
@@ -361,6 +379,16 @@
             <div v-if="client.clientPhoto">
               <router-link :to="{ name: 'ClientPhotoView', params: { clientPhotoId: client.clientPhoto.id } }">{{
                 client.clientPhoto.id
+              }}</router-link>
+            </div>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.clientVenueStats')"></span>
+          </dt>
+          <dd>
+            <div v-if="client.clientVenueStats">
+              <router-link :to="{ name: 'ClientVenueStatsView', params: { clientVenueStatsId: client.clientVenueStats.id } }">{{
+                client.clientVenueStats.id
               }}</router-link>
             </div>
           </dd>

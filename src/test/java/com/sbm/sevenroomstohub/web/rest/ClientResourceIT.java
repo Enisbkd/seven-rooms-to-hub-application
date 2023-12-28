@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.repository.ClientRepository;
+import com.sbm.sevenroomstohub.service.dto.ClientDTO;
+import com.sbm.sevenroomstohub.service.mapper.ClientMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -139,6 +141,9 @@ class ClientResourceIT {
     private static final String DEFAULT_MARKETING_OPTINTS = "AAAAAAAAAA";
     private static final String UPDATED_MARKETING_OPTINTS = "BBBBBBBBBB";
 
+    private static final String DEFAULT_MARKETING_OPT_OUTTS = "AAAAAAAAAA";
+    private static final String UPDATED_MARKETING_OPT_OUTTS = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_HAS_BILLING_PROFILE = false;
     private static final Boolean UPDATED_HAS_BILLING_PROFILE = true;
 
@@ -193,6 +198,12 @@ class ClientResourceIT {
     private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_TOTAL_ORDER_COUNT = 1;
+    private static final Integer UPDATED_TOTAL_ORDER_COUNT = 2;
+
+    private static final String DEFAULT_PREFERRED_LANGUAGE_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_PREFERRED_LANGUAGE_CODE = "BBBBBBBBBB";
+
     private static final String DEFAULT_TECH_LINEAGE = "AAAAAAAAAA";
     private static final String UPDATED_TECH_LINEAGE = "BBBBBBBBBB";
 
@@ -216,6 +227,9 @@ class ClientResourceIT {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private ClientMapper clientMapper;
 
     @Autowired
     private EntityManager em;
@@ -268,6 +282,7 @@ class ClientResourceIT {
             .loyaltyTier(DEFAULT_LOYALTY_TIER)
             .marketingOptin(DEFAULT_MARKETING_OPTIN)
             .marketingOptints(DEFAULT_MARKETING_OPTINTS)
+            .marketingOptOutts(DEFAULT_MARKETING_OPT_OUTTS)
             .hasBillingProfile(DEFAULT_HAS_BILLING_PROFILE)
             .notes(DEFAULT_NOTES)
             .privateNotes(DEFAULT_PRIVATE_NOTES)
@@ -286,6 +301,8 @@ class ClientResourceIT {
             .birthdayAltDay(DEFAULT_BIRTHDAY_ALT_DAY)
             .userId(DEFAULT_USER_ID)
             .userName(DEFAULT_USER_NAME)
+            .totalOrderCount(DEFAULT_TOTAL_ORDER_COUNT)
+            .preferredLanguageCode(DEFAULT_PREFERRED_LANGUAGE_CODE)
             .techLineage(DEFAULT_TECH_LINEAGE)
             .techCreatedDate(DEFAULT_TECH_CREATED_DATE)
             .techUpdatedDate(DEFAULT_TECH_UPDATED_DATE)
@@ -337,6 +354,7 @@ class ClientResourceIT {
             .loyaltyTier(UPDATED_LOYALTY_TIER)
             .marketingOptin(UPDATED_MARKETING_OPTIN)
             .marketingOptints(UPDATED_MARKETING_OPTINTS)
+            .marketingOptOutts(UPDATED_MARKETING_OPT_OUTTS)
             .hasBillingProfile(UPDATED_HAS_BILLING_PROFILE)
             .notes(UPDATED_NOTES)
             .privateNotes(UPDATED_PRIVATE_NOTES)
@@ -355,6 +373,8 @@ class ClientResourceIT {
             .birthdayAltDay(UPDATED_BIRTHDAY_ALT_DAY)
             .userId(UPDATED_USER_ID)
             .userName(UPDATED_USER_NAME)
+            .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
+            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE)
             .techLineage(UPDATED_TECH_LINEAGE)
             .techCreatedDate(UPDATED_TECH_CREATED_DATE)
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
@@ -373,8 +393,9 @@ class ClientResourceIT {
     void createClient() throws Exception {
         int databaseSizeBeforeCreate = clientRepository.findAll().size();
         // Create the Client
+        ClientDTO clientDTO = clientMapper.toDto(client);
         restClientMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(client)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Client in the database
@@ -416,6 +437,7 @@ class ClientResourceIT {
         assertThat(testClient.getLoyaltyTier()).isEqualTo(DEFAULT_LOYALTY_TIER);
         assertThat(testClient.getMarketingOptin()).isEqualTo(DEFAULT_MARKETING_OPTIN);
         assertThat(testClient.getMarketingOptints()).isEqualTo(DEFAULT_MARKETING_OPTINTS);
+        assertThat(testClient.getMarketingOptOutts()).isEqualTo(DEFAULT_MARKETING_OPT_OUTTS);
         assertThat(testClient.getHasBillingProfile()).isEqualTo(DEFAULT_HAS_BILLING_PROFILE);
         assertThat(testClient.getNotes()).isEqualTo(DEFAULT_NOTES);
         assertThat(testClient.getPrivateNotes()).isEqualTo(DEFAULT_PRIVATE_NOTES);
@@ -434,6 +456,8 @@ class ClientResourceIT {
         assertThat(testClient.getBirthdayAltDay()).isEqualTo(DEFAULT_BIRTHDAY_ALT_DAY);
         assertThat(testClient.getUserId()).isEqualTo(DEFAULT_USER_ID);
         assertThat(testClient.getUserName()).isEqualTo(DEFAULT_USER_NAME);
+        assertThat(testClient.getTotalOrderCount()).isEqualTo(DEFAULT_TOTAL_ORDER_COUNT);
+        assertThat(testClient.getPreferredLanguageCode()).isEqualTo(DEFAULT_PREFERRED_LANGUAGE_CODE);
         assertThat(testClient.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
         assertThat(testClient.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
         assertThat(testClient.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
@@ -446,12 +470,13 @@ class ClientResourceIT {
     void createClientWithExistingId() throws Exception {
         // Create the Client with an existing ID
         client.setId(1L);
+        ClientDTO clientDTO = clientMapper.toDto(client);
 
         int databaseSizeBeforeCreate = clientRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restClientMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(client)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Client in the database
@@ -506,6 +531,7 @@ class ClientResourceIT {
             .andExpect(jsonPath("$.[*].loyaltyTier").value(hasItem(DEFAULT_LOYALTY_TIER)))
             .andExpect(jsonPath("$.[*].marketingOptin").value(hasItem(DEFAULT_MARKETING_OPTIN.booleanValue())))
             .andExpect(jsonPath("$.[*].marketingOptints").value(hasItem(DEFAULT_MARKETING_OPTINTS)))
+            .andExpect(jsonPath("$.[*].marketingOptOutts").value(hasItem(DEFAULT_MARKETING_OPT_OUTTS)))
             .andExpect(jsonPath("$.[*].hasBillingProfile").value(hasItem(DEFAULT_HAS_BILLING_PROFILE.booleanValue())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].privateNotes").value(hasItem(DEFAULT_PRIVATE_NOTES)))
@@ -524,6 +550,8 @@ class ClientResourceIT {
             .andExpect(jsonPath("$.[*].birthdayAltDay").value(hasItem(DEFAULT_BIRTHDAY_ALT_DAY)))
             .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID)))
             .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME)))
+            .andExpect(jsonPath("$.[*].totalOrderCount").value(hasItem(DEFAULT_TOTAL_ORDER_COUNT)))
+            .andExpect(jsonPath("$.[*].preferredLanguageCode").value(hasItem(DEFAULT_PREFERRED_LANGUAGE_CODE)))
             .andExpect(jsonPath("$.[*].techLineage").value(hasItem(DEFAULT_TECH_LINEAGE)))
             .andExpect(jsonPath("$.[*].techCreatedDate").value(hasItem(sameInstant(DEFAULT_TECH_CREATED_DATE))))
             .andExpect(jsonPath("$.[*].techUpdatedDate").value(hasItem(sameInstant(DEFAULT_TECH_UPDATED_DATE))))
@@ -578,6 +606,7 @@ class ClientResourceIT {
             .andExpect(jsonPath("$.loyaltyTier").value(DEFAULT_LOYALTY_TIER))
             .andExpect(jsonPath("$.marketingOptin").value(DEFAULT_MARKETING_OPTIN.booleanValue()))
             .andExpect(jsonPath("$.marketingOptints").value(DEFAULT_MARKETING_OPTINTS))
+            .andExpect(jsonPath("$.marketingOptOutts").value(DEFAULT_MARKETING_OPT_OUTTS))
             .andExpect(jsonPath("$.hasBillingProfile").value(DEFAULT_HAS_BILLING_PROFILE.booleanValue()))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
             .andExpect(jsonPath("$.privateNotes").value(DEFAULT_PRIVATE_NOTES))
@@ -596,6 +625,8 @@ class ClientResourceIT {
             .andExpect(jsonPath("$.birthdayAltDay").value(DEFAULT_BIRTHDAY_ALT_DAY))
             .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID))
             .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME))
+            .andExpect(jsonPath("$.totalOrderCount").value(DEFAULT_TOTAL_ORDER_COUNT))
+            .andExpect(jsonPath("$.preferredLanguageCode").value(DEFAULT_PREFERRED_LANGUAGE_CODE))
             .andExpect(jsonPath("$.techLineage").value(DEFAULT_TECH_LINEAGE))
             .andExpect(jsonPath("$.techCreatedDate").value(sameInstant(DEFAULT_TECH_CREATED_DATE)))
             .andExpect(jsonPath("$.techUpdatedDate").value(sameInstant(DEFAULT_TECH_UPDATED_DATE)))
@@ -658,6 +689,7 @@ class ClientResourceIT {
             .loyaltyTier(UPDATED_LOYALTY_TIER)
             .marketingOptin(UPDATED_MARKETING_OPTIN)
             .marketingOptints(UPDATED_MARKETING_OPTINTS)
+            .marketingOptOutts(UPDATED_MARKETING_OPT_OUTTS)
             .hasBillingProfile(UPDATED_HAS_BILLING_PROFILE)
             .notes(UPDATED_NOTES)
             .privateNotes(UPDATED_PRIVATE_NOTES)
@@ -676,17 +708,20 @@ class ClientResourceIT {
             .birthdayAltDay(UPDATED_BIRTHDAY_ALT_DAY)
             .userId(UPDATED_USER_ID)
             .userName(UPDATED_USER_NAME)
+            .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
+            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE)
             .techLineage(UPDATED_TECH_LINEAGE)
             .techCreatedDate(UPDATED_TECH_CREATED_DATE)
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ClientDTO clientDTO = clientMapper.toDto(updatedClient);
 
         restClientMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedClient.getId())
+                put(ENTITY_API_URL_ID, clientDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedClient))
+                    .content(TestUtil.convertObjectToJsonBytes(clientDTO))
             )
             .andExpect(status().isOk());
 
@@ -729,6 +764,7 @@ class ClientResourceIT {
         assertThat(testClient.getLoyaltyTier()).isEqualTo(UPDATED_LOYALTY_TIER);
         assertThat(testClient.getMarketingOptin()).isEqualTo(UPDATED_MARKETING_OPTIN);
         assertThat(testClient.getMarketingOptints()).isEqualTo(UPDATED_MARKETING_OPTINTS);
+        assertThat(testClient.getMarketingOptOutts()).isEqualTo(UPDATED_MARKETING_OPT_OUTTS);
         assertThat(testClient.getHasBillingProfile()).isEqualTo(UPDATED_HAS_BILLING_PROFILE);
         assertThat(testClient.getNotes()).isEqualTo(UPDATED_NOTES);
         assertThat(testClient.getPrivateNotes()).isEqualTo(UPDATED_PRIVATE_NOTES);
@@ -747,6 +783,8 @@ class ClientResourceIT {
         assertThat(testClient.getBirthdayAltDay()).isEqualTo(UPDATED_BIRTHDAY_ALT_DAY);
         assertThat(testClient.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testClient.getUserName()).isEqualTo(UPDATED_USER_NAME);
+        assertThat(testClient.getTotalOrderCount()).isEqualTo(UPDATED_TOTAL_ORDER_COUNT);
+        assertThat(testClient.getPreferredLanguageCode()).isEqualTo(UPDATED_PREFERRED_LANGUAGE_CODE);
         assertThat(testClient.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
         assertThat(testClient.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
         assertThat(testClient.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
@@ -760,12 +798,15 @@ class ClientResourceIT {
         int databaseSizeBeforeUpdate = clientRepository.findAll().size();
         client.setId(longCount.incrementAndGet());
 
+        // Create the Client
+        ClientDTO clientDTO = clientMapper.toDto(client);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restClientMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, client.getId())
+                put(ENTITY_API_URL_ID, clientDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(client))
+                    .content(TestUtil.convertObjectToJsonBytes(clientDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -780,12 +821,15 @@ class ClientResourceIT {
         int databaseSizeBeforeUpdate = clientRepository.findAll().size();
         client.setId(longCount.incrementAndGet());
 
+        // Create the Client
+        ClientDTO clientDTO = clientMapper.toDto(client);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(client))
+                    .content(TestUtil.convertObjectToJsonBytes(clientDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -800,9 +844,12 @@ class ClientResourceIT {
         int databaseSizeBeforeUpdate = clientRepository.findAll().size();
         client.setId(longCount.incrementAndGet());
 
+        // Create the Client
+        ClientDTO clientDTO = clientMapper.toDto(client);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(client)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Client in the database
@@ -840,17 +887,19 @@ class ClientResourceIT {
             .loyaltyRank(UPDATED_LOYALTY_RANK)
             .marketingOptin(UPDATED_MARKETING_OPTIN)
             .marketingOptints(UPDATED_MARKETING_OPTINTS)
-            .notes(UPDATED_NOTES)
+            .hasBillingProfile(UPDATED_HAS_BILLING_PROFILE)
+            .privateNotes(UPDATED_PRIVATE_NOTES)
             .tags(UPDATED_TAGS)
-            .totalVisits(UPDATED_TOTAL_VISITS)
-            .totalNoShows(UPDATED_TOTAL_NO_SHOWS)
-            .totalspendPerVisit(UPDATED_TOTALSPEND_PER_VISIT)
+            .totalCancellations(UPDATED_TOTAL_CANCELLATIONS)
+            .totalSpendPerCover(UPDATED_TOTAL_SPEND_PER_COVER)
+            .avgRating(UPDATED_AVG_RATING)
             .referenceCode(UPDATED_REFERENCE_CODE)
             .externalUserId(UPDATED_EXTERNAL_USER_ID)
-            .venueGroupId(UPDATED_VENUE_GROUP_ID)
+            .userId(UPDATED_USER_ID)
             .userName(UPDATED_USER_NAME)
-            .techLineage(UPDATED_TECH_LINEAGE)
+            .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
             .techCreatedDate(UPDATED_TECH_CREATED_DATE)
+            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techComment(UPDATED_TECH_COMMENT);
 
         restClientMockMvc
@@ -900,27 +949,30 @@ class ClientResourceIT {
         assertThat(testClient.getLoyaltyTier()).isEqualTo(DEFAULT_LOYALTY_TIER);
         assertThat(testClient.getMarketingOptin()).isEqualTo(UPDATED_MARKETING_OPTIN);
         assertThat(testClient.getMarketingOptints()).isEqualTo(UPDATED_MARKETING_OPTINTS);
-        assertThat(testClient.getHasBillingProfile()).isEqualTo(DEFAULT_HAS_BILLING_PROFILE);
-        assertThat(testClient.getNotes()).isEqualTo(UPDATED_NOTES);
-        assertThat(testClient.getPrivateNotes()).isEqualTo(DEFAULT_PRIVATE_NOTES);
+        assertThat(testClient.getMarketingOptOutts()).isEqualTo(DEFAULT_MARKETING_OPT_OUTTS);
+        assertThat(testClient.getHasBillingProfile()).isEqualTo(UPDATED_HAS_BILLING_PROFILE);
+        assertThat(testClient.getNotes()).isEqualTo(DEFAULT_NOTES);
+        assertThat(testClient.getPrivateNotes()).isEqualTo(UPDATED_PRIVATE_NOTES);
         assertThat(testClient.getTags()).isEqualTo(UPDATED_TAGS);
-        assertThat(testClient.getTotalVisits()).isEqualTo(UPDATED_TOTAL_VISITS);
+        assertThat(testClient.getTotalVisits()).isEqualTo(DEFAULT_TOTAL_VISITS);
         assertThat(testClient.getTotalCovers()).isEqualTo(DEFAULT_TOTAL_COVERS);
-        assertThat(testClient.getTotalCancellations()).isEqualTo(DEFAULT_TOTAL_CANCELLATIONS);
-        assertThat(testClient.getTotalNoShows()).isEqualTo(UPDATED_TOTAL_NO_SHOWS);
+        assertThat(testClient.getTotalCancellations()).isEqualTo(UPDATED_TOTAL_CANCELLATIONS);
+        assertThat(testClient.getTotalNoShows()).isEqualTo(DEFAULT_TOTAL_NO_SHOWS);
         assertThat(testClient.getTotalSpend()).isEqualTo(DEFAULT_TOTAL_SPEND);
-        assertThat(testClient.getTotalSpendPerCover()).isEqualTo(DEFAULT_TOTAL_SPEND_PER_COVER);
-        assertThat(testClient.getTotalspendPerVisit()).isEqualTo(UPDATED_TOTALSPEND_PER_VISIT);
-        assertThat(testClient.getAvgRating()).isEqualTo(DEFAULT_AVG_RATING);
+        assertThat(testClient.getTotalSpendPerCover()).isEqualTo(UPDATED_TOTAL_SPEND_PER_COVER);
+        assertThat(testClient.getTotalspendPerVisit()).isEqualTo(DEFAULT_TOTALSPEND_PER_VISIT);
+        assertThat(testClient.getAvgRating()).isEqualTo(UPDATED_AVG_RATING);
         assertThat(testClient.getReferenceCode()).isEqualTo(UPDATED_REFERENCE_CODE);
         assertThat(testClient.getExternalUserId()).isEqualTo(UPDATED_EXTERNAL_USER_ID);
-        assertThat(testClient.getVenueGroupId()).isEqualTo(UPDATED_VENUE_GROUP_ID);
+        assertThat(testClient.getVenueGroupId()).isEqualTo(DEFAULT_VENUE_GROUP_ID);
         assertThat(testClient.getBirthdayAltDay()).isEqualTo(DEFAULT_BIRTHDAY_ALT_DAY);
-        assertThat(testClient.getUserId()).isEqualTo(DEFAULT_USER_ID);
+        assertThat(testClient.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testClient.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testClient.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
+        assertThat(testClient.getTotalOrderCount()).isEqualTo(UPDATED_TOTAL_ORDER_COUNT);
+        assertThat(testClient.getPreferredLanguageCode()).isEqualTo(DEFAULT_PREFERRED_LANGUAGE_CODE);
+        assertThat(testClient.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
         assertThat(testClient.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testClient.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
+        assertThat(testClient.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
         assertThat(testClient.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
         assertThat(testClient.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
@@ -973,6 +1025,7 @@ class ClientResourceIT {
             .loyaltyTier(UPDATED_LOYALTY_TIER)
             .marketingOptin(UPDATED_MARKETING_OPTIN)
             .marketingOptints(UPDATED_MARKETING_OPTINTS)
+            .marketingOptOutts(UPDATED_MARKETING_OPT_OUTTS)
             .hasBillingProfile(UPDATED_HAS_BILLING_PROFILE)
             .notes(UPDATED_NOTES)
             .privateNotes(UPDATED_PRIVATE_NOTES)
@@ -991,6 +1044,8 @@ class ClientResourceIT {
             .birthdayAltDay(UPDATED_BIRTHDAY_ALT_DAY)
             .userId(UPDATED_USER_ID)
             .userName(UPDATED_USER_NAME)
+            .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
+            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE)
             .techLineage(UPDATED_TECH_LINEAGE)
             .techCreatedDate(UPDATED_TECH_CREATED_DATE)
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
@@ -1044,6 +1099,7 @@ class ClientResourceIT {
         assertThat(testClient.getLoyaltyTier()).isEqualTo(UPDATED_LOYALTY_TIER);
         assertThat(testClient.getMarketingOptin()).isEqualTo(UPDATED_MARKETING_OPTIN);
         assertThat(testClient.getMarketingOptints()).isEqualTo(UPDATED_MARKETING_OPTINTS);
+        assertThat(testClient.getMarketingOptOutts()).isEqualTo(UPDATED_MARKETING_OPT_OUTTS);
         assertThat(testClient.getHasBillingProfile()).isEqualTo(UPDATED_HAS_BILLING_PROFILE);
         assertThat(testClient.getNotes()).isEqualTo(UPDATED_NOTES);
         assertThat(testClient.getPrivateNotes()).isEqualTo(UPDATED_PRIVATE_NOTES);
@@ -1062,6 +1118,8 @@ class ClientResourceIT {
         assertThat(testClient.getBirthdayAltDay()).isEqualTo(UPDATED_BIRTHDAY_ALT_DAY);
         assertThat(testClient.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testClient.getUserName()).isEqualTo(UPDATED_USER_NAME);
+        assertThat(testClient.getTotalOrderCount()).isEqualTo(UPDATED_TOTAL_ORDER_COUNT);
+        assertThat(testClient.getPreferredLanguageCode()).isEqualTo(UPDATED_PREFERRED_LANGUAGE_CODE);
         assertThat(testClient.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
         assertThat(testClient.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
         assertThat(testClient.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
@@ -1075,12 +1133,15 @@ class ClientResourceIT {
         int databaseSizeBeforeUpdate = clientRepository.findAll().size();
         client.setId(longCount.incrementAndGet());
 
+        // Create the Client
+        ClientDTO clientDTO = clientMapper.toDto(client);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restClientMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, client.getId())
+                patch(ENTITY_API_URL_ID, clientDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(client))
+                    .content(TestUtil.convertObjectToJsonBytes(clientDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -1095,12 +1156,15 @@ class ClientResourceIT {
         int databaseSizeBeforeUpdate = clientRepository.findAll().size();
         client.setId(longCount.incrementAndGet());
 
+        // Create the Client
+        ClientDTO clientDTO = clientMapper.toDto(client);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(client))
+                    .content(TestUtil.convertObjectToJsonBytes(clientDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -1115,9 +1179,14 @@ class ClientResourceIT {
         int databaseSizeBeforeUpdate = clientRepository.findAll().size();
         client.setId(longCount.incrementAndGet());
 
+        // Create the Client
+        ClientDTO clientDTO = clientMapper.toDto(client);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(client)))
+            .perform(
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(clientDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Client in the database

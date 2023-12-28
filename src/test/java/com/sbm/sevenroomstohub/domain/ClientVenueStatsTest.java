@@ -30,8 +30,10 @@ class ClientVenueStatsTest {
 
         clientVenueStats.setClient(clientBack);
         assertThat(clientVenueStats.getClient()).isEqualTo(clientBack);
+        assertThat(clientBack.getClientVenueStats()).isEqualTo(clientVenueStats);
 
         clientVenueStats.client(null);
         assertThat(clientVenueStats.getClient()).isNull();
+        assertThat(clientBack.getClientVenueStats()).isNull();
     }
 }

@@ -7,8 +7,8 @@ import ResPosticketsItemService from './res-postickets-item.service';
 import { useValidation, useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
-import ReservationService from '@/entities/reservation/reservation.service';
-import { type IReservation } from '@/shared/model/reservation.model';
+import ResPosTicketService from '@/entities/res-pos-ticket/res-pos-ticket.service';
+import { type IResPosTicket } from '@/shared/model/res-pos-ticket.model';
 import { type IResPosticketsItem, ResPosticketsItem } from '@/shared/model/res-postickets-item.model';
 
 export default defineComponent({
@@ -20,9 +20,9 @@ export default defineComponent({
 
     const resPosticketsItem: Ref<IResPosticketsItem> = ref(new ResPosticketsItem());
 
-    const reservationService = inject('reservationService', () => new ReservationService());
+    const resPosTicketService = inject('resPosTicketService', () => new ResPosTicketService());
 
-    const reservations: Ref<IReservation[]> = ref([]);
+    const resPosTickets: Ref<IResPosTicket[]> = ref([]);
     const isSaving = ref(false);
     const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? 'en'), true);
 
@@ -47,10 +47,10 @@ export default defineComponent({
     }
 
     const initRelationships = () => {
-      reservationService()
+      resPosTicketService()
         .retrieve()
         .then(res => {
-          reservations.value = res.data;
+          resPosTickets.value = res.data;
         });
     };
 
@@ -67,7 +67,7 @@ export default defineComponent({
       techUpdatedDate: {},
       techMapping: {},
       techComment: {},
-      reservation: {},
+      resPosTicket: {},
     };
     const v$ = useVuelidate(validationRules, resPosticketsItem as any);
     v$.value.$validate();
@@ -79,7 +79,7 @@ export default defineComponent({
       previousState,
       isSaving,
       currentLanguage,
-      reservations,
+      resPosTickets,
       v$,
       ...useDateFormat({ entityRef: resPosticketsItem }),
       t$,

@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sbm.sevenroomstohub.IntegrationTest;
 import com.sbm.sevenroomstohub.domain.ClientPhoto;
 import com.sbm.sevenroomstohub.repository.ClientPhotoRepository;
+import com.sbm.sevenroomstohub.service.dto.ClientPhotoDTO;
+import com.sbm.sevenroomstohub.service.mapper.ClientPhotoMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -104,6 +106,9 @@ class ClientPhotoResourceIT {
     private ClientPhotoRepository clientPhotoRepository;
 
     @Autowired
+    private ClientPhotoMapper clientPhotoMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -183,8 +188,11 @@ class ClientPhotoResourceIT {
     void createClientPhoto() throws Exception {
         int databaseSizeBeforeCreate = clientPhotoRepository.findAll().size();
         // Create the ClientPhoto
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(clientPhoto);
         restClientPhotoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientPhoto)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the ClientPhoto in the database
@@ -218,12 +226,15 @@ class ClientPhotoResourceIT {
     void createClientPhotoWithExistingId() throws Exception {
         // Create the ClientPhoto with an existing ID
         clientPhoto.setId(1L);
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(clientPhoto);
 
         int databaseSizeBeforeCreate = clientPhotoRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restClientPhotoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientPhoto)))
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the ClientPhoto in the database
@@ -339,12 +350,13 @@ class ClientPhotoResourceIT {
             .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
             .techMapping(UPDATED_TECH_MAPPING)
             .techComment(UPDATED_TECH_COMMENT);
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(updatedClientPhoto);
 
         restClientPhotoMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedClientPhoto.getId())
+                put(ENTITY_API_URL_ID, clientPhotoDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedClientPhoto))
+                    .content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO))
             )
             .andExpect(status().isOk());
 
@@ -380,12 +392,15 @@ class ClientPhotoResourceIT {
         int databaseSizeBeforeUpdate = clientPhotoRepository.findAll().size();
         clientPhoto.setId(longCount.incrementAndGet());
 
+        // Create the ClientPhoto
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(clientPhoto);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restClientPhotoMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, clientPhoto.getId())
+                put(ENTITY_API_URL_ID, clientPhotoDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(clientPhoto))
+                    .content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -400,12 +415,15 @@ class ClientPhotoResourceIT {
         int databaseSizeBeforeUpdate = clientPhotoRepository.findAll().size();
         clientPhoto.setId(longCount.incrementAndGet());
 
+        // Create the ClientPhoto
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(clientPhoto);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientPhotoMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(clientPhoto))
+                    .content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -420,9 +438,12 @@ class ClientPhotoResourceIT {
         int databaseSizeBeforeUpdate = clientPhotoRepository.findAll().size();
         clientPhoto.setId(longCount.incrementAndGet());
 
+        // Create the ClientPhoto
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(clientPhoto);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientPhotoMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientPhoto)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the ClientPhoto in the database
@@ -563,12 +584,15 @@ class ClientPhotoResourceIT {
         int databaseSizeBeforeUpdate = clientPhotoRepository.findAll().size();
         clientPhoto.setId(longCount.incrementAndGet());
 
+        // Create the ClientPhoto
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(clientPhoto);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restClientPhotoMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, clientPhoto.getId())
+                patch(ENTITY_API_URL_ID, clientPhotoDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(clientPhoto))
+                    .content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -583,12 +607,15 @@ class ClientPhotoResourceIT {
         int databaseSizeBeforeUpdate = clientPhotoRepository.findAll().size();
         clientPhoto.setId(longCount.incrementAndGet());
 
+        // Create the ClientPhoto
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(clientPhoto);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientPhotoMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(clientPhoto))
+                    .content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -603,10 +630,13 @@ class ClientPhotoResourceIT {
         int databaseSizeBeforeUpdate = clientPhotoRepository.findAll().size();
         clientPhoto.setId(longCount.incrementAndGet());
 
+        // Create the ClientPhoto
+        ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(clientPhoto);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClientPhotoMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(clientPhoto))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(clientPhotoDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

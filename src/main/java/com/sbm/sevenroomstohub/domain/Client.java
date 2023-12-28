@@ -1,7 +1,5 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
@@ -133,6 +131,9 @@ public class Client implements Serializable {
     @Column(name = "marketing_optints")
     private String marketingOptints;
 
+    @Column(name = "marketing_opt_outts")
+    private String marketingOptOutts;
+
     @Column(name = "has_billing_profile")
     private Boolean hasBillingProfile;
 
@@ -187,6 +188,12 @@ public class Client implements Serializable {
     @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "total_order_count")
+    private Integer totalOrderCount;
+
+    @Column(name = "preferred_language_code")
+    private String preferredLanguageCode;
+
     @Column(name = "tech_lineage")
     private String techLineage;
 
@@ -207,11 +214,10 @@ public class Client implements Serializable {
     @JoinColumn(unique = true)
     private ClientPhoto clientPhoto;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
-    @JsonIgnore
-    private Set<ClientVenueStats> clientVenueStats = new HashSet<>();
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private ClientVenueStats clientVenueStats;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -225,7 +231,7 @@ public class Client implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "resTags", "resPosticketsItems", "resPosTickets", "resCustomFields", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "tables", "client" }, allowSetters = true)
     private Set<Reservation> reservations = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
@@ -703,6 +709,19 @@ public class Client implements Serializable {
         this.marketingOptints = marketingOptints;
     }
 
+    public String getMarketingOptOutts() {
+        return this.marketingOptOutts;
+    }
+
+    public Client marketingOptOutts(String marketingOptOutts) {
+        this.setMarketingOptOutts(marketingOptOutts);
+        return this;
+    }
+
+    public void setMarketingOptOutts(String marketingOptOutts) {
+        this.marketingOptOutts = marketingOptOutts;
+    }
+
     public Boolean getHasBillingProfile() {
         return this.hasBillingProfile;
     }
@@ -937,6 +956,32 @@ public class Client implements Serializable {
         this.userName = userName;
     }
 
+    public Integer getTotalOrderCount() {
+        return this.totalOrderCount;
+    }
+
+    public Client totalOrderCount(Integer totalOrderCount) {
+        this.setTotalOrderCount(totalOrderCount);
+        return this;
+    }
+
+    public void setTotalOrderCount(Integer totalOrderCount) {
+        this.totalOrderCount = totalOrderCount;
+    }
+
+    public String getPreferredLanguageCode() {
+        return this.preferredLanguageCode;
+    }
+
+    public Client preferredLanguageCode(String preferredLanguageCode) {
+        this.setPreferredLanguageCode(preferredLanguageCode);
+        return this;
+    }
+
+    public void setPreferredLanguageCode(String preferredLanguageCode) {
+        this.preferredLanguageCode = preferredLanguageCode;
+    }
+
     public String getTechLineage() {
         return this.techLineage;
     }
@@ -1015,34 +1060,16 @@ public class Client implements Serializable {
         return this;
     }
 
-    public Set<ClientVenueStats> getClientVenueStats() {
+    public ClientVenueStats getClientVenueStats() {
         return this.clientVenueStats;
     }
 
-    public void setClientVenueStats(Set<ClientVenueStats> clientVenueStats) {
-        if (this.clientVenueStats != null) {
-            this.clientVenueStats.forEach(i -> i.setClient(null));
-        }
-        if (clientVenueStats != null) {
-            clientVenueStats.forEach(i -> i.setClient(this));
-        }
+    public void setClientVenueStats(ClientVenueStats clientVenueStats) {
         this.clientVenueStats = clientVenueStats;
     }
 
-    public Client clientVenueStats(Set<ClientVenueStats> clientVenueStats) {
+    public Client clientVenueStats(ClientVenueStats clientVenueStats) {
         this.setClientVenueStats(clientVenueStats);
-        return this;
-    }
-
-    public Client addClientVenueStats(ClientVenueStats clientVenueStats) {
-        this.clientVenueStats.add(clientVenueStats);
-        clientVenueStats.setClient(this);
-        return this;
-    }
-
-    public Client removeClientVenueStats(ClientVenueStats clientVenueStats) {
-        this.clientVenueStats.remove(clientVenueStats);
-        clientVenueStats.setClient(null);
         return this;
     }
 
@@ -1229,6 +1256,7 @@ public class Client implements Serializable {
             ", loyaltyTier='" + getLoyaltyTier() + "'" +
             ", marketingOptin='" + getMarketingOptin() + "'" +
             ", marketingOptints='" + getMarketingOptints() + "'" +
+            ", marketingOptOutts='" + getMarketingOptOutts() + "'" +
             ", hasBillingProfile='" + getHasBillingProfile() + "'" +
             ", notes='" + getNotes() + "'" +
             ", privateNotes='" + getPrivateNotes() + "'" +
@@ -1247,6 +1275,8 @@ public class Client implements Serializable {
             ", birthdayAltDay=" + getBirthdayAltDay() +
             ", userId='" + getUserId() + "'" +
             ", userName='" + getUserName() + "'" +
+            ", totalOrderCount=" + getTotalOrderCount() +
+            ", preferredLanguageCode='" + getPreferredLanguageCode() + "'" +
             ", techLineage='" + getTechLineage() + "'" +
             ", techCreatedDate='" + getTechCreatedDate() + "'" +
             ", techUpdatedDate='" + getTechUpdatedDate() + "'" +

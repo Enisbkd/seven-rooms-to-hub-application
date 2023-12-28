@@ -3,9 +3,9 @@ package com.sbm.sevenroomstohub.domain;
 import static com.sbm.sevenroomstohub.domain.ClientTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResCustomFieldTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResPosTicketTestSamples.*;
-import static com.sbm.sevenroomstohub.domain.ResPosticketsItemTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResTagTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ReservationTestSamples.*;
+import static com.sbm.sevenroomstohub.domain.TableTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sbm.sevenroomstohub.web.rest.TestUtil;
@@ -52,28 +52,6 @@ class ReservationTest {
     }
 
     @Test
-    void resPosticketsItemTest() throws Exception {
-        Reservation reservation = getReservationRandomSampleGenerator();
-        ResPosticketsItem resPosticketsItemBack = getResPosticketsItemRandomSampleGenerator();
-
-        reservation.addResPosticketsItem(resPosticketsItemBack);
-        assertThat(reservation.getResPosticketsItems()).containsOnly(resPosticketsItemBack);
-        assertThat(resPosticketsItemBack.getReservation()).isEqualTo(reservation);
-
-        reservation.removeResPosticketsItem(resPosticketsItemBack);
-        assertThat(reservation.getResPosticketsItems()).doesNotContain(resPosticketsItemBack);
-        assertThat(resPosticketsItemBack.getReservation()).isNull();
-
-        reservation.resPosticketsItems(new HashSet<>(Set.of(resPosticketsItemBack)));
-        assertThat(reservation.getResPosticketsItems()).containsOnly(resPosticketsItemBack);
-        assertThat(resPosticketsItemBack.getReservation()).isEqualTo(reservation);
-
-        reservation.setResPosticketsItems(new HashSet<>());
-        assertThat(reservation.getResPosticketsItems()).doesNotContain(resPosticketsItemBack);
-        assertThat(resPosticketsItemBack.getReservation()).isNull();
-    }
-
-    @Test
     void resPosTicketTest() throws Exception {
         Reservation reservation = getReservationRandomSampleGenerator();
         ResPosTicket resPosTicketBack = getResPosTicketRandomSampleGenerator();
@@ -115,6 +93,28 @@ class ReservationTest {
         reservation.setResCustomFields(new HashSet<>());
         assertThat(reservation.getResCustomFields()).doesNotContain(resCustomFieldBack);
         assertThat(resCustomFieldBack.getReservation()).isNull();
+    }
+
+    @Test
+    void tableTest() throws Exception {
+        Reservation reservation = getReservationRandomSampleGenerator();
+        Table tableBack = getTableRandomSampleGenerator();
+
+        reservation.addTable(tableBack);
+        assertThat(reservation.getTables()).containsOnly(tableBack);
+        assertThat(tableBack.getReservation()).isEqualTo(reservation);
+
+        reservation.removeTable(tableBack);
+        assertThat(reservation.getTables()).doesNotContain(tableBack);
+        assertThat(tableBack.getReservation()).isNull();
+
+        reservation.tables(new HashSet<>(Set.of(tableBack)));
+        assertThat(reservation.getTables()).containsOnly(tableBack);
+        assertThat(tableBack.getReservation()).isEqualTo(reservation);
+
+        reservation.setTables(new HashSet<>());
+        assertThat(reservation.getTables()).doesNotContain(tableBack);
+        assertThat(tableBack.getReservation()).isNull();
     }
 
     @Test

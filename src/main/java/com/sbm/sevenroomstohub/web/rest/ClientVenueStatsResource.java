@@ -1,7 +1,8 @@
 package com.sbm.sevenroomstohub.web.rest;
 
-import com.sbm.sevenroomstohub.domain.ClientVenueStats;
 import com.sbm.sevenroomstohub.repository.ClientVenueStatsRepository;
+import com.sbm.sevenroomstohub.service.ClientVenueStatsService;
+import com.sbm.sevenroomstohub.service.dto.ClientVenueStatsDTO;
 import com.sbm.sevenroomstohub.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -11,10 +12,15 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -22,7 +28,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/client-venue-stats")
-@Transactional
 public class ClientVenueStatsResource {
 
     private final Logger log = LoggerFactory.getLogger(ClientVenueStatsResource.class);
@@ -32,27 +37,33 @@ public class ClientVenueStatsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ClientVenueStatsService clientVenueStatsService;
+
     private final ClientVenueStatsRepository clientVenueStatsRepository;
 
-    public ClientVenueStatsResource(ClientVenueStatsRepository clientVenueStatsRepository) {
+    public ClientVenueStatsResource(
+        ClientVenueStatsService clientVenueStatsService,
+        ClientVenueStatsRepository clientVenueStatsRepository
+    ) {
+        this.clientVenueStatsService = clientVenueStatsService;
         this.clientVenueStatsRepository = clientVenueStatsRepository;
     }
 
     /**
      * {@code POST  /client-venue-stats} : Create a new clientVenueStats.
      *
-     * @param clientVenueStats the clientVenueStats to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new clientVenueStats, or with status {@code 400 (Bad Request)} if the clientVenueStats has already an ID.
+     * @param clientVenueStatsDTO the clientVenueStatsDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new clientVenueStatsDTO, or with status {@code 400 (Bad Request)} if the clientVenueStats has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<ClientVenueStats> createClientVenueStats(@RequestBody ClientVenueStats clientVenueStats)
+    public ResponseEntity<ClientVenueStatsDTO> createClientVenueStats(@RequestBody ClientVenueStatsDTO clientVenueStatsDTO)
         throws URISyntaxException {
-        log.debug("REST request to save ClientVenueStats : {}", clientVenueStats);
-        if (clientVenueStats.getId() != null) {
+        log.debug("REST request to save ClientVenueStats : {}", clientVenueStatsDTO);
+        if (clientVenueStatsDTO.getId() != null) {
             throw new BadRequestAlertException("A new clientVenueStats cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ClientVenueStats result = clientVenueStatsRepository.save(clientVenueStats);
+        ClientVenueStatsDTO result = clientVenueStatsService.save(clientVenueStatsDTO);
         return ResponseEntity
             .created(new URI("/api/client-venue-stats/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -62,23 +73,23 @@ public class ClientVenueStatsResource {
     /**
      * {@code PUT  /client-venue-stats/:id} : Updates an existing clientVenueStats.
      *
-     * @param id the id of the clientVenueStats to save.
-     * @param clientVenueStats the clientVenueStats to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clientVenueStats,
-     * or with status {@code 400 (Bad Request)} if the clientVenueStats is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the clientVenueStats couldn't be updated.
+     * @param id the id of the clientVenueStatsDTO to save.
+     * @param clientVenueStatsDTO the clientVenueStatsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clientVenueStatsDTO,
+     * or with status {@code 400 (Bad Request)} if the clientVenueStatsDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the clientVenueStatsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<ClientVenueStats> updateClientVenueStats(
+    public ResponseEntity<ClientVenueStatsDTO> updateClientVenueStats(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody ClientVenueStats clientVenueStats
+        @RequestBody ClientVenueStatsDTO clientVenueStatsDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update ClientVenueStats : {}, {}", id, clientVenueStats);
-        if (clientVenueStats.getId() == null) {
+        log.debug("REST request to update ClientVenueStats : {}, {}", id, clientVenueStatsDTO);
+        if (clientVenueStatsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, clientVenueStats.getId())) {
+        if (!Objects.equals(id, clientVenueStatsDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -86,34 +97,34 @@ public class ClientVenueStatsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ClientVenueStats result = clientVenueStatsRepository.save(clientVenueStats);
+        ClientVenueStatsDTO result = clientVenueStatsService.update(clientVenueStatsDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clientVenueStats.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clientVenueStatsDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /client-venue-stats/:id} : Partial updates given fields of an existing clientVenueStats, field will ignore if it is null
      *
-     * @param id the id of the clientVenueStats to save.
-     * @param clientVenueStats the clientVenueStats to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clientVenueStats,
-     * or with status {@code 400 (Bad Request)} if the clientVenueStats is not valid,
-     * or with status {@code 404 (Not Found)} if the clientVenueStats is not found,
-     * or with status {@code 500 (Internal Server Error)} if the clientVenueStats couldn't be updated.
+     * @param id the id of the clientVenueStatsDTO to save.
+     * @param clientVenueStatsDTO the clientVenueStatsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clientVenueStatsDTO,
+     * or with status {@code 400 (Bad Request)} if the clientVenueStatsDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the clientVenueStatsDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the clientVenueStatsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<ClientVenueStats> partialUpdateClientVenueStats(
+    public ResponseEntity<ClientVenueStatsDTO> partialUpdateClientVenueStats(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody ClientVenueStats clientVenueStats
+        @RequestBody ClientVenueStatsDTO clientVenueStatsDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update ClientVenueStats partially : {}, {}", id, clientVenueStats);
-        if (clientVenueStats.getId() == null) {
+        log.debug("REST request to partial update ClientVenueStats partially : {}, {}", id, clientVenueStatsDTO);
+        if (clientVenueStatsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, clientVenueStats.getId())) {
+        if (!Objects.equals(id, clientVenueStatsDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -121,120 +132,59 @@ public class ClientVenueStatsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ClientVenueStats> result = clientVenueStatsRepository
-            .findById(clientVenueStats.getId())
-            .map(existingClientVenueStats -> {
-                if (clientVenueStats.getVenueId() != null) {
-                    existingClientVenueStats.setVenueId(clientVenueStats.getVenueId());
-                }
-                if (clientVenueStats.getAvgRating() != null) {
-                    existingClientVenueStats.setAvgRating(clientVenueStats.getAvgRating());
-                }
-                if (clientVenueStats.getBookedByNames() != null) {
-                    existingClientVenueStats.setBookedByNames(clientVenueStats.getBookedByNames());
-                }
-                if (clientVenueStats.getLastVisitDate() != null) {
-                    existingClientVenueStats.setLastVisitDate(clientVenueStats.getLastVisitDate());
-                }
-                if (clientVenueStats.getNumRatings() != null) {
-                    existingClientVenueStats.setNumRatings(clientVenueStats.getNumRatings());
-                }
-                if (clientVenueStats.getTotalCancellations() != null) {
-                    existingClientVenueStats.setTotalCancellations(clientVenueStats.getTotalCancellations());
-                }
-                if (clientVenueStats.getTotalCovers() != null) {
-                    existingClientVenueStats.setTotalCovers(clientVenueStats.getTotalCovers());
-                }
-                if (clientVenueStats.getTotalNoShows() != null) {
-                    existingClientVenueStats.setTotalNoShows(clientVenueStats.getTotalNoShows());
-                }
-                if (clientVenueStats.getTotalSpend() != null) {
-                    existingClientVenueStats.setTotalSpend(clientVenueStats.getTotalSpend());
-                }
-                if (clientVenueStats.getTotalSpendLocal() != null) {
-                    existingClientVenueStats.setTotalSpendLocal(clientVenueStats.getTotalSpendLocal());
-                }
-                if (clientVenueStats.getTotalSpendLocalperCover() != null) {
-                    existingClientVenueStats.setTotalSpendLocalperCover(clientVenueStats.getTotalSpendLocalperCover());
-                }
-                if (clientVenueStats.getTotalSpendLocalPerVisit() != null) {
-                    existingClientVenueStats.setTotalSpendLocalPerVisit(clientVenueStats.getTotalSpendLocalPerVisit());
-                }
-                if (clientVenueStats.getTotalSpendperCover() != null) {
-                    existingClientVenueStats.setTotalSpendperCover(clientVenueStats.getTotalSpendperCover());
-                }
-                if (clientVenueStats.getTotalSpendPerVisit() != null) {
-                    existingClientVenueStats.setTotalSpendPerVisit(clientVenueStats.getTotalSpendPerVisit());
-                }
-                if (clientVenueStats.getTotalVisit() != null) {
-                    existingClientVenueStats.setTotalVisit(clientVenueStats.getTotalVisit());
-                }
-                if (clientVenueStats.getVenueMarketingOptin() != null) {
-                    existingClientVenueStats.setVenueMarketingOptin(clientVenueStats.getVenueMarketingOptin());
-                }
-                if (clientVenueStats.getVenueMarketingOptints() != null) {
-                    existingClientVenueStats.setVenueMarketingOptints(clientVenueStats.getVenueMarketingOptints());
-                }
-                if (clientVenueStats.getTechLineage() != null) {
-                    existingClientVenueStats.setTechLineage(clientVenueStats.getTechLineage());
-                }
-                if (clientVenueStats.getTechCreatedDate() != null) {
-                    existingClientVenueStats.setTechCreatedDate(clientVenueStats.getTechCreatedDate());
-                }
-                if (clientVenueStats.getTechUpdatedDate() != null) {
-                    existingClientVenueStats.setTechUpdatedDate(clientVenueStats.getTechUpdatedDate());
-                }
-                if (clientVenueStats.getTechMapping() != null) {
-                    existingClientVenueStats.setTechMapping(clientVenueStats.getTechMapping());
-                }
-                if (clientVenueStats.getTechComment() != null) {
-                    existingClientVenueStats.setTechComment(clientVenueStats.getTechComment());
-                }
-
-                return existingClientVenueStats;
-            })
-            .map(clientVenueStatsRepository::save);
+        Optional<ClientVenueStatsDTO> result = clientVenueStatsService.partialUpdate(clientVenueStatsDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clientVenueStats.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clientVenueStatsDTO.getId().toString())
         );
     }
 
     /**
      * {@code GET  /client-venue-stats} : get all the clientVenueStats.
      *
+     * @param pageable the pagination information.
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientVenueStats in body.
      */
     @GetMapping("")
-    public List<ClientVenueStats> getAllClientVenueStats() {
-        log.debug("REST request to get all ClientVenueStats");
-        return clientVenueStatsRepository.findAll();
+    public ResponseEntity<List<ClientVenueStatsDTO>> getAllClientVenueStats(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @RequestParam(name = "filter", required = false) String filter
+    ) {
+        if ("client-is-null".equals(filter)) {
+            log.debug("REST request to get all ClientVenueStatss where client is null");
+            return new ResponseEntity<>(clientVenueStatsService.findAllWhereClientIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of ClientVenueStats");
+        Page<ClientVenueStatsDTO> page = clientVenueStatsService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
      * {@code GET  /client-venue-stats/:id} : get the "id" clientVenueStats.
      *
-     * @param id the id of the clientVenueStats to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the clientVenueStats, or with status {@code 404 (Not Found)}.
+     * @param id the id of the clientVenueStatsDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the clientVenueStatsDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ClientVenueStats> getClientVenueStats(@PathVariable("id") Long id) {
+    public ResponseEntity<ClientVenueStatsDTO> getClientVenueStats(@PathVariable("id") Long id) {
         log.debug("REST request to get ClientVenueStats : {}", id);
-        Optional<ClientVenueStats> clientVenueStats = clientVenueStatsRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(clientVenueStats);
+        Optional<ClientVenueStatsDTO> clientVenueStatsDTO = clientVenueStatsService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(clientVenueStatsDTO);
     }
 
     /**
      * {@code DELETE  /client-venue-stats/:id} : delete the "id" clientVenueStats.
      *
-     * @param id the id of the clientVenueStats to delete.
+     * @param id the id of the clientVenueStatsDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClientVenueStats(@PathVariable("id") Long id) {
         log.debug("REST request to delete ClientVenueStats : {}", id);
-        clientVenueStatsRepository.deleteById(id);
+        clientVenueStatsService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

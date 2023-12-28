@@ -78,12 +78,9 @@ export default defineComponent({
       statusDisplay: {},
       statusSimple: {},
       tableNumbers: {},
-      venueSeatingAreaId: {},
-      venueSeatingAreaName: {},
       accessPersistentId: {},
       arrivedGuests: {},
       isvip: {},
-      iswalkin: {},
       bookedby: {},
       clientReferenceCode: {},
       lastname: {},
@@ -136,9 +133,9 @@ export default defineComponent({
       techMapping: {},
       techComment: {},
       resTags: {},
-      resPosticketsItems: {},
       resPosTickets: {},
       resCustomFields: {},
+      tables: {},
       client: {},
     };
     const v$ = useVuelidate(validationRules, reservation as any);

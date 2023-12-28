@@ -28,66 +28,262 @@
       <table class="table table-striped" aria-describedby="clients">
         <thead>
           <tr>
-            <th scope="row"><span v-text="t$('global.field.id')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.clientId')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.createdDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.updatedDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.deletedDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.lastname')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.firstname')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.gender')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.salutation')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.title')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.birthdayDay')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.birthdayMonth')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.birthdayAltMonth')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.anniversaryDay')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.anniversaryMonth')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.company')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.email')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.emailAlt')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.phoneNumber')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.phoneNumberlocale')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.phoneNumberalt')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.phoneNumberaltlocale')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.address')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.address2')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.city')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.postalCode')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.state')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.country')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.isContactPrivate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.isOnetimeGuest')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.status')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.loyaltyId')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.loyaltyRank')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.loyaltyTier')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.marketingOptin')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.marketingOptints')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.hasBillingProfile')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.notes')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.privateNotes')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.tags')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.totalVisits')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.totalCovers')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.totalCancellations')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.totalNoShows')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.totalSpend')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.totalSpendPerCover')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.totalspendPerVisit')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.avgRating')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.referenceCode')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.externalUserId')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.venueGroupId')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.birthdayAltDay')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.userId')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.userName')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.techLineage')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.techCreatedDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.techUpdatedDate')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.techMapping')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.techComment')"></span></th>
-            <th scope="row"><span v-text="t$('sevenRoomsToHubApplicationApp.client.clientPhoto')"></span></th>
+            <th scope="row" v-on:click="changeOrder('id')">
+              <span v-text="t$('global.field.id')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('clientId')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.clientId')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'clientId'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('createdDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.createdDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'createdDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('updatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.updatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'updatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('deletedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.deletedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'deletedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('lastname')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.lastname')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'lastname'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('firstname')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.firstname')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'firstname'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('gender')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.gender')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'gender'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('salutation')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.salutation')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'salutation'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('title')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.title')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'title'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('birthdayDay')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.birthdayDay')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'birthdayDay'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('birthdayMonth')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.birthdayMonth')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'birthdayMonth'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('birthdayAltMonth')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.birthdayAltMonth')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'birthdayAltMonth'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('anniversaryDay')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.anniversaryDay')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'anniversaryDay'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('anniversaryMonth')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.anniversaryMonth')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'anniversaryMonth'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('company')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.company')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'company'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('email')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.email')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'email'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('emailAlt')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.emailAlt')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'emailAlt'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('phoneNumber')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.phoneNumber')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'phoneNumber'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('phoneNumberlocale')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.phoneNumberlocale')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'phoneNumberlocale'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('phoneNumberalt')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.phoneNumberalt')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'phoneNumberalt'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('phoneNumberaltlocale')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.phoneNumberaltlocale')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'phoneNumberaltlocale'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('address')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.address')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'address'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('address2')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.address2')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'address2'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('city')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.city')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'city'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('postalCode')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.postalCode')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'postalCode'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('state')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.state')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'state'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('country')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.country')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'country'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('isContactPrivate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.isContactPrivate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'isContactPrivate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('isOnetimeGuest')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.isOnetimeGuest')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'isOnetimeGuest'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('status')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.status')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'status'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('loyaltyId')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.loyaltyId')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'loyaltyId'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('loyaltyRank')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.loyaltyRank')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'loyaltyRank'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('loyaltyTier')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.loyaltyTier')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'loyaltyTier'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('marketingOptin')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.marketingOptin')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'marketingOptin'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('marketingOptints')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.marketingOptints')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'marketingOptints'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('marketingOptOutts')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.marketingOptOutts')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'marketingOptOutts'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('hasBillingProfile')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.hasBillingProfile')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'hasBillingProfile'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('notes')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.notes')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'notes'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('privateNotes')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.privateNotes')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'privateNotes'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('tags')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.tags')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'tags'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalVisits')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalVisits')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalVisits'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalCovers')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalCovers')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalCovers'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalCancellations')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalCancellations')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalCancellations'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalNoShows')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalNoShows')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalNoShows'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalSpend')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalSpend')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpend'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalSpendPerCover')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalSpendPerCover')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpendPerCover'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalspendPerVisit')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalspendPerVisit')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalspendPerVisit'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('avgRating')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.avgRating')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'avgRating'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('referenceCode')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.referenceCode')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'referenceCode'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('externalUserId')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.externalUserId')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'externalUserId'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('venueGroupId')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.venueGroupId')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'venueGroupId'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('birthdayAltDay')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.birthdayAltDay')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'birthdayAltDay'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('userId')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.userId')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'userId'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('userName')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.userName')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'userName'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalOrderCount')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.totalOrderCount')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalOrderCount'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('preferredLanguageCode')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.preferredLanguageCode')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'preferredLanguageCode'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techLineage')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techLineage')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techCreatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techUpdatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techMapping')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techMapping')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techComment')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techComment')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('clientPhoto.id')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.clientPhoto')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'clientPhoto.id'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('clientVenueStats.id')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.client.clientVenueStats')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'clientVenueStats.id'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -131,6 +327,7 @@
             <td>{{ client.loyaltyTier }}</td>
             <td>{{ client.marketingOptin }}</td>
             <td>{{ client.marketingOptints }}</td>
+            <td>{{ client.marketingOptOutts }}</td>
             <td>{{ client.hasBillingProfile }}</td>
             <td>{{ client.notes }}</td>
             <td>{{ client.privateNotes }}</td>
@@ -149,6 +346,8 @@
             <td>{{ client.birthdayAltDay }}</td>
             <td>{{ client.userId }}</td>
             <td>{{ client.userName }}</td>
+            <td>{{ client.totalOrderCount }}</td>
+            <td>{{ client.preferredLanguageCode }}</td>
             <td>{{ client.techLineage }}</td>
             <td>{{ formatDateShort(client.techCreatedDate) || '' }}</td>
             <td>{{ formatDateShort(client.techUpdatedDate) || '' }}</td>
@@ -158,6 +357,13 @@
               <div v-if="client.clientPhoto">
                 <router-link :to="{ name: 'ClientPhotoView', params: { clientPhotoId: client.clientPhoto.id } }">{{
                   client.clientPhoto.id
+                }}</router-link>
+              </div>
+            </td>
+            <td>
+              <div v-if="client.clientVenueStats">
+                <router-link :to="{ name: 'ClientVenueStatsView', params: { clientVenueStatsId: client.clientVenueStats.id } }">{{
+                  client.clientVenueStats.id
                 }}</router-link>
               </div>
             </td>
@@ -216,6 +422,14 @@
         </div>
       </template>
     </b-modal>
+    <div v-show="clients && clients.length > 0">
+      <div class="row justify-content-center">
+        <jhi-item-count :page="page" :total="queryCount" :itemsPerPage="itemsPerPage"></jhi-item-count>
+      </div>
+      <div class="row justify-content-center">
+        <b-pagination size="md" :total-rows="totalItems" v-model="page" :per-page="itemsPerPage"></b-pagination>
+      </div>
+    </div>
   </div>
 </template>
 

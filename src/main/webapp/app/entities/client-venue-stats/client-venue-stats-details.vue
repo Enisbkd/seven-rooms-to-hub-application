@@ -138,16 +138,6 @@
           <dd>
             <span>{{ clientVenueStats.techComment }}</span>
           </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.client')"></span>
-          </dt>
-          <dd>
-            <div v-if="clientVenueStats.client">
-              <router-link :to="{ name: 'ClientView', params: { clientId: clientVenueStats.client.id } }">{{
-                clientVenueStats.client.id
-              }}</router-link>
-            </div>
-          </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.back')"></span>

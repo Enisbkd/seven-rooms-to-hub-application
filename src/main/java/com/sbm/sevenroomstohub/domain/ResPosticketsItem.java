@@ -49,8 +49,8 @@ public class ResPosticketsItem implements Serializable {
     private String techComment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "resTags", "resPosticketsItems", "resPosTickets", "resCustomFields", "client" }, allowSetters = true)
-    private Reservation reservation;
+    @JsonIgnoreProperties(value = { "resPosticketsItems", "reservation" }, allowSetters = true)
+    private ResPosTicket resPosTicket;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -171,16 +171,16 @@ public class ResPosticketsItem implements Serializable {
         this.techComment = techComment;
     }
 
-    public Reservation getReservation() {
-        return this.reservation;
+    public ResPosTicket getResPosTicket() {
+        return this.resPosTicket;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public void setResPosTicket(ResPosTicket resPosTicket) {
+        this.resPosTicket = resPosTicket;
     }
 
-    public ResPosticketsItem reservation(Reservation reservation) {
-        this.setReservation(reservation);
+    public ResPosticketsItem resPosTicket(ResPosTicket resPosTicket) {
+        this.setResPosTicket(resPosTicket);
         return this;
     }
 

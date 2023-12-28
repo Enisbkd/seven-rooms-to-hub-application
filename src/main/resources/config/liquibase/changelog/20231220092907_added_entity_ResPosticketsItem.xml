@@ -38,7 +38,7 @@
             <column name="tech_comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="reservation_id" type="bigint">
+            <column name="res_pos_ticket_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

@@ -1,7 +1,7 @@
 import { type IResTag } from '@/shared/model/res-tag.model';
-import { type IResPosticketsItem } from '@/shared/model/res-postickets-item.model';
 import { type IResPosTicket } from '@/shared/model/res-pos-ticket.model';
 import { type IResCustomField } from '@/shared/model/res-custom-field.model';
+import { type ITable } from '@/shared/model/table.model';
 import { type IClient } from '@/shared/model/client.model';
 
 export interface IReservation {
@@ -25,12 +25,9 @@ export interface IReservation {
   statusDisplay?: string | null;
   statusSimple?: string | null;
   tableNumbers?: string | null;
-  venueSeatingAreaId?: string | null;
-  venueSeatingAreaName?: string | null;
   accessPersistentId?: string | null;
   arrivedGuests?: number | null;
   isvip?: boolean | null;
-  iswalkin?: boolean | null;
   bookedby?: string | null;
   clientReferenceCode?: string | null;
   lastname?: string | null;
@@ -83,9 +80,9 @@ export interface IReservation {
   techMapping?: string | null;
   techComment?: string | null;
   resTags?: IResTag[] | null;
-  resPosticketsItems?: IResPosticketsItem[] | null;
   resPosTickets?: IResPosTicket[] | null;
   resCustomFields?: IResCustomField[] | null;
+  tables?: ITable[] | null;
   client?: IClient | null;
 }
 
@@ -111,12 +108,9 @@ export class Reservation implements IReservation {
     public statusDisplay?: string | null,
     public statusSimple?: string | null,
     public tableNumbers?: string | null,
-    public venueSeatingAreaId?: string | null,
-    public venueSeatingAreaName?: string | null,
     public accessPersistentId?: string | null,
     public arrivedGuests?: number | null,
     public isvip?: boolean | null,
-    public iswalkin?: boolean | null,
     public bookedby?: string | null,
     public clientReferenceCode?: string | null,
     public lastname?: string | null,
@@ -169,13 +163,12 @@ export class Reservation implements IReservation {
     public techMapping?: string | null,
     public techComment?: string | null,
     public resTags?: IResTag[] | null,
-    public resPosticketsItems?: IResPosticketsItem[] | null,
     public resPosTickets?: IResPosTicket[] | null,
     public resCustomFields?: IResCustomField[] | null,
+    public tables?: ITable[] | null,
     public client?: IClient | null,
   ) {
     this.isvip = this.isvip ?? false;
-    this.iswalkin = this.iswalkin ?? false;
     this.reservationSmsOptin = this.reservationSmsOptin ?? false;
     this.sendReminderEmail = this.sendReminderEmail ?? false;
     this.sendreminderSms = this.sendreminderSms ?? false;

@@ -71,12 +71,6 @@
             <column name="table_numbers" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="venue_seating_area_id" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="venue_seating_area_name" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="access_persistent_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -84,9 +78,6 @@
                 <constraints nullable="true" />
             </column>
             <column name="isvip" type="boolean">
-                <constraints nullable="true" />
-            </column>
-            <column name="iswalkin" type="boolean">
                 <constraints nullable="true" />
             </column>
             <column name="bookedby" type="varchar(255)">
@@ -287,12 +278,9 @@
             <column name="status_display" type="string"/>
             <column name="status_simple" type="string"/>
             <column name="table_numbers" type="string"/>
-            <column name="venue_seating_area_id" type="string"/>
-            <column name="venue_seating_area_name" type="string"/>
             <column name="access_persistent_id" type="string"/>
             <column name="arrived_guests" type="numeric"/>
             <column name="isvip" type="boolean"/>
-            <column name="iswalkin" type="boolean"/>
             <column name="bookedby" type="string"/>
             <column name="client_reference_code" type="string"/>
             <column name="lastname" type="string"/>

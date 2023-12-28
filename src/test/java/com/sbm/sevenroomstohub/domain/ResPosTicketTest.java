@@ -1,10 +1,13 @@
 package com.sbm.sevenroomstohub.domain;
 
 import static com.sbm.sevenroomstohub.domain.ResPosTicketTestSamples.*;
+import static com.sbm.sevenroomstohub.domain.ResPosticketsItemTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ReservationTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sbm.sevenroomstohub.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class ResPosTicketTest {
@@ -21,6 +24,28 @@ class ResPosTicketTest {
 
         resPosTicket2 = getResPosTicketSample2();
         assertThat(resPosTicket1).isNotEqualTo(resPosTicket2);
+    }
+
+    @Test
+    void resPosticketsItemTest() throws Exception {
+        ResPosTicket resPosTicket = getResPosTicketRandomSampleGenerator();
+        ResPosticketsItem resPosticketsItemBack = getResPosticketsItemRandomSampleGenerator();
+
+        resPosTicket.addResPosticketsItem(resPosticketsItemBack);
+        assertThat(resPosTicket.getResPosticketsItems()).containsOnly(resPosticketsItemBack);
+        assertThat(resPosticketsItemBack.getResPosTicket()).isEqualTo(resPosTicket);
+
+        resPosTicket.removeResPosticketsItem(resPosticketsItemBack);
+        assertThat(resPosTicket.getResPosticketsItems()).doesNotContain(resPosticketsItemBack);
+        assertThat(resPosticketsItemBack.getResPosTicket()).isNull();
+
+        resPosTicket.resPosticketsItems(new HashSet<>(Set.of(resPosticketsItemBack)));
+        assertThat(resPosTicket.getResPosticketsItems()).containsOnly(resPosticketsItemBack);
+        assertThat(resPosticketsItemBack.getResPosTicket()).isEqualTo(resPosTicket);
+
+        resPosTicket.setResPosticketsItems(new HashSet<>());
+        assertThat(resPosTicket.getResPosticketsItems()).doesNotContain(resPosticketsItemBack);
+        assertThat(resPosticketsItemBack.getResPosTicket()).isNull();
     }
 
     @Test

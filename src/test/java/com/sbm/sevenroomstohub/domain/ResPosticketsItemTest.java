@@ -1,7 +1,7 @@
 package com.sbm.sevenroomstohub.domain;
 
+import static com.sbm.sevenroomstohub.domain.ResPosTicketTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResPosticketsItemTestSamples.*;
-import static com.sbm.sevenroomstohub.domain.ReservationTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sbm.sevenroomstohub.web.rest.TestUtil;
@@ -24,14 +24,14 @@ class ResPosticketsItemTest {
     }
 
     @Test
-    void reservationTest() throws Exception {
+    void resPosTicketTest() throws Exception {
         ResPosticketsItem resPosticketsItem = getResPosticketsItemRandomSampleGenerator();
-        Reservation reservationBack = getReservationRandomSampleGenerator();
+        ResPosTicket resPosTicketBack = getResPosTicketRandomSampleGenerator();
 
-        resPosticketsItem.setReservation(reservationBack);
-        assertThat(resPosticketsItem.getReservation()).isEqualTo(reservationBack);
+        resPosticketsItem.setResPosTicket(resPosTicketBack);
+        assertThat(resPosticketsItem.getResPosTicket()).isEqualTo(resPosTicketBack);
 
-        resPosticketsItem.reservation(null);
-        assertThat(resPosticketsItem.getReservation()).isNull();
+        resPosticketsItem.resPosTicket(null);
+        assertThat(resPosticketsItem.getResPosTicket()).isNull();
     }
 }
