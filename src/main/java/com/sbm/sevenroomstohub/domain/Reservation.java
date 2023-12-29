@@ -247,7 +247,7 @@ public class Reservation implements Serializable {
     @JsonProperty("external_user_id")
     private String externalUserId;
 
-    @Column(name = "modify_reservation_link")
+    @Column(name = "modify_reservation_link", length = 500)
     @JsonProperty("modify_reservation_link")
     private String modifyReservationLink;
 
@@ -316,7 +316,7 @@ public class Reservation implements Serializable {
     @JsonProperty("table_numbers")
     private Set<ResTable> resTables = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties(
         value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
         allowSetters = true

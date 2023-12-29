@@ -85,7 +85,7 @@ public class ResPosTicket implements Serializable {
     @JsonIgnoreProperties(value = { "resPosTicket" }, allowSetters = true)
     private Set<ResPosticketsItem> resPosticketsItems = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client" }, allowSetters = true)
     private Reservation reservation;
 

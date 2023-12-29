@@ -26,7 +26,7 @@ public class ResTable implements Serializable {
     @Column(name = "table_number")
     private Integer tableNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client" }, allowSetters = true)
     private Reservation reservation;
 

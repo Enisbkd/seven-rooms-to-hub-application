@@ -1,8 +1,10 @@
 package com.sbm.sevenroomstohub.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 public class ReservationPayload implements Serializable {
 
@@ -14,6 +16,9 @@ public class ReservationPayload implements Serializable {
 
     @JsonProperty("entity_type")
     private String entity_type;
+
+    @JsonIgnore
+    private Set<UpdateField> updates;
 
     public Reservation getReservation() {
         return reservation;
@@ -39,6 +44,14 @@ public class ReservationPayload implements Serializable {
         this.entity_type = entity_type;
     }
 
+    public Set<UpdateField> getUpdates() {
+        return updates;
+    }
+
+    public void setUpdates(Set<UpdateField> updates) {
+        this.updates = updates;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,13 +60,14 @@ public class ReservationPayload implements Serializable {
         return (
             Objects.equals(reservation, that.reservation) &&
             Objects.equals(event_type, that.event_type) &&
-            Objects.equals(entity_type, that.entity_type)
+            Objects.equals(entity_type, that.entity_type) &&
+            Objects.equals(updates, that.updates)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reservation, event_type, entity_type);
+        return Objects.hash(reservation, event_type, entity_type, updates);
     }
 
     @Override
@@ -68,6 +82,8 @@ public class ReservationPayload implements Serializable {
             ", entity_type='" +
             entity_type +
             '\'' +
+            ", updates=" +
+            updates +
             '}'
         );
     }

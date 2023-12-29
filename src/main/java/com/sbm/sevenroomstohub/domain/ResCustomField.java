@@ -54,7 +54,7 @@ public class ResCustomField implements Serializable {
     @Column(name = "tech_comment")
     private String techComment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client" }, allowSetters = true)
     private Reservation reservation;
 
