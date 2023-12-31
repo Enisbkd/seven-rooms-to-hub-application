@@ -1,7 +1,6 @@
 package com.sbm.sevenroomstohub.service;
 
 import com.sbm.sevenroomstohub.domain.ClientPayload;
-import com.sbm.sevenroomstohub.domain.ResTag;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.repository.ClientRepository;
@@ -9,9 +8,7 @@ import com.sbm.sevenroomstohub.repository.ResTagRepository;
 import com.sbm.sevenroomstohub.repository.ReservationRepository;
 import com.sbm.sevenroomstohub.serdes.CustomSerdes;
 import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
-import com.sbm.sevenroomstohub.service.mapper.ResTagMapper;
 import com.sbm.sevenroomstohub.service.mapper.ReservationMapperImpl;
-import java.util.Set;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -19,7 +16,6 @@ import org.apache.kafka.streams.errors.StreamsException;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -68,7 +64,7 @@ public class StreamsProcessor {
 
     private void clientProcessor(ClientPayload clientPayload) {
         try {
-            System.out.println(clientPayload);
+            //            System.out.println(clientPayload);
             clientPayload.getClient().setTechComment("helloo");
             //            clientRepository.save(clientPayload.getClient());
             System.out.println(clientPayload.getClient());
@@ -82,6 +78,7 @@ public class StreamsProcessor {
             System.out.println(reservationPayload);
 
             Reservation reservation = reservationPayload.getReservation();
+            String clientId = reservation.getClient().getClientId(); //Check if not null && clientService findbyId
 
             ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
 

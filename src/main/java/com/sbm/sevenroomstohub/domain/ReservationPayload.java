@@ -2,6 +2,7 @@ package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;

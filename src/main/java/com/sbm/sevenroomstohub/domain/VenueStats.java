@@ -1,27 +1,12 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-/**
- * A ClientVenueStats.
- */
-@Entity
-@Table(name = "client_venue_stats")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@SuppressWarnings("common-java:DuplicatedBlocks")
-public class ClientVenueStats implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class VenueStats implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
@@ -113,10 +98,10 @@ public class ClientVenueStats implements Serializable {
     private String techComment;
 
     @JsonIgnoreProperties(
-        value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
+        value = { "clientPhoto", "VenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
         allowSetters = true
     )
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "clientVenueStats")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "VenueStats")
     private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -125,7 +110,7 @@ public class ClientVenueStats implements Serializable {
         return this.id;
     }
 
-    public ClientVenueStats id(Long id) {
+    public VenueStats id(Long id) {
         this.setId(id);
         return this;
     }
@@ -138,7 +123,7 @@ public class ClientVenueStats implements Serializable {
         return this.venueId;
     }
 
-    public ClientVenueStats venueId(String venueId) {
+    public VenueStats venueId(String venueId) {
         this.setVenueId(venueId);
         return this;
     }
@@ -151,7 +136,7 @@ public class ClientVenueStats implements Serializable {
         return this.avgRating;
     }
 
-    public ClientVenueStats avgRating(Integer avgRating) {
+    public VenueStats avgRating(Integer avgRating) {
         this.setAvgRating(avgRating);
         return this;
     }
@@ -164,7 +149,7 @@ public class ClientVenueStats implements Serializable {
         return this.bookedByNames;
     }
 
-    public ClientVenueStats bookedByNames(String bookedByNames) {
+    public VenueStats bookedByNames(String bookedByNames) {
         this.setBookedByNames(bookedByNames);
         return this;
     }
@@ -177,7 +162,7 @@ public class ClientVenueStats implements Serializable {
         return this.lastVisitDate;
     }
 
-    public ClientVenueStats lastVisitDate(String lastVisitDate) {
+    public VenueStats lastVisitDate(String lastVisitDate) {
         this.setLastVisitDate(lastVisitDate);
         return this;
     }
@@ -190,7 +175,7 @@ public class ClientVenueStats implements Serializable {
         return this.numRatings;
     }
 
-    public ClientVenueStats numRatings(Integer numRatings) {
+    public VenueStats numRatings(Integer numRatings) {
         this.setNumRatings(numRatings);
         return this;
     }
@@ -203,7 +188,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalCancellations;
     }
 
-    public ClientVenueStats totalCancellations(Integer totalCancellations) {
+    public VenueStats totalCancellations(Integer totalCancellations) {
         this.setTotalCancellations(totalCancellations);
         return this;
     }
@@ -216,7 +201,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalCovers;
     }
 
-    public ClientVenueStats totalCovers(Integer totalCovers) {
+    public VenueStats totalCovers(Integer totalCovers) {
         this.setTotalCovers(totalCovers);
         return this;
     }
@@ -229,7 +214,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalNoShows;
     }
 
-    public ClientVenueStats totalNoShows(Integer totalNoShows) {
+    public VenueStats totalNoShows(Integer totalNoShows) {
         this.setTotalNoShows(totalNoShows);
         return this;
     }
@@ -242,7 +227,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalSpend;
     }
 
-    public ClientVenueStats totalSpend(Double totalSpend) {
+    public VenueStats totalSpend(Double totalSpend) {
         this.setTotalSpend(totalSpend);
         return this;
     }
@@ -255,7 +240,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalSpendLocal;
     }
 
-    public ClientVenueStats totalSpendLocal(Double totalSpendLocal) {
+    public VenueStats totalSpendLocal(Double totalSpendLocal) {
         this.setTotalSpendLocal(totalSpendLocal);
         return this;
     }
@@ -268,7 +253,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalSpendLocalperCover;
     }
 
-    public ClientVenueStats totalSpendLocalperCover(Double totalSpendLocalperCover) {
+    public VenueStats totalSpendLocalperCover(Double totalSpendLocalperCover) {
         this.setTotalSpendLocalperCover(totalSpendLocalperCover);
         return this;
     }
@@ -281,7 +266,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalSpendLocalPerVisit;
     }
 
-    public ClientVenueStats totalSpendLocalPerVisit(Double totalSpendLocalPerVisit) {
+    public VenueStats totalSpendLocalPerVisit(Double totalSpendLocalPerVisit) {
         this.setTotalSpendLocalPerVisit(totalSpendLocalPerVisit);
         return this;
     }
@@ -294,7 +279,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalSpendperCover;
     }
 
-    public ClientVenueStats totalSpendperCover(Double totalSpendperCover) {
+    public VenueStats totalSpendperCover(Double totalSpendperCover) {
         this.setTotalSpendperCover(totalSpendperCover);
         return this;
     }
@@ -307,7 +292,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalSpendPerVisit;
     }
 
-    public ClientVenueStats totalSpendPerVisit(Double totalSpendPerVisit) {
+    public VenueStats totalSpendPerVisit(Double totalSpendPerVisit) {
         this.setTotalSpendPerVisit(totalSpendPerVisit);
         return this;
     }
@@ -320,7 +305,7 @@ public class ClientVenueStats implements Serializable {
         return this.totalVisit;
     }
 
-    public ClientVenueStats totalVisit(Integer totalVisit) {
+    public VenueStats totalVisit(Integer totalVisit) {
         this.setTotalVisit(totalVisit);
         return this;
     }
@@ -333,7 +318,7 @@ public class ClientVenueStats implements Serializable {
         return this.venueMarketingOptin;
     }
 
-    public ClientVenueStats venueMarketingOptin(Boolean venueMarketingOptin) {
+    public VenueStats venueMarketingOptin(Boolean venueMarketingOptin) {
         this.setVenueMarketingOptin(venueMarketingOptin);
         return this;
     }
@@ -346,7 +331,7 @@ public class ClientVenueStats implements Serializable {
         return this.venueMarketingOptints;
     }
 
-    public ClientVenueStats venueMarketingOptints(String venueMarketingOptints) {
+    public VenueStats venueMarketingOptints(String venueMarketingOptints) {
         this.setVenueMarketingOptints(venueMarketingOptints);
         return this;
     }
@@ -359,7 +344,7 @@ public class ClientVenueStats implements Serializable {
         return this.techLineage;
     }
 
-    public ClientVenueStats techLineage(String techLineage) {
+    public VenueStats techLineage(String techLineage) {
         this.setTechLineage(techLineage);
         return this;
     }
@@ -372,7 +357,7 @@ public class ClientVenueStats implements Serializable {
         return this.techCreatedDate;
     }
 
-    public ClientVenueStats techCreatedDate(ZonedDateTime techCreatedDate) {
+    public VenueStats techCreatedDate(ZonedDateTime techCreatedDate) {
         this.setTechCreatedDate(techCreatedDate);
         return this;
     }
@@ -385,7 +370,7 @@ public class ClientVenueStats implements Serializable {
         return this.techUpdatedDate;
     }
 
-    public ClientVenueStats techUpdatedDate(ZonedDateTime techUpdatedDate) {
+    public VenueStats techUpdatedDate(ZonedDateTime techUpdatedDate) {
         this.setTechUpdatedDate(techUpdatedDate);
         return this;
     }
@@ -398,7 +383,7 @@ public class ClientVenueStats implements Serializable {
         return this.techMapping;
     }
 
-    public ClientVenueStats techMapping(String techMapping) {
+    public VenueStats techMapping(String techMapping) {
         this.setTechMapping(techMapping);
         return this;
     }
@@ -411,7 +396,7 @@ public class ClientVenueStats implements Serializable {
         return this.techComment;
     }
 
-    public ClientVenueStats techComment(String techComment) {
+    public VenueStats techComment(String techComment) {
         this.setTechComment(techComment);
         return this;
     }
@@ -421,22 +406,11 @@ public class ClientVenueStats implements Serializable {
     }
 
     public Client getClient() {
-        return this.client;
+        return client;
     }
 
     public void setClient(Client client) {
-        if (this.client != null) {
-            this.client.setClientVenueStats(null);
-        }
-        if (client != null) {
-            client.setClientVenueStats(this);
-        }
         this.client = client;
-    }
-
-    public ClientVenueStats client(Client client) {
-        this.setClient(client);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -446,10 +420,64 @@ public class ClientVenueStats implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ClientVenueStats)) {
+        if (!(o instanceof VenueStats)) {
             return false;
         }
-        return getId() != null && getId().equals(((ClientVenueStats) o).getId());
+        return getId() != null && getId().equals(((VenueStats) o).getId());
+    }
+
+    public VenueStats() {}
+
+    public VenueStats(
+        Long id,
+        String venueId,
+        Integer avgRating,
+        String bookedByNames,
+        String lastVisitDate,
+        Integer numRatings,
+        Integer totalCancellations,
+        Integer totalCovers,
+        Integer totalNoShows,
+        Double totalSpend,
+        Double totalSpendLocal,
+        Double totalSpendLocalperCover,
+        Double totalSpendLocalPerVisit,
+        Double totalSpendperCover,
+        Double totalSpendPerVisit,
+        Integer totalVisit,
+        Boolean venueMarketingOptin,
+        String venueMarketingOptints,
+        String techLineage,
+        ZonedDateTime techCreatedDate,
+        ZonedDateTime techUpdatedDate,
+        String techMapping,
+        String techComment,
+        Client client
+    ) {
+        this.id = id;
+        this.venueId = venueId;
+        this.avgRating = avgRating;
+        this.bookedByNames = bookedByNames;
+        this.lastVisitDate = lastVisitDate;
+        this.numRatings = numRatings;
+        this.totalCancellations = totalCancellations;
+        this.totalCovers = totalCovers;
+        this.totalNoShows = totalNoShows;
+        this.totalSpend = totalSpend;
+        this.totalSpendLocal = totalSpendLocal;
+        this.totalSpendLocalperCover = totalSpendLocalperCover;
+        this.totalSpendLocalPerVisit = totalSpendLocalPerVisit;
+        this.totalSpendperCover = totalSpendperCover;
+        this.totalSpendPerVisit = totalSpendPerVisit;
+        this.totalVisit = totalVisit;
+        this.venueMarketingOptin = venueMarketingOptin;
+        this.venueMarketingOptints = venueMarketingOptints;
+        this.techLineage = techLineage;
+        this.techCreatedDate = techCreatedDate;
+        this.techUpdatedDate = techUpdatedDate;
+        this.techMapping = techMapping;
+        this.techComment = techComment;
+        this.client = client;
     }
 
     @Override
@@ -461,7 +489,7 @@ public class ClientVenueStats implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "ClientVenueStats{" +
+        return "VenueStats{" +
             "id=" + getId() +
             ", venueId='" + getVenueId() + "'" +
             ", avgRating=" + getAvgRating() +

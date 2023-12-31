@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -159,6 +160,7 @@ public class Client implements Serializable {
     private String marketingOptints;
 
     @Column(name = "marketing_opt_outts")
+    @JsonProperty("marketing_opt_out_ts")
     private String marketingOptOutts;
 
     @Column(name = "has_billing_profile")
@@ -286,7 +288,21 @@ public class Client implements Serializable {
     @JsonProperty("member_groups")
     private Set<MemberGroup> memberGroups = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public Boolean getContactPrivate() {
+        return isContactPrivate;
+    }
+
+    public void setContactPrivate(Boolean contactPrivate) {
+        isContactPrivate = contactPrivate;
+    }
+
+    public Boolean getOnetimeGuest() {
+        return isOnetimeGuest;
+    }
+
+    public void setOnetimeGuest(Boolean onetimeGuest) {
+        isOnetimeGuest = onetimeGuest;
+    }
 
     public Long getId() {
         return this.id;
