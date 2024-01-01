@@ -14,19 +14,10 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="venue_id" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="avg_rating" type="integer">
-                <constraints nullable="true" />
-            </column>
-            <column name="booked_by_names" type="varchar(255)">
+            <column name="total_spend_localper_cover" type="double">
                 <constraints nullable="true" />
             </column>
             <column name="last_visit_date" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="num_ratings" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="total_cancellations" type="integer">
@@ -35,28 +26,61 @@
             <column name="total_covers" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="total_no_shows" type="integer">
-                <constraints nullable="true" />
-            </column>
-            <column name="total_spend" type="double">
-                <constraints nullable="true" />
-            </column>
-            <column name="total_spend_local" type="double">
-                <constraints nullable="true" />
-            </column>
-            <column name="total_spend_localper_cover" type="double">
-                <constraints nullable="true" />
-            </column>
-            <column name="total_spend_local_per_visit" type="double">
+            <column name="avg_rating" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="total_spendper_cover" type="double">
                 <constraints nullable="true" />
             </column>
+            <column name="total_spend" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_no_shows" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="num_ratings" type="integer">
+                <constraints nullable="true" />
+            </column>
             <column name="total_spend_per_visit" type="double">
                 <constraints nullable="true" />
             </column>
-            <column name="total_visit" type="integer">
+            <column name="total_spend_local" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_spend_local_per_visit" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_visits" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="gross_total" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_order_count" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_order_cancellations" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_order_spend" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="gross_order_total" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_order_spend_local" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="last_order_date" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_spendper_order" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_spend_localper_order" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="venue_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="venue_marketing_optin" type="boolean">
@@ -103,21 +127,29 @@
                   tableName="client_venue_stats"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="venue_id" type="string"/>
-            <column name="avg_rating" type="numeric"/>
-            <column name="booked_by_names" type="string"/>
+            <column name="total_spend_localper_cover" type="numeric"/>
             <column name="last_visit_date" type="string"/>
-            <column name="num_ratings" type="numeric"/>
             <column name="total_cancellations" type="numeric"/>
             <column name="total_covers" type="numeric"/>
-            <column name="total_no_shows" type="numeric"/>
-            <column name="total_spend" type="numeric"/>
-            <column name="total_spend_local" type="numeric"/>
-            <column name="total_spend_localper_cover" type="numeric"/>
-            <column name="total_spend_local_per_visit" type="numeric"/>
+            <column name="avg_rating" type="numeric"/>
             <column name="total_spendper_cover" type="numeric"/>
+            <column name="total_spend" type="numeric"/>
+            <column name="total_no_shows" type="numeric"/>
+            <column name="num_ratings" type="numeric"/>
             <column name="total_spend_per_visit" type="numeric"/>
-            <column name="total_visit" type="numeric"/>
+            <column name="total_spend_local" type="numeric"/>
+            <column name="total_spend_local_per_visit" type="numeric"/>
+            <column name="total_visits" type="numeric"/>
+            <column name="gross_total" type="numeric"/>
+            <column name="total_order_count" type="numeric"/>
+            <column name="total_order_cancellations" type="numeric"/>
+            <column name="total_order_spend" type="numeric"/>
+            <column name="gross_order_total" type="numeric"/>
+            <column name="total_order_spend_local" type="numeric"/>
+            <column name="last_order_date" type="string"/>
+            <column name="total_spendper_order" type="numeric"/>
+            <column name="total_spend_localper_order" type="numeric"/>
+            <column name="venue_id" type="string"/>
             <column name="venue_marketing_optin" type="boolean"/>
             <column name="venue_marketing_optints" type="string"/>
             <column name="tech_lineage" type="string"/>

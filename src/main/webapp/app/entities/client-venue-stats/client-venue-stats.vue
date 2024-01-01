@@ -32,25 +32,17 @@
               <span v-text="t$('global.field.id')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('venueId')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueId')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'venueId'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('avgRating')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.avgRating')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'avgRating'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('bookedByNames')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.bookedByNames')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'bookedByNames'"></jhi-sort-indicator>
+            <th scope="row" v-on:click="changeOrder('totalSpendLocalperCover')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperCover')"></span>
+              <jhi-sort-indicator
+                :current-order="propOrder"
+                :reverse="reverse"
+                :field-name="'totalSpendLocalperCover'"
+              ></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('lastVisitDate')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.lastVisitDate')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'lastVisitDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('numRatings')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.numRatings')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'numRatings'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('totalCancellations')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalCancellations')"></span>
@@ -60,25 +52,33 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalCovers')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalCovers'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('totalNoShows')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalNoShows')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalNoShows'"></jhi-sort-indicator>
+            <th scope="row" v-on:click="changeOrder('avgRating')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.avgRating')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'avgRating'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalSpendperCover')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendperCover')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpendperCover'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('totalSpend')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpend')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpend'"></jhi-sort-indicator>
             </th>
+            <th scope="row" v-on:click="changeOrder('totalNoShows')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalNoShows')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalNoShows'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('numRatings')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.numRatings')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'numRatings'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalSpendPerVisit')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendPerVisit')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpendPerVisit'"></jhi-sort-indicator>
+            </th>
             <th scope="row" v-on:click="changeOrder('totalSpendLocal')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocal')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpendLocal'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('totalSpendLocalperCover')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperCover')"></span>
-              <jhi-sort-indicator
-                :current-order="propOrder"
-                :reverse="reverse"
-                :field-name="'totalSpendLocalperCover'"
-              ></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('totalSpendLocalPerVisit')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalPerVisit')"></span>
@@ -88,17 +88,57 @@
                 :field-name="'totalSpendLocalPerVisit'"
               ></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('totalSpendperCover')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendperCover')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpendperCover'"></jhi-sort-indicator>
+            <th scope="row" v-on:click="changeOrder('totalVisits')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalVisits')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalVisits'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('totalSpendPerVisit')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendPerVisit')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpendPerVisit'"></jhi-sort-indicator>
+            <th scope="row" v-on:click="changeOrder('grossTotal')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.grossTotal')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'grossTotal'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('totalVisit')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalVisit')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalVisit'"></jhi-sort-indicator>
+            <th scope="row" v-on:click="changeOrder('totalOrderCount')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderCount')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalOrderCount'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalOrderCancellations')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderCancellations')"></span>
+              <jhi-sort-indicator
+                :current-order="propOrder"
+                :reverse="reverse"
+                :field-name="'totalOrderCancellations'"
+              ></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalOrderSpend')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderSpend')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalOrderSpend'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('grossOrderTotal')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.grossOrderTotal')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'grossOrderTotal'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalOrderSpendLocal')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderSpendLocal')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalOrderSpendLocal'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('lastOrderDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.lastOrderDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'lastOrderDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalSpendperOrder')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendperOrder')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'totalSpendperOrder'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('totalSpendLocalperOrder')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperOrder')"></span>
+              <jhi-sort-indicator
+                :current-order="propOrder"
+                :reverse="reverse"
+                :field-name="'totalSpendLocalperOrder'"
+              ></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('venueId')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueId')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'venueId'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('venueMarketingOptin')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueMarketingOptin')"></span>
@@ -138,21 +178,29 @@
                 clientVenueStats.id
               }}</router-link>
             </td>
-            <td>{{ clientVenueStats.venueId }}</td>
-            <td>{{ clientVenueStats.avgRating }}</td>
-            <td>{{ clientVenueStats.bookedByNames }}</td>
+            <td>{{ clientVenueStats.totalSpendLocalperCover }}</td>
             <td>{{ clientVenueStats.lastVisitDate }}</td>
-            <td>{{ clientVenueStats.numRatings }}</td>
             <td>{{ clientVenueStats.totalCancellations }}</td>
             <td>{{ clientVenueStats.totalCovers }}</td>
-            <td>{{ clientVenueStats.totalNoShows }}</td>
-            <td>{{ clientVenueStats.totalSpend }}</td>
-            <td>{{ clientVenueStats.totalSpendLocal }}</td>
-            <td>{{ clientVenueStats.totalSpendLocalperCover }}</td>
-            <td>{{ clientVenueStats.totalSpendLocalPerVisit }}</td>
+            <td>{{ clientVenueStats.avgRating }}</td>
             <td>{{ clientVenueStats.totalSpendperCover }}</td>
+            <td>{{ clientVenueStats.totalSpend }}</td>
+            <td>{{ clientVenueStats.totalNoShows }}</td>
+            <td>{{ clientVenueStats.numRatings }}</td>
             <td>{{ clientVenueStats.totalSpendPerVisit }}</td>
-            <td>{{ clientVenueStats.totalVisit }}</td>
+            <td>{{ clientVenueStats.totalSpendLocal }}</td>
+            <td>{{ clientVenueStats.totalSpendLocalPerVisit }}</td>
+            <td>{{ clientVenueStats.totalVisits }}</td>
+            <td>{{ clientVenueStats.grossTotal }}</td>
+            <td>{{ clientVenueStats.totalOrderCount }}</td>
+            <td>{{ clientVenueStats.totalOrderCancellations }}</td>
+            <td>{{ clientVenueStats.totalOrderSpend }}</td>
+            <td>{{ clientVenueStats.grossOrderTotal }}</td>
+            <td>{{ clientVenueStats.totalOrderSpendLocal }}</td>
+            <td>{{ clientVenueStats.lastOrderDate }}</td>
+            <td>{{ clientVenueStats.totalSpendperOrder }}</td>
+            <td>{{ clientVenueStats.totalSpendLocalperOrder }}</td>
+            <td>{{ clientVenueStats.venueId }}</td>
             <td>{{ clientVenueStats.venueMarketingOptin }}</td>
             <td>{{ clientVenueStats.venueMarketingOptints }}</td>
             <td>{{ clientVenueStats.techLineage }}</td>

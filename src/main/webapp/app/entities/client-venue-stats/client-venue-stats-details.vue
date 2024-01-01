@@ -7,34 +7,16 @@
         </h2>
         <dl class="row jh-entity-details">
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueId')"></span>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperCover')"></span>
           </dt>
           <dd>
-            <span>{{ clientVenueStats.venueId }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.avgRating')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.avgRating }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.bookedByNames')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.bookedByNames }}</span>
+            <span>{{ clientVenueStats.totalSpendLocalperCover }}</span>
           </dd>
           <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.lastVisitDate')"></span>
           </dt>
           <dd>
             <span>{{ clientVenueStats.lastVisitDate }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.numRatings')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.numRatings }}</span>
           </dd>
           <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalCancellations')"></span>
@@ -49,34 +31,10 @@
             <span>{{ clientVenueStats.totalCovers }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalNoShows')"></span>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.avgRating')"></span>
           </dt>
           <dd>
-            <span>{{ clientVenueStats.totalNoShows }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpend')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.totalSpend }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocal')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.totalSpendLocal }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperCover')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.totalSpendLocalperCover }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalPerVisit')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.totalSpendLocalPerVisit }}</span>
+            <span>{{ clientVenueStats.avgRating }}</span>
           </dd>
           <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendperCover')"></span>
@@ -85,16 +43,106 @@
             <span>{{ clientVenueStats.totalSpendperCover }}</span>
           </dd>
           <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpend')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalSpend }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalNoShows')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalNoShows }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.numRatings')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.numRatings }}</span>
+          </dd>
+          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendPerVisit')"></span>
           </dt>
           <dd>
             <span>{{ clientVenueStats.totalSpendPerVisit }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalVisit')"></span>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocal')"></span>
           </dt>
           <dd>
-            <span>{{ clientVenueStats.totalVisit }}</span>
+            <span>{{ clientVenueStats.totalSpendLocal }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalPerVisit')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalSpendLocalPerVisit }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalVisits')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalVisits }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.grossTotal')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.grossTotal }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderCount')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalOrderCount }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderCancellations')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalOrderCancellations }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderSpend')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalOrderSpend }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.grossOrderTotal')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.grossOrderTotal }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderSpendLocal')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalOrderSpendLocal }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.lastOrderDate')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.lastOrderDate }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendperOrder')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalSpendperOrder }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperOrder')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.totalSpendLocalperOrder }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueId')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientVenueStats.venueId }}</span>
           </dd>
           <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueMarketingOptin')"></span>

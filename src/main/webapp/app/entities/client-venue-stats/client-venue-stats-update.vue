@@ -15,49 +15,17 @@
           <div class="form-group">
             <label
               class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueId')"
-              for="client-venue-stats-venueId"
-            ></label>
-            <input
-              type="text"
-              class="form-control"
-              name="venueId"
-              id="client-venue-stats-venueId"
-              data-cy="venueId"
-              :class="{ valid: !v$.venueId.$invalid, invalid: v$.venueId.$invalid }"
-              v-model="v$.venueId.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.avgRating')"
-              for="client-venue-stats-avgRating"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperCover')"
+              for="client-venue-stats-totalSpendLocalperCover"
             ></label>
             <input
               type="number"
               class="form-control"
-              name="avgRating"
-              id="client-venue-stats-avgRating"
-              data-cy="avgRating"
-              :class="{ valid: !v$.avgRating.$invalid, invalid: v$.avgRating.$invalid }"
-              v-model.number="v$.avgRating.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.bookedByNames')"
-              for="client-venue-stats-bookedByNames"
-            ></label>
-            <input
-              type="text"
-              class="form-control"
-              name="bookedByNames"
-              id="client-venue-stats-bookedByNames"
-              data-cy="bookedByNames"
-              :class="{ valid: !v$.bookedByNames.$invalid, invalid: v$.bookedByNames.$invalid }"
-              v-model="v$.bookedByNames.$model"
+              name="totalSpendLocalperCover"
+              id="client-venue-stats-totalSpendLocalperCover"
+              data-cy="totalSpendLocalperCover"
+              :class="{ valid: !v$.totalSpendLocalperCover.$invalid, invalid: v$.totalSpendLocalperCover.$invalid }"
+              v-model.number="v$.totalSpendLocalperCover.$model"
             />
           </div>
           <div class="form-group">
@@ -74,22 +42,6 @@
               data-cy="lastVisitDate"
               :class="{ valid: !v$.lastVisitDate.$invalid, invalid: v$.lastVisitDate.$invalid }"
               v-model="v$.lastVisitDate.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.numRatings')"
-              for="client-venue-stats-numRatings"
-            ></label>
-            <input
-              type="number"
-              class="form-control"
-              name="numRatings"
-              id="client-venue-stats-numRatings"
-              data-cy="numRatings"
-              :class="{ valid: !v$.numRatings.$invalid, invalid: v$.numRatings.$invalid }"
-              v-model.number="v$.numRatings.$model"
             />
           </div>
           <div class="form-group">
@@ -127,81 +79,17 @@
           <div class="form-group">
             <label
               class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalNoShows')"
-              for="client-venue-stats-totalNoShows"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.avgRating')"
+              for="client-venue-stats-avgRating"
             ></label>
             <input
               type="number"
               class="form-control"
-              name="totalNoShows"
-              id="client-venue-stats-totalNoShows"
-              data-cy="totalNoShows"
-              :class="{ valid: !v$.totalNoShows.$invalid, invalid: v$.totalNoShows.$invalid }"
-              v-model.number="v$.totalNoShows.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpend')"
-              for="client-venue-stats-totalSpend"
-            ></label>
-            <input
-              type="number"
-              class="form-control"
-              name="totalSpend"
-              id="client-venue-stats-totalSpend"
-              data-cy="totalSpend"
-              :class="{ valid: !v$.totalSpend.$invalid, invalid: v$.totalSpend.$invalid }"
-              v-model.number="v$.totalSpend.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocal')"
-              for="client-venue-stats-totalSpendLocal"
-            ></label>
-            <input
-              type="number"
-              class="form-control"
-              name="totalSpendLocal"
-              id="client-venue-stats-totalSpendLocal"
-              data-cy="totalSpendLocal"
-              :class="{ valid: !v$.totalSpendLocal.$invalid, invalid: v$.totalSpendLocal.$invalid }"
-              v-model.number="v$.totalSpendLocal.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperCover')"
-              for="client-venue-stats-totalSpendLocalperCover"
-            ></label>
-            <input
-              type="number"
-              class="form-control"
-              name="totalSpendLocalperCover"
-              id="client-venue-stats-totalSpendLocalperCover"
-              data-cy="totalSpendLocalperCover"
-              :class="{ valid: !v$.totalSpendLocalperCover.$invalid, invalid: v$.totalSpendLocalperCover.$invalid }"
-              v-model.number="v$.totalSpendLocalperCover.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalPerVisit')"
-              for="client-venue-stats-totalSpendLocalPerVisit"
-            ></label>
-            <input
-              type="number"
-              class="form-control"
-              name="totalSpendLocalPerVisit"
-              id="client-venue-stats-totalSpendLocalPerVisit"
-              data-cy="totalSpendLocalPerVisit"
-              :class="{ valid: !v$.totalSpendLocalPerVisit.$invalid, invalid: v$.totalSpendLocalPerVisit.$invalid }"
-              v-model.number="v$.totalSpendLocalPerVisit.$model"
+              name="avgRating"
+              id="client-venue-stats-avgRating"
+              data-cy="avgRating"
+              :class="{ valid: !v$.avgRating.$invalid, invalid: v$.avgRating.$invalid }"
+              v-model.number="v$.avgRating.$model"
             />
           </div>
           <div class="form-group">
@@ -223,6 +111,54 @@
           <div class="form-group">
             <label
               class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpend')"
+              for="client-venue-stats-totalSpend"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalSpend"
+              id="client-venue-stats-totalSpend"
+              data-cy="totalSpend"
+              :class="{ valid: !v$.totalSpend.$invalid, invalid: v$.totalSpend.$invalid }"
+              v-model.number="v$.totalSpend.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalNoShows')"
+              for="client-venue-stats-totalNoShows"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalNoShows"
+              id="client-venue-stats-totalNoShows"
+              data-cy="totalNoShows"
+              :class="{ valid: !v$.totalNoShows.$invalid, invalid: v$.totalNoShows.$invalid }"
+              v-model.number="v$.totalNoShows.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.numRatings')"
+              for="client-venue-stats-numRatings"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="numRatings"
+              id="client-venue-stats-numRatings"
+              data-cy="numRatings"
+              :class="{ valid: !v$.numRatings.$invalid, invalid: v$.numRatings.$invalid }"
+              v-model.number="v$.numRatings.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
               v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendPerVisit')"
               for="client-venue-stats-totalSpendPerVisit"
             ></label>
@@ -239,17 +175,209 @@
           <div class="form-group">
             <label
               class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalVisit')"
-              for="client-venue-stats-totalVisit"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocal')"
+              for="client-venue-stats-totalSpendLocal"
             ></label>
             <input
               type="number"
               class="form-control"
-              name="totalVisit"
-              id="client-venue-stats-totalVisit"
-              data-cy="totalVisit"
-              :class="{ valid: !v$.totalVisit.$invalid, invalid: v$.totalVisit.$invalid }"
-              v-model.number="v$.totalVisit.$model"
+              name="totalSpendLocal"
+              id="client-venue-stats-totalSpendLocal"
+              data-cy="totalSpendLocal"
+              :class="{ valid: !v$.totalSpendLocal.$invalid, invalid: v$.totalSpendLocal.$invalid }"
+              v-model.number="v$.totalSpendLocal.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalPerVisit')"
+              for="client-venue-stats-totalSpendLocalPerVisit"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalSpendLocalPerVisit"
+              id="client-venue-stats-totalSpendLocalPerVisit"
+              data-cy="totalSpendLocalPerVisit"
+              :class="{ valid: !v$.totalSpendLocalPerVisit.$invalid, invalid: v$.totalSpendLocalPerVisit.$invalid }"
+              v-model.number="v$.totalSpendLocalPerVisit.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalVisits')"
+              for="client-venue-stats-totalVisits"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalVisits"
+              id="client-venue-stats-totalVisits"
+              data-cy="totalVisits"
+              :class="{ valid: !v$.totalVisits.$invalid, invalid: v$.totalVisits.$invalid }"
+              v-model.number="v$.totalVisits.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.grossTotal')"
+              for="client-venue-stats-grossTotal"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="grossTotal"
+              id="client-venue-stats-grossTotal"
+              data-cy="grossTotal"
+              :class="{ valid: !v$.grossTotal.$invalid, invalid: v$.grossTotal.$invalid }"
+              v-model.number="v$.grossTotal.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderCount')"
+              for="client-venue-stats-totalOrderCount"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalOrderCount"
+              id="client-venue-stats-totalOrderCount"
+              data-cy="totalOrderCount"
+              :class="{ valid: !v$.totalOrderCount.$invalid, invalid: v$.totalOrderCount.$invalid }"
+              v-model.number="v$.totalOrderCount.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderCancellations')"
+              for="client-venue-stats-totalOrderCancellations"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalOrderCancellations"
+              id="client-venue-stats-totalOrderCancellations"
+              data-cy="totalOrderCancellations"
+              :class="{ valid: !v$.totalOrderCancellations.$invalid, invalid: v$.totalOrderCancellations.$invalid }"
+              v-model.number="v$.totalOrderCancellations.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderSpend')"
+              for="client-venue-stats-totalOrderSpend"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalOrderSpend"
+              id="client-venue-stats-totalOrderSpend"
+              data-cy="totalOrderSpend"
+              :class="{ valid: !v$.totalOrderSpend.$invalid, invalid: v$.totalOrderSpend.$invalid }"
+              v-model.number="v$.totalOrderSpend.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.grossOrderTotal')"
+              for="client-venue-stats-grossOrderTotal"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="grossOrderTotal"
+              id="client-venue-stats-grossOrderTotal"
+              data-cy="grossOrderTotal"
+              :class="{ valid: !v$.grossOrderTotal.$invalid, invalid: v$.grossOrderTotal.$invalid }"
+              v-model.number="v$.grossOrderTotal.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalOrderSpendLocal')"
+              for="client-venue-stats-totalOrderSpendLocal"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalOrderSpendLocal"
+              id="client-venue-stats-totalOrderSpendLocal"
+              data-cy="totalOrderSpendLocal"
+              :class="{ valid: !v$.totalOrderSpendLocal.$invalid, invalid: v$.totalOrderSpendLocal.$invalid }"
+              v-model.number="v$.totalOrderSpendLocal.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.lastOrderDate')"
+              for="client-venue-stats-lastOrderDate"
+            ></label>
+            <input
+              type="text"
+              class="form-control"
+              name="lastOrderDate"
+              id="client-venue-stats-lastOrderDate"
+              data-cy="lastOrderDate"
+              :class="{ valid: !v$.lastOrderDate.$invalid, invalid: v$.lastOrderDate.$invalid }"
+              v-model="v$.lastOrderDate.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendperOrder')"
+              for="client-venue-stats-totalSpendperOrder"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalSpendperOrder"
+              id="client-venue-stats-totalSpendperOrder"
+              data-cy="totalSpendperOrder"
+              :class="{ valid: !v$.totalSpendperOrder.$invalid, invalid: v$.totalSpendperOrder.$invalid }"
+              v-model.number="v$.totalSpendperOrder.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.totalSpendLocalperOrder')"
+              for="client-venue-stats-totalSpendLocalperOrder"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="totalSpendLocalperOrder"
+              id="client-venue-stats-totalSpendLocalperOrder"
+              data-cy="totalSpendLocalperOrder"
+              :class="{ valid: !v$.totalSpendLocalperOrder.$invalid, invalid: v$.totalSpendLocalperOrder.$invalid }"
+              v-model.number="v$.totalSpendLocalperOrder.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueId')"
+              for="client-venue-stats-venueId"
+            ></label>
+            <input
+              type="text"
+              class="form-control"
+              name="venueId"
+              id="client-venue-stats-venueId"
+              data-cy="venueId"
+              :class="{ valid: !v$.venueId.$invalid, invalid: v$.venueId.$invalid }"
+              v-model="v$.venueId.$model"
             />
           </div>
           <div class="form-group">

@@ -47,7 +47,7 @@ public interface ClientVenueStatsService {
      *
      * @return the {@link List} of entities.
      */
-    //    List<ClientVenueStatsDTO> findAllWhereClientIsNull();
+    List<ClientVenueStatsDTO> findAllWhereClientIsNull();
 
     /**
      * Get the "id" clientVenueStats.

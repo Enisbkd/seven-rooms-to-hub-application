@@ -80,15 +80,15 @@ public class ClientVenueStatsServiceImpl implements ClientVenueStatsService {
      *  Get all the clientVenueStats where Client is {@code null}.
      *  @return the list of entities.
      */
-    //    @Transactional(readOnly = true)
-    //    public List<ClientVenueStatsDTO> findAllWhereClientIsNull() {
-    //        log.debug("Request to get all clientVenueStats where Client is null");
-    //        return StreamSupport
-    //            .stream(clientVenueStatsRepository.findAll().spliterator(), false)
-    //            .filter(clientVenueStats -> clientVenueStats.getClient() == null)
-    //            .map(clientVenueStatsMapper::toDto)
-    //            .collect(Collectors.toCollection(LinkedList::new));
-    //    }
+    @Transactional(readOnly = true)
+    public List<ClientVenueStatsDTO> findAllWhereClientIsNull() {
+        log.debug("Request to get all clientVenueStats where Client is null");
+        return StreamSupport
+            .stream(clientVenueStatsRepository.findAll().spliterator(), false)
+            .filter(clientVenueStats -> clientVenueStats.getClient() == null)
+            .map(clientVenueStatsMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     @Override
     @Transactional(readOnly = true)

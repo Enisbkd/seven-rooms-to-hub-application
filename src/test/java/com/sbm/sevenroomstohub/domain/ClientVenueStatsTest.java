@@ -1,10 +1,13 @@
 package com.sbm.sevenroomstohub.domain;
 
+import static com.sbm.sevenroomstohub.domain.BookingNameTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ClientTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ClientVenueStatsTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sbm.sevenroomstohub.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class ClientVenueStatsTest {
@@ -21,6 +24,28 @@ class ClientVenueStatsTest {
 
         clientVenueStats2 = getClientVenueStatsSample2();
         assertThat(clientVenueStats1).isNotEqualTo(clientVenueStats2);
+    }
+
+    @Test
+    void bookingNameTest() throws Exception {
+        ClientVenueStats clientVenueStats = getClientVenueStatsRandomSampleGenerator();
+        BookingName bookingNameBack = getBookingNameRandomSampleGenerator();
+
+        clientVenueStats.addBookingName(bookingNameBack);
+        assertThat(clientVenueStats.getBookingNames()).containsOnly(bookingNameBack);
+        assertThat(bookingNameBack.getClientVenueStats()).isEqualTo(clientVenueStats);
+
+        clientVenueStats.removeBookingName(bookingNameBack);
+        assertThat(clientVenueStats.getBookingNames()).doesNotContain(bookingNameBack);
+        assertThat(bookingNameBack.getClientVenueStats()).isNull();
+
+        clientVenueStats.bookingNames(new HashSet<>(Set.of(bookingNameBack)));
+        assertThat(clientVenueStats.getBookingNames()).containsOnly(bookingNameBack);
+        assertThat(bookingNameBack.getClientVenueStats()).isEqualTo(clientVenueStats);
+
+        clientVenueStats.setBookingNames(new HashSet<>());
+        assertThat(clientVenueStats.getBookingNames()).doesNotContain(bookingNameBack);
+        assertThat(bookingNameBack.getClientVenueStats()).isNull();
     }
 
     @Test

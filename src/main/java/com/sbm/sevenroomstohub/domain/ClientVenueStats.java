@@ -1,14 +1,11 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,72 +26,79 @@ public class ClientVenueStats implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "venue_id")
-    @JsonProperty("venue_id")
-    private String venueId;
-
-    @Column(name = "avg_rating")
-    @JsonProperty("avg_rating")
-    private Integer avgRating;
-
-    @Column(name = "booked_by_names")
-    @JsonProperty("booked_by_names")
-    private String bookedByNames;
+    @Column(name = "total_spend_localper_cover")
+    private Double totalSpendLocalperCover;
 
     @Column(name = "last_visit_date")
-    @JsonProperty("last_visit_date")
     private String lastVisitDate;
 
-    @Column(name = "num_ratings")
-    @JsonProperty("num_ratings")
-    private Integer numRatings;
-
     @Column(name = "total_cancellations")
-    @JsonProperty("total_cancellations")
     private Integer totalCancellations;
 
     @Column(name = "total_covers")
-    @JsonProperty("total_covers")
     private Integer totalCovers;
 
-    @Column(name = "total_no_shows")
-    @JsonProperty("total_noshows")
-    private Integer totalNoShows;
-
-    @Column(name = "total_spend")
-    @JsonProperty("total_spend")
-    private Double totalSpend;
-
-    @Column(name = "total_spend_local")
-    @JsonProperty("total_spend_local")
-    private Double totalSpendLocal;
-
-    @Column(name = "total_spend_localper_cover")
-    @JsonProperty("total_spend_local_per_cover")
-    private Double totalSpendLocalperCover;
-
-    @Column(name = "total_spend_local_per_visit")
-    @JsonProperty("total_spend_local_per_visit")
-    private Double totalSpendLocalPerVisit;
+    @Column(name = "avg_rating")
+    private Integer avgRating;
 
     @Column(name = "total_spendper_cover")
-    @JsonProperty("total_spend_per_cover")
     private Double totalSpendperCover;
 
+    @Column(name = "total_spend")
+    private Double totalSpend;
+
+    @Column(name = "total_no_shows")
+    private Integer totalNoShows;
+
+    @Column(name = "num_ratings")
+    private Integer numRatings;
+
     @Column(name = "total_spend_per_visit")
-    @JsonProperty("total_spend_per_visit")
     private Double totalSpendPerVisit;
 
-    @Column(name = "total_visit")
-    @JsonProperty("total_visits")
-    private Integer totalVisit;
+    @Column(name = "total_spend_local")
+    private Double totalSpendLocal;
+
+    @Column(name = "total_spend_local_per_visit")
+    private Double totalSpendLocalPerVisit;
+
+    @Column(name = "total_visits")
+    private Integer totalVisits;
+
+    @Column(name = "gross_total")
+    private Double grossTotal;
+
+    @Column(name = "total_order_count")
+    private Double totalOrderCount;
+
+    @Column(name = "total_order_cancellations")
+    private Double totalOrderCancellations;
+
+    @Column(name = "total_order_spend")
+    private Double totalOrderSpend;
+
+    @Column(name = "gross_order_total")
+    private Double grossOrderTotal;
+
+    @Column(name = "total_order_spend_local")
+    private Double totalOrderSpendLocal;
+
+    @Column(name = "last_order_date")
+    private String lastOrderDate;
+
+    @Column(name = "total_spendper_order")
+    private Double totalSpendperOrder;
+
+    @Column(name = "total_spend_localper_order")
+    private Double totalSpendLocalperOrder;
+
+    @Column(name = "venue_id")
+    private String venueId;
 
     @Column(name = "venue_marketing_optin")
-    @JsonProperty("venue_marketing_optin")
     private Boolean venueMarketingOptin;
 
     @Column(name = "venue_marketing_optints")
-    @JsonProperty("venue_marketing_optints")
     private String venueMarketingOptints;
 
     @Column(name = "tech_lineage")
@@ -111,6 +115,11 @@ public class ClientVenueStats implements Serializable {
 
     @Column(name = "tech_comment")
     private String techComment;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clientVenueStats")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "clientVenueStats" }, allowSetters = true)
+    private Set<BookingName> bookingNames = new HashSet<>();
 
     @JsonIgnoreProperties(
         value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
@@ -134,43 +143,17 @@ public class ClientVenueStats implements Serializable {
         this.id = id;
     }
 
-    public String getVenueId() {
-        return this.venueId;
+    public Double getTotalSpendLocalperCover() {
+        return this.totalSpendLocalperCover;
     }
 
-    public ClientVenueStats venueId(String venueId) {
-        this.setVenueId(venueId);
+    public ClientVenueStats totalSpendLocalperCover(Double totalSpendLocalperCover) {
+        this.setTotalSpendLocalperCover(totalSpendLocalperCover);
         return this;
     }
 
-    public void setVenueId(String venueId) {
-        this.venueId = venueId;
-    }
-
-    public Integer getAvgRating() {
-        return this.avgRating;
-    }
-
-    public ClientVenueStats avgRating(Integer avgRating) {
-        this.setAvgRating(avgRating);
-        return this;
-    }
-
-    public void setAvgRating(Integer avgRating) {
-        this.avgRating = avgRating;
-    }
-
-    public String getBookedByNames() {
-        return this.bookedByNames;
-    }
-
-    public ClientVenueStats bookedByNames(String bookedByNames) {
-        this.setBookedByNames(bookedByNames);
-        return this;
-    }
-
-    public void setBookedByNames(String bookedByNames) {
-        this.bookedByNames = bookedByNames;
+    public void setTotalSpendLocalperCover(Double totalSpendLocalperCover) {
+        this.totalSpendLocalperCover = totalSpendLocalperCover;
     }
 
     public String getLastVisitDate() {
@@ -184,19 +167,6 @@ public class ClientVenueStats implements Serializable {
 
     public void setLastVisitDate(String lastVisitDate) {
         this.lastVisitDate = lastVisitDate;
-    }
-
-    public Integer getNumRatings() {
-        return this.numRatings;
-    }
-
-    public ClientVenueStats numRatings(Integer numRatings) {
-        this.setNumRatings(numRatings);
-        return this;
-    }
-
-    public void setNumRatings(Integer numRatings) {
-        this.numRatings = numRatings;
     }
 
     public Integer getTotalCancellations() {
@@ -225,69 +195,17 @@ public class ClientVenueStats implements Serializable {
         this.totalCovers = totalCovers;
     }
 
-    public Integer getTotalNoShows() {
-        return this.totalNoShows;
+    public Integer getAvgRating() {
+        return this.avgRating;
     }
 
-    public ClientVenueStats totalNoShows(Integer totalNoShows) {
-        this.setTotalNoShows(totalNoShows);
+    public ClientVenueStats avgRating(Integer avgRating) {
+        this.setAvgRating(avgRating);
         return this;
     }
 
-    public void setTotalNoShows(Integer totalNoShows) {
-        this.totalNoShows = totalNoShows;
-    }
-
-    public Double getTotalSpend() {
-        return this.totalSpend;
-    }
-
-    public ClientVenueStats totalSpend(Double totalSpend) {
-        this.setTotalSpend(totalSpend);
-        return this;
-    }
-
-    public void setTotalSpend(Double totalSpend) {
-        this.totalSpend = totalSpend;
-    }
-
-    public Double getTotalSpendLocal() {
-        return this.totalSpendLocal;
-    }
-
-    public ClientVenueStats totalSpendLocal(Double totalSpendLocal) {
-        this.setTotalSpendLocal(totalSpendLocal);
-        return this;
-    }
-
-    public void setTotalSpendLocal(Double totalSpendLocal) {
-        this.totalSpendLocal = totalSpendLocal;
-    }
-
-    public Double getTotalSpendLocalperCover() {
-        return this.totalSpendLocalperCover;
-    }
-
-    public ClientVenueStats totalSpendLocalperCover(Double totalSpendLocalperCover) {
-        this.setTotalSpendLocalperCover(totalSpendLocalperCover);
-        return this;
-    }
-
-    public void setTotalSpendLocalperCover(Double totalSpendLocalperCover) {
-        this.totalSpendLocalperCover = totalSpendLocalperCover;
-    }
-
-    public Double getTotalSpendLocalPerVisit() {
-        return this.totalSpendLocalPerVisit;
-    }
-
-    public ClientVenueStats totalSpendLocalPerVisit(Double totalSpendLocalPerVisit) {
-        this.setTotalSpendLocalPerVisit(totalSpendLocalPerVisit);
-        return this;
-    }
-
-    public void setTotalSpendLocalPerVisit(Double totalSpendLocalPerVisit) {
-        this.totalSpendLocalPerVisit = totalSpendLocalPerVisit;
+    public void setAvgRating(Integer avgRating) {
+        this.avgRating = avgRating;
     }
 
     public Double getTotalSpendperCover() {
@@ -303,6 +221,45 @@ public class ClientVenueStats implements Serializable {
         this.totalSpendperCover = totalSpendperCover;
     }
 
+    public Double getTotalSpend() {
+        return this.totalSpend;
+    }
+
+    public ClientVenueStats totalSpend(Double totalSpend) {
+        this.setTotalSpend(totalSpend);
+        return this;
+    }
+
+    public void setTotalSpend(Double totalSpend) {
+        this.totalSpend = totalSpend;
+    }
+
+    public Integer getTotalNoShows() {
+        return this.totalNoShows;
+    }
+
+    public ClientVenueStats totalNoShows(Integer totalNoShows) {
+        this.setTotalNoShows(totalNoShows);
+        return this;
+    }
+
+    public void setTotalNoShows(Integer totalNoShows) {
+        this.totalNoShows = totalNoShows;
+    }
+
+    public Integer getNumRatings() {
+        return this.numRatings;
+    }
+
+    public ClientVenueStats numRatings(Integer numRatings) {
+        this.setNumRatings(numRatings);
+        return this;
+    }
+
+    public void setNumRatings(Integer numRatings) {
+        this.numRatings = numRatings;
+    }
+
     public Double getTotalSpendPerVisit() {
         return this.totalSpendPerVisit;
     }
@@ -316,17 +273,173 @@ public class ClientVenueStats implements Serializable {
         this.totalSpendPerVisit = totalSpendPerVisit;
     }
 
-    public Integer getTotalVisit() {
-        return this.totalVisit;
+    public Double getTotalSpendLocal() {
+        return this.totalSpendLocal;
     }
 
-    public ClientVenueStats totalVisit(Integer totalVisit) {
-        this.setTotalVisit(totalVisit);
+    public ClientVenueStats totalSpendLocal(Double totalSpendLocal) {
+        this.setTotalSpendLocal(totalSpendLocal);
         return this;
     }
 
-    public void setTotalVisit(Integer totalVisit) {
-        this.totalVisit = totalVisit;
+    public void setTotalSpendLocal(Double totalSpendLocal) {
+        this.totalSpendLocal = totalSpendLocal;
+    }
+
+    public Double getTotalSpendLocalPerVisit() {
+        return this.totalSpendLocalPerVisit;
+    }
+
+    public ClientVenueStats totalSpendLocalPerVisit(Double totalSpendLocalPerVisit) {
+        this.setTotalSpendLocalPerVisit(totalSpendLocalPerVisit);
+        return this;
+    }
+
+    public void setTotalSpendLocalPerVisit(Double totalSpendLocalPerVisit) {
+        this.totalSpendLocalPerVisit = totalSpendLocalPerVisit;
+    }
+
+    public Integer getTotalVisits() {
+        return this.totalVisits;
+    }
+
+    public ClientVenueStats totalVisits(Integer totalVisits) {
+        this.setTotalVisits(totalVisits);
+        return this;
+    }
+
+    public void setTotalVisits(Integer totalVisits) {
+        this.totalVisits = totalVisits;
+    }
+
+    public Double getGrossTotal() {
+        return this.grossTotal;
+    }
+
+    public ClientVenueStats grossTotal(Double grossTotal) {
+        this.setGrossTotal(grossTotal);
+        return this;
+    }
+
+    public void setGrossTotal(Double grossTotal) {
+        this.grossTotal = grossTotal;
+    }
+
+    public Double getTotalOrderCount() {
+        return this.totalOrderCount;
+    }
+
+    public ClientVenueStats totalOrderCount(Double totalOrderCount) {
+        this.setTotalOrderCount(totalOrderCount);
+        return this;
+    }
+
+    public void setTotalOrderCount(Double totalOrderCount) {
+        this.totalOrderCount = totalOrderCount;
+    }
+
+    public Double getTotalOrderCancellations() {
+        return this.totalOrderCancellations;
+    }
+
+    public ClientVenueStats totalOrderCancellations(Double totalOrderCancellations) {
+        this.setTotalOrderCancellations(totalOrderCancellations);
+        return this;
+    }
+
+    public void setTotalOrderCancellations(Double totalOrderCancellations) {
+        this.totalOrderCancellations = totalOrderCancellations;
+    }
+
+    public Double getTotalOrderSpend() {
+        return this.totalOrderSpend;
+    }
+
+    public ClientVenueStats totalOrderSpend(Double totalOrderSpend) {
+        this.setTotalOrderSpend(totalOrderSpend);
+        return this;
+    }
+
+    public void setTotalOrderSpend(Double totalOrderSpend) {
+        this.totalOrderSpend = totalOrderSpend;
+    }
+
+    public Double getGrossOrderTotal() {
+        return this.grossOrderTotal;
+    }
+
+    public ClientVenueStats grossOrderTotal(Double grossOrderTotal) {
+        this.setGrossOrderTotal(grossOrderTotal);
+        return this;
+    }
+
+    public void setGrossOrderTotal(Double grossOrderTotal) {
+        this.grossOrderTotal = grossOrderTotal;
+    }
+
+    public Double getTotalOrderSpendLocal() {
+        return this.totalOrderSpendLocal;
+    }
+
+    public ClientVenueStats totalOrderSpendLocal(Double totalOrderSpendLocal) {
+        this.setTotalOrderSpendLocal(totalOrderSpendLocal);
+        return this;
+    }
+
+    public void setTotalOrderSpendLocal(Double totalOrderSpendLocal) {
+        this.totalOrderSpendLocal = totalOrderSpendLocal;
+    }
+
+    public String getLastOrderDate() {
+        return this.lastOrderDate;
+    }
+
+    public ClientVenueStats lastOrderDate(String lastOrderDate) {
+        this.setLastOrderDate(lastOrderDate);
+        return this;
+    }
+
+    public void setLastOrderDate(String lastOrderDate) {
+        this.lastOrderDate = lastOrderDate;
+    }
+
+    public Double getTotalSpendperOrder() {
+        return this.totalSpendperOrder;
+    }
+
+    public ClientVenueStats totalSpendperOrder(Double totalSpendperOrder) {
+        this.setTotalSpendperOrder(totalSpendperOrder);
+        return this;
+    }
+
+    public void setTotalSpendperOrder(Double totalSpendperOrder) {
+        this.totalSpendperOrder = totalSpendperOrder;
+    }
+
+    public Double getTotalSpendLocalperOrder() {
+        return this.totalSpendLocalperOrder;
+    }
+
+    public ClientVenueStats totalSpendLocalperOrder(Double totalSpendLocalperOrder) {
+        this.setTotalSpendLocalperOrder(totalSpendLocalperOrder);
+        return this;
+    }
+
+    public void setTotalSpendLocalperOrder(Double totalSpendLocalperOrder) {
+        this.totalSpendLocalperOrder = totalSpendLocalperOrder;
+    }
+
+    public String getVenueId() {
+        return this.venueId;
+    }
+
+    public ClientVenueStats venueId(String venueId) {
+        this.setVenueId(venueId);
+        return this;
+    }
+
+    public void setVenueId(String venueId) {
+        this.venueId = venueId;
     }
 
     public Boolean getVenueMarketingOptin() {
@@ -420,6 +533,37 @@ public class ClientVenueStats implements Serializable {
         this.techComment = techComment;
     }
 
+    public Set<BookingName> getBookingNames() {
+        return this.bookingNames;
+    }
+
+    public void setBookingNames(Set<BookingName> bookingNames) {
+        if (this.bookingNames != null) {
+            this.bookingNames.forEach(i -> i.setClientVenueStats(null));
+        }
+        if (bookingNames != null) {
+            bookingNames.forEach(i -> i.setClientVenueStats(this));
+        }
+        this.bookingNames = bookingNames;
+    }
+
+    public ClientVenueStats bookingNames(Set<BookingName> bookingNames) {
+        this.setBookingNames(bookingNames);
+        return this;
+    }
+
+    public ClientVenueStats addBookingName(BookingName bookingName) {
+        this.bookingNames.add(bookingName);
+        bookingName.setClientVenueStats(this);
+        return this;
+    }
+
+    public ClientVenueStats removeBookingName(BookingName bookingName) {
+        this.bookingNames.remove(bookingName);
+        bookingName.setClientVenueStats(null);
+        return this;
+    }
+
     public Client getClient() {
         return this.client;
     }
@@ -463,21 +607,29 @@ public class ClientVenueStats implements Serializable {
     public String toString() {
         return "ClientVenueStats{" +
             "id=" + getId() +
-            ", venueId='" + getVenueId() + "'" +
-            ", avgRating=" + getAvgRating() +
-            ", bookedByNames='" + getBookedByNames() + "'" +
+            ", totalSpendLocalperCover=" + getTotalSpendLocalperCover() +
             ", lastVisitDate='" + getLastVisitDate() + "'" +
-            ", numRatings=" + getNumRatings() +
             ", totalCancellations=" + getTotalCancellations() +
             ", totalCovers=" + getTotalCovers() +
-            ", totalNoShows=" + getTotalNoShows() +
-            ", totalSpend=" + getTotalSpend() +
-            ", totalSpendLocal=" + getTotalSpendLocal() +
-            ", totalSpendLocalperCover=" + getTotalSpendLocalperCover() +
-            ", totalSpendLocalPerVisit=" + getTotalSpendLocalPerVisit() +
+            ", avgRating=" + getAvgRating() +
             ", totalSpendperCover=" + getTotalSpendperCover() +
+            ", totalSpend=" + getTotalSpend() +
+            ", totalNoShows=" + getTotalNoShows() +
+            ", numRatings=" + getNumRatings() +
             ", totalSpendPerVisit=" + getTotalSpendPerVisit() +
-            ", totalVisit=" + getTotalVisit() +
+            ", totalSpendLocal=" + getTotalSpendLocal() +
+            ", totalSpendLocalPerVisit=" + getTotalSpendLocalPerVisit() +
+            ", totalVisits=" + getTotalVisits() +
+            ", grossTotal=" + getGrossTotal() +
+            ", totalOrderCount=" + getTotalOrderCount() +
+            ", totalOrderCancellations=" + getTotalOrderCancellations() +
+            ", totalOrderSpend=" + getTotalOrderSpend() +
+            ", grossOrderTotal=" + getGrossOrderTotal() +
+            ", totalOrderSpendLocal=" + getTotalOrderSpendLocal() +
+            ", lastOrderDate='" + getLastOrderDate() + "'" +
+            ", totalSpendperOrder=" + getTotalSpendperOrder() +
+            ", totalSpendLocalperOrder=" + getTotalSpendLocalperOrder() +
+            ", venueId='" + getVenueId() + "'" +
             ", venueMarketingOptin='" + getVenueMarketingOptin() + "'" +
             ", venueMarketingOptints='" + getVenueMarketingOptints() + "'" +
             ", techLineage='" + getTechLineage() + "'" +
