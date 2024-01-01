@@ -69,6 +69,8 @@ public class CacheConfiguration {
             createCache(cm, com.sbm.sevenroomstohub.domain.ResPosticketsItem.class.getName());
             createCache(cm, com.sbm.sevenroomstohub.domain.ResTag.class.getName());
             createCache(cm, com.sbm.sevenroomstohub.domain.ResTable.class.getName());
+            createCache(cm, com.sbm.sevenroomstohub.domain.BookingName.class.getName());
+            createCache(cm, com.sbm.sevenroomstohub.domain.ClientVenueStats.class.getName() + ".bookingNames");
             // jhipster-needle-ehcache-add-entry
         };
     }

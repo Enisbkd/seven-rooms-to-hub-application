@@ -147,20 +147,20 @@ public class ClientVenueStatsResource {
      * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientVenueStats in body.
      */
-    //    @GetMapping("")
-    //    public ResponseEntity<List<ClientVenueStatsDTO>> getAllClientVenueStats(
-    //        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
-    //        @RequestParam(name = "filter", required = false) String filter
-    //    ) {
-    //        if ("client-is-null".equals(filter)) {
-    //            log.debug("REST request to get all ClientVenueStatss where client is null");
-    //            return new ResponseEntity<>(clientVenueStatsService.findAllWhereClientIsNull(), HttpStatus.OK);
-    //        }
-    //        log.debug("REST request to get a page of ClientVenueStats");
-    //        Page<ClientVenueStatsDTO> page = clientVenueStatsService.findAll(pageable);
-    //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-    //        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    //    }
+    @GetMapping("")
+    public ResponseEntity<List<ClientVenueStatsDTO>> getAllClientVenueStats(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @RequestParam(name = "filter", required = false) String filter
+    ) {
+        if ("client-is-null".equals(filter)) {
+            log.debug("REST request to get all ClientVenueStatss where client is null");
+            return new ResponseEntity<>(clientVenueStatsService.findAllWhereClientIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of ClientVenueStats");
+        Page<ClientVenueStatsDTO> page = clientVenueStatsService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 
     /**
      * {@code GET  /client-venue-stats/:id} : get the "id" clientVenueStats.

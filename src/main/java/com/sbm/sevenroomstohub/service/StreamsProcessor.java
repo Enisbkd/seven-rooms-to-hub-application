@@ -16,6 +16,7 @@ import org.apache.kafka.streams.errors.StreamsException;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,6 +25,12 @@ public class StreamsProcessor {
     private static final Serde<String> STRING_SERDE = Serdes.String();
     private static final Serde<ClientPayload> CLIENT_PAYLOAD_SERDE = CustomSerdes.ClientPayload();
     private static final Serde<ReservationPayload> RESERVATION_PAYLOAD_SERDE = CustomSerdes.ReservationPayload();
+
+    @Value(value = "${spring.kafka.streams.client-topic}")
+    private String clientTopic;
+
+    @Value(value = "${spring.kafka.streams.reservation-topic}")
+    private String reservationTopic;
 
     @Autowired
     ClientRepository clientRepository;
@@ -47,16 +54,13 @@ public class StreamsProcessor {
 
     @Autowired
     void buildPipeline(StreamsBuilder streamsBuilder) {
-        KStream<String, ClientPayload> clientStream = streamsBuilder.stream(
-            "data-7rooms-client",
-            Consumed.with(STRING_SERDE, CLIENT_PAYLOAD_SERDE)
-        );
+        KStream<String, ClientPayload> clientStream = streamsBuilder.stream(clientTopic, Consumed.with(STRING_SERDE, CLIENT_PAYLOAD_SERDE));
         clientStream.foreach((key, clientPayload) -> {
             clientProcessor(clientPayload);
         });
 
         KStream<String, ReservationPayload> reservationStream = streamsBuilder.stream(
-            "data-7rooms-reservation",
+            reservationTopic,
             Consumed.with(STRING_SERDE, RESERVATION_PAYLOAD_SERDE)
         );
         reservationStream.foreach((key, value) -> reservationsProcessor(key, value));

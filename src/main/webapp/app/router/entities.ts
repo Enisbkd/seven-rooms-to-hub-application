@@ -3,6 +3,10 @@ import { Authority } from '@/shared/security/authority';
 // prettier-ignore
 const Entities = () => import('@/entities/entities.vue');
 
+const BookingName = () => import('@/entities/booking-name/booking-name.vue');
+const BookingNameUpdate = () => import('@/entities/booking-name/booking-name-update.vue');
+const BookingNameDetails = () => import('@/entities/booking-name/booking-name-details.vue');
+
 const Client = () => import('@/entities/client/client.vue');
 const ClientUpdate = () => import('@/entities/client/client-update.vue');
 const ClientDetails = () => import('@/entities/client/client-details.vue');
@@ -57,6 +61,30 @@ export default {
   path: '/',
   component: Entities,
   children: [
+    {
+      path: 'booking-name',
+      name: 'BookingName',
+      component: BookingName,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'booking-name/new',
+      name: 'BookingNameCreate',
+      component: BookingNameUpdate,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'booking-name/:bookingNameId/edit',
+      name: 'BookingNameEdit',
+      component: BookingNameUpdate,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'booking-name/:bookingNameId/view',
+      name: 'BookingNameView',
+      component: BookingNameDetails,
+      meta: { authorities: [Authority.USER] },
+    },
     {
       path: 'client',
       name: 'Client',

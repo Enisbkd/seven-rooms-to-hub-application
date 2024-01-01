@@ -12,35 +12,51 @@ public class ClientVenueStatsDTO implements Serializable {
 
     private Long id;
 
-    private String venueId;
-
-    private Integer avgRating;
-
-    private String bookedByNames;
+    private Double totalSpendLocalperCover;
 
     private String lastVisitDate;
-
-    private Integer numRatings;
 
     private Integer totalCancellations;
 
     private Integer totalCovers;
 
-    private Integer totalNoShows;
-
-    private Double totalSpend;
-
-    private Double totalSpendLocal;
-
-    private Double totalSpendLocalperCover;
-
-    private Double totalSpendLocalPerVisit;
+    private Integer avgRating;
 
     private Double totalSpendperCover;
 
+    private Double totalSpend;
+
+    private Integer totalNoShows;
+
+    private Integer numRatings;
+
     private Double totalSpendPerVisit;
 
-    private Integer totalVisit;
+    private Double totalSpendLocal;
+
+    private Double totalSpendLocalPerVisit;
+
+    private Integer totalVisits;
+
+    private Double grossTotal;
+
+    private Double totalOrderCount;
+
+    private Double totalOrderCancellations;
+
+    private Double totalOrderSpend;
+
+    private Double grossOrderTotal;
+
+    private Double totalOrderSpendLocal;
+
+    private String lastOrderDate;
+
+    private Double totalSpendperOrder;
+
+    private Double totalSpendLocalperOrder;
+
+    private String venueId;
 
     private Boolean venueMarketingOptin;
 
@@ -64,28 +80,12 @@ public class ClientVenueStatsDTO implements Serializable {
         this.id = id;
     }
 
-    public String getVenueId() {
-        return venueId;
+    public Double getTotalSpendLocalperCover() {
+        return totalSpendLocalperCover;
     }
 
-    public void setVenueId(String venueId) {
-        this.venueId = venueId;
-    }
-
-    public Integer getAvgRating() {
-        return avgRating;
-    }
-
-    public void setAvgRating(Integer avgRating) {
-        this.avgRating = avgRating;
-    }
-
-    public String getBookedByNames() {
-        return bookedByNames;
-    }
-
-    public void setBookedByNames(String bookedByNames) {
-        this.bookedByNames = bookedByNames;
+    public void setTotalSpendLocalperCover(Double totalSpendLocalperCover) {
+        this.totalSpendLocalperCover = totalSpendLocalperCover;
     }
 
     public String getLastVisitDate() {
@@ -94,14 +94,6 @@ public class ClientVenueStatsDTO implements Serializable {
 
     public void setLastVisitDate(String lastVisitDate) {
         this.lastVisitDate = lastVisitDate;
-    }
-
-    public Integer getNumRatings() {
-        return numRatings;
-    }
-
-    public void setNumRatings(Integer numRatings) {
-        this.numRatings = numRatings;
     }
 
     public Integer getTotalCancellations() {
@@ -120,44 +112,12 @@ public class ClientVenueStatsDTO implements Serializable {
         this.totalCovers = totalCovers;
     }
 
-    public Integer getTotalNoShows() {
-        return totalNoShows;
+    public Integer getAvgRating() {
+        return avgRating;
     }
 
-    public void setTotalNoShows(Integer totalNoShows) {
-        this.totalNoShows = totalNoShows;
-    }
-
-    public Double getTotalSpend() {
-        return totalSpend;
-    }
-
-    public void setTotalSpend(Double totalSpend) {
-        this.totalSpend = totalSpend;
-    }
-
-    public Double getTotalSpendLocal() {
-        return totalSpendLocal;
-    }
-
-    public void setTotalSpendLocal(Double totalSpendLocal) {
-        this.totalSpendLocal = totalSpendLocal;
-    }
-
-    public Double getTotalSpendLocalperCover() {
-        return totalSpendLocalperCover;
-    }
-
-    public void setTotalSpendLocalperCover(Double totalSpendLocalperCover) {
-        this.totalSpendLocalperCover = totalSpendLocalperCover;
-    }
-
-    public Double getTotalSpendLocalPerVisit() {
-        return totalSpendLocalPerVisit;
-    }
-
-    public void setTotalSpendLocalPerVisit(Double totalSpendLocalPerVisit) {
-        this.totalSpendLocalPerVisit = totalSpendLocalPerVisit;
+    public void setAvgRating(Integer avgRating) {
+        this.avgRating = avgRating;
     }
 
     public Double getTotalSpendperCover() {
@@ -168,6 +128,30 @@ public class ClientVenueStatsDTO implements Serializable {
         this.totalSpendperCover = totalSpendperCover;
     }
 
+    public Double getTotalSpend() {
+        return totalSpend;
+    }
+
+    public void setTotalSpend(Double totalSpend) {
+        this.totalSpend = totalSpend;
+    }
+
+    public Integer getTotalNoShows() {
+        return totalNoShows;
+    }
+
+    public void setTotalNoShows(Integer totalNoShows) {
+        this.totalNoShows = totalNoShows;
+    }
+
+    public Integer getNumRatings() {
+        return numRatings;
+    }
+
+    public void setNumRatings(Integer numRatings) {
+        this.numRatings = numRatings;
+    }
+
     public Double getTotalSpendPerVisit() {
         return totalSpendPerVisit;
     }
@@ -176,12 +160,108 @@ public class ClientVenueStatsDTO implements Serializable {
         this.totalSpendPerVisit = totalSpendPerVisit;
     }
 
-    public Integer getTotalVisit() {
-        return totalVisit;
+    public Double getTotalSpendLocal() {
+        return totalSpendLocal;
     }
 
-    public void setTotalVisit(Integer totalVisit) {
-        this.totalVisit = totalVisit;
+    public void setTotalSpendLocal(Double totalSpendLocal) {
+        this.totalSpendLocal = totalSpendLocal;
+    }
+
+    public Double getTotalSpendLocalPerVisit() {
+        return totalSpendLocalPerVisit;
+    }
+
+    public void setTotalSpendLocalPerVisit(Double totalSpendLocalPerVisit) {
+        this.totalSpendLocalPerVisit = totalSpendLocalPerVisit;
+    }
+
+    public Integer getTotalVisits() {
+        return totalVisits;
+    }
+
+    public void setTotalVisits(Integer totalVisits) {
+        this.totalVisits = totalVisits;
+    }
+
+    public Double getGrossTotal() {
+        return grossTotal;
+    }
+
+    public void setGrossTotal(Double grossTotal) {
+        this.grossTotal = grossTotal;
+    }
+
+    public Double getTotalOrderCount() {
+        return totalOrderCount;
+    }
+
+    public void setTotalOrderCount(Double totalOrderCount) {
+        this.totalOrderCount = totalOrderCount;
+    }
+
+    public Double getTotalOrderCancellations() {
+        return totalOrderCancellations;
+    }
+
+    public void setTotalOrderCancellations(Double totalOrderCancellations) {
+        this.totalOrderCancellations = totalOrderCancellations;
+    }
+
+    public Double getTotalOrderSpend() {
+        return totalOrderSpend;
+    }
+
+    public void setTotalOrderSpend(Double totalOrderSpend) {
+        this.totalOrderSpend = totalOrderSpend;
+    }
+
+    public Double getGrossOrderTotal() {
+        return grossOrderTotal;
+    }
+
+    public void setGrossOrderTotal(Double grossOrderTotal) {
+        this.grossOrderTotal = grossOrderTotal;
+    }
+
+    public Double getTotalOrderSpendLocal() {
+        return totalOrderSpendLocal;
+    }
+
+    public void setTotalOrderSpendLocal(Double totalOrderSpendLocal) {
+        this.totalOrderSpendLocal = totalOrderSpendLocal;
+    }
+
+    public String getLastOrderDate() {
+        return lastOrderDate;
+    }
+
+    public void setLastOrderDate(String lastOrderDate) {
+        this.lastOrderDate = lastOrderDate;
+    }
+
+    public Double getTotalSpendperOrder() {
+        return totalSpendperOrder;
+    }
+
+    public void setTotalSpendperOrder(Double totalSpendperOrder) {
+        this.totalSpendperOrder = totalSpendperOrder;
+    }
+
+    public Double getTotalSpendLocalperOrder() {
+        return totalSpendLocalperOrder;
+    }
+
+    public void setTotalSpendLocalperOrder(Double totalSpendLocalperOrder) {
+        this.totalSpendLocalperOrder = totalSpendLocalperOrder;
+    }
+
+    public String getVenueId() {
+        return venueId;
+    }
+
+    public void setVenueId(String venueId) {
+        this.venueId = venueId;
     }
 
     public Boolean getVenueMarketingOptin() {
@@ -266,21 +346,29 @@ public class ClientVenueStatsDTO implements Serializable {
     public String toString() {
         return "ClientVenueStatsDTO{" +
             "id=" + getId() +
-            ", venueId='" + getVenueId() + "'" +
-            ", avgRating=" + getAvgRating() +
-            ", bookedByNames='" + getBookedByNames() + "'" +
+            ", totalSpendLocalperCover=" + getTotalSpendLocalperCover() +
             ", lastVisitDate='" + getLastVisitDate() + "'" +
-            ", numRatings=" + getNumRatings() +
             ", totalCancellations=" + getTotalCancellations() +
             ", totalCovers=" + getTotalCovers() +
-            ", totalNoShows=" + getTotalNoShows() +
-            ", totalSpend=" + getTotalSpend() +
-            ", totalSpendLocal=" + getTotalSpendLocal() +
-            ", totalSpendLocalperCover=" + getTotalSpendLocalperCover() +
-            ", totalSpendLocalPerVisit=" + getTotalSpendLocalPerVisit() +
+            ", avgRating=" + getAvgRating() +
             ", totalSpendperCover=" + getTotalSpendperCover() +
+            ", totalSpend=" + getTotalSpend() +
+            ", totalNoShows=" + getTotalNoShows() +
+            ", numRatings=" + getNumRatings() +
             ", totalSpendPerVisit=" + getTotalSpendPerVisit() +
-            ", totalVisit=" + getTotalVisit() +
+            ", totalSpendLocal=" + getTotalSpendLocal() +
+            ", totalSpendLocalPerVisit=" + getTotalSpendLocalPerVisit() +
+            ", totalVisits=" + getTotalVisits() +
+            ", grossTotal=" + getGrossTotal() +
+            ", totalOrderCount=" + getTotalOrderCount() +
+            ", totalOrderCancellations=" + getTotalOrderCancellations() +
+            ", totalOrderSpend=" + getTotalOrderSpend() +
+            ", grossOrderTotal=" + getGrossOrderTotal() +
+            ", totalOrderSpendLocal=" + getTotalOrderSpendLocal() +
+            ", lastOrderDate='" + getLastOrderDate() + "'" +
+            ", totalSpendperOrder=" + getTotalSpendperOrder() +
+            ", totalSpendLocalperOrder=" + getTotalSpendLocalperOrder() +
+            ", venueId='" + getVenueId() + "'" +
             ", venueMarketingOptin='" + getVenueMarketingOptin() + "'" +
             ", venueMarketingOptints='" + getVenueMarketingOptints() + "'" +
             ", techLineage='" + getTechLineage() + "'" +

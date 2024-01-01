@@ -36,20 +36,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ClientVenueStatsResourceIT {
 
-    private static final String DEFAULT_VENUE_ID = "AAAAAAAAAA";
-    private static final String UPDATED_VENUE_ID = "BBBBBBBBBB";
-
-    private static final Integer DEFAULT_AVG_RATING = 1;
-    private static final Integer UPDATED_AVG_RATING = 2;
-
-    private static final String DEFAULT_BOOKED_BY_NAMES = "AAAAAAAAAA";
-    private static final String UPDATED_BOOKED_BY_NAMES = "BBBBBBBBBB";
+    private static final Double DEFAULT_TOTAL_SPEND_LOCALPER_COVER = 1D;
+    private static final Double UPDATED_TOTAL_SPEND_LOCALPER_COVER = 2D;
 
     private static final String DEFAULT_LAST_VISIT_DATE = "AAAAAAAAAA";
     private static final String UPDATED_LAST_VISIT_DATE = "BBBBBBBBBB";
-
-    private static final Integer DEFAULT_NUM_RATINGS = 1;
-    private static final Integer UPDATED_NUM_RATINGS = 2;
 
     private static final Integer DEFAULT_TOTAL_CANCELLATIONS = 1;
     private static final Integer UPDATED_TOTAL_CANCELLATIONS = 2;
@@ -57,29 +48,62 @@ class ClientVenueStatsResourceIT {
     private static final Integer DEFAULT_TOTAL_COVERS = 1;
     private static final Integer UPDATED_TOTAL_COVERS = 2;
 
-    private static final Integer DEFAULT_TOTAL_NO_SHOWS = 1;
-    private static final Integer UPDATED_TOTAL_NO_SHOWS = 2;
-
-    private static final Double DEFAULT_TOTAL_SPEND = 1D;
-    private static final Double UPDATED_TOTAL_SPEND = 2D;
-
-    private static final Double DEFAULT_TOTAL_SPEND_LOCAL = 1D;
-    private static final Double UPDATED_TOTAL_SPEND_LOCAL = 2D;
-
-    private static final Double DEFAULT_TOTAL_SPEND_LOCALPER_COVER = 1D;
-    private static final Double UPDATED_TOTAL_SPEND_LOCALPER_COVER = 2D;
-
-    private static final Double DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT = 1D;
-    private static final Double UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT = 2D;
+    private static final Integer DEFAULT_AVG_RATING = 1;
+    private static final Integer UPDATED_AVG_RATING = 2;
 
     private static final Double DEFAULT_TOTAL_SPENDPER_COVER = 1D;
     private static final Double UPDATED_TOTAL_SPENDPER_COVER = 2D;
 
+    private static final Double DEFAULT_TOTAL_SPEND = 1D;
+    private static final Double UPDATED_TOTAL_SPEND = 2D;
+
+    private static final Integer DEFAULT_TOTAL_NO_SHOWS = 1;
+    private static final Integer UPDATED_TOTAL_NO_SHOWS = 2;
+
+    private static final Integer DEFAULT_NUM_RATINGS = 1;
+    private static final Integer UPDATED_NUM_RATINGS = 2;
+
     private static final Double DEFAULT_TOTAL_SPEND_PER_VISIT = 1D;
     private static final Double UPDATED_TOTAL_SPEND_PER_VISIT = 2D;
 
-    private static final Integer DEFAULT_TOTAL_VISIT = 1;
-    private static final Integer UPDATED_TOTAL_VISIT = 2;
+    private static final Double DEFAULT_TOTAL_SPEND_LOCAL = 1D;
+    private static final Double UPDATED_TOTAL_SPEND_LOCAL = 2D;
+
+    private static final Double DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT = 1D;
+    private static final Double UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT = 2D;
+
+    private static final Integer DEFAULT_TOTAL_VISITS = 1;
+    private static final Integer UPDATED_TOTAL_VISITS = 2;
+
+    private static final Double DEFAULT_GROSS_TOTAL = 1D;
+    private static final Double UPDATED_GROSS_TOTAL = 2D;
+
+    private static final Double DEFAULT_TOTAL_ORDER_COUNT = 1D;
+    private static final Double UPDATED_TOTAL_ORDER_COUNT = 2D;
+
+    private static final Double DEFAULT_TOTAL_ORDER_CANCELLATIONS = 1D;
+    private static final Double UPDATED_TOTAL_ORDER_CANCELLATIONS = 2D;
+
+    private static final Double DEFAULT_TOTAL_ORDER_SPEND = 1D;
+    private static final Double UPDATED_TOTAL_ORDER_SPEND = 2D;
+
+    private static final Double DEFAULT_GROSS_ORDER_TOTAL = 1D;
+    private static final Double UPDATED_GROSS_ORDER_TOTAL = 2D;
+
+    private static final Double DEFAULT_TOTAL_ORDER_SPEND_LOCAL = 1D;
+    private static final Double UPDATED_TOTAL_ORDER_SPEND_LOCAL = 2D;
+
+    private static final String DEFAULT_LAST_ORDER_DATE = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_ORDER_DATE = "BBBBBBBBBB";
+
+    private static final Double DEFAULT_TOTAL_SPENDPER_ORDER = 1D;
+    private static final Double UPDATED_TOTAL_SPENDPER_ORDER = 2D;
+
+    private static final Double DEFAULT_TOTAL_SPEND_LOCALPER_ORDER = 1D;
+    private static final Double UPDATED_TOTAL_SPEND_LOCALPER_ORDER = 2D;
+
+    private static final String DEFAULT_VENUE_ID = "AAAAAAAAAA";
+    private static final String UPDATED_VENUE_ID = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_VENUE_MARKETING_OPTIN = false;
     private static final Boolean UPDATED_VENUE_MARKETING_OPTIN = true;
@@ -130,21 +154,29 @@ class ClientVenueStatsResourceIT {
      */
     public static ClientVenueStats createEntity(EntityManager em) {
         ClientVenueStats clientVenueStats = new ClientVenueStats()
-            .venueId(DEFAULT_VENUE_ID)
-            .avgRating(DEFAULT_AVG_RATING)
-            .bookedByNames(DEFAULT_BOOKED_BY_NAMES)
+            .totalSpendLocalperCover(DEFAULT_TOTAL_SPEND_LOCALPER_COVER)
             .lastVisitDate(DEFAULT_LAST_VISIT_DATE)
-            .numRatings(DEFAULT_NUM_RATINGS)
             .totalCancellations(DEFAULT_TOTAL_CANCELLATIONS)
             .totalCovers(DEFAULT_TOTAL_COVERS)
-            .totalNoShows(DEFAULT_TOTAL_NO_SHOWS)
-            .totalSpend(DEFAULT_TOTAL_SPEND)
-            .totalSpendLocal(DEFAULT_TOTAL_SPEND_LOCAL)
-            .totalSpendLocalperCover(DEFAULT_TOTAL_SPEND_LOCALPER_COVER)
-            .totalSpendLocalPerVisit(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT)
+            .avgRating(DEFAULT_AVG_RATING)
             .totalSpendperCover(DEFAULT_TOTAL_SPENDPER_COVER)
+            .totalSpend(DEFAULT_TOTAL_SPEND)
+            .totalNoShows(DEFAULT_TOTAL_NO_SHOWS)
+            .numRatings(DEFAULT_NUM_RATINGS)
             .totalSpendPerVisit(DEFAULT_TOTAL_SPEND_PER_VISIT)
-            .totalVisit(DEFAULT_TOTAL_VISIT)
+            .totalSpendLocal(DEFAULT_TOTAL_SPEND_LOCAL)
+            .totalSpendLocalPerVisit(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT)
+            .totalVisits(DEFAULT_TOTAL_VISITS)
+            .grossTotal(DEFAULT_GROSS_TOTAL)
+            .totalOrderCount(DEFAULT_TOTAL_ORDER_COUNT)
+            .totalOrderCancellations(DEFAULT_TOTAL_ORDER_CANCELLATIONS)
+            .totalOrderSpend(DEFAULT_TOTAL_ORDER_SPEND)
+            .grossOrderTotal(DEFAULT_GROSS_ORDER_TOTAL)
+            .totalOrderSpendLocal(DEFAULT_TOTAL_ORDER_SPEND_LOCAL)
+            .lastOrderDate(DEFAULT_LAST_ORDER_DATE)
+            .totalSpendperOrder(DEFAULT_TOTAL_SPENDPER_ORDER)
+            .totalSpendLocalperOrder(DEFAULT_TOTAL_SPEND_LOCALPER_ORDER)
+            .venueId(DEFAULT_VENUE_ID)
             .venueMarketingOptin(DEFAULT_VENUE_MARKETING_OPTIN)
             .venueMarketingOptints(DEFAULT_VENUE_MARKETING_OPTINTS)
             .techLineage(DEFAULT_TECH_LINEAGE)
@@ -163,21 +195,29 @@ class ClientVenueStatsResourceIT {
      */
     public static ClientVenueStats createUpdatedEntity(EntityManager em) {
         ClientVenueStats clientVenueStats = new ClientVenueStats()
-            .venueId(UPDATED_VENUE_ID)
-            .avgRating(UPDATED_AVG_RATING)
-            .bookedByNames(UPDATED_BOOKED_BY_NAMES)
+            .totalSpendLocalperCover(UPDATED_TOTAL_SPEND_LOCALPER_COVER)
             .lastVisitDate(UPDATED_LAST_VISIT_DATE)
-            .numRatings(UPDATED_NUM_RATINGS)
             .totalCancellations(UPDATED_TOTAL_CANCELLATIONS)
             .totalCovers(UPDATED_TOTAL_COVERS)
-            .totalNoShows(UPDATED_TOTAL_NO_SHOWS)
-            .totalSpend(UPDATED_TOTAL_SPEND)
-            .totalSpendLocal(UPDATED_TOTAL_SPEND_LOCAL)
-            .totalSpendLocalperCover(UPDATED_TOTAL_SPEND_LOCALPER_COVER)
-            .totalSpendLocalPerVisit(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT)
+            .avgRating(UPDATED_AVG_RATING)
             .totalSpendperCover(UPDATED_TOTAL_SPENDPER_COVER)
+            .totalSpend(UPDATED_TOTAL_SPEND)
+            .totalNoShows(UPDATED_TOTAL_NO_SHOWS)
+            .numRatings(UPDATED_NUM_RATINGS)
             .totalSpendPerVisit(UPDATED_TOTAL_SPEND_PER_VISIT)
-            .totalVisit(UPDATED_TOTAL_VISIT)
+            .totalSpendLocal(UPDATED_TOTAL_SPEND_LOCAL)
+            .totalSpendLocalPerVisit(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT)
+            .totalVisits(UPDATED_TOTAL_VISITS)
+            .grossTotal(UPDATED_GROSS_TOTAL)
+            .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
+            .totalOrderCancellations(UPDATED_TOTAL_ORDER_CANCELLATIONS)
+            .totalOrderSpend(UPDATED_TOTAL_ORDER_SPEND)
+            .grossOrderTotal(UPDATED_GROSS_ORDER_TOTAL)
+            .totalOrderSpendLocal(UPDATED_TOTAL_ORDER_SPEND_LOCAL)
+            .lastOrderDate(UPDATED_LAST_ORDER_DATE)
+            .totalSpendperOrder(UPDATED_TOTAL_SPENDPER_ORDER)
+            .totalSpendLocalperOrder(UPDATED_TOTAL_SPEND_LOCALPER_ORDER)
+            .venueId(UPDATED_VENUE_ID)
             .venueMarketingOptin(UPDATED_VENUE_MARKETING_OPTIN)
             .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS)
             .techLineage(UPDATED_TECH_LINEAGE)
@@ -209,21 +249,29 @@ class ClientVenueStatsResourceIT {
         List<ClientVenueStats> clientVenueStatsList = clientVenueStatsRepository.findAll();
         assertThat(clientVenueStatsList).hasSize(databaseSizeBeforeCreate + 1);
         ClientVenueStats testClientVenueStats = clientVenueStatsList.get(clientVenueStatsList.size() - 1);
-        assertThat(testClientVenueStats.getVenueId()).isEqualTo(DEFAULT_VENUE_ID);
-        assertThat(testClientVenueStats.getAvgRating()).isEqualTo(DEFAULT_AVG_RATING);
-        assertThat(testClientVenueStats.getBookedByNames()).isEqualTo(DEFAULT_BOOKED_BY_NAMES);
+        assertThat(testClientVenueStats.getTotalSpendLocalperCover()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCALPER_COVER);
         assertThat(testClientVenueStats.getLastVisitDate()).isEqualTo(DEFAULT_LAST_VISIT_DATE);
-        assertThat(testClientVenueStats.getNumRatings()).isEqualTo(DEFAULT_NUM_RATINGS);
         assertThat(testClientVenueStats.getTotalCancellations()).isEqualTo(DEFAULT_TOTAL_CANCELLATIONS);
         assertThat(testClientVenueStats.getTotalCovers()).isEqualTo(DEFAULT_TOTAL_COVERS);
-        assertThat(testClientVenueStats.getTotalNoShows()).isEqualTo(DEFAULT_TOTAL_NO_SHOWS);
-        assertThat(testClientVenueStats.getTotalSpend()).isEqualTo(DEFAULT_TOTAL_SPEND);
-        assertThat(testClientVenueStats.getTotalSpendLocal()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCAL);
-        assertThat(testClientVenueStats.getTotalSpendLocalperCover()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCALPER_COVER);
-        assertThat(testClientVenueStats.getTotalSpendLocalPerVisit()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT);
+        assertThat(testClientVenueStats.getAvgRating()).isEqualTo(DEFAULT_AVG_RATING);
         assertThat(testClientVenueStats.getTotalSpendperCover()).isEqualTo(DEFAULT_TOTAL_SPENDPER_COVER);
+        assertThat(testClientVenueStats.getTotalSpend()).isEqualTo(DEFAULT_TOTAL_SPEND);
+        assertThat(testClientVenueStats.getTotalNoShows()).isEqualTo(DEFAULT_TOTAL_NO_SHOWS);
+        assertThat(testClientVenueStats.getNumRatings()).isEqualTo(DEFAULT_NUM_RATINGS);
         assertThat(testClientVenueStats.getTotalSpendPerVisit()).isEqualTo(DEFAULT_TOTAL_SPEND_PER_VISIT);
-        assertThat(testClientVenueStats.getTotalVisit()).isEqualTo(DEFAULT_TOTAL_VISIT);
+        assertThat(testClientVenueStats.getTotalSpendLocal()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCAL);
+        assertThat(testClientVenueStats.getTotalSpendLocalPerVisit()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT);
+        assertThat(testClientVenueStats.getTotalVisits()).isEqualTo(DEFAULT_TOTAL_VISITS);
+        assertThat(testClientVenueStats.getGrossTotal()).isEqualTo(DEFAULT_GROSS_TOTAL);
+        assertThat(testClientVenueStats.getTotalOrderCount()).isEqualTo(DEFAULT_TOTAL_ORDER_COUNT);
+        assertThat(testClientVenueStats.getTotalOrderCancellations()).isEqualTo(DEFAULT_TOTAL_ORDER_CANCELLATIONS);
+        assertThat(testClientVenueStats.getTotalOrderSpend()).isEqualTo(DEFAULT_TOTAL_ORDER_SPEND);
+        assertThat(testClientVenueStats.getGrossOrderTotal()).isEqualTo(DEFAULT_GROSS_ORDER_TOTAL);
+        assertThat(testClientVenueStats.getTotalOrderSpendLocal()).isEqualTo(DEFAULT_TOTAL_ORDER_SPEND_LOCAL);
+        assertThat(testClientVenueStats.getLastOrderDate()).isEqualTo(DEFAULT_LAST_ORDER_DATE);
+        assertThat(testClientVenueStats.getTotalSpendperOrder()).isEqualTo(DEFAULT_TOTAL_SPENDPER_ORDER);
+        assertThat(testClientVenueStats.getTotalSpendLocalperOrder()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCALPER_ORDER);
+        assertThat(testClientVenueStats.getVenueId()).isEqualTo(DEFAULT_VENUE_ID);
         assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(DEFAULT_VENUE_MARKETING_OPTIN);
         assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(DEFAULT_VENUE_MARKETING_OPTINTS);
         assertThat(testClientVenueStats.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
@@ -266,21 +314,29 @@ class ClientVenueStatsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(clientVenueStats.getId().intValue())))
-            .andExpect(jsonPath("$.[*].venueId").value(hasItem(DEFAULT_VENUE_ID)))
-            .andExpect(jsonPath("$.[*].avgRating").value(hasItem(DEFAULT_AVG_RATING)))
-            .andExpect(jsonPath("$.[*].bookedByNames").value(hasItem(DEFAULT_BOOKED_BY_NAMES)))
+            .andExpect(jsonPath("$.[*].totalSpendLocalperCover").value(hasItem(DEFAULT_TOTAL_SPEND_LOCALPER_COVER.doubleValue())))
             .andExpect(jsonPath("$.[*].lastVisitDate").value(hasItem(DEFAULT_LAST_VISIT_DATE)))
-            .andExpect(jsonPath("$.[*].numRatings").value(hasItem(DEFAULT_NUM_RATINGS)))
             .andExpect(jsonPath("$.[*].totalCancellations").value(hasItem(DEFAULT_TOTAL_CANCELLATIONS)))
             .andExpect(jsonPath("$.[*].totalCovers").value(hasItem(DEFAULT_TOTAL_COVERS)))
-            .andExpect(jsonPath("$.[*].totalNoShows").value(hasItem(DEFAULT_TOTAL_NO_SHOWS)))
-            .andExpect(jsonPath("$.[*].totalSpend").value(hasItem(DEFAULT_TOTAL_SPEND.doubleValue())))
-            .andExpect(jsonPath("$.[*].totalSpendLocal").value(hasItem(DEFAULT_TOTAL_SPEND_LOCAL.doubleValue())))
-            .andExpect(jsonPath("$.[*].totalSpendLocalperCover").value(hasItem(DEFAULT_TOTAL_SPEND_LOCALPER_COVER.doubleValue())))
-            .andExpect(jsonPath("$.[*].totalSpendLocalPerVisit").value(hasItem(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT.doubleValue())))
+            .andExpect(jsonPath("$.[*].avgRating").value(hasItem(DEFAULT_AVG_RATING)))
             .andExpect(jsonPath("$.[*].totalSpendperCover").value(hasItem(DEFAULT_TOTAL_SPENDPER_COVER.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalSpend").value(hasItem(DEFAULT_TOTAL_SPEND.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalNoShows").value(hasItem(DEFAULT_TOTAL_NO_SHOWS)))
+            .andExpect(jsonPath("$.[*].numRatings").value(hasItem(DEFAULT_NUM_RATINGS)))
             .andExpect(jsonPath("$.[*].totalSpendPerVisit").value(hasItem(DEFAULT_TOTAL_SPEND_PER_VISIT.doubleValue())))
-            .andExpect(jsonPath("$.[*].totalVisit").value(hasItem(DEFAULT_TOTAL_VISIT)))
+            .andExpect(jsonPath("$.[*].totalSpendLocal").value(hasItem(DEFAULT_TOTAL_SPEND_LOCAL.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalSpendLocalPerVisit").value(hasItem(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalVisits").value(hasItem(DEFAULT_TOTAL_VISITS)))
+            .andExpect(jsonPath("$.[*].grossTotal").value(hasItem(DEFAULT_GROSS_TOTAL.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalOrderCount").value(hasItem(DEFAULT_TOTAL_ORDER_COUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalOrderCancellations").value(hasItem(DEFAULT_TOTAL_ORDER_CANCELLATIONS.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalOrderSpend").value(hasItem(DEFAULT_TOTAL_ORDER_SPEND.doubleValue())))
+            .andExpect(jsonPath("$.[*].grossOrderTotal").value(hasItem(DEFAULT_GROSS_ORDER_TOTAL.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalOrderSpendLocal").value(hasItem(DEFAULT_TOTAL_ORDER_SPEND_LOCAL.doubleValue())))
+            .andExpect(jsonPath("$.[*].lastOrderDate").value(hasItem(DEFAULT_LAST_ORDER_DATE)))
+            .andExpect(jsonPath("$.[*].totalSpendperOrder").value(hasItem(DEFAULT_TOTAL_SPENDPER_ORDER.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalSpendLocalperOrder").value(hasItem(DEFAULT_TOTAL_SPEND_LOCALPER_ORDER.doubleValue())))
+            .andExpect(jsonPath("$.[*].venueId").value(hasItem(DEFAULT_VENUE_ID)))
             .andExpect(jsonPath("$.[*].venueMarketingOptin").value(hasItem(DEFAULT_VENUE_MARKETING_OPTIN.booleanValue())))
             .andExpect(jsonPath("$.[*].venueMarketingOptints").value(hasItem(DEFAULT_VENUE_MARKETING_OPTINTS)))
             .andExpect(jsonPath("$.[*].techLineage").value(hasItem(DEFAULT_TECH_LINEAGE)))
@@ -302,21 +358,29 @@ class ClientVenueStatsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(clientVenueStats.getId().intValue()))
-            .andExpect(jsonPath("$.venueId").value(DEFAULT_VENUE_ID))
-            .andExpect(jsonPath("$.avgRating").value(DEFAULT_AVG_RATING))
-            .andExpect(jsonPath("$.bookedByNames").value(DEFAULT_BOOKED_BY_NAMES))
+            .andExpect(jsonPath("$.totalSpendLocalperCover").value(DEFAULT_TOTAL_SPEND_LOCALPER_COVER.doubleValue()))
             .andExpect(jsonPath("$.lastVisitDate").value(DEFAULT_LAST_VISIT_DATE))
-            .andExpect(jsonPath("$.numRatings").value(DEFAULT_NUM_RATINGS))
             .andExpect(jsonPath("$.totalCancellations").value(DEFAULT_TOTAL_CANCELLATIONS))
             .andExpect(jsonPath("$.totalCovers").value(DEFAULT_TOTAL_COVERS))
-            .andExpect(jsonPath("$.totalNoShows").value(DEFAULT_TOTAL_NO_SHOWS))
-            .andExpect(jsonPath("$.totalSpend").value(DEFAULT_TOTAL_SPEND.doubleValue()))
-            .andExpect(jsonPath("$.totalSpendLocal").value(DEFAULT_TOTAL_SPEND_LOCAL.doubleValue()))
-            .andExpect(jsonPath("$.totalSpendLocalperCover").value(DEFAULT_TOTAL_SPEND_LOCALPER_COVER.doubleValue()))
-            .andExpect(jsonPath("$.totalSpendLocalPerVisit").value(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT.doubleValue()))
+            .andExpect(jsonPath("$.avgRating").value(DEFAULT_AVG_RATING))
             .andExpect(jsonPath("$.totalSpendperCover").value(DEFAULT_TOTAL_SPENDPER_COVER.doubleValue()))
+            .andExpect(jsonPath("$.totalSpend").value(DEFAULT_TOTAL_SPEND.doubleValue()))
+            .andExpect(jsonPath("$.totalNoShows").value(DEFAULT_TOTAL_NO_SHOWS))
+            .andExpect(jsonPath("$.numRatings").value(DEFAULT_NUM_RATINGS))
             .andExpect(jsonPath("$.totalSpendPerVisit").value(DEFAULT_TOTAL_SPEND_PER_VISIT.doubleValue()))
-            .andExpect(jsonPath("$.totalVisit").value(DEFAULT_TOTAL_VISIT))
+            .andExpect(jsonPath("$.totalSpendLocal").value(DEFAULT_TOTAL_SPEND_LOCAL.doubleValue()))
+            .andExpect(jsonPath("$.totalSpendLocalPerVisit").value(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT.doubleValue()))
+            .andExpect(jsonPath("$.totalVisits").value(DEFAULT_TOTAL_VISITS))
+            .andExpect(jsonPath("$.grossTotal").value(DEFAULT_GROSS_TOTAL.doubleValue()))
+            .andExpect(jsonPath("$.totalOrderCount").value(DEFAULT_TOTAL_ORDER_COUNT.doubleValue()))
+            .andExpect(jsonPath("$.totalOrderCancellations").value(DEFAULT_TOTAL_ORDER_CANCELLATIONS.doubleValue()))
+            .andExpect(jsonPath("$.totalOrderSpend").value(DEFAULT_TOTAL_ORDER_SPEND.doubleValue()))
+            .andExpect(jsonPath("$.grossOrderTotal").value(DEFAULT_GROSS_ORDER_TOTAL.doubleValue()))
+            .andExpect(jsonPath("$.totalOrderSpendLocal").value(DEFAULT_TOTAL_ORDER_SPEND_LOCAL.doubleValue()))
+            .andExpect(jsonPath("$.lastOrderDate").value(DEFAULT_LAST_ORDER_DATE))
+            .andExpect(jsonPath("$.totalSpendperOrder").value(DEFAULT_TOTAL_SPENDPER_ORDER.doubleValue()))
+            .andExpect(jsonPath("$.totalSpendLocalperOrder").value(DEFAULT_TOTAL_SPEND_LOCALPER_ORDER.doubleValue()))
+            .andExpect(jsonPath("$.venueId").value(DEFAULT_VENUE_ID))
             .andExpect(jsonPath("$.venueMarketingOptin").value(DEFAULT_VENUE_MARKETING_OPTIN.booleanValue()))
             .andExpect(jsonPath("$.venueMarketingOptints").value(DEFAULT_VENUE_MARKETING_OPTINTS))
             .andExpect(jsonPath("$.techLineage").value(DEFAULT_TECH_LINEAGE))
@@ -346,21 +410,29 @@ class ClientVenueStatsResourceIT {
         // Disconnect from session so that the updates on updatedClientVenueStats are not directly saved in db
         em.detach(updatedClientVenueStats);
         updatedClientVenueStats
-            .venueId(UPDATED_VENUE_ID)
-            .avgRating(UPDATED_AVG_RATING)
-            .bookedByNames(UPDATED_BOOKED_BY_NAMES)
+            .totalSpendLocalperCover(UPDATED_TOTAL_SPEND_LOCALPER_COVER)
             .lastVisitDate(UPDATED_LAST_VISIT_DATE)
-            .numRatings(UPDATED_NUM_RATINGS)
             .totalCancellations(UPDATED_TOTAL_CANCELLATIONS)
             .totalCovers(UPDATED_TOTAL_COVERS)
-            .totalNoShows(UPDATED_TOTAL_NO_SHOWS)
-            .totalSpend(UPDATED_TOTAL_SPEND)
-            .totalSpendLocal(UPDATED_TOTAL_SPEND_LOCAL)
-            .totalSpendLocalperCover(UPDATED_TOTAL_SPEND_LOCALPER_COVER)
-            .totalSpendLocalPerVisit(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT)
+            .avgRating(UPDATED_AVG_RATING)
             .totalSpendperCover(UPDATED_TOTAL_SPENDPER_COVER)
+            .totalSpend(UPDATED_TOTAL_SPEND)
+            .totalNoShows(UPDATED_TOTAL_NO_SHOWS)
+            .numRatings(UPDATED_NUM_RATINGS)
             .totalSpendPerVisit(UPDATED_TOTAL_SPEND_PER_VISIT)
-            .totalVisit(UPDATED_TOTAL_VISIT)
+            .totalSpendLocal(UPDATED_TOTAL_SPEND_LOCAL)
+            .totalSpendLocalPerVisit(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT)
+            .totalVisits(UPDATED_TOTAL_VISITS)
+            .grossTotal(UPDATED_GROSS_TOTAL)
+            .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
+            .totalOrderCancellations(UPDATED_TOTAL_ORDER_CANCELLATIONS)
+            .totalOrderSpend(UPDATED_TOTAL_ORDER_SPEND)
+            .grossOrderTotal(UPDATED_GROSS_ORDER_TOTAL)
+            .totalOrderSpendLocal(UPDATED_TOTAL_ORDER_SPEND_LOCAL)
+            .lastOrderDate(UPDATED_LAST_ORDER_DATE)
+            .totalSpendperOrder(UPDATED_TOTAL_SPENDPER_ORDER)
+            .totalSpendLocalperOrder(UPDATED_TOTAL_SPEND_LOCALPER_ORDER)
+            .venueId(UPDATED_VENUE_ID)
             .venueMarketingOptin(UPDATED_VENUE_MARKETING_OPTIN)
             .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS)
             .techLineage(UPDATED_TECH_LINEAGE)
@@ -382,21 +454,29 @@ class ClientVenueStatsResourceIT {
         List<ClientVenueStats> clientVenueStatsList = clientVenueStatsRepository.findAll();
         assertThat(clientVenueStatsList).hasSize(databaseSizeBeforeUpdate);
         ClientVenueStats testClientVenueStats = clientVenueStatsList.get(clientVenueStatsList.size() - 1);
-        assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
-        assertThat(testClientVenueStats.getAvgRating()).isEqualTo(UPDATED_AVG_RATING);
-        assertThat(testClientVenueStats.getBookedByNames()).isEqualTo(UPDATED_BOOKED_BY_NAMES);
+        assertThat(testClientVenueStats.getTotalSpendLocalperCover()).isEqualTo(UPDATED_TOTAL_SPEND_LOCALPER_COVER);
         assertThat(testClientVenueStats.getLastVisitDate()).isEqualTo(UPDATED_LAST_VISIT_DATE);
-        assertThat(testClientVenueStats.getNumRatings()).isEqualTo(UPDATED_NUM_RATINGS);
         assertThat(testClientVenueStats.getTotalCancellations()).isEqualTo(UPDATED_TOTAL_CANCELLATIONS);
         assertThat(testClientVenueStats.getTotalCovers()).isEqualTo(UPDATED_TOTAL_COVERS);
-        assertThat(testClientVenueStats.getTotalNoShows()).isEqualTo(UPDATED_TOTAL_NO_SHOWS);
-        assertThat(testClientVenueStats.getTotalSpend()).isEqualTo(UPDATED_TOTAL_SPEND);
-        assertThat(testClientVenueStats.getTotalSpendLocal()).isEqualTo(UPDATED_TOTAL_SPEND_LOCAL);
-        assertThat(testClientVenueStats.getTotalSpendLocalperCover()).isEqualTo(UPDATED_TOTAL_SPEND_LOCALPER_COVER);
-        assertThat(testClientVenueStats.getTotalSpendLocalPerVisit()).isEqualTo(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT);
+        assertThat(testClientVenueStats.getAvgRating()).isEqualTo(UPDATED_AVG_RATING);
         assertThat(testClientVenueStats.getTotalSpendperCover()).isEqualTo(UPDATED_TOTAL_SPENDPER_COVER);
+        assertThat(testClientVenueStats.getTotalSpend()).isEqualTo(UPDATED_TOTAL_SPEND);
+        assertThat(testClientVenueStats.getTotalNoShows()).isEqualTo(UPDATED_TOTAL_NO_SHOWS);
+        assertThat(testClientVenueStats.getNumRatings()).isEqualTo(UPDATED_NUM_RATINGS);
         assertThat(testClientVenueStats.getTotalSpendPerVisit()).isEqualTo(UPDATED_TOTAL_SPEND_PER_VISIT);
-        assertThat(testClientVenueStats.getTotalVisit()).isEqualTo(UPDATED_TOTAL_VISIT);
+        assertThat(testClientVenueStats.getTotalSpendLocal()).isEqualTo(UPDATED_TOTAL_SPEND_LOCAL);
+        assertThat(testClientVenueStats.getTotalSpendLocalPerVisit()).isEqualTo(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT);
+        assertThat(testClientVenueStats.getTotalVisits()).isEqualTo(UPDATED_TOTAL_VISITS);
+        assertThat(testClientVenueStats.getGrossTotal()).isEqualTo(UPDATED_GROSS_TOTAL);
+        assertThat(testClientVenueStats.getTotalOrderCount()).isEqualTo(UPDATED_TOTAL_ORDER_COUNT);
+        assertThat(testClientVenueStats.getTotalOrderCancellations()).isEqualTo(UPDATED_TOTAL_ORDER_CANCELLATIONS);
+        assertThat(testClientVenueStats.getTotalOrderSpend()).isEqualTo(UPDATED_TOTAL_ORDER_SPEND);
+        assertThat(testClientVenueStats.getGrossOrderTotal()).isEqualTo(UPDATED_GROSS_ORDER_TOTAL);
+        assertThat(testClientVenueStats.getTotalOrderSpendLocal()).isEqualTo(UPDATED_TOTAL_ORDER_SPEND_LOCAL);
+        assertThat(testClientVenueStats.getLastOrderDate()).isEqualTo(UPDATED_LAST_ORDER_DATE);
+        assertThat(testClientVenueStats.getTotalSpendperOrder()).isEqualTo(UPDATED_TOTAL_SPENDPER_ORDER);
+        assertThat(testClientVenueStats.getTotalSpendLocalperOrder()).isEqualTo(UPDATED_TOTAL_SPEND_LOCALPER_ORDER);
+        assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
         assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(UPDATED_VENUE_MARKETING_OPTIN);
         assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(UPDATED_VENUE_MARKETING_OPTINTS);
         assertThat(testClientVenueStats.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
@@ -486,13 +566,16 @@ class ClientVenueStatsResourceIT {
         partialUpdatedClientVenueStats.setId(clientVenueStats.getId());
 
         partialUpdatedClientVenueStats
+            .totalSpendLocalperCover(UPDATED_TOTAL_SPEND_LOCALPER_COVER)
+            .totalCancellations(UPDATED_TOTAL_CANCELLATIONS)
+            .totalSpend(UPDATED_TOTAL_SPEND)
+            .totalVisits(UPDATED_TOTAL_VISITS)
+            .totalOrderCancellations(UPDATED_TOTAL_ORDER_CANCELLATIONS)
+            .grossOrderTotal(UPDATED_GROSS_ORDER_TOTAL)
+            .totalSpendLocalperOrder(UPDATED_TOTAL_SPEND_LOCALPER_ORDER)
             .venueId(UPDATED_VENUE_ID)
-            .bookedByNames(UPDATED_BOOKED_BY_NAMES)
-            .totalCovers(UPDATED_TOTAL_COVERS)
-            .totalSpendperCover(UPDATED_TOTAL_SPENDPER_COVER)
-            .venueMarketingOptin(UPDATED_VENUE_MARKETING_OPTIN)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techComment(UPDATED_TECH_COMMENT);
+            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS)
+            .techMapping(UPDATED_TECH_MAPPING);
 
         restClientVenueStatsMockMvc
             .perform(
@@ -506,28 +589,36 @@ class ClientVenueStatsResourceIT {
         List<ClientVenueStats> clientVenueStatsList = clientVenueStatsRepository.findAll();
         assertThat(clientVenueStatsList).hasSize(databaseSizeBeforeUpdate);
         ClientVenueStats testClientVenueStats = clientVenueStatsList.get(clientVenueStatsList.size() - 1);
-        assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
-        assertThat(testClientVenueStats.getAvgRating()).isEqualTo(DEFAULT_AVG_RATING);
-        assertThat(testClientVenueStats.getBookedByNames()).isEqualTo(UPDATED_BOOKED_BY_NAMES);
+        assertThat(testClientVenueStats.getTotalSpendLocalperCover()).isEqualTo(UPDATED_TOTAL_SPEND_LOCALPER_COVER);
         assertThat(testClientVenueStats.getLastVisitDate()).isEqualTo(DEFAULT_LAST_VISIT_DATE);
-        assertThat(testClientVenueStats.getNumRatings()).isEqualTo(DEFAULT_NUM_RATINGS);
-        assertThat(testClientVenueStats.getTotalCancellations()).isEqualTo(DEFAULT_TOTAL_CANCELLATIONS);
-        assertThat(testClientVenueStats.getTotalCovers()).isEqualTo(UPDATED_TOTAL_COVERS);
+        assertThat(testClientVenueStats.getTotalCancellations()).isEqualTo(UPDATED_TOTAL_CANCELLATIONS);
+        assertThat(testClientVenueStats.getTotalCovers()).isEqualTo(DEFAULT_TOTAL_COVERS);
+        assertThat(testClientVenueStats.getAvgRating()).isEqualTo(DEFAULT_AVG_RATING);
+        assertThat(testClientVenueStats.getTotalSpendperCover()).isEqualTo(DEFAULT_TOTAL_SPENDPER_COVER);
+        assertThat(testClientVenueStats.getTotalSpend()).isEqualTo(UPDATED_TOTAL_SPEND);
         assertThat(testClientVenueStats.getTotalNoShows()).isEqualTo(DEFAULT_TOTAL_NO_SHOWS);
-        assertThat(testClientVenueStats.getTotalSpend()).isEqualTo(DEFAULT_TOTAL_SPEND);
-        assertThat(testClientVenueStats.getTotalSpendLocal()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCAL);
-        assertThat(testClientVenueStats.getTotalSpendLocalperCover()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCALPER_COVER);
-        assertThat(testClientVenueStats.getTotalSpendLocalPerVisit()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT);
-        assertThat(testClientVenueStats.getTotalSpendperCover()).isEqualTo(UPDATED_TOTAL_SPENDPER_COVER);
+        assertThat(testClientVenueStats.getNumRatings()).isEqualTo(DEFAULT_NUM_RATINGS);
         assertThat(testClientVenueStats.getTotalSpendPerVisit()).isEqualTo(DEFAULT_TOTAL_SPEND_PER_VISIT);
-        assertThat(testClientVenueStats.getTotalVisit()).isEqualTo(DEFAULT_TOTAL_VISIT);
-        assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(UPDATED_VENUE_MARKETING_OPTIN);
-        assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(DEFAULT_VENUE_MARKETING_OPTINTS);
-        assertThat(testClientVenueStats.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
+        assertThat(testClientVenueStats.getTotalSpendLocal()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCAL);
+        assertThat(testClientVenueStats.getTotalSpendLocalPerVisit()).isEqualTo(DEFAULT_TOTAL_SPEND_LOCAL_PER_VISIT);
+        assertThat(testClientVenueStats.getTotalVisits()).isEqualTo(UPDATED_TOTAL_VISITS);
+        assertThat(testClientVenueStats.getGrossTotal()).isEqualTo(DEFAULT_GROSS_TOTAL);
+        assertThat(testClientVenueStats.getTotalOrderCount()).isEqualTo(DEFAULT_TOTAL_ORDER_COUNT);
+        assertThat(testClientVenueStats.getTotalOrderCancellations()).isEqualTo(UPDATED_TOTAL_ORDER_CANCELLATIONS);
+        assertThat(testClientVenueStats.getTotalOrderSpend()).isEqualTo(DEFAULT_TOTAL_ORDER_SPEND);
+        assertThat(testClientVenueStats.getGrossOrderTotal()).isEqualTo(UPDATED_GROSS_ORDER_TOTAL);
+        assertThat(testClientVenueStats.getTotalOrderSpendLocal()).isEqualTo(DEFAULT_TOTAL_ORDER_SPEND_LOCAL);
+        assertThat(testClientVenueStats.getLastOrderDate()).isEqualTo(DEFAULT_LAST_ORDER_DATE);
+        assertThat(testClientVenueStats.getTotalSpendperOrder()).isEqualTo(DEFAULT_TOTAL_SPENDPER_ORDER);
+        assertThat(testClientVenueStats.getTotalSpendLocalperOrder()).isEqualTo(UPDATED_TOTAL_SPEND_LOCALPER_ORDER);
+        assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
+        assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(DEFAULT_VENUE_MARKETING_OPTIN);
+        assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(UPDATED_VENUE_MARKETING_OPTINTS);
+        assertThat(testClientVenueStats.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
         assertThat(testClientVenueStats.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
         assertThat(testClientVenueStats.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testClientVenueStats.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testClientVenueStats.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
+        assertThat(testClientVenueStats.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
+        assertThat(testClientVenueStats.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -543,21 +634,29 @@ class ClientVenueStatsResourceIT {
         partialUpdatedClientVenueStats.setId(clientVenueStats.getId());
 
         partialUpdatedClientVenueStats
-            .venueId(UPDATED_VENUE_ID)
-            .avgRating(UPDATED_AVG_RATING)
-            .bookedByNames(UPDATED_BOOKED_BY_NAMES)
+            .totalSpendLocalperCover(UPDATED_TOTAL_SPEND_LOCALPER_COVER)
             .lastVisitDate(UPDATED_LAST_VISIT_DATE)
-            .numRatings(UPDATED_NUM_RATINGS)
             .totalCancellations(UPDATED_TOTAL_CANCELLATIONS)
             .totalCovers(UPDATED_TOTAL_COVERS)
-            .totalNoShows(UPDATED_TOTAL_NO_SHOWS)
-            .totalSpend(UPDATED_TOTAL_SPEND)
-            .totalSpendLocal(UPDATED_TOTAL_SPEND_LOCAL)
-            .totalSpendLocalperCover(UPDATED_TOTAL_SPEND_LOCALPER_COVER)
-            .totalSpendLocalPerVisit(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT)
+            .avgRating(UPDATED_AVG_RATING)
             .totalSpendperCover(UPDATED_TOTAL_SPENDPER_COVER)
+            .totalSpend(UPDATED_TOTAL_SPEND)
+            .totalNoShows(UPDATED_TOTAL_NO_SHOWS)
+            .numRatings(UPDATED_NUM_RATINGS)
             .totalSpendPerVisit(UPDATED_TOTAL_SPEND_PER_VISIT)
-            .totalVisit(UPDATED_TOTAL_VISIT)
+            .totalSpendLocal(UPDATED_TOTAL_SPEND_LOCAL)
+            .totalSpendLocalPerVisit(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT)
+            .totalVisits(UPDATED_TOTAL_VISITS)
+            .grossTotal(UPDATED_GROSS_TOTAL)
+            .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
+            .totalOrderCancellations(UPDATED_TOTAL_ORDER_CANCELLATIONS)
+            .totalOrderSpend(UPDATED_TOTAL_ORDER_SPEND)
+            .grossOrderTotal(UPDATED_GROSS_ORDER_TOTAL)
+            .totalOrderSpendLocal(UPDATED_TOTAL_ORDER_SPEND_LOCAL)
+            .lastOrderDate(UPDATED_LAST_ORDER_DATE)
+            .totalSpendperOrder(UPDATED_TOTAL_SPENDPER_ORDER)
+            .totalSpendLocalperOrder(UPDATED_TOTAL_SPEND_LOCALPER_ORDER)
+            .venueId(UPDATED_VENUE_ID)
             .venueMarketingOptin(UPDATED_VENUE_MARKETING_OPTIN)
             .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS)
             .techLineage(UPDATED_TECH_LINEAGE)
@@ -578,21 +677,29 @@ class ClientVenueStatsResourceIT {
         List<ClientVenueStats> clientVenueStatsList = clientVenueStatsRepository.findAll();
         assertThat(clientVenueStatsList).hasSize(databaseSizeBeforeUpdate);
         ClientVenueStats testClientVenueStats = clientVenueStatsList.get(clientVenueStatsList.size() - 1);
-        assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
-        assertThat(testClientVenueStats.getAvgRating()).isEqualTo(UPDATED_AVG_RATING);
-        assertThat(testClientVenueStats.getBookedByNames()).isEqualTo(UPDATED_BOOKED_BY_NAMES);
+        assertThat(testClientVenueStats.getTotalSpendLocalperCover()).isEqualTo(UPDATED_TOTAL_SPEND_LOCALPER_COVER);
         assertThat(testClientVenueStats.getLastVisitDate()).isEqualTo(UPDATED_LAST_VISIT_DATE);
-        assertThat(testClientVenueStats.getNumRatings()).isEqualTo(UPDATED_NUM_RATINGS);
         assertThat(testClientVenueStats.getTotalCancellations()).isEqualTo(UPDATED_TOTAL_CANCELLATIONS);
         assertThat(testClientVenueStats.getTotalCovers()).isEqualTo(UPDATED_TOTAL_COVERS);
-        assertThat(testClientVenueStats.getTotalNoShows()).isEqualTo(UPDATED_TOTAL_NO_SHOWS);
-        assertThat(testClientVenueStats.getTotalSpend()).isEqualTo(UPDATED_TOTAL_SPEND);
-        assertThat(testClientVenueStats.getTotalSpendLocal()).isEqualTo(UPDATED_TOTAL_SPEND_LOCAL);
-        assertThat(testClientVenueStats.getTotalSpendLocalperCover()).isEqualTo(UPDATED_TOTAL_SPEND_LOCALPER_COVER);
-        assertThat(testClientVenueStats.getTotalSpendLocalPerVisit()).isEqualTo(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT);
+        assertThat(testClientVenueStats.getAvgRating()).isEqualTo(UPDATED_AVG_RATING);
         assertThat(testClientVenueStats.getTotalSpendperCover()).isEqualTo(UPDATED_TOTAL_SPENDPER_COVER);
+        assertThat(testClientVenueStats.getTotalSpend()).isEqualTo(UPDATED_TOTAL_SPEND);
+        assertThat(testClientVenueStats.getTotalNoShows()).isEqualTo(UPDATED_TOTAL_NO_SHOWS);
+        assertThat(testClientVenueStats.getNumRatings()).isEqualTo(UPDATED_NUM_RATINGS);
         assertThat(testClientVenueStats.getTotalSpendPerVisit()).isEqualTo(UPDATED_TOTAL_SPEND_PER_VISIT);
-        assertThat(testClientVenueStats.getTotalVisit()).isEqualTo(UPDATED_TOTAL_VISIT);
+        assertThat(testClientVenueStats.getTotalSpendLocal()).isEqualTo(UPDATED_TOTAL_SPEND_LOCAL);
+        assertThat(testClientVenueStats.getTotalSpendLocalPerVisit()).isEqualTo(UPDATED_TOTAL_SPEND_LOCAL_PER_VISIT);
+        assertThat(testClientVenueStats.getTotalVisits()).isEqualTo(UPDATED_TOTAL_VISITS);
+        assertThat(testClientVenueStats.getGrossTotal()).isEqualTo(UPDATED_GROSS_TOTAL);
+        assertThat(testClientVenueStats.getTotalOrderCount()).isEqualTo(UPDATED_TOTAL_ORDER_COUNT);
+        assertThat(testClientVenueStats.getTotalOrderCancellations()).isEqualTo(UPDATED_TOTAL_ORDER_CANCELLATIONS);
+        assertThat(testClientVenueStats.getTotalOrderSpend()).isEqualTo(UPDATED_TOTAL_ORDER_SPEND);
+        assertThat(testClientVenueStats.getGrossOrderTotal()).isEqualTo(UPDATED_GROSS_ORDER_TOTAL);
+        assertThat(testClientVenueStats.getTotalOrderSpendLocal()).isEqualTo(UPDATED_TOTAL_ORDER_SPEND_LOCAL);
+        assertThat(testClientVenueStats.getLastOrderDate()).isEqualTo(UPDATED_LAST_ORDER_DATE);
+        assertThat(testClientVenueStats.getTotalSpendperOrder()).isEqualTo(UPDATED_TOTAL_SPENDPER_ORDER);
+        assertThat(testClientVenueStats.getTotalSpendLocalperOrder()).isEqualTo(UPDATED_TOTAL_SPEND_LOCALPER_ORDER);
+        assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
         assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(UPDATED_VENUE_MARKETING_OPTIN);
         assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(UPDATED_VENUE_MARKETING_OPTINTS);
         assertThat(testClientVenueStats.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);

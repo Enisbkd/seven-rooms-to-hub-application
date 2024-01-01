@@ -1,0 +1,25 @@
+{
+  "sevenRoomsToHubApplicationApp": {
+    "bookingName": {
+      "home": {
+        "title": "BookingNames",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Booking Name",
+        "createOrEditLabel": "Créer ou éditer un Booking Name",
+        "notFound": "Aucun Booking Name trouvé"
+      },
+      "created": "Un nouveau Booking Name a été créé avec l'identifiant { param }",
+      "updated": "Le Booking Name avec l'identifiant { param } a été mis à jour",
+      "deleted": "Le Booking Name avec l'identifiant { param } a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Booking Name { id } ?"
+      },
+      "detail": {
+        "title": "Booking Name"
+      },
+      "id": "ID",
+      "name": "Name",
+      "clientVenueStats": "Client Venue Stats"
+    }
+  }
+}

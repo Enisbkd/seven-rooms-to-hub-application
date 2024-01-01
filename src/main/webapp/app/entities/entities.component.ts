@@ -1,5 +1,6 @@
 import { defineComponent, provide } from 'vue';
 
+import BookingNameService from './booking-name/booking-name.service';
 import ClientService from './client/client.service';
 import MemberGroupService from './member-group/member-group.service';
 import ClientTagService from './client-tag/client-tag.service';
@@ -20,6 +21,7 @@ export default defineComponent({
   name: 'Entities',
   setup() {
     provide('userService', () => new UserService());
+    provide('bookingNameService', () => new BookingNameService());
     provide('clientService', () => new ClientService());
     provide('memberGroupService', () => new MemberGroupService());
     provide('clientTagService', () => new ClientTagService());

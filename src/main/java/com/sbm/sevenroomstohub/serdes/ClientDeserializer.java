@@ -19,12 +19,9 @@ package com.sbm.sevenroomstohub.serdes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sbm.sevenroomstohub.domain.Client;
-import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.domain.ClientVenueStats;
-import com.sbm.sevenroomstohub.domain.UpdateField;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.slf4j.Logger;
@@ -76,14 +73,15 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
 
             JsonNode venue_stats = objectMapper.readTree(bytes).get("entity").get("venue_stats");
 
-            String venue_field_name = venue_stats.fieldNames().next();
+            if (venue_stats.fieldNames().hasNext()) {
+                String venue_field_name = venue_stats.fieldNames().next();
 
-            JsonNode clientVenueStatsNode = venue_stats.get(venue_field_name);
+                JsonNode clientVenueStatsNode = venue_stats.get(venue_field_name);
 
-            ClientVenueStats clientVenueStats = objectMapper.convertValue(clientVenueStatsNode, ClientVenueStats.class);
+                ClientVenueStats clientVenueStats = objectMapper.convertValue(clientVenueStatsNode, ClientVenueStats.class);
 
-            client.setClientVenueStats(clientVenueStats);
-
+                client.setClientVenueStats(clientVenueStats);
+            }
             clientPayload.setClient(client);
 
             return (ClientPayload) clientPayload;
