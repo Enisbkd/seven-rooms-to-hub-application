@@ -55,6 +55,13 @@ public class ClientPayload implements Serializable {
 
     public ClientPayload() {}
 
+    public ClientPayload(Client client, String event_type, String entity_type, Set<UpdateField> updates) {
+        this.client = client;
+        this.event_type = event_type;
+        this.entity_type = entity_type;
+        this.updates = updates;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
