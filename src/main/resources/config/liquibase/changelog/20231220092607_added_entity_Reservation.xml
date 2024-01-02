@@ -188,7 +188,7 @@
             <column name="external_user_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="modify_reservation_link" type="varchar(255)">
+            <column name="modify_reservation_link" type="varchar(500)">
                 <constraints nullable="true" />
             </column>
             <column name="reference_code" type="varchar(255)">

@@ -1,24 +1,9 @@
 package com.sbm.sevenroomstohub.serdes;
 
-/**
- * Copyright © 2017 Jeremy Custenborder (jcustenborder@gmail.com)
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sbm.sevenroomstohub.domain.Client;
+import com.sbm.sevenroomstohub.domain.ClientPhoto;
 import com.sbm.sevenroomstohub.domain.ClientVenueStats;
 import java.io.IOException;
 import java.util.Map;
@@ -70,6 +55,31 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
                 com.sbm.sevenroomstohub.domain.ClientPayload.class
             );
             Client client = objectMapper.readValue(bytes, com.sbm.sevenroomstohub.domain.ClientPayload.class).getClient();
+
+            String userId = String.valueOf(objectMapper.readTree(bytes).get("entity").get("user").get("id"));
+            String userName = String.valueOf(objectMapper.readTree(bytes).get("entity").get("user").get("name"));
+
+            client.setUserId(userId);
+            client.setUserName(userName);
+
+            Integer cropx = Integer.parseInt(String.valueOf(objectMapper.readTree(bytes).get("entity").get("photo_crop_info").get("x")));
+            Integer cropy = Integer.valueOf(String.valueOf(objectMapper.readTree(bytes).get("entity").get("photo_crop_info").get("y")));
+            Double cropHeight = Double.valueOf(
+                String.valueOf(objectMapper.readTree(bytes).get("entity").get("photo_crop_info").get("height"))
+            );
+            Double cropWidth = Double.valueOf(
+                String.valueOf(objectMapper.readTree(bytes).get("entity").get("photo_crop_info").get("width"))
+            );
+
+            if (client.getClientPhoto() == null) {
+                ClientPhoto clientPhoto = new ClientPhoto();
+                client.setClientPhoto(clientPhoto);
+            }
+
+            client.getClientPhoto().setCropx(cropx);
+            client.getClientPhoto().setCropy(cropy);
+            client.getClientPhoto().setCropHeight(cropHeight);
+            client.getClientPhoto().setCropWidth(cropWidth);
 
             JsonNode venue_stats = objectMapper.readTree(bytes).get("entity").get("venue_stats");
 

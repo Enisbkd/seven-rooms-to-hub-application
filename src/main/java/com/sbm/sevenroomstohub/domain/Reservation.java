@@ -19,6 +19,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "reservation")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Reservation implements Serializable {
 
@@ -1181,13 +1182,6 @@ public class Reservation implements Serializable {
 
     public void setSourceClientId(String sourceClientId) {
         this.sourceClientId = sourceClientId;
-    }
-
-    @JsonProperty("user")
-    @JsonSetter
-    public void setUserIdName(Map<String, String> user) {
-        this.userId = user.get("id");
-        this.userName = user.get("name");
     }
 
     public String getUserId() {

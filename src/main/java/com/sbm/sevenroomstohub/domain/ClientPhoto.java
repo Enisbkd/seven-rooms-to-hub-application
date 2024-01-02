@@ -312,15 +312,6 @@ public class ClientPhoto implements Serializable {
         this.cropWidth = cropWidth;
     }
 
-    @JsonProperty("photo_crop_info")
-    @JsonSetter
-    public void setCropInfo(Map<String, String> crop) {
-        this.cropx = Integer.valueOf(crop.get("x"));
-        this.cropy = Integer.valueOf(crop.get("y"));
-        this.cropHeight = Double.valueOf(crop.get("height"));
-        this.cropWidth = Double.valueOf(crop.get("width"));
-    }
-
     public String getTechLineage() {
         return this.techLineage;
     }

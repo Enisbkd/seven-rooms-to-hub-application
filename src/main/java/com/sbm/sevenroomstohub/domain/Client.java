@@ -17,6 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "client")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Client implements Serializable {
 
@@ -1015,13 +1016,6 @@ public class Client implements Serializable {
         return this;
     }
 
-    @JsonProperty("user")
-    @JsonSetter
-    public void setUserIdName(Map<String, String> user) {
-        this.userId = user.get("id");
-        this.userName = user.get("name");
-    }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -1123,17 +1117,6 @@ public class Client implements Serializable {
 
     public void setClientPhoto(ClientPhoto clientPhoto) {
         this.clientPhoto = clientPhoto;
-    }
-
-    @JsonProperty("photo_crop_info")
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
-    public void setCropInfo(Map<String, String> crop) {
-        if (this.clientPhoto != null && crop != null) {
-            this.clientPhoto.setCropx(crop.get("x") == null ? null : Integer.valueOf(crop.get("x")));
-            this.clientPhoto.setCropy(crop.get("y") == null ? null : Integer.valueOf(crop.get("y")));
-            this.clientPhoto.setCropHeight(crop.get("height") == null ? null : Double.valueOf(crop.get("height")));
-            this.clientPhoto.setCropHeight(crop.get("width") == null ? null : Double.valueOf(crop.get("width")));
-        }
     }
 
     public Client clientPhoto(ClientPhoto clientPhoto) {
