@@ -2,9 +2,9 @@ package com.sbm.sevenroomstohub.serdes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.domain.Client;
-import com.sbm.sevenroomstohub.domain.ClientPhoto;
-import com.sbm.sevenroomstohub.domain.ClientVenueStats;
+import com.sbm.sevenroomstohub.service.dto.ClientDTO;
+import com.sbm.sevenroomstohub.service.dto.ClientPhotoDTO;
+import com.sbm.sevenroomstohub.service.dto.ClientVenueStatsDTO;
 import java.io.IOException;
 import java.util.Map;
 import org.apache.kafka.common.errors.SerializationException;
@@ -54,46 +54,51 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
                 bytes,
                 com.sbm.sevenroomstohub.domain.ClientPayload.class
             );
-            Client client = objectMapper.readValue(bytes, com.sbm.sevenroomstohub.domain.ClientPayload.class).getClient();
+            ClientDTO clientDTO = objectMapper.readValue(bytes, com.sbm.sevenroomstohub.domain.ClientPayload.class).getClientDTO();
+            JsonNode clientEntity = objectMapper.readTree(bytes).get("entity");
+            if (clientEntity != null) {
+                JsonNode userNode = clientEntity.get("user");
+                if (userNode != null) {
+                    String userId = String.valueOf(clientEntity.get("user").get("id"));
+                    String userName = String.valueOf(clientEntity.get("user").get("name"));
+                    clientDTO.setUserId(userId);
+                    clientDTO.setUserName(userName);
+                }
+                JsonNode photoCropNode = clientEntity.get("photo_crop_info");
+                if (photoCropNode != null) {
+                    Integer cropx = (photoCropNode.get("x") == null) ? null : Integer.parseInt(String.valueOf(photoCropNode.get("x")));
+                    Integer cropy = (photoCropNode.get("y") == null) ? null : Integer.parseInt(String.valueOf(photoCropNode.get("y")));
+                    Double cropHeight = (photoCropNode.get("height") == null)
+                        ? null
+                        : Double.valueOf(String.valueOf(photoCropNode.get("height")));
+                    Double cropWidth = (photoCropNode.get("width") == null)
+                        ? null
+                        : Double.valueOf(String.valueOf(photoCropNode.get("width")));
 
-            String userId = String.valueOf(objectMapper.readTree(bytes).get("entity").get("user").get("id"));
-            String userName = String.valueOf(objectMapper.readTree(bytes).get("entity").get("user").get("name"));
+                    if (clientDTO.getClientPhoto() == null) {
+                        ClientPhotoDTO clientPhoto = new ClientPhotoDTO();
+                        clientDTO.setClientPhoto(clientPhoto);
+                    }
 
-            client.setUserId(userId);
-            client.setUserName(userName);
+                    clientDTO.getClientPhoto().setCropx(cropx);
+                    clientDTO.getClientPhoto().setCropy(cropy);
+                    clientDTO.getClientPhoto().setCropHeight(cropHeight);
+                    clientDTO.getClientPhoto().setCropWidth(cropWidth);
+                }
 
-            Integer cropx = Integer.parseInt(String.valueOf(objectMapper.readTree(bytes).get("entity").get("photo_crop_info").get("x")));
-            Integer cropy = Integer.valueOf(String.valueOf(objectMapper.readTree(bytes).get("entity").get("photo_crop_info").get("y")));
-            Double cropHeight = Double.valueOf(
-                String.valueOf(objectMapper.readTree(bytes).get("entity").get("photo_crop_info").get("height"))
-            );
-            Double cropWidth = Double.valueOf(
-                String.valueOf(objectMapper.readTree(bytes).get("entity").get("photo_crop_info").get("width"))
-            );
+                JsonNode venue_stats = clientEntity.get("venue_stats");
 
-            if (client.getClientPhoto() == null) {
-                ClientPhoto clientPhoto = new ClientPhoto();
-                client.setClientPhoto(clientPhoto);
+                if (venue_stats.fieldNames().hasNext()) {
+                    String venue_field_name = venue_stats.fieldNames().next();
+
+                    JsonNode clientVenueStatsNode = venue_stats.get(venue_field_name);
+
+                    ClientVenueStatsDTO clientVenueStats = objectMapper.convertValue(clientVenueStatsNode, ClientVenueStatsDTO.class);
+
+                    clientDTO.setClientVenueStats(clientVenueStats);
+                }
+                clientPayload.setClientDTO(clientDTO);
             }
-
-            client.getClientPhoto().setCropx(cropx);
-            client.getClientPhoto().setCropy(cropy);
-            client.getClientPhoto().setCropHeight(cropHeight);
-            client.getClientPhoto().setCropWidth(cropWidth);
-
-            JsonNode venue_stats = objectMapper.readTree(bytes).get("entity").get("venue_stats");
-
-            if (venue_stats.fieldNames().hasNext()) {
-                String venue_field_name = venue_stats.fieldNames().next();
-
-                JsonNode clientVenueStatsNode = venue_stats.get(venue_field_name);
-
-                ClientVenueStats clientVenueStats = objectMapper.convertValue(clientVenueStatsNode, ClientVenueStats.class);
-
-                client.setClientVenueStats(clientVenueStats);
-            }
-            clientPayload.setClient(client);
-
             return (ClientPayload) clientPayload;
         } catch (IOException e) {
             throw new SerializationException(e);

@@ -44,7 +44,7 @@
             <column name="small_width" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="jhi_raw" type="varchar(255)">
+            <column name="photo_raw" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="cropx" type="integer">
@@ -107,7 +107,7 @@
             <column name="small" type="string"/>
             <column name="small_height" type="numeric"/>
             <column name="small_width" type="numeric"/>
-            <column name="jhi_raw" type="string"/>
+            <column name="photo_raw" type="string"/>
             <column name="cropx" type="numeric"/>
             <column name="cropy" type="numeric"/>
             <column name="crop_height" type="numeric"/>

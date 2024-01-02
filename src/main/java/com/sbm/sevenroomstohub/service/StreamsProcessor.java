@@ -3,9 +3,6 @@ package com.sbm.sevenroomstohub.service;
 import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
-import com.sbm.sevenroomstohub.repository.ClientRepository;
-import com.sbm.sevenroomstohub.repository.ResTagRepository;
-import com.sbm.sevenroomstohub.repository.ReservationRepository;
 import com.sbm.sevenroomstohub.serdes.CustomSerdes;
 import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
 import com.sbm.sevenroomstohub.service.mapper.ReservationMapperImpl;
@@ -38,22 +35,13 @@ public class StreamsProcessor {
     private String reservationTopic;
 
     @Autowired
-    ClientRepository clientRepository;
-
-    @Autowired
-    ReservationRepository reservationRepository;
-
-    @Autowired
     ReservationService reservationService;
 
     @Autowired
     ReservationMapperImpl reservationMapper;
 
     @Autowired
-    ResTagService resTagService;
-
-    @Autowired
-    ResTagRepository resTagRepository;
+    ClientPersistenceService clientPersistenceService;
 
     public StreamsProcessor() {}
 
@@ -75,15 +63,17 @@ public class StreamsProcessor {
         try {
             switch (clientPayload.getEvent_type()) {
                 case "created":
-                    {}
+                    {
+                        clientPersistenceService.saveClient(clientPayload);
+                    }
                 case "updated":
                     {}
                 case "deleted":
                     {}
             }
-            logger.info(clientPayload.getClient().toString());
-        } catch (StreamsException streamsException) {
-            logger.error(streamsException.getMessage(), streamsException.getClass());
+            logger.info(clientPayload.getClientDTO().toString());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e.getClass());
         }
     }
 
