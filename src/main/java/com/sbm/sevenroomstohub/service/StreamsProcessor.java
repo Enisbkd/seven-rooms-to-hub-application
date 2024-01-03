@@ -10,7 +10,6 @@ import com.sbm.sevenroomstohub.web.rest.UserResource;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.errors.StreamsException;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.slf4j.Logger;
@@ -48,9 +47,7 @@ public class StreamsProcessor {
     @Autowired
     void buildPipeline(StreamsBuilder streamsBuilder) {
         KStream<String, ClientPayload> clientStream = streamsBuilder.stream(clientTopic, Consumed.with(STRING_SERDE, CLIENT_PAYLOAD_SERDE));
-        clientStream.foreach((key, clientPayload) -> {
-            clientsProcessor(clientPayload);
-        });
+        clientStream.foreach((key, clientPayload) -> clientsProcessor(clientPayload));
 
         KStream<String, ReservationPayload> reservationStream = streamsBuilder.stream(
             reservationTopic,
@@ -64,14 +61,14 @@ public class StreamsProcessor {
             switch (clientPayload.getEvent_type()) {
                 case "created":
                     {
-                        clientPersistenceService.saveClient(clientPayload);
+                        //                        clientPersistenceService.saveClient(clientPayload);
                     }
                 case "updated":
                     {}
                 case "deleted":
                     {}
             }
-            logger.info(clientPayload.getClientDTO().toString());
+            logger.info(clientPayload.toString());
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());
         }
@@ -81,12 +78,12 @@ public class StreamsProcessor {
         try {
             logger.info(reservationPayload.toString());
 
-            Reservation reservation = reservationPayload.getReservation();
+            ReservationDTO reservation = reservationPayload.getReservation();
             String clientId = reservation.getClient().getClientId(); //Check if not null && clientService findbyId
-
-            ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
-
-            reservationService.save(reservationDTO);
+            //
+            //            ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+            //
+            //            reservationService.save(reservationDTO);
         } catch (Exception e) {
             logger.error("Exception", e);
         }

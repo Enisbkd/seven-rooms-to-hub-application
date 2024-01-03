@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.service;
 
-import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.repository.ClientRepository;
 import com.sbm.sevenroomstohub.service.dto.ClientDTO;
@@ -25,12 +24,12 @@ public class ClientPersistenceService {
     ClientVenueStatsService clientVenueStatsService;
 
     public ClientDTO saveClient(ClientPayload clientPayload) {
-        ClientPhotoDTO clientPhotoDTO = clientPhotoService.save(clientPayload.getClientDTO().getClientPhoto());
-        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsService.save(clientPayload.getClientDTO().getClientVenueStats());
-        clientPayload.getClientDTO().setClientPhoto(clientPhotoDTO);
-        clientPayload.getClientDTO().setClientVenueStats(clientVenueStatsDTO);
-        clientService.save(clientPayload.getClientDTO());
-        return clientPayload.getClientDTO();
+        ClientPhotoDTO clientPhotoDTO = clientPhotoService.save(clientPayload.getClient().getClientPhoto());
+        ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsService.save(clientPayload.getClient().getClientVenueStats());
+        clientPayload.getClient().setClientPhoto(clientPhotoDTO);
+        clientPayload.getClient().setClientVenueStats(clientVenueStatsDTO);
+        clientService.save(clientPayload.getClient());
+        return clientPayload.getClient();
     }
 
     public ClientDTO updateClient(ClientPayload clientPayload) {

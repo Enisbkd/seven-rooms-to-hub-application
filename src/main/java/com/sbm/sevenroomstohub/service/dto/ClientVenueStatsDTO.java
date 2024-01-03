@@ -1,6 +1,7 @@
 package com.sbm.sevenroomstohub.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Objects;
  * A DTO for the {@link com.sbm.sevenroomstohub.domain.ClientVenueStats} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClientVenueStatsDTO implements Serializable {
 
     @JsonIgnore

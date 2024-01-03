@@ -7,6 +7,7 @@ import com.sbm.sevenroomstohub.service.dto.ClientPhotoDTO;
 import com.sbm.sevenroomstohub.service.dto.ClientVenueStatsDTO;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
                 bytes,
                 com.sbm.sevenroomstohub.domain.ClientPayload.class
             );
-            ClientDTO clientDTO = objectMapper.readValue(bytes, com.sbm.sevenroomstohub.domain.ClientPayload.class).getClientDTO();
+            ClientDTO clientDTO = objectMapper.readValue(bytes, com.sbm.sevenroomstohub.domain.ClientPayload.class).getClient();
             JsonNode clientEntity = objectMapper.readTree(bytes).get("entity");
             if (clientEntity != null) {
                 JsonNode userNode = clientEntity.get("user");
@@ -85,6 +86,21 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
                     clientDTO.getClientPhoto().setCropHeight(cropHeight);
                     clientDTO.getClientPhoto().setCropWidth(cropWidth);
                 }
+                JsonNode clientTagsNode = clientEntity.get("client_tags");
+                if (clientTagsNode != null) {
+                    Set clientTags = objectMapper.convertValue(clientTagsNode, Set.class);
+                    clientPayload.setClientTags(clientTags);
+                }
+                JsonNode customFieldsNode = clientEntity.get("custom_fields");
+                if (customFieldsNode != null) {
+                    Set customFields = objectMapper.convertValue(customFieldsNode, Set.class);
+                    clientPayload.setCustomFields(customFields);
+                }
+                JsonNode memberGroupsNode = clientEntity.get("member_groups");
+                if (memberGroupsNode != null) {
+                    Set memberGroups = objectMapper.convertValue(memberGroupsNode, Set.class);
+                    clientPayload.setMemberGroups(memberGroups);
+                }
 
                 JsonNode venue_stats = clientEntity.get("venue_stats");
 
@@ -95,9 +111,16 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
 
                     ClientVenueStatsDTO clientVenueStats = objectMapper.convertValue(clientVenueStatsNode, ClientVenueStatsDTO.class);
 
+                    JsonNode bookedByNamesNode = clientVenueStatsNode.get("booked_by_names");
+
+                    if (bookedByNamesNode != null) {
+                        Set bookedByNames = objectMapper.convertValue(bookedByNamesNode, Set.class);
+                        clientPayload.setBookingNames(bookedByNames);
+                    }
+
                     clientDTO.setClientVenueStats(clientVenueStats);
                 }
-                clientPayload.setClientDTO(clientDTO);
+                clientPayload.setClient(clientDTO);
             }
             return (ClientPayload) clientPayload;
         } catch (IOException e) {

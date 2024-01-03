@@ -16,12 +16,15 @@ package com.sbm.sevenroomstohub.serdes;
  * limitations under the License.
  */
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.domain.Client;
-import com.sbm.sevenroomstohub.domain.ClientPhoto;
-import com.sbm.sevenroomstohub.domain.Reservation;
+import com.sbm.sevenroomstohub.service.dto.ClientDTO;
+import com.sbm.sevenroomstohub.service.dto.CustomFieldDTO;
+import com.sbm.sevenroomstohub.service.dto.ResCustomFieldDTO;
+import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.slf4j.Logger;
@@ -69,21 +72,56 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
                 bytes,
                 com.sbm.sevenroomstohub.domain.ReservationPayload.class
             );
-            Reservation reservation = objectMapper
+            ReservationDTO reservation = objectMapper
                 .readValue(bytes, com.sbm.sevenroomstohub.domain.ReservationPayload.class)
                 .getReservation();
 
-            String clientId = String.valueOf(objectMapper.readTree(bytes).get("entity").get("client_id"));
-            Client client = new Client();
-            client.setClientId(clientId);
-            reservation.setClient(client);
+            JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
 
-            String userId = String.valueOf(objectMapper.readTree(bytes).get("entity").get("user").get("id"));
-            String userName = String.valueOf(objectMapper.readTree(bytes).get("entity").get("user").get("name"));
+            if (resEntity != null) {
+                JsonNode userNode = resEntity.get("user");
+                if (userNode != null) {
+                    String userId = String.valueOf(userNode.get("id"));
+                    String userName = String.valueOf(userNode.get("name"));
+                    reservation.setUserId(userId);
+                    reservation.setUserName(userName);
+                }
+                JsonNode tagsNode = resEntity.get("tags");
+                if (tagsNode != null) {
+                    Set tags = objectMapper.convertValue(tagsNode, Set.class);
+                    reservationPayload.setResPosTickets(tags);
+                }
 
-            reservation.setUserId(userId);
-            reservation.setUserName(userName);
-            reservationPayload.setReservation(reservation);
+                JsonNode posTicketsNode = resEntity.get("pos_tickets");
+                if (posTicketsNode != null) {
+                    Set posTickets = objectMapper.convertValue(posTicketsNode, Set.class);
+                    reservationPayload.setResPosTickets(posTickets);
+                    JsonNode itemsNode = posTicketsNode.get("items");
+                    if (itemsNode != null) {
+                        Set items = objectMapper.convertValue(itemsNode, Set.class);
+                        reservationPayload.setResPosticketsItems(items);
+                    }
+                }
+
+                JsonNode customFieldsNode = resEntity.get("custom_fields");
+                if (customFieldsNode != null) {
+                    Set customFields = objectMapper.convertValue(customFieldsNode, Set.class);
+                    reservationPayload.setResCustomFields(customFields);
+                }
+
+                JsonNode tableNumbersNode = resEntity.get("table_numbers");
+                if (tableNumbersNode != null) {
+                    Set tableNumbers = objectMapper.convertValue(tableNumbersNode, Set.class);
+                    reservationPayload.setResTables(tableNumbers);
+                }
+
+                String clientId = String.valueOf(resEntity.get("client_id"));
+                ClientDTO client = new ClientDTO();
+                client.setClientId(clientId);
+                reservation.setClient(client);
+
+                reservationPayload.setReservation(reservation);
+            }
             return (ReservationPayload) reservationPayload;
         } catch (IOException e) {
             throw new SerializationException(e);
