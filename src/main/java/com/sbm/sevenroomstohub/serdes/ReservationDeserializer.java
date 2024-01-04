@@ -16,12 +16,10 @@ package com.sbm.sevenroomstohub.serdes;
  * limitations under the License.
  */
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.service.dto.ClientDTO;
-import com.sbm.sevenroomstohub.service.dto.CustomFieldDTO;
-import com.sbm.sevenroomstohub.service.dto.ResCustomFieldDTO;
-import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
+import com.sbm.sevenroomstohub.service.dto.*;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
@@ -72,48 +70,17 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
                 bytes,
                 com.sbm.sevenroomstohub.domain.ReservationPayload.class
             );
-            ReservationDTO reservation = objectMapper
-                .readValue(bytes, com.sbm.sevenroomstohub.domain.ReservationPayload.class)
-                .getReservation();
+
+            ReservationDTO reservation = reservationPayload.getReservation();
 
             JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
 
             if (resEntity != null) {
-                JsonNode userNode = resEntity.get("user");
-                if (userNode != null) {
-                    String userId = String.valueOf(userNode.get("id"));
-                    String userName = String.valueOf(userNode.get("name"));
-                    reservation.setUserId(userId);
-                    reservation.setUserName(userName);
-                }
-                JsonNode tagsNode = resEntity.get("tags");
-                if (tagsNode != null) {
-                    Set tags = objectMapper.convertValue(tagsNode, Set.class);
-                    reservationPayload.setResPosTickets(tags);
-                }
-
-                JsonNode posTicketsNode = resEntity.get("pos_tickets");
-                if (posTicketsNode != null) {
-                    Set posTickets = objectMapper.convertValue(posTicketsNode, Set.class);
-                    reservationPayload.setResPosTickets(posTickets);
-                    JsonNode itemsNode = posTicketsNode.get("items");
-                    if (itemsNode != null) {
-                        Set items = objectMapper.convertValue(itemsNode, Set.class);
-                        reservationPayload.setResPosticketsItems(items);
-                    }
-                }
-
-                JsonNode customFieldsNode = resEntity.get("custom_fields");
-                if (customFieldsNode != null) {
-                    Set customFields = objectMapper.convertValue(customFieldsNode, Set.class);
-                    reservationPayload.setResCustomFields(customFields);
-                }
-
-                JsonNode tableNumbersNode = resEntity.get("table_numbers");
-                if (tableNumbersNode != null) {
-                    Set tableNumbers = objectMapper.convertValue(tableNumbersNode, Set.class);
-                    reservationPayload.setResTables(tableNumbers);
-                }
+                userDeserializer(resEntity, reservation);
+                tagsDeserializer(resEntity, reservationPayload);
+                posTicketsDeserializer(resEntity, reservationPayload);
+                customFieldsDeserializer(resEntity, reservationPayload);
+                tableNumbersDeserializer(resEntity, reservationPayload);
 
                 String clientId = String.valueOf(resEntity.get("client_id"));
                 ClientDTO client = new ClientDTO();
@@ -125,6 +92,56 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
             return (ReservationPayload) reservationPayload;
         } catch (IOException e) {
             throw new SerializationException(e);
+        }
+    }
+
+    private void tableNumbersDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
+        JsonNode tableNumbersNode = resEntity.get("table_numbers");
+        if (tableNumbersNode != null) {
+            Set<ResTableDTO> tableNumbers = objectMapper.convertValue(tableNumbersNode, new TypeReference<Set<ResTableDTO>>() {});
+            reservationPayload.setResTables(tableNumbers);
+        }
+    }
+
+    private void customFieldsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
+        JsonNode customFieldsNode = resEntity.get("custom_fields");
+        if (customFieldsNode != null) {
+            Set<ResCustomFieldDTO> customFields = objectMapper.convertValue(
+                customFieldsNode,
+                new TypeReference<Set<ResCustomFieldDTO>>() {}
+            );
+            reservationPayload.setResCustomFields(customFields);
+        }
+    }
+
+    private void posTicketsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
+        JsonNode posTicketsNode = resEntity.get("pos_tickets");
+        if (posTicketsNode != null) {
+            Set<ResPosTicketDTO> posTickets = objectMapper.convertValue(posTicketsNode, new TypeReference<Set<ResPosTicketDTO>>() {});
+            reservationPayload.setResPosTickets(posTickets);
+            JsonNode itemsNode = posTicketsNode.get("items");
+            if (itemsNode != null) {
+                Set<ResPosticketsItemDTO> items = objectMapper.convertValue(itemsNode, new TypeReference<Set<ResPosticketsItemDTO>>() {});
+                reservationPayload.setResPosticketsItems(items);
+            }
+        }
+    }
+
+    private void tagsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
+        JsonNode tagsNode = resEntity.get("tags");
+        if (tagsNode != null) {
+            Set<ResTagDTO> tags = objectMapper.convertValue(tagsNode, new TypeReference<Set<ResTagDTO>>() {});
+            reservationPayload.setResTags(tags);
+        }
+    }
+
+    private static void userDeserializer(JsonNode resEntity, ReservationDTO reservation) {
+        JsonNode userNode = resEntity.get("user");
+        if (userNode != null) {
+            String userId = String.valueOf(userNode.get("id"));
+            String userName = String.valueOf(userNode.get("name"));
+            reservation.setUserId(userId);
+            reservation.setUserName(userName);
         }
     }
 

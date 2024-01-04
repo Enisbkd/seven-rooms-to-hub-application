@@ -1,5 +1,6 @@
 package com.sbm.sevenroomstohub.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -14,28 +15,35 @@ public class ResPosTicketDTO implements Serializable {
 
     private String status;
 
+    @JsonProperty("admin_fee")
     private Double adminFee;
 
     private Integer code;
 
+    @JsonProperty("table_no")
     private String tableNo;
 
     private Double tax;
 
+    @JsonProperty("business_id")
     private Integer businessId;
 
+    @JsonProperty("local_pos_ticket_id")
     private String localPosticketId;
 
+    @JsonProperty("employee_name")
     private String employeeName;
 
     private Double total;
-
     private Double subtotal;
 
+    @JsonProperty("start_time")
     private String startTime;
 
+    @JsonProperty("service_charge")
     private Double serviceCharge;
 
+    @JsonProperty("end_time")
     private String endtime;
 
     private String techLineage;

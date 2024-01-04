@@ -34,13 +34,10 @@ public class StreamsProcessor {
     private String reservationTopic;
 
     @Autowired
-    ReservationService reservationService;
-
-    @Autowired
-    ReservationMapperImpl reservationMapper;
-
-    @Autowired
     ClientPersistenceService clientPersistenceService;
+
+    @Autowired
+    ReservationPersistenceService reservationPersistenceService;
 
     public StreamsProcessor() {}
 
@@ -53,7 +50,7 @@ public class StreamsProcessor {
             reservationTopic,
             Consumed.with(STRING_SERDE, RESERVATION_PAYLOAD_SERDE)
         );
-        reservationStream.foreach((key, value) -> reservationsProcessor(key, value));
+        reservationStream.foreach((key, value) -> reservationsProcessor(value));
     }
 
     private void clientsProcessor(ClientPayload clientPayload) {
@@ -74,12 +71,12 @@ public class StreamsProcessor {
         }
     }
 
-    private void reservationsProcessor(String key, ReservationPayload reservationPayload) {
+    private void reservationsProcessor(ReservationPayload reservationPayload) {
         try {
             logger.info(reservationPayload.toString());
 
-            ReservationDTO reservation = reservationPayload.getReservation();
-            String clientId = reservation.getClient().getClientId(); //Check if not null && clientService findbyId
+            reservationPersistenceService.saveReservation(reservationPayload);
+            //            String clientId = reservation.getClient().getClientId(); //Check if not null && clientService findbyId
             //
             //            ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
             //

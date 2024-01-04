@@ -49,93 +49,108 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
         if (null == bytes) {
             return null;
         }
-
         try {
             com.sbm.sevenroomstohub.domain.ClientPayload clientPayload = objectMapper.readValue(
                 bytes,
                 com.sbm.sevenroomstohub.domain.ClientPayload.class
             );
-            ClientDTO clientDTO = objectMapper.readValue(bytes, com.sbm.sevenroomstohub.domain.ClientPayload.class).getClient();
+            ClientDTO clientDTO = clientPayload.getClient();
+
             JsonNode clientEntity = objectMapper.readTree(bytes).get("entity");
             if (clientEntity != null) {
-                JsonNode userNode = clientEntity.get("user");
-                if (userNode != null) {
-                    String userId = String.valueOf(clientEntity.get("user").get("id"));
-                    String userName = String.valueOf(clientEntity.get("user").get("name"));
-                    clientDTO.setUserId(userId);
-                    clientDTO.setUserName(userName);
-                }
-                JsonNode photoCropNode = clientEntity.get("photo_crop_info");
-                if (photoCropNode != null) {
-                    Integer cropx = (photoCropNode.get("x") == null) ? null : Integer.parseInt(String.valueOf(photoCropNode.get("x")));
-                    Integer cropy = (photoCropNode.get("y") == null) ? null : Integer.parseInt(String.valueOf(photoCropNode.get("y")));
-                    Double cropHeight = (photoCropNode.get("height") == null)
-                        ? null
-                        : Double.valueOf(String.valueOf(photoCropNode.get("height")));
-                    Double cropWidth = (photoCropNode.get("width") == null)
-                        ? null
-                        : Double.valueOf(String.valueOf(photoCropNode.get("width")));
-
-                    if (clientDTO.getClientPhoto() == null) {
-                        log.info("creating new PHOTO");
-                        ClientPhotoDTO clientPhoto = new ClientPhotoDTO();
-                        clientDTO.setClientPhoto(clientPhoto);
-                    }
-
-                    clientDTO.getClientPhoto().setCropx(cropx);
-                    clientDTO.getClientPhoto().setCropy(cropy);
-                    clientDTO.getClientPhoto().setCropHeight(cropHeight);
-                    clientDTO.getClientPhoto().setCropWidth(cropWidth);
-                }
-                JsonNode clientTagsNode = clientEntity.get("client_tags");
-                if (clientTagsNode != null) {
-                    Set<ClientTagDTO> clientTags = objectMapper.convertValue(clientTagsNode, new TypeReference<Set<ClientTagDTO>>() {});
-                    clientPayload.setClientTags(clientTags);
-                }
-                JsonNode customFieldsNode = clientEntity.get("custom_fields");
-                if (customFieldsNode != null) {
-                    Set<CustomFieldDTO> customFields = objectMapper.convertValue(
-                        customFieldsNode,
-                        new TypeReference<Set<CustomFieldDTO>>() {}
-                    );
-                    clientPayload.setCustomFields(customFields);
-                }
-                JsonNode memberGroupsNode = clientEntity.get("member_groups");
-                if (memberGroupsNode != null) {
-                    Set<MemberGroupDTO> memberGroups = objectMapper.convertValue(
-                        memberGroupsNode,
-                        new TypeReference<Set<MemberGroupDTO>>() {}
-                    );
-                    clientPayload.setMemberGroups(memberGroups);
-                }
-
-                JsonNode venue_stats = clientEntity.get("venue_stats");
-
-                if (venue_stats.fieldNames().hasNext()) {
-                    String venue_field_name = venue_stats.fieldNames().next();
-
-                    JsonNode clientVenueStatsNode = venue_stats.get(venue_field_name);
-
-                    ClientVenueStatsDTO clientVenueStats = objectMapper.convertValue(clientVenueStatsNode, ClientVenueStatsDTO.class);
-
-                    JsonNode bookedByNamesNode = clientVenueStatsNode.get("booked_by_names");
-
-                    if (bookedByNamesNode != null) {
-                        Set<BookingNameDTO> bookingNameDTOS = new HashSet<>();
-                        Set<String> bookedByNames = objectMapper.convertValue(bookedByNamesNode, new TypeReference<Set<String>>() {});
-                        for (String name : bookedByNames) {
-                            bookingNameDTOS.add(new BookingNameDTO(name));
-                        }
-                        clientPayload.setBookingNames(bookingNameDTOS);
-                    }
-
-                    clientDTO.setClientVenueStats(clientVenueStats);
-                }
+                userDeserializer(clientEntity, clientDTO);
+                photoCropDeserializer(clientEntity, clientDTO);
+                clientTagsDeserializer(clientEntity, clientPayload);
+                customFieldsDeserializer(clientEntity, clientPayload);
+                memberGroupsDeserializer(clientEntity, clientPayload);
+                venueStatsDeserializer(clientEntity, clientPayload, clientDTO);
                 clientPayload.setClient(clientDTO);
             }
             return (ClientPayload) clientPayload;
         } catch (IOException e) {
             throw new SerializationException(e);
+        }
+    }
+
+    private void customFieldsDeserializer(JsonNode clientEntity, com.sbm.sevenroomstohub.domain.ClientPayload clientPayload) {
+        JsonNode customFieldsNode = clientEntity.get("custom_fields");
+        if (customFieldsNode != null) {
+            Set<CustomFieldDTO> customFields = objectMapper.convertValue(customFieldsNode, new TypeReference<Set<CustomFieldDTO>>() {});
+            clientPayload.setCustomFields(customFields);
+        }
+    }
+
+    private void clientTagsDeserializer(JsonNode clientEntity, com.sbm.sevenroomstohub.domain.ClientPayload clientPayload) {
+        JsonNode clientTagsNode = clientEntity.get("client_tags");
+        if (clientTagsNode != null) {
+            Set<ClientTagDTO> clientTags = objectMapper.convertValue(clientTagsNode, new TypeReference<Set<ClientTagDTO>>() {});
+            clientPayload.setClientTags(clientTags);
+        }
+    }
+
+    private static void userDeserializer(JsonNode clientEntity, ClientDTO clientDTO) {
+        JsonNode userNode = clientEntity.get("user");
+        if (userNode != null) {
+            String userId = String.valueOf(clientEntity.get("user").get("id"));
+            String userName = String.valueOf(clientEntity.get("user").get("name"));
+            clientDTO.setUserId(userId);
+            clientDTO.setUserName(userName);
+        }
+    }
+
+    private static void photoCropDeserializer(JsonNode clientEntity, ClientDTO clientDTO) {
+        JsonNode photoCropNode = clientEntity.get("photo_crop_info");
+        if (photoCropNode != null && !photoCropNode.isNull() && !photoCropNode.isEmpty()) {
+            Integer cropx = (photoCropNode.get("x") == null) ? null : Integer.parseInt(String.valueOf(photoCropNode.get("x")));
+            Integer cropy = (photoCropNode.get("y") == null) ? null : Integer.parseInt(String.valueOf(photoCropNode.get("y")));
+            Double cropHeight = (photoCropNode.get("height") == null) ? null : Double.valueOf(String.valueOf(photoCropNode.get("height")));
+            Double cropWidth = (photoCropNode.get("width") == null) ? null : Double.valueOf(String.valueOf(photoCropNode.get("width")));
+
+            if (clientDTO.getClientPhoto() == null) {
+                ClientPhotoDTO clientPhoto = new ClientPhotoDTO();
+                clientDTO.setClientPhoto(clientPhoto);
+            }
+
+            clientDTO.getClientPhoto().setCropx(cropx);
+            clientDTO.getClientPhoto().setCropy(cropy);
+            clientDTO.getClientPhoto().setCropHeight(cropHeight);
+            clientDTO.getClientPhoto().setCropWidth(cropWidth);
+        }
+    }
+
+    private void memberGroupsDeserializer(JsonNode clientEntity, com.sbm.sevenroomstohub.domain.ClientPayload clientPayload) {
+        JsonNode memberGroupsNode = clientEntity.get("member_groups");
+        if (memberGroupsNode != null) {
+            Set<MemberGroupDTO> memberGroups = objectMapper.convertValue(memberGroupsNode, new TypeReference<Set<MemberGroupDTO>>() {});
+            clientPayload.setMemberGroups(memberGroups);
+        }
+    }
+
+    private void venueStatsDeserializer(
+        JsonNode clientEntity,
+        com.sbm.sevenroomstohub.domain.ClientPayload clientPayload,
+        ClientDTO clientDTO
+    ) {
+        JsonNode venue_stats = clientEntity.get("venue_stats");
+        if (venue_stats.fieldNames().hasNext()) {
+            String venue_field_name = venue_stats.fieldNames().next();
+
+            JsonNode clientVenueStatsNode = venue_stats.get(venue_field_name);
+
+            ClientVenueStatsDTO clientVenueStats = objectMapper.convertValue(clientVenueStatsNode, ClientVenueStatsDTO.class);
+
+            JsonNode bookedByNamesNode = clientVenueStatsNode.get("booked_by_names");
+
+            if (bookedByNamesNode != null) {
+                Set<BookingNameDTO> bookingNameDTOS = new HashSet<>();
+                Set<String> bookedByNames = objectMapper.convertValue(bookedByNamesNode, new TypeReference<Set<String>>() {});
+                for (String name : bookedByNames) {
+                    bookingNameDTOS.add(new BookingNameDTO(name));
+                }
+                clientPayload.setBookingNames(bookingNameDTOS);
+            }
+
+            clientDTO.setClientVenueStats(clientVenueStats);
         }
     }
 
