@@ -7,10 +7,6 @@
   "entityTableName": "client_photo",
   "fields": [
     {
-      "fieldName": "clientId",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "large",
       "fieldType": "String"
     },

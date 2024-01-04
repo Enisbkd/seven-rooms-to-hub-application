@@ -1,14 +1,10 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -19,7 +15,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "reservation")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Reservation implements Serializable {
 
@@ -29,11 +24,9 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
-    @JsonIgnore
     private Long id;
 
     @Column(name = "resv_id")
-    @JsonProperty("id")
     private String resvId;
 
     @Column(name = "created")
@@ -46,15 +39,12 @@ public class Reservation implements Serializable {
     private String deleted;
 
     @Column(name = "venue_group_client_id")
-    @JsonProperty("venue_group_client_id")
     private String venueGroupClientId;
 
     @Column(name = "venue_group_id")
-    @JsonProperty("venue_group_id")
     private String venueGroupId;
 
     @Column(name = "venue_id")
-    @JsonProperty("venue_id")
     private String venueId;
 
     @Column(name = "jhi_date")
@@ -64,87 +54,69 @@ public class Reservation implements Serializable {
     private Integer duration;
 
     @Column(name = "check_numbers")
-    @JsonProperty("check_numbers")
     private String checkNumbers;
 
     @Column(name = "shift_category")
-    @JsonProperty("shift_category")
     private String shiftCategory;
 
     @Column(name = "shift_persistent_id")
-    @JsonProperty("shift_persistent_id")
     private String shiftPersistentId;
 
     @Column(name = "max_guests")
-    @JsonProperty("max_guests")
     private Integer maxGuests;
 
     @Column(name = "mfratio_male")
-    @JsonProperty("mf_ratio_male")
     private Integer mfratioMale;
 
     @Column(name = "mfratio_female")
-    @JsonProperty("mf_ratio_female")
     private Integer mfratioFemale;
 
     @Column(name = "status")
     private String status;
 
     @Column(name = "status_display")
-    @JsonProperty("status_display")
     private String statusDisplay;
 
     @Column(name = "status_simple")
-    @JsonProperty("status_simple")
     private String statusSimple;
 
     @Column(name = "access_persistent_id")
-    @JsonProperty("access_persistent_id")
     private String accessPersistentId;
 
     @Column(name = "arrived_guests")
-    @JsonProperty("arrived_guests")
     private Integer arrivedGuests;
 
     @Column(name = "isvip")
-    @JsonProperty("is_vip")
     private Boolean isvip;
 
     @Column(name = "bookedby")
-    @JsonProperty("booked_by")
     private String bookedby;
 
     @Column(name = "client_reference_code")
-    @JsonProperty("client_reference_code")
     private String clientReferenceCode;
 
     @Column(name = "lastname")
-    @JsonProperty("last_name")
     private String lastname;
 
     @Column(name = "firstname")
-    @JsonProperty("first_name")
     private String firstname;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "phone_number")
-    @JsonProperty("phone_number")
     private String phoneNumber;
 
     @Column(name = "address")
     private String address;
 
     @Column(name = "address_2")
-    @JsonProperty("address_2")
     private String address2;
 
     @Column(name = "city")
     private String city;
 
     @Column(name = "postal_code")
-    @JsonProperty("postal_code")
     private String postalCode;
 
     @Column(name = "state")
@@ -154,72 +126,57 @@ public class Reservation implements Serializable {
     private String country;
 
     @Column(name = "loyalty_id")
-    @JsonProperty("loyalty_id")
     private String loyaltyId;
 
     @Column(name = "loyalty_rank")
-    @JsonProperty("loyalty_rank")
     private Integer loyaltyRank;
 
     @Column(name = "loyalty_tier")
-    @JsonProperty("loyalty_tier")
     private String loyaltyTier;
 
     @Column(name = "notes")
     private String notes;
 
     @Column(name = "arrival_time")
-    @JsonProperty("arrival_time")
     private String arrivalTime;
 
     @Column(name = "seated_time")
-    @JsonProperty("seated_time")
     private String seatedTime;
 
     @Column(name = "left_time")
-    @JsonProperty("left_time")
     private String leftTime;
 
     @Column(name = "client_requests")
-    @JsonProperty("client_requests")
     private String clientRequests;
 
     @Column(name = "comps")
     private Integer comps;
 
     @Column(name = "comps_price_type")
-    @JsonProperty("comps_price_type")
     private String compsPriceType;
 
     @Column(name = "cost_option")
-    @JsonProperty("cost_option")
     private Integer costOption;
 
     @Column(name = "policy")
     private String policy;
 
     @Column(name = "min_price")
-    @JsonProperty("min_price")
     private Integer minPrice;
 
     @Column(name = "pre_payment")
-    @JsonProperty("prepayment")
     private Double prePayment;
 
     @Column(name = "onsite_payment")
-    @JsonProperty("onsite_payment")
     private Double onsitePayment;
 
     @Column(name = "total_payment")
-    @JsonProperty("total_payment")
     private Integer totalPayment;
 
     @Column(name = "paid_by")
-    @JsonProperty("paid_by")
     private String paidBy;
 
     @Column(name = "served_by")
-    @JsonProperty("served_by")
     private String servedBy;
 
     @Column(name = "rating")
@@ -229,51 +186,39 @@ public class Reservation implements Serializable {
     private String problems;
 
     @Column(name = "auto_assignments")
-    @JsonProperty("auto_assignments")
     private String autoAssignments;
 
     @Column(name = "external_client_id")
-    @JsonProperty("external_client_id")
     private String externalClientId;
 
     @Column(name = "external_id")
-    @JsonProperty("external_id")
     private String externalId;
 
     @Column(name = "external_reference_code")
-    @JsonProperty("external_reference_code")
     private String externalReferenceCode;
 
     @Column(name = "external_user_id")
-    @JsonProperty("external_user_id")
     private String externalUserId;
 
-    @Column(name = "modify_reservation_link", length = 500)
-    @JsonProperty("modify_reservation_link")
+    @Column(name = "modify_reservation_link")
     private String modifyReservationLink;
 
     @Column(name = "reference_code")
-    @JsonProperty("reference_code")
     private String referenceCode;
 
     @Column(name = "reservation_sms_optin")
-    @JsonProperty("reservation_sms_opt_in")
     private Boolean reservationSmsOptin;
 
     @Column(name = "reservation_type")
-    @JsonProperty("reservation_type")
     private String reservationType;
 
     @Column(name = "send_reminder_email")
-    @JsonProperty("send_reminder_email")
     private Boolean sendReminderEmail;
 
     @Column(name = "sendreminder_sms")
-    @JsonProperty("send_reminder_sms")
     private Boolean sendreminderSms;
 
     @Column(name = "source_client_id")
-    @JsonProperty("source_client_id")
     private String sourceClientId;
 
     @Column(name = "user_id")
@@ -299,25 +244,25 @@ public class Reservation implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonProperty("tags")
+    @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
     private Set<ResTag> resTags = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonProperty("pos_tickets")
+    @JsonIgnoreProperties(value = { "resPosticketsItems", "reservation" }, allowSetters = true)
     private Set<ResPosTicket> resPosTickets = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonProperty("custom_fields")
+    @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
     private Set<ResCustomField> resCustomFields = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonProperty("table_numbers")
+    @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)
     private Set<ResTable> resTables = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
         value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
         allowSetters = true

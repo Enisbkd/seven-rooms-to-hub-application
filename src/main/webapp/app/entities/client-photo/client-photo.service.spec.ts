@@ -36,7 +36,6 @@ describe('Service Tests', () => {
       elemDefault = new ClientPhoto(
         123,
         'AAAAAAA',
-        'AAAAAAA',
         0,
         0,
         'AAAAAAA',
@@ -121,7 +120,6 @@ describe('Service Tests', () => {
       it('should update a ClientPhoto', async () => {
         const returnedFromService = Object.assign(
           {
-            clientId: 'BBBBBB',
             large: 'BBBBBB',
             largeHeight: 1,
             largeWidth: 1,
@@ -173,15 +171,14 @@ describe('Service Tests', () => {
       it('should partial update a ClientPhoto', async () => {
         const patchObject = Object.assign(
           {
-            large: 'BBBBBB',
-            mediumHeight: 1,
+            largeWidth: 1,
             small: 'BBBBBB',
-            smallHeight: 1,
             smallWidth: 1,
-            cropy: 1,
-            cropHeight: 1,
+            raw: 'BBBBBB',
+            cropx: 1,
+            cropWidth: 1,
             techLineage: 'BBBBBB',
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
+            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
             techMapping: 'BBBBBB',
           },
           new ClientPhoto(),
@@ -216,7 +213,6 @@ describe('Service Tests', () => {
       it('should return a list of ClientPhoto', async () => {
         const returnedFromService = Object.assign(
           {
-            clientId: 'BBBBBB',
             large: 'BBBBBB',
             largeHeight: 1,
             largeWidth: 1,

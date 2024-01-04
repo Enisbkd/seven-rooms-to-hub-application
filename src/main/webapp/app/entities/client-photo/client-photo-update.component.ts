@@ -47,7 +47,6 @@ export default defineComponent({
     const { t: t$ } = useI18n();
     const validations = useValidation();
     const validationRules = {
-      clientId: {},
       large: {},
       largeHeight: {},
       largeWidth: {},
