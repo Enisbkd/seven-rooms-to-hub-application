@@ -182,6 +182,7 @@ public class ClientDTO implements Serializable {
 
     private String techComment;
 
+    @JsonProperty("photo")
     private ClientPhotoDTO clientPhoto;
 
     private ClientVenueStatsDTO clientVenueStats;

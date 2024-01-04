@@ -1,10 +1,9 @@
 package com.sbm.sevenroomstohub.serdes;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.service.dto.ClientDTO;
-import com.sbm.sevenroomstohub.service.dto.ClientPhotoDTO;
-import com.sbm.sevenroomstohub.service.dto.ClientVenueStatsDTO;
+import com.sbm.sevenroomstohub.service.dto.*;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
@@ -77,6 +76,7 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
                         : Double.valueOf(String.valueOf(photoCropNode.get("width")));
 
                     if (clientDTO.getClientPhoto() == null) {
+                        log.info("creating new PHOTO");
                         ClientPhotoDTO clientPhoto = new ClientPhotoDTO();
                         clientDTO.setClientPhoto(clientPhoto);
                     }
@@ -88,17 +88,23 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
                 }
                 JsonNode clientTagsNode = clientEntity.get("client_tags");
                 if (clientTagsNode != null) {
-                    Set clientTags = objectMapper.convertValue(clientTagsNode, Set.class);
+                    Set<ClientTagDTO> clientTags = objectMapper.convertValue(clientTagsNode, new TypeReference<Set<ClientTagDTO>>() {});
                     clientPayload.setClientTags(clientTags);
                 }
                 JsonNode customFieldsNode = clientEntity.get("custom_fields");
                 if (customFieldsNode != null) {
-                    Set customFields = objectMapper.convertValue(customFieldsNode, Set.class);
+                    Set<CustomFieldDTO> customFields = objectMapper.convertValue(
+                        customFieldsNode,
+                        new TypeReference<Set<CustomFieldDTO>>() {}
+                    );
                     clientPayload.setCustomFields(customFields);
                 }
                 JsonNode memberGroupsNode = clientEntity.get("member_groups");
                 if (memberGroupsNode != null) {
-                    Set memberGroups = objectMapper.convertValue(memberGroupsNode, Set.class);
+                    Set<MemberGroupDTO> memberGroups = objectMapper.convertValue(
+                        memberGroupsNode,
+                        new TypeReference<Set<MemberGroupDTO>>() {}
+                    );
                     clientPayload.setMemberGroups(memberGroups);
                 }
 

@@ -61,7 +61,7 @@ public class StreamsProcessor {
             switch (clientPayload.getEvent_type()) {
                 case "created":
                     {
-                        //                        clientPersistenceService.saveClient(clientPayload);
+                        clientPersistenceService.saveClient(clientPayload);
                     }
                 case "updated":
                     {}

@@ -1,5 +1,7 @@
 package com.sbm.sevenroomstohub.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -14,10 +16,12 @@ public class ClientTagDTO implements Serializable {
 
     private String tag;
 
+    @JsonProperty("tag_display")
     private String tagDisplay;
 
     private String group;
 
+    @JsonProperty("group_display")
     private String groupDisplay;
 
     private String color;
