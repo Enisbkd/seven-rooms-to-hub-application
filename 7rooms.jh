@@ -128,7 +128,6 @@ entity BookingName{
 }
 
 entity ClientPhoto{
-	clientId String
 	large String
 	largeHeight Integer
 	largeWidth Integer
