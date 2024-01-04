@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sbm.sevenroomstohub.service.dto.*;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
@@ -120,8 +121,12 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
                     JsonNode bookedByNamesNode = clientVenueStatsNode.get("booked_by_names");
 
                     if (bookedByNamesNode != null) {
-                        Set bookedByNames = objectMapper.convertValue(bookedByNamesNode, Set.class);
-                        clientPayload.setBookingNames(bookedByNames);
+                        Set<BookingNameDTO> bookingNameDTOS = new HashSet<>();
+                        Set<String> bookedByNames = objectMapper.convertValue(bookedByNamesNode, new TypeReference<Set<String>>() {});
+                        for (String name : bookedByNames) {
+                            bookingNameDTOS.add(new BookingNameDTO(name));
+                        }
+                        clientPayload.setBookingNames(bookingNameDTOS);
                     }
 
                     clientDTO.setClientVenueStats(clientVenueStats);
