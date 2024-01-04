@@ -7,12 +7,6 @@
         </h2>
         <dl class="row jh-entity-details">
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.clientId')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientPhoto.clientId }}</span>
-          </dd>
-          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.large')"></span>
           </dt>
           <dd>

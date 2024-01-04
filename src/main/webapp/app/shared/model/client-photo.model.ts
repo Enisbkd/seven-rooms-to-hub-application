@@ -2,7 +2,6 @@ import { type IClient } from '@/shared/model/client.model';
 
 export interface IClientPhoto {
   id?: number;
-  clientId?: string | null;
   large?: string | null;
   largeHeight?: number | null;
   largeWidth?: number | null;
@@ -28,7 +27,6 @@ export interface IClientPhoto {
 export class ClientPhoto implements IClientPhoto {
   constructor(
     public id?: number,
-    public clientId?: string | null,
     public large?: string | null,
     public largeHeight?: number | null,
     public largeWidth?: number | null,

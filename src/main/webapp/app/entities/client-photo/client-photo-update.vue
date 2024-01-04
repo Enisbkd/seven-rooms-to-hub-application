@@ -15,22 +15,6 @@
           <div class="form-group">
             <label
               class="form-control-label"
-              v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.clientId')"
-              for="client-photo-clientId"
-            ></label>
-            <input
-              type="text"
-              class="form-control"
-              name="clientId"
-              id="client-photo-clientId"
-              data-cy="clientId"
-              :class="{ valid: !v$.clientId.$invalid, invalid: v$.clientId.$invalid }"
-              v-model="v$.clientId.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label
-              class="form-control-label"
               v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.large')"
               for="client-photo-large"
             ></label>

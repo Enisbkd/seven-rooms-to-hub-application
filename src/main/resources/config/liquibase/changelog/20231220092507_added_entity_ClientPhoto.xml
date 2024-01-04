@@ -14,10 +14,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="client_id" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="large" type="varchar(1000)">
+            <column name="large" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="large_height" type="integer">
@@ -26,7 +23,7 @@
             <column name="large_width" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="medium" type="varchar(1000)">
+            <column name="medium" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="medium_height" type="integer">
@@ -35,7 +32,7 @@
             <column name="medium_width" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="small" type="varchar(1000)">
+            <column name="small" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="small_height" type="integer">
@@ -44,7 +41,7 @@
             <column name="small_width" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="photo_raw" type="varchar(1000)">
+            <column name="jhi_raw" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="cropx" type="integer">
@@ -97,7 +94,6 @@
                   tableName="client_photo"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="client_id" type="string"/>
             <column name="large" type="string"/>
             <column name="large_height" type="numeric"/>
             <column name="large_width" type="numeric"/>
@@ -107,7 +103,7 @@
             <column name="small" type="string"/>
             <column name="small_height" type="numeric"/>
             <column name="small_width" type="numeric"/>
-            <column name="photo_raw" type="string"/>
+            <column name="jhi_raw" type="string"/>
             <column name="cropx" type="numeric"/>
             <column name="cropy" type="numeric"/>
             <column name="crop_height" type="numeric"/>

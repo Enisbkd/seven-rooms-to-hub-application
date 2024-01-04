@@ -1,8 +1,6 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -17,7 +15,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "client_venue_stats")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ClientVenueStats implements Serializable {
 
@@ -27,107 +24,81 @@ public class ClientVenueStats implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
-    @JsonIgnore
     private Long id;
 
     @Column(name = "total_spend_localper_cover")
-    @JsonProperty("total_spend_local_per_cover")
     private Double totalSpendLocalperCover;
 
     @Column(name = "last_visit_date")
-    @JsonProperty("last_visit_date")
     private String lastVisitDate;
 
     @Column(name = "total_cancellations")
-    @JsonProperty("total_cancellations")
     private Integer totalCancellations;
 
     @Column(name = "total_covers")
-    @JsonProperty("total_covers")
     private Integer totalCovers;
 
     @Column(name = "avg_rating")
-    @JsonProperty("avg_rating")
     private Integer avgRating;
 
     @Column(name = "total_spendper_cover")
-    @JsonProperty("total_spendper_cover")
     private Double totalSpendperCover;
 
     @Column(name = "total_spend")
-    @JsonProperty("total_spend")
     private Double totalSpend;
 
     @Column(name = "total_no_shows")
-    @JsonProperty("total_noshows")
     private Integer totalNoShows;
 
     @Column(name = "num_ratings")
-    @JsonProperty("num_ratings")
     private Integer numRatings;
 
     @Column(name = "total_spend_per_visit")
-    @JsonProperty("total_spend_per_visit")
     private Double totalSpendPerVisit;
 
     @Column(name = "total_spend_local")
-    @JsonProperty("total_spend_local")
     private Double totalSpendLocal;
 
     @Column(name = "total_spend_local_per_visit")
-    @JsonProperty("total_spend_local_per_visit")
     private Double totalSpendLocalPerVisit;
 
     @Column(name = "total_visits")
-    @JsonProperty("total_visits")
     private Integer totalVisits;
 
     @Column(name = "gross_total")
-    @JsonProperty("gross_total")
     private Double grossTotal;
 
     @Column(name = "total_order_count")
-    @JsonProperty("total_order_count")
     private Double totalOrderCount;
 
     @Column(name = "total_order_cancellations")
-    @JsonProperty("total_order_cancellations")
     private Double totalOrderCancellations;
 
     @Column(name = "total_order_spend")
-    @JsonProperty("total_order_spend")
     private Double totalOrderSpend;
 
     @Column(name = "gross_order_total")
-    @JsonProperty("gross_order_total")
     private Double grossOrderTotal;
 
     @Column(name = "total_order_spend_local")
-    @JsonProperty("total_order_spend_local")
     private Double totalOrderSpendLocal;
 
     @Column(name = "last_order_date")
-    @JsonProperty("last_order_date")
     private String lastOrderDate;
 
     @Column(name = "total_spendper_order")
-    @JsonProperty("total_spend_per_order")
     private Double totalSpendperOrder;
 
     @Column(name = "total_spend_localper_order")
-    @JsonProperty("total_spend_local_per_order")
     private Double totalSpendLocalperOrder;
 
     @Column(name = "venue_id")
-    @JsonProperty("venue_id")
     private String venueId;
 
     @Column(name = "venue_marketing_optin")
-    @JsonProperty("venue_marketing_optin")
     private Boolean venueMarketingOptin;
 
     @Column(name = "venue_marketing_optints")
-    @JsonProperty("venue_marketing_optints")
     private String venueMarketingOptints;
 
     @Column(name = "tech_lineage")
