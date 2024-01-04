@@ -44,6 +44,9 @@ public class ResPosTicket implements Serializable {
     @Column(name = "business_id")
     private Integer businessId;
 
+    @Column(name = "ticket_id")
+    private Integer ticketId;
+
     @Column(name = "local_posticket_id")
     private String localPosticketId;
 
@@ -180,6 +183,19 @@ public class ResPosTicket implements Serializable {
 
     public void setBusinessId(Integer businessId) {
         this.businessId = businessId;
+    }
+
+    public Integer getTicketId() {
+        return this.ticketId;
+    }
+
+    public ResPosTicket ticketId(Integer ticketId) {
+        this.setTicketId(ticketId);
+        return this;
+    }
+
+    public void setTicketId(Integer ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getLocalPosticketId() {
@@ -412,6 +428,7 @@ public class ResPosTicket implements Serializable {
             ", tableNo='" + getTableNo() + "'" +
             ", tax=" + getTax() +
             ", businessId=" + getBusinessId() +
+            ", ticketId=" + getTicketId() +
             ", localPosticketId='" + getLocalPosticketId() + "'" +
             ", employeeName='" + getEmployeeName() + "'" +
             ", total=" + getTotal() +

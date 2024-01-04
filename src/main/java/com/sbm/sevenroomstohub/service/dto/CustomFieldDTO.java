@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -13,10 +12,8 @@ public class CustomFieldDTO implements Serializable {
 
     private Long id;
 
-    @JsonProperty("system_name")
     private String systemName;
 
-    @JsonProperty("display_order")
     private Integer displayOrder;
 
     private String name;

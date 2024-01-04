@@ -1,8 +1,5 @@
 package com.sbm.sevenroomstohub.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -17,40 +14,30 @@ public class ClientPhotoDTO implements Serializable {
 
     private String large;
 
-    @JsonProperty("large_height")
     private Integer largeHeight;
 
-    @JsonProperty("large_width")
     private Integer largeWidth;
 
     private String medium;
 
-    @JsonProperty("medium_height")
     private Integer mediumHeight;
 
-    @JsonProperty("medium_width")
     private Integer mediumWidth;
 
     private String small;
 
-    @JsonProperty("small_height")
     private Integer smallHeight;
 
-    @JsonProperty("small_width")
     private Integer smallWidth;
 
     private String raw;
 
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Integer cropx;
 
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Integer cropy;
 
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Double cropHeight;
 
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Double cropWidth;
 
     private String techLineage;

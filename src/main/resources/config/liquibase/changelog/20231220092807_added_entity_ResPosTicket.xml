@@ -32,6 +32,9 @@
             <column name="business_id" type="integer">
                 <constraints nullable="true" />
             </column>
+            <column name="ticket_id" type="integer">
+                <constraints nullable="true" />
+            </column>
             <column name="local_posticket_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -100,6 +103,7 @@
             <column name="table_no" type="string"/>
             <column name="tax" type="numeric"/>
             <column name="business_id" type="numeric"/>
+            <column name="ticket_id" type="numeric"/>
             <column name="local_posticket_id" type="string"/>
             <column name="employee_name" type="string"/>
             <column name="total" type="numeric"/>

@@ -24,6 +24,8 @@ public class ResPosTicketDTO implements Serializable {
 
     private Integer businessId;
 
+    private Integer ticketId;
+
     private String localPosticketId;
 
     private String employeeName;
@@ -104,6 +106,14 @@ public class ResPosTicketDTO implements Serializable {
 
     public void setBusinessId(Integer businessId) {
         this.businessId = businessId;
+    }
+
+    public Integer getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(Integer ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getLocalPosticketId() {
@@ -242,6 +252,7 @@ public class ResPosTicketDTO implements Serializable {
             ", tableNo='" + getTableNo() + "'" +
             ", tax=" + getTax() +
             ", businessId=" + getBusinessId() +
+            ", ticketId=" + getTicketId() +
             ", localPosticketId='" + getLocalPosticketId() + "'" +
             ", employeeName='" + getEmployeeName() + "'" +
             ", total=" + getTotal() +

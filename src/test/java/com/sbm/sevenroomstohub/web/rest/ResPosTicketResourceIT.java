@@ -54,6 +54,9 @@ class ResPosTicketResourceIT {
     private static final Integer DEFAULT_BUSINESS_ID = 1;
     private static final Integer UPDATED_BUSINESS_ID = 2;
 
+    private static final Integer DEFAULT_TICKET_ID = 1;
+    private static final Integer UPDATED_TICKET_ID = 2;
+
     private static final String DEFAULT_LOCAL_POSTICKET_ID = "AAAAAAAAAA";
     private static final String UPDATED_LOCAL_POSTICKET_ID = "BBBBBBBBBB";
 
@@ -124,6 +127,7 @@ class ResPosTicketResourceIT {
             .tableNo(DEFAULT_TABLE_NO)
             .tax(DEFAULT_TAX)
             .businessId(DEFAULT_BUSINESS_ID)
+            .ticketId(DEFAULT_TICKET_ID)
             .localPosticketId(DEFAULT_LOCAL_POSTICKET_ID)
             .employeeName(DEFAULT_EMPLOYEE_NAME)
             .total(DEFAULT_TOTAL)
@@ -153,6 +157,7 @@ class ResPosTicketResourceIT {
             .tableNo(UPDATED_TABLE_NO)
             .tax(UPDATED_TAX)
             .businessId(UPDATED_BUSINESS_ID)
+            .ticketId(UPDATED_TICKET_ID)
             .localPosticketId(UPDATED_LOCAL_POSTICKET_ID)
             .employeeName(UPDATED_EMPLOYEE_NAME)
             .total(UPDATED_TOTAL)
@@ -195,6 +200,7 @@ class ResPosTicketResourceIT {
         assertThat(testResPosTicket.getTableNo()).isEqualTo(DEFAULT_TABLE_NO);
         assertThat(testResPosTicket.getTax()).isEqualTo(DEFAULT_TAX);
         assertThat(testResPosTicket.getBusinessId()).isEqualTo(DEFAULT_BUSINESS_ID);
+        assertThat(testResPosTicket.getTicketId()).isEqualTo(DEFAULT_TICKET_ID);
         assertThat(testResPosTicket.getLocalPosticketId()).isEqualTo(DEFAULT_LOCAL_POSTICKET_ID);
         assertThat(testResPosTicket.getEmployeeName()).isEqualTo(DEFAULT_EMPLOYEE_NAME);
         assertThat(testResPosTicket.getTotal()).isEqualTo(DEFAULT_TOTAL);
@@ -248,6 +254,7 @@ class ResPosTicketResourceIT {
             .andExpect(jsonPath("$.[*].tableNo").value(hasItem(DEFAULT_TABLE_NO)))
             .andExpect(jsonPath("$.[*].tax").value(hasItem(DEFAULT_TAX.doubleValue())))
             .andExpect(jsonPath("$.[*].businessId").value(hasItem(DEFAULT_BUSINESS_ID)))
+            .andExpect(jsonPath("$.[*].ticketId").value(hasItem(DEFAULT_TICKET_ID)))
             .andExpect(jsonPath("$.[*].localPosticketId").value(hasItem(DEFAULT_LOCAL_POSTICKET_ID)))
             .andExpect(jsonPath("$.[*].employeeName").value(hasItem(DEFAULT_EMPLOYEE_NAME)))
             .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL.doubleValue())))
@@ -280,6 +287,7 @@ class ResPosTicketResourceIT {
             .andExpect(jsonPath("$.tableNo").value(DEFAULT_TABLE_NO))
             .andExpect(jsonPath("$.tax").value(DEFAULT_TAX.doubleValue()))
             .andExpect(jsonPath("$.businessId").value(DEFAULT_BUSINESS_ID))
+            .andExpect(jsonPath("$.ticketId").value(DEFAULT_TICKET_ID))
             .andExpect(jsonPath("$.localPosticketId").value(DEFAULT_LOCAL_POSTICKET_ID))
             .andExpect(jsonPath("$.employeeName").value(DEFAULT_EMPLOYEE_NAME))
             .andExpect(jsonPath("$.total").value(DEFAULT_TOTAL.doubleValue()))
@@ -320,6 +328,7 @@ class ResPosTicketResourceIT {
             .tableNo(UPDATED_TABLE_NO)
             .tax(UPDATED_TAX)
             .businessId(UPDATED_BUSINESS_ID)
+            .ticketId(UPDATED_TICKET_ID)
             .localPosticketId(UPDATED_LOCAL_POSTICKET_ID)
             .employeeName(UPDATED_EMPLOYEE_NAME)
             .total(UPDATED_TOTAL)
@@ -352,6 +361,7 @@ class ResPosTicketResourceIT {
         assertThat(testResPosTicket.getTableNo()).isEqualTo(UPDATED_TABLE_NO);
         assertThat(testResPosTicket.getTax()).isEqualTo(UPDATED_TAX);
         assertThat(testResPosTicket.getBusinessId()).isEqualTo(UPDATED_BUSINESS_ID);
+        assertThat(testResPosTicket.getTicketId()).isEqualTo(UPDATED_TICKET_ID);
         assertThat(testResPosTicket.getLocalPosticketId()).isEqualTo(UPDATED_LOCAL_POSTICKET_ID);
         assertThat(testResPosTicket.getEmployeeName()).isEqualTo(UPDATED_EMPLOYEE_NAME);
         assertThat(testResPosTicket.getTotal()).isEqualTo(UPDATED_TOTAL);
@@ -449,15 +459,15 @@ class ResPosTicketResourceIT {
             .adminFee(UPDATED_ADMIN_FEE)
             .code(UPDATED_CODE)
             .tax(UPDATED_TAX)
+            .localPosticketId(UPDATED_LOCAL_POSTICKET_ID)
             .employeeName(UPDATED_EMPLOYEE_NAME)
-            .total(UPDATED_TOTAL)
+            .subtotal(UPDATED_SUBTOTAL)
             .startTime(UPDATED_START_TIME)
             .serviceCharge(UPDATED_SERVICE_CHARGE)
             .endtime(UPDATED_ENDTIME)
             .techLineage(UPDATED_TECH_LINEAGE)
             .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techComment(UPDATED_TECH_COMMENT);
+            .techMapping(UPDATED_TECH_MAPPING);
 
         restResPosTicketMockMvc
             .perform(
@@ -477,18 +487,19 @@ class ResPosTicketResourceIT {
         assertThat(testResPosTicket.getTableNo()).isEqualTo(DEFAULT_TABLE_NO);
         assertThat(testResPosTicket.getTax()).isEqualTo(UPDATED_TAX);
         assertThat(testResPosTicket.getBusinessId()).isEqualTo(DEFAULT_BUSINESS_ID);
-        assertThat(testResPosTicket.getLocalPosticketId()).isEqualTo(DEFAULT_LOCAL_POSTICKET_ID);
+        assertThat(testResPosTicket.getTicketId()).isEqualTo(DEFAULT_TICKET_ID);
+        assertThat(testResPosTicket.getLocalPosticketId()).isEqualTo(UPDATED_LOCAL_POSTICKET_ID);
         assertThat(testResPosTicket.getEmployeeName()).isEqualTo(UPDATED_EMPLOYEE_NAME);
-        assertThat(testResPosTicket.getTotal()).isEqualTo(UPDATED_TOTAL);
-        assertThat(testResPosTicket.getSubtotal()).isEqualTo(DEFAULT_SUBTOTAL);
+        assertThat(testResPosTicket.getTotal()).isEqualTo(DEFAULT_TOTAL);
+        assertThat(testResPosTicket.getSubtotal()).isEqualTo(UPDATED_SUBTOTAL);
         assertThat(testResPosTicket.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testResPosTicket.getServiceCharge()).isEqualTo(UPDATED_SERVICE_CHARGE);
         assertThat(testResPosTicket.getEndtime()).isEqualTo(UPDATED_ENDTIME);
         assertThat(testResPosTicket.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
         assertThat(testResPosTicket.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testResPosTicket.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testResPosTicket.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testResPosTicket.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
+        assertThat(testResPosTicket.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
+        assertThat(testResPosTicket.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
+        assertThat(testResPosTicket.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -510,6 +521,7 @@ class ResPosTicketResourceIT {
             .tableNo(UPDATED_TABLE_NO)
             .tax(UPDATED_TAX)
             .businessId(UPDATED_BUSINESS_ID)
+            .ticketId(UPDATED_TICKET_ID)
             .localPosticketId(UPDATED_LOCAL_POSTICKET_ID)
             .employeeName(UPDATED_EMPLOYEE_NAME)
             .total(UPDATED_TOTAL)
@@ -541,6 +553,7 @@ class ResPosTicketResourceIT {
         assertThat(testResPosTicket.getTableNo()).isEqualTo(UPDATED_TABLE_NO);
         assertThat(testResPosTicket.getTax()).isEqualTo(UPDATED_TAX);
         assertThat(testResPosTicket.getBusinessId()).isEqualTo(UPDATED_BUSINESS_ID);
+        assertThat(testResPosTicket.getTicketId()).isEqualTo(UPDATED_TICKET_ID);
         assertThat(testResPosTicket.getLocalPosticketId()).isEqualTo(UPDATED_LOCAL_POSTICKET_ID);
         assertThat(testResPosTicket.getEmployeeName()).isEqualTo(UPDATED_EMPLOYEE_NAME);
         assertThat(testResPosTicket.getTotal()).isEqualTo(UPDATED_TOTAL);

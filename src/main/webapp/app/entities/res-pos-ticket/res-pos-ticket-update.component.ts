@@ -65,6 +65,7 @@ export default defineComponent({
       tableNo: {},
       tax: {},
       businessId: {},
+      ticketId: {},
       localPosticketId: {},
       employeeName: {},
       total: {},
