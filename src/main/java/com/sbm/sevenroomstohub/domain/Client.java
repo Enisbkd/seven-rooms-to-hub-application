@@ -272,7 +272,7 @@ public class Client implements Serializable {
     @JsonProperty("custom_fields")
     private Set<CustomField> customFields = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
     @JsonProperty("client_tags")
@@ -289,21 +289,7 @@ public class Client implements Serializable {
     @JsonProperty("member_groups")
     private Set<MemberGroup> memberGroups = new HashSet<>();
 
-    public Boolean getContactPrivate() {
-        return isContactPrivate;
-    }
-
-    public void setContactPrivate(Boolean contactPrivate) {
-        isContactPrivate = contactPrivate;
-    }
-
-    public Boolean getOnetimeGuest() {
-        return isOnetimeGuest;
-    }
-
-    public void setOnetimeGuest(Boolean onetimeGuest) {
-        isOnetimeGuest = onetimeGuest;
-    }
+    // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
         return this.id;

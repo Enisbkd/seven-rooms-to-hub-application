@@ -25,9 +25,6 @@ public class ClientPhoto implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "client_id")
-    private String clientId;
-
     @Column(name = "large", length = 1000)
     private String large;
 
@@ -115,19 +112,6 @@ public class ClientPhoto implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getClientId() {
-        return this.clientId;
-    }
-
-    public ClientPhoto clientId(String clientId) {
-        this.setClientId(clientId);
-        return this;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
     }
 
     public String getLarge() {
@@ -420,7 +404,6 @@ public class ClientPhoto implements Serializable {
     public String toString() {
         return "ClientPhoto{" +
             "id=" + getId() +
-            ", clientId='" + getClientId() + "'" +
             ", large='" + getLarge() + "'" +
             ", largeHeight=" + getLargeHeight() +
             ", largeWidth=" + getLargeWidth() +

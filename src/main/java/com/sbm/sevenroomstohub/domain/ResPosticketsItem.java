@@ -48,7 +48,7 @@ public class ResPosticketsItem implements Serializable {
     @Column(name = "tech_comment")
     private String techComment;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "resPosticketsItems", "reservation" }, allowSetters = true)
     private ResPosTicket resPosTicket;
 

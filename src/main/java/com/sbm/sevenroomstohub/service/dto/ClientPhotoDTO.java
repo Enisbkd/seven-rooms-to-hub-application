@@ -15,8 +15,6 @@ public class ClientPhotoDTO implements Serializable {
 
     private Long id;
 
-    private String clientId;
-
     private String large;
 
     @JsonProperty("large_height")
@@ -71,14 +69,6 @@ public class ClientPhotoDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
     }
 
     public String getLarge() {
@@ -259,7 +249,6 @@ public class ClientPhotoDTO implements Serializable {
     public String toString() {
         return "ClientPhotoDTO{" +
             "id=" + getId() +
-            ", clientId='" + getClientId() + "'" +
             ", large='" + getLarge() + "'" +
             ", largeHeight=" + getLargeHeight() +
             ", largeWidth=" + getLargeWidth() +

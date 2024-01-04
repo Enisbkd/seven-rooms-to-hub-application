@@ -14,7 +14,6 @@ public class ClientPhotoTestSamples {
     public static ClientPhoto getClientPhotoSample1() {
         return new ClientPhoto()
             .id(1L)
-            .clientId("clientId1")
             .large("large1")
             .largeHeight(1)
             .largeWidth(1)
@@ -35,7 +34,6 @@ public class ClientPhotoTestSamples {
     public static ClientPhoto getClientPhotoSample2() {
         return new ClientPhoto()
             .id(2L)
-            .clientId("clientId2")
             .large("large2")
             .largeHeight(2)
             .largeWidth(2)
@@ -56,7 +54,6 @@ public class ClientPhotoTestSamples {
     public static ClientPhoto getClientPhotoRandomSampleGenerator() {
         return new ClientPhoto()
             .id(longCount.incrementAndGet())
-            .clientId(UUID.randomUUID().toString())
             .large(UUID.randomUUID().toString())
             .largeHeight(intCount.incrementAndGet())
             .largeWidth(intCount.incrementAndGet())

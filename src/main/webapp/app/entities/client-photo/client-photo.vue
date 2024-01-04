@@ -32,10 +32,6 @@
               <span v-text="t$('global.field.id')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('clientId')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.clientId')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'clientId'"></jhi-sort-indicator>
-            </th>
             <th scope="row" v-on:click="changeOrder('large')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.large')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'large'"></jhi-sort-indicator>
@@ -120,7 +116,6 @@
             <td>
               <router-link :to="{ name: 'ClientPhotoView', params: { clientPhotoId: clientPhoto.id } }">{{ clientPhoto.id }}</router-link>
             </td>
-            <td>{{ clientPhoto.clientId }}</td>
             <td>{{ clientPhoto.large }}</td>
             <td>{{ clientPhoto.largeHeight }}</td>
             <td>{{ clientPhoto.largeWidth }}</td>

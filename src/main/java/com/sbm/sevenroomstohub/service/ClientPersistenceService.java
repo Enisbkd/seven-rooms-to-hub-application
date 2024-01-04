@@ -1,5 +1,6 @@
 package com.sbm.sevenroomstohub.service;
 
+import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.domain.ClientTag;
 import com.sbm.sevenroomstohub.repository.ClientRepository;
@@ -40,7 +41,7 @@ public class ClientPersistenceService {
     public ClientDTO saveClient(ClientPayload clientPayload) {
         ClientDTO clientDTO = clientPayload.getClient();
         if (clientDTO.getClientPhoto() != null) {
-            logger.info("Saving Client Photo having id : " + clientDTO.getClientPhoto().getClientId());
+            logger.info("Saving Client Photo having id : " + clientDTO.getClientPhoto().getId());
             ClientPhotoDTO clientPhotoDTO = clientPhotoService.save(clientDTO.getClientPhoto());
             clientDTO.setClientPhoto(clientPhotoDTO);
         }
@@ -52,12 +53,12 @@ public class ClientPersistenceService {
 
         Set<ClientTagDTO> clientTags = clientPayload.getClientTags();
 
-        //        for (ClientTagDTO clientTagDTO : clientTags) {
-        //            System.out.println(clientTagDTO);
-        //            System.out.println(clientTagDTO.getClass());
-        //            clientTagDTO.setClient(clientDTO);
-        //            clientTagService.save(clientTagDTO);
-        //        }
+        ClientDTO clientsaved = clientService.save(clientDTO);
+
+        for (ClientTagDTO clientTagDTO : clientTags) {
+            clientTagDTO.setClient(clientsaved);
+            clientTagService.save(clientTagDTO);
+        }
 
         return clientDTO;
     }

@@ -36,9 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ClientPhotoResourceIT {
 
-    private static final String DEFAULT_CLIENT_ID = "AAAAAAAAAA";
-    private static final String UPDATED_CLIENT_ID = "BBBBBBBBBB";
-
     private static final String DEFAULT_LARGE = "AAAAAAAAAA";
     private static final String UPDATED_LARGE = "BBBBBBBBBB";
 
@@ -124,7 +121,6 @@ class ClientPhotoResourceIT {
      */
     public static ClientPhoto createEntity(EntityManager em) {
         ClientPhoto clientPhoto = new ClientPhoto()
-            .clientId(DEFAULT_CLIENT_ID)
             .large(DEFAULT_LARGE)
             .largeHeight(DEFAULT_LARGE_HEIGHT)
             .largeWidth(DEFAULT_LARGE_WIDTH)
@@ -155,7 +151,6 @@ class ClientPhotoResourceIT {
      */
     public static ClientPhoto createUpdatedEntity(EntityManager em) {
         ClientPhoto clientPhoto = new ClientPhoto()
-            .clientId(UPDATED_CLIENT_ID)
             .large(UPDATED_LARGE)
             .largeHeight(UPDATED_LARGE_HEIGHT)
             .largeWidth(UPDATED_LARGE_WIDTH)
@@ -199,7 +194,6 @@ class ClientPhotoResourceIT {
         List<ClientPhoto> clientPhotoList = clientPhotoRepository.findAll();
         assertThat(clientPhotoList).hasSize(databaseSizeBeforeCreate + 1);
         ClientPhoto testClientPhoto = clientPhotoList.get(clientPhotoList.size() - 1);
-        assertThat(testClientPhoto.getClientId()).isEqualTo(DEFAULT_CLIENT_ID);
         assertThat(testClientPhoto.getLarge()).isEqualTo(DEFAULT_LARGE);
         assertThat(testClientPhoto.getLargeHeight()).isEqualTo(DEFAULT_LARGE_HEIGHT);
         assertThat(testClientPhoto.getLargeWidth()).isEqualTo(DEFAULT_LARGE_WIDTH);
@@ -254,7 +248,6 @@ class ClientPhotoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(clientPhoto.getId().intValue())))
-            .andExpect(jsonPath("$.[*].clientId").value(hasItem(DEFAULT_CLIENT_ID)))
             .andExpect(jsonPath("$.[*].large").value(hasItem(DEFAULT_LARGE)))
             .andExpect(jsonPath("$.[*].largeHeight").value(hasItem(DEFAULT_LARGE_HEIGHT)))
             .andExpect(jsonPath("$.[*].largeWidth").value(hasItem(DEFAULT_LARGE_WIDTH)))
@@ -288,7 +281,6 @@ class ClientPhotoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(clientPhoto.getId().intValue()))
-            .andExpect(jsonPath("$.clientId").value(DEFAULT_CLIENT_ID))
             .andExpect(jsonPath("$.large").value(DEFAULT_LARGE))
             .andExpect(jsonPath("$.largeHeight").value(DEFAULT_LARGE_HEIGHT))
             .andExpect(jsonPath("$.largeWidth").value(DEFAULT_LARGE_WIDTH))
@@ -330,7 +322,6 @@ class ClientPhotoResourceIT {
         // Disconnect from session so that the updates on updatedClientPhoto are not directly saved in db
         em.detach(updatedClientPhoto);
         updatedClientPhoto
-            .clientId(UPDATED_CLIENT_ID)
             .large(UPDATED_LARGE)
             .largeHeight(UPDATED_LARGE_HEIGHT)
             .largeWidth(UPDATED_LARGE_WIDTH)
@@ -364,7 +355,6 @@ class ClientPhotoResourceIT {
         List<ClientPhoto> clientPhotoList = clientPhotoRepository.findAll();
         assertThat(clientPhotoList).hasSize(databaseSizeBeforeUpdate);
         ClientPhoto testClientPhoto = clientPhotoList.get(clientPhotoList.size() - 1);
-        assertThat(testClientPhoto.getClientId()).isEqualTo(UPDATED_CLIENT_ID);
         assertThat(testClientPhoto.getLarge()).isEqualTo(UPDATED_LARGE);
         assertThat(testClientPhoto.getLargeHeight()).isEqualTo(UPDATED_LARGE_HEIGHT);
         assertThat(testClientPhoto.getLargeWidth()).isEqualTo(UPDATED_LARGE_WIDTH);
@@ -464,15 +454,15 @@ class ClientPhotoResourceIT {
         partialUpdatedClientPhoto.setId(clientPhoto.getId());
 
         partialUpdatedClientPhoto
-            .large(UPDATED_LARGE)
             .largeHeight(UPDATED_LARGE_HEIGHT)
-            .medium(UPDATED_MEDIUM)
+            .largeWidth(UPDATED_LARGE_WIDTH)
             .mediumHeight(UPDATED_MEDIUM_HEIGHT)
-            .smallWidth(UPDATED_SMALL_WIDTH)
-            .cropx(UPDATED_CROPX)
+            .mediumWidth(UPDATED_MEDIUM_WIDTH)
+            .raw(UPDATED_RAW)
             .cropy(UPDATED_CROPY)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE);
+            .cropHeight(UPDATED_CROP_HEIGHT)
+            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
+            .techMapping(UPDATED_TECH_MAPPING);
 
         restClientPhotoMockMvc
             .perform(
@@ -486,25 +476,24 @@ class ClientPhotoResourceIT {
         List<ClientPhoto> clientPhotoList = clientPhotoRepository.findAll();
         assertThat(clientPhotoList).hasSize(databaseSizeBeforeUpdate);
         ClientPhoto testClientPhoto = clientPhotoList.get(clientPhotoList.size() - 1);
-        assertThat(testClientPhoto.getClientId()).isEqualTo(DEFAULT_CLIENT_ID);
-        assertThat(testClientPhoto.getLarge()).isEqualTo(UPDATED_LARGE);
+        assertThat(testClientPhoto.getLarge()).isEqualTo(DEFAULT_LARGE);
         assertThat(testClientPhoto.getLargeHeight()).isEqualTo(UPDATED_LARGE_HEIGHT);
-        assertThat(testClientPhoto.getLargeWidth()).isEqualTo(DEFAULT_LARGE_WIDTH);
-        assertThat(testClientPhoto.getMedium()).isEqualTo(UPDATED_MEDIUM);
+        assertThat(testClientPhoto.getLargeWidth()).isEqualTo(UPDATED_LARGE_WIDTH);
+        assertThat(testClientPhoto.getMedium()).isEqualTo(DEFAULT_MEDIUM);
         assertThat(testClientPhoto.getMediumHeight()).isEqualTo(UPDATED_MEDIUM_HEIGHT);
-        assertThat(testClientPhoto.getMediumWidth()).isEqualTo(DEFAULT_MEDIUM_WIDTH);
+        assertThat(testClientPhoto.getMediumWidth()).isEqualTo(UPDATED_MEDIUM_WIDTH);
         assertThat(testClientPhoto.getSmall()).isEqualTo(DEFAULT_SMALL);
         assertThat(testClientPhoto.getSmallHeight()).isEqualTo(DEFAULT_SMALL_HEIGHT);
-        assertThat(testClientPhoto.getSmallWidth()).isEqualTo(UPDATED_SMALL_WIDTH);
-        assertThat(testClientPhoto.getRaw()).isEqualTo(DEFAULT_RAW);
-        assertThat(testClientPhoto.getCropx()).isEqualTo(UPDATED_CROPX);
+        assertThat(testClientPhoto.getSmallWidth()).isEqualTo(DEFAULT_SMALL_WIDTH);
+        assertThat(testClientPhoto.getRaw()).isEqualTo(UPDATED_RAW);
+        assertThat(testClientPhoto.getCropx()).isEqualTo(DEFAULT_CROPX);
         assertThat(testClientPhoto.getCropy()).isEqualTo(UPDATED_CROPY);
-        assertThat(testClientPhoto.getCropHeight()).isEqualTo(DEFAULT_CROP_HEIGHT);
+        assertThat(testClientPhoto.getCropHeight()).isEqualTo(UPDATED_CROP_HEIGHT);
         assertThat(testClientPhoto.getCropWidth()).isEqualTo(DEFAULT_CROP_WIDTH);
         assertThat(testClientPhoto.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testClientPhoto.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
+        assertThat(testClientPhoto.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
         assertThat(testClientPhoto.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testClientPhoto.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
+        assertThat(testClientPhoto.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
         assertThat(testClientPhoto.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
@@ -521,7 +510,6 @@ class ClientPhotoResourceIT {
         partialUpdatedClientPhoto.setId(clientPhoto.getId());
 
         partialUpdatedClientPhoto
-            .clientId(UPDATED_CLIENT_ID)
             .large(UPDATED_LARGE)
             .largeHeight(UPDATED_LARGE_HEIGHT)
             .largeWidth(UPDATED_LARGE_WIDTH)
@@ -554,7 +542,6 @@ class ClientPhotoResourceIT {
         List<ClientPhoto> clientPhotoList = clientPhotoRepository.findAll();
         assertThat(clientPhotoList).hasSize(databaseSizeBeforeUpdate);
         ClientPhoto testClientPhoto = clientPhotoList.get(clientPhotoList.size() - 1);
-        assertThat(testClientPhoto.getClientId()).isEqualTo(UPDATED_CLIENT_ID);
         assertThat(testClientPhoto.getLarge()).isEqualTo(UPDATED_LARGE);
         assertThat(testClientPhoto.getLargeHeight()).isEqualTo(UPDATED_LARGE_HEIGHT);
         assertThat(testClientPhoto.getLargeWidth()).isEqualTo(UPDATED_LARGE_WIDTH);

@@ -14,9 +14,6 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="client_id" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="large" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
@@ -97,7 +94,6 @@
                   tableName="client_photo"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="client_id" type="string"/>
             <column name="large" type="string"/>
             <column name="large_height" type="numeric"/>
             <column name="large_width" type="numeric"/>
