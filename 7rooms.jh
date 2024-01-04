@@ -128,7 +128,6 @@ entity BookingName{
 }
 
 entity ClientPhoto{
-	clientId String
 	large String
 	largeHeight Integer
 	largeWidth Integer
@@ -258,7 +257,8 @@ entity ResPosTicket{
 	tableNo String
 	tax Double
 	businessId Integer
-	localPosticketId String
+	ticketId Integer
+    localPosticketId String
 	employeeName String
 	total Double
 	subtotal Double

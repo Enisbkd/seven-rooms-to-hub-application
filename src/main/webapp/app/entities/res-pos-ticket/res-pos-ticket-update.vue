@@ -111,6 +111,22 @@
           <div class="form-group">
             <label
               class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.ticketId')"
+              for="res-pos-ticket-ticketId"
+            ></label>
+            <input
+              type="number"
+              class="form-control"
+              name="ticketId"
+              id="res-pos-ticket-ticketId"
+              data-cy="ticketId"
+              :class="{ valid: !v$.ticketId.$invalid, invalid: v$.ticketId.$invalid }"
+              v-model.number="v$.ticketId.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
               v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.localPosticketId')"
               for="res-pos-ticket-localPosticketId"
             ></label>

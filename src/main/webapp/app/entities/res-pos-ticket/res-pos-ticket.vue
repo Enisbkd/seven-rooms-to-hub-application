@@ -56,6 +56,10 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.businessId')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'businessId'"></jhi-sort-indicator>
             </th>
+            <th scope="row" v-on:click="changeOrder('ticketId')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.ticketId')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'ticketId'"></jhi-sort-indicator>
+            </th>
             <th scope="row" v-on:click="changeOrder('localPosticketId')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.localPosticketId')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'localPosticketId'"></jhi-sort-indicator>
@@ -124,6 +128,7 @@
             <td>{{ resPosTicket.tableNo }}</td>
             <td>{{ resPosTicket.tax }}</td>
             <td>{{ resPosTicket.businessId }}</td>
+            <td>{{ resPosTicket.ticketId }}</td>
             <td>{{ resPosTicket.localPosticketId }}</td>
             <td>{{ resPosTicket.employeeName }}</td>
             <td>{{ resPosTicket.total }}</td>

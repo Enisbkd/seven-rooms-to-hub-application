@@ -9,6 +9,7 @@ export interface IResPosTicket {
   tableNo?: string | null;
   tax?: number | null;
   businessId?: number | null;
+  ticketId?: number | null;
   localPosticketId?: string | null;
   employeeName?: string | null;
   total?: number | null;
@@ -34,6 +35,7 @@ export class ResPosTicket implements IResPosTicket {
     public tableNo?: string | null,
     public tax?: number | null,
     public businessId?: number | null,
+    public ticketId?: number | null,
     public localPosticketId?: string | null,
     public employeeName?: string | null,
     public total?: number | null,

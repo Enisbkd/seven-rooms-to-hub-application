@@ -41,6 +41,7 @@ describe('Service Tests', () => {
         'AAAAAAA',
         0,
         0,
+        0,
         'AAAAAAA',
         'AAAAAAA',
         0,
@@ -125,6 +126,7 @@ describe('Service Tests', () => {
             tableNo: 'BBBBBB',
             tax: 1,
             businessId: 1,
+            ticketId: 1,
             localPosticketId: 'BBBBBB',
             employeeName: 'BBBBBB',
             total: 1,
@@ -169,15 +171,15 @@ describe('Service Tests', () => {
       it('should partial update a ResPosTicket', async () => {
         const patchObject = Object.assign(
           {
+            status: 'BBBBBB',
             adminFee: 1,
             code: 1,
-            tableNo: 'BBBBBB',
+            employeeName: 'BBBBBB',
             subtotal: 1,
             serviceCharge: 1,
-            techLineage: 'BBBBBB',
+            endtime: 'BBBBBB',
             techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techMapping: 'BBBBBB',
-            techComment: 'BBBBBB',
+            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
           },
           new ResPosTicket(),
         );
@@ -217,6 +219,7 @@ describe('Service Tests', () => {
             tableNo: 'BBBBBB',
             tax: 1,
             businessId: 1,
+            ticketId: 1,
             localPosticketId: 'BBBBBB',
             employeeName: 'BBBBBB',
             total: 1,

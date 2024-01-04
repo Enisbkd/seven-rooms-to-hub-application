@@ -39,12 +39,6 @@ public class BookingNameDTO implements Serializable {
         this.clientVenueStats = clientVenueStats;
     }
 
-    public BookingNameDTO() {}
-
-    public BookingNameDTO(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
