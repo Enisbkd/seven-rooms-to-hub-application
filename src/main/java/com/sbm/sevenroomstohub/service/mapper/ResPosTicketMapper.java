@@ -1,6 +1,7 @@
 package com.sbm.sevenroomstohub.service.mapper;
 
 import com.sbm.sevenroomstohub.domain.ResPosTicket;
+import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.service.dto.ResPosTicketDTO;
 import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
@@ -18,4 +19,6 @@ public interface ResPosTicketMapper extends EntityMapper<ResPosTicketDTO, ResPos
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     ReservationDTO toDtoReservationId(Reservation reservation);
+
+    ResPosTicket toEntity(ResPosTicketPayload resPosTicketPayload);
 }

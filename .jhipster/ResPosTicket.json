@@ -31,6 +31,10 @@
       "fieldType": "Integer"
     },
     {
+      "fieldName": "ticketId",
+      "fieldType": "Integer"
+    },
+    {
       "fieldName": "localPosticketId",
       "fieldType": "String"
     },

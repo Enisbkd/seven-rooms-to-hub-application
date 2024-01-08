@@ -19,8 +19,11 @@ package com.sbm.sevenroomstohub.serdes;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sbm.sevenroomstohub.domain.ResPosTicket;
+import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
 import com.sbm.sevenroomstohub.service.dto.*;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
@@ -114,16 +117,15 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
         }
     }
 
-    private void posTicketsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
+    private void posTicketsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload)
+        throws IOException {
         JsonNode posTicketsNode = resEntity.get("pos_tickets");
         if (posTicketsNode != null) {
-            Set<ResPosTicketDTO> posTickets = objectMapper.convertValue(posTicketsNode, new TypeReference<Set<ResPosTicketDTO>>() {});
+            Set<ResPosTicketPayload> posTickets = objectMapper.convertValue(
+                posTicketsNode,
+                new TypeReference<Set<ResPosTicketPayload>>() {}
+            );
             reservationPayload.setResPosTickets(posTickets);
-            JsonNode itemsNode = posTicketsNode.get("items");
-            if (itemsNode != null) {
-                Set<ResPosticketsItemDTO> items = objectMapper.convertValue(itemsNode, new TypeReference<Set<ResPosticketsItemDTO>>() {});
-                reservationPayload.setResPosticketsItems(items);
-            }
         }
     }
 

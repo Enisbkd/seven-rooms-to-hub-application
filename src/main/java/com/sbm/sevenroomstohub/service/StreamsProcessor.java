@@ -1,11 +1,8 @@
 package com.sbm.sevenroomstohub.service;
 
 import com.sbm.sevenroomstohub.domain.ClientPayload;
-import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.serdes.CustomSerdes;
-import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
-import com.sbm.sevenroomstohub.service.mapper.ReservationMapperImpl;
 import com.sbm.sevenroomstohub.web.rest.UserResource;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
@@ -21,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StreamsProcessor {
 
-    private final Logger logger = LoggerFactory.getLogger(UserResource.class);
+    private final Logger logger = LoggerFactory.getLogger(StreamsProcessor.class);
 
     private static final Serde<String> STRING_SERDE = Serdes.String();
     private static final Serde<ClientPayload> CLIENT_PAYLOAD_SERDE = CustomSerdes.ClientPayload();
@@ -73,7 +70,8 @@ public class StreamsProcessor {
 
     private void reservationsProcessor(ReservationPayload reservationPayload) {
         try {
-            logger.info(reservationPayload.toString());
+            System.out.println("After reception in kstream");
+            logger.debug(reservationPayload.toString());
 
             reservationPersistenceService.saveReservation(reservationPayload);
             //            String clientId = reservation.getClient().getClientId(); //Check if not null && clientService findbyId

@@ -1,6 +1,8 @@
 package com.sbm.sevenroomstohub.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -24,30 +26,40 @@ public class ResPosTicket implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
+    @JsonIgnore
     private Long id;
 
     @Column(name = "status")
     private String status;
 
     @Column(name = "admin_fee")
+    @JsonProperty("admin_fee")
     private Double adminFee;
 
     @Column(name = "code")
     private Integer code;
 
     @Column(name = "table_no")
+    @JsonProperty("table_no")
     private String tableNo;
 
     @Column(name = "tax")
     private Double tax;
 
     @Column(name = "business_id")
+    @JsonProperty("business_id")
     private Integer businessId;
 
+    @Column(name = "ticket_id")
+    @JsonProperty("ticket_id")
+    private Integer ticketId;
+
     @Column(name = "local_posticket_id")
+    @JsonProperty("local_pos_ticket_id")
     private String localPosticketId;
 
     @Column(name = "employee_name")
+    @JsonProperty("employee_name")
     private String employeeName;
 
     @Column(name = "total")
@@ -57,12 +69,15 @@ public class ResPosTicket implements Serializable {
     private Double subtotal;
 
     @Column(name = "start_time")
+    @JsonProperty("start_time")
     private String startTime;
 
     @Column(name = "service_charge")
+    @JsonProperty("service_charge")
     private Double serviceCharge;
 
     @Column(name = "endtime")
+    @JsonProperty("end_time")
     private String endtime;
 
     @Column(name = "tech_lineage")
@@ -83,6 +98,7 @@ public class ResPosTicket implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "resPosTicket")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "resPosTicket" }, allowSetters = true)
+    @JsonProperty("items")
     private Set<ResPosticketsItem> resPosticketsItems = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -180,6 +196,19 @@ public class ResPosTicket implements Serializable {
 
     public void setBusinessId(Integer businessId) {
         this.businessId = businessId;
+    }
+
+    public Integer getTicketId() {
+        return this.ticketId;
+    }
+
+    public ResPosTicket ticketId(Integer ticketId) {
+        this.setTicketId(ticketId);
+        return this;
+    }
+
+    public void setTicketId(Integer ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getLocalPosticketId() {
@@ -401,29 +430,64 @@ public class ResPosTicket implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "ResPosTicket{" +
-            "id=" + getId() +
-            ", status='" + getStatus() + "'" +
-            ", adminFee=" + getAdminFee() +
-            ", code=" + getCode() +
-            ", tableNo='" + getTableNo() + "'" +
-            ", tax=" + getTax() +
-            ", businessId=" + getBusinessId() +
-            ", localPosticketId='" + getLocalPosticketId() + "'" +
-            ", employeeName='" + getEmployeeName() + "'" +
-            ", total=" + getTotal() +
-            ", subtotal=" + getSubtotal() +
-            ", startTime='" + getStartTime() + "'" +
-            ", serviceCharge=" + getServiceCharge() +
-            ", endtime='" + getEndtime() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
-            "}";
+        return (
+            "ResPosTicket{" +
+            "id=" +
+            id +
+            ", status='" +
+            status +
+            '\'' +
+            ", adminFee=" +
+            adminFee +
+            ", code=" +
+            code +
+            ", tableNo='" +
+            tableNo +
+            '\'' +
+            ", tax=" +
+            tax +
+            ", businessId=" +
+            businessId +
+            ", ticketId=" +
+            ticketId +
+            ", localPosticketId='" +
+            localPosticketId +
+            '\'' +
+            ", employeeName='" +
+            employeeName +
+            '\'' +
+            ", total=" +
+            total +
+            ", subtotal=" +
+            subtotal +
+            ", startTime='" +
+            startTime +
+            '\'' +
+            ", serviceCharge=" +
+            serviceCharge +
+            ", endtime='" +
+            endtime +
+            '\'' +
+            ", techLineage='" +
+            techLineage +
+            '\'' +
+            ", techCreatedDate=" +
+            techCreatedDate +
+            ", techUpdatedDate=" +
+            techUpdatedDate +
+            ", techMapping='" +
+            techMapping +
+            '\'' +
+            ", techComment='" +
+            techComment +
+            '\'' +
+            ", resPosticketsItems=" +
+            resPosticketsItems +
+            ", reservation=" +
+            reservation +
+            '}'
+        );
     }
 }

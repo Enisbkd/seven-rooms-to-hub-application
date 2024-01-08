@@ -43,6 +43,12 @@
             <span>{{ resPosTicket.businessId }}</span>
           </dd>
           <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.ticketId')"></span>
+          </dt>
+          <dd>
+            <span>{{ resPosTicket.ticketId }}</span>
+          </dd>
+          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.localPosticketId')"></span>
           </dt>
           <dd>

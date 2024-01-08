@@ -1,16 +1,17 @@
-package com.sbm.sevenroomstohub.service.dto;
+package com.sbm.sevenroomstohub.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
+import com.sbm.sevenroomstohub.service.dto.ResPosticketsItemDTO;
+import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- * A DTO for the {@link com.sbm.sevenroomstohub.domain.ResPosTicket} entity.
- */
-@SuppressWarnings("common-java:DuplicatedBlocks")
-public class ResPosTicketDTO implements Serializable {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ResPosTicketPayload implements Serializable {
 
     private Long id;
 
@@ -58,6 +59,9 @@ public class ResPosTicketDTO implements Serializable {
     private String techComment;
 
     private ReservationDTO reservation;
+
+    @JsonProperty("items")
+    private Set<ResPosticketsItemDTO> resPosticketsItems = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -219,91 +223,42 @@ public class ResPosTicketDTO implements Serializable {
         this.reservation = reservation;
     }
 
-    public ResPosTicketDTO() {}
-
-    public ResPosTicketDTO(
-        Long id,
-        String status,
-        Double adminFee,
-        Integer code,
-        String tableNo,
-        Double tax,
-        Integer businessId,
-        String localPosticketId,
-        String employeeName,
-        Double total,
-        Double subtotal,
-        String startTime,
-        Double serviceCharge,
-        String endtime,
-        String techLineage,
-        ZonedDateTime techCreatedDate,
-        ZonedDateTime techUpdatedDate,
-        String techMapping,
-        String techComment,
-        ReservationDTO reservation
-    ) {
-        this.id = id;
-        this.status = status;
-        this.adminFee = adminFee;
-        this.code = code;
-        this.tableNo = tableNo;
-        this.tax = tax;
-        this.businessId = businessId;
-        this.localPosticketId = localPosticketId;
-        this.employeeName = employeeName;
-        this.total = total;
-        this.subtotal = subtotal;
-        this.startTime = startTime;
-        this.serviceCharge = serviceCharge;
-        this.endtime = endtime;
-        this.techLineage = techLineage;
-        this.techCreatedDate = techCreatedDate;
-        this.techUpdatedDate = techUpdatedDate;
-        this.techMapping = techMapping;
-        this.techComment = techComment;
-        this.reservation = reservation;
+    public Set<ResPosticketsItemDTO> getResPosticketsItems() {
+        return resPosticketsItems;
     }
 
-    public static ResPosTicketDTO buildResposticketDto(ResPosTicketPayload resPosTicketPayload) {
-        return new ResPosTicketDTO(
-            resPosTicketPayload.getId(),
-            resPosTicketPayload.getStatus(),
-            resPosTicketPayload.getAdminFee(),
-            resPosTicketPayload.getCode(),
-            resPosTicketPayload.getTableNo(),
-            resPosTicketPayload.getTax(),
-            resPosTicketPayload.getBusinessId(),
-            resPosTicketPayload.getLocalPosticketId(),
-            resPosTicketPayload.getEmployeeName(),
-            resPosTicketPayload.getTotal(),
-            resPosTicketPayload.getSubtotal(),
-            resPosTicketPayload.getStartTime(),
-            resPosTicketPayload.getServiceCharge(),
-            resPosTicketPayload.getEndtime(),
-            resPosTicketPayload.getTechLineage(),
-            resPosTicketPayload.getTechCreatedDate(),
-            resPosTicketPayload.getTechUpdatedDate(),
-            resPosTicketPayload.getTechMapping(),
-            resPosTicketPayload.getTechComment(),
-            resPosTicketPayload.getReservation()
-        );
+    public void setResPosticketsItems(Set<ResPosticketsItemDTO> resPosticketsItems) {
+        this.resPosticketsItems = resPosticketsItems;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof ResPosTicketDTO)) {
-            return false;
-        }
-
-        ResPosTicketDTO resPosTicketDTO = (ResPosTicketDTO) o;
-        if (this.id == null) {
-            return false;
-        }
-        return Objects.equals(this.id, resPosTicketDTO.id);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResPosTicketPayload that = (ResPosTicketPayload) o;
+        return (
+            Objects.equals(id, that.id) &&
+            Objects.equals(status, that.status) &&
+            Objects.equals(adminFee, that.adminFee) &&
+            Objects.equals(code, that.code) &&
+            Objects.equals(tableNo, that.tableNo) &&
+            Objects.equals(tax, that.tax) &&
+            Objects.equals(businessId, that.businessId) &&
+            Objects.equals(localPosticketId, that.localPosticketId) &&
+            Objects.equals(employeeName, that.employeeName) &&
+            Objects.equals(total, that.total) &&
+            Objects.equals(subtotal, that.subtotal) &&
+            Objects.equals(startTime, that.startTime) &&
+            Objects.equals(serviceCharge, that.serviceCharge) &&
+            Objects.equals(endtime, that.endtime) &&
+            Objects.equals(techLineage, that.techLineage) &&
+            Objects.equals(techCreatedDate, that.techCreatedDate) &&
+            Objects.equals(techUpdatedDate, that.techUpdatedDate) &&
+            Objects.equals(techMapping, that.techMapping) &&
+            Objects.equals(techComment, that.techComment) &&
+            Objects.equals(reservation, that.reservation) &&
+            Objects.equals(resPosticketsItems, that.resPosticketsItems)
+        );
     }
 
     @Override
@@ -334,6 +289,7 @@ public class ResPosTicketDTO implements Serializable {
             ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
             ", techMapping='" + getTechMapping() + "'" +
             ", techComment='" + getTechComment() + "'" +
+            ", items='" + getResPosticketsItems() + "'" +
             ", reservation=" + getReservation() +
             "}";
     }

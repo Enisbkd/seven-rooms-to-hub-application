@@ -24,6 +24,7 @@
       "tableNo": "Table No",
       "tax": "Tax",
       "businessId": "Business Id",
+      "ticketId": "Ticket Id",
       "localPosticketId": "Local Posticket Id",
       "employeeName": "Employee Name",
       "total": "Total",

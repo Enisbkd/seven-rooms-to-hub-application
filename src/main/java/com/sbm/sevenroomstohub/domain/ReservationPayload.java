@@ -3,14 +3,10 @@ package com.sbm.sevenroomstohub.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sbm.sevenroomstohub.service.dto.*;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 public class ReservationPayload implements Serializable {
 
@@ -28,21 +24,11 @@ public class ReservationPayload implements Serializable {
 
     private Set<ResTagDTO> resTags = new HashSet<>();
 
-    private Set<ResPosTicketDTO> resPosTickets = new HashSet<>();
-
-    private Set<ResPosticketsItemDTO> resPosticketsItems = new HashSet<>();
+    private Set<ResPosTicketPayload> resPosTickets = new HashSet<>();
 
     private Set<ResCustomFieldDTO> resCustomFields = new HashSet<>();
 
     private Set<ResTableDTO> resTables = new HashSet<>();
-
-    public Set<ResPosticketsItemDTO> getResPosticketsItems() {
-        return resPosticketsItems;
-    }
-
-    public void setResPosticketsItems(Set<ResPosticketsItemDTO> resPosticketsItems) {
-        this.resPosticketsItems = resPosticketsItems;
-    }
 
     public Set<ResTagDTO> getResTags() {
         return resTags;
@@ -52,11 +38,11 @@ public class ReservationPayload implements Serializable {
         this.resTags = resTags;
     }
 
-    public Set<ResPosTicketDTO> getResPosTickets() {
+    public Set<ResPosTicketPayload> getResPosTickets() {
         return resPosTickets;
     }
 
-    public void setResPosTickets(Set<ResPosTicketDTO> resPosTickets) {
+    public void setResPosTickets(Set<ResPosTicketPayload> resPosTickets) {
         this.resPosTickets = resPosTickets;
     }
 
@@ -127,8 +113,7 @@ public class ReservationPayload implements Serializable {
         String entity_type,
         Set<UpdateField> updates,
         Set<ResTagDTO> resTags,
-        Set<ResPosTicketDTO> resPosTickets,
-        Set<ResPosticketsItemDTO> resPosticketsItems,
+        Set<ResPosTicketPayload> resPosTickets,
         Set<ResCustomFieldDTO> resCustomFields,
         Set<ResTableDTO> resTables
     ) {
@@ -138,7 +123,6 @@ public class ReservationPayload implements Serializable {
         this.updates = updates;
         this.resTags = resTags;
         this.resPosTickets = resPosTickets;
-        this.resPosticketsItems = resPosticketsItems;
         this.resCustomFields = resCustomFields;
         this.resTables = resTables;
     }
@@ -161,8 +145,6 @@ public class ReservationPayload implements Serializable {
             resTags +
             ", resPosTickets=" +
             resPosTickets +
-            ", resPosticketsItems=" +
-            resPosticketsItems +
             ", resCustomFields=" +
             resCustomFields +
             ", resTables=" +

@@ -1,11 +1,16 @@
 package com.sbm.sevenroomstohub.service.impl;
 
+import static com.sbm.sevenroomstohub.service.dto.ResPosTicketDTO.buildResposticketDto;
+
+import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.service.*;
 import com.sbm.sevenroomstohub.service.dto.*;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReservationPersistenceServiceImpl implements ReservationPersistenceService {
 
     @Autowired
@@ -27,7 +32,7 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
     ResPosticketsItemService resPosticketsItemService;
 
     @Override
-    public ReservationDTO saveReservation(ReservationPayload reservationPayload) {
+    public ReservationDTO saveReservation(ReservationPayload reservationPayload) throws NoSuchFieldException, IllegalAccessException {
         ReservationDTO reservationDTO = reservationPayload.getReservation();
         ReservationDTO savedReservation = reservationService.save(reservationDTO);
 
@@ -52,18 +57,17 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
             resTableService.save(resTable);
         }
 
-        Set<ResPosTicketDTO> resPosTickets = reservationPayload.getResPosTickets();
-        Set<ResPosticketsItemDTO> resPosTicketItems = reservationPayload.getResPosticketsItems();
-        //TODO Identify a solution in case there are many posTickets
-        for (ResPosTicketDTO resPosTicket : resPosTickets) {
+        Set<ResPosTicketPayload> resPosTickets = reservationPayload.getResPosTickets();
+
+        for (ResPosTicketPayload resPosTicket : resPosTickets) {
             resPosTicket.setReservation(savedReservation);
-            ResPosTicketDTO savedPosticket = resPosTicketService.save(resPosTicket);
-            for (ResPosticketsItemDTO resPosTicketItem : resPosTicketItems) {
-                resPosTicketItem.setResPosTicket(savedPosticket);
-                resPosticketsItemService.save(resPosTicketItem);
+            ResPosTicketDTO resPosTicketDTO = buildResposticketDto(resPosTicket);
+            ResPosTicketDTO savedResPosTicket = resPosTicketService.save(resPosTicketDTO);
+            for (ResPosticketsItemDTO resPosticketsItemDTO : resPosTicket.getResPosticketsItems()) {
+                resPosticketsItemDTO.setResPosTicket(savedResPosTicket);
+                resPosticketsItemService.save(resPosticketsItemDTO);
             }
         }
-
         return reservationDTO;
     }
 }
