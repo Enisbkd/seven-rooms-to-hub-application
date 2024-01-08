@@ -77,6 +77,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<ClientDTO> findByClientId(String clientId) {
+        log.debug("Request to get Client by Id : {}", clientId);
+        return clientRepository.findByClientId(clientId).map(clientMapper::toDto);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Client : {}", id);
         clientRepository.deleteById(id);

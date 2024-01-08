@@ -8,4 +8,6 @@ public interface ClientPersistenceService {
     ClientDTO saveClient(ClientPayload clientPayload);
 
     ClientDTO updateClient(ClientPayload clientPayload);
+
+    void deleteClient(ClientPayload clientPayload);
 }

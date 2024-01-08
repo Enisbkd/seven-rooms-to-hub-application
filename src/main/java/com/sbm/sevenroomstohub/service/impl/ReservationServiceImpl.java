@@ -77,6 +77,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public Optional<ReservationDTO> findByResvId(String resvId) {
+        log.debug("Request to get Reservation : {}", resvId);
+        return reservationRepository.findByResvId(resvId).map(reservationMapper::toDto);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Reservation : {}", id);
         reservationRepository.deleteById(id);

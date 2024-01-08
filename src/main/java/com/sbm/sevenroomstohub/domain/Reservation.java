@@ -297,22 +297,22 @@ public class Reservation implements Serializable {
     @Column(name = "tech_comment")
     private String techComment;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonProperty("tags")
     private Set<ResTag> resTags = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonProperty("pos_tickets")
     private Set<ResPosTicket> resPosTickets = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonProperty("custom_fields")
     private Set<ResCustomField> resCustomFields = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonProperty("table_numbers")
     private Set<ResTable> resTables = new HashSet<>();

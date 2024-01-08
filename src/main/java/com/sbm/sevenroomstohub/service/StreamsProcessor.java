@@ -52,15 +52,15 @@ public class StreamsProcessor {
 
     private void clientsProcessor(ClientPayload clientPayload) {
         try {
-            switch (clientPayload.getEvent_type()) {
-                case "created":
-                    {
-                        clientPersistenceService.saveClient(clientPayload);
-                    }
-                case "updated":
-                    {}
-                case "deleted":
-                    {}
+            if (clientPayload.getEvent_type().equalsIgnoreCase("created")) {
+                System.out.println("Create Payload");
+                clientPersistenceService.saveClient(clientPayload);
+            } else if (clientPayload.getEvent_type().equalsIgnoreCase("updated")) {
+                System.out.println("Update Payload");
+                clientPersistenceService.updateClient(clientPayload);
+            } else if (clientPayload.getEvent_type().equalsIgnoreCase("deleted")) {
+                System.out.println("Delete Payload");
+                clientPersistenceService.deleteClient(clientPayload);
             }
             logger.info(clientPayload.toString());
         } catch (Exception e) {
@@ -70,15 +70,16 @@ public class StreamsProcessor {
 
     private void reservationsProcessor(ReservationPayload reservationPayload) {
         try {
-            System.out.println("After reception in kstream");
-            logger.debug(reservationPayload.toString());
-
-            reservationPersistenceService.saveReservation(reservationPayload);
-            //            String clientId = reservation.getClient().getClientId(); //Check if not null && clientService findbyId
-            //
-            //            ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
-            //
-            //            reservationService.save(reservationDTO);
+            if (reservationPayload.getEvent_type().equalsIgnoreCase("created")) {
+                System.out.println("Create Payload");
+                reservationPersistenceService.saveReservation(reservationPayload);
+            } else if (reservationPayload.getEvent_type().equalsIgnoreCase("updated")) {
+                System.out.println("Update Payload");
+                reservationPersistenceService.saveReservation(reservationPayload);
+            } else if (reservationPayload.getEvent_type().equalsIgnoreCase("deleted")) {
+                System.out.println("Delete Payload");
+                reservationPersistenceService.deleteReservation(reservationPayload);
+            }
         } catch (Exception e) {
             logger.error("Exception", e);
         }

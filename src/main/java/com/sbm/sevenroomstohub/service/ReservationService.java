@@ -1,5 +1,6 @@
 package com.sbm.sevenroomstohub.service;
 
+import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -48,6 +49,14 @@ public interface ReservationService {
      * @return the entity.
      */
     Optional<ReservationDTO> findOne(Long id);
+
+    /**
+     * Get the "id" reservation.
+     *
+     * @param resvId the Business id of the entity.
+     * @return the entity.
+     */
+    Optional<ReservationDTO> findByResvId(String resvId);
 
     /**
      * Delete the "id" reservation.

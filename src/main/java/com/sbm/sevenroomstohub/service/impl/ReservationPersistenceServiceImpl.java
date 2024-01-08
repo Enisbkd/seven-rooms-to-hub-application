@@ -2,6 +2,7 @@ package com.sbm.sevenroomstohub.service.impl;
 
 import static com.sbm.sevenroomstohub.service.dto.ResPosTicketDTO.buildResposticketDto;
 
+import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.service.*;
@@ -32,7 +33,7 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
     ResPosticketsItemService resPosticketsItemService;
 
     @Override
-    public ReservationDTO saveReservation(ReservationPayload reservationPayload) throws NoSuchFieldException, IllegalAccessException {
+    public ReservationDTO saveReservation(ReservationPayload reservationPayload) {
         ReservationDTO reservationDTO = reservationPayload.getReservation();
         ReservationDTO savedReservation = reservationService.save(reservationDTO);
 
@@ -58,16 +59,26 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
         }
 
         Set<ResPosTicketPayload> resPosTickets = reservationPayload.getResPosTickets();
-
-        for (ResPosTicketPayload resPosTicket : resPosTickets) {
-            resPosTicket.setReservation(savedReservation);
-            ResPosTicketDTO resPosTicketDTO = buildResposticketDto(resPosTicket);
-            ResPosTicketDTO savedResPosTicket = resPosTicketService.save(resPosTicketDTO);
-            for (ResPosticketsItemDTO resPosticketsItemDTO : resPosTicket.getResPosticketsItems()) {
-                resPosticketsItemDTO.setResPosTicket(savedResPosTicket);
-                resPosticketsItemService.save(resPosticketsItemDTO);
+        if (resPosTickets != null) {
+            for (ResPosTicketPayload resPosTicket : resPosTickets) {
+                resPosTicket.setReservation(savedReservation);
+                ResPosTicketDTO resPosTicketDTO = buildResposticketDto(resPosTicket);
+                ResPosTicketDTO savedResPosTicket = resPosTicketService.save(resPosTicketDTO);
+                for (ResPosticketsItemDTO resPosticketsItemDTO : resPosTicket.getResPosticketsItems()) {
+                    resPosticketsItemDTO.setResPosTicket(savedResPosTicket);
+                    resPosticketsItemService.save(resPosticketsItemDTO);
+                }
             }
         }
         return reservationDTO;
+    }
+
+    @Override
+    public void deleteReservation(ReservationPayload reservationPayload) {
+        String resvId = reservationPayload.getReservation().getResvId();
+        Long id = reservationService.findByResvId(resvId).get().getId();
+        if (id != null) {
+            reservationService.delete(id);
+        }
     }
 }

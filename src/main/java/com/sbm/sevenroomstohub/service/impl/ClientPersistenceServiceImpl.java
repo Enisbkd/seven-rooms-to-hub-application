@@ -83,4 +83,13 @@ public class ClientPersistenceServiceImpl implements ClientPersistenceService {
     public ClientDTO updateClient(ClientPayload clientPayload) {
         return null;
     }
+
+    @Override
+    public void deleteClient(ClientPayload clientPayload) {
+        String clientId = clientPayload.getClient().getClientId();
+        Long id = clientService.findByClientId(clientId).get().getId();
+        if (clientService.findByClientId(clientId).isPresent()) {
+            clientService.delete(id);
+        }
+    }
 }
