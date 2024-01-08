@@ -3,7 +3,10 @@ package com.sbm.sevenroomstohub.service.impl;
 import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.service.*;
 import com.sbm.sevenroomstohub.service.dto.*;
+import com.sbm.sevenroomstohub.utils.TimestampUtils;
 import com.sbm.sevenroomstohub.web.rest.UserResource;
+import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +39,29 @@ public class ClientPersistenceServiceImpl implements ClientPersistenceService {
     @Autowired
     BookingNameService bookingNameService;
 
+    public ClientDTO upsertClient(ClientPayload clientPayload) {
+        String clientId = clientPayload.getClient().getClientId();
+        Optional<ClientDTO> clientFromDB = clientService.findByClientId(clientId);
+        if (clientFromDB.isPresent()) {
+            String updateDateInDB = clientFromDB.get().getUpdatedDate();
+            String updateDateInPayload = clientPayload.getClient().getUpdatedDate();
+
+            Timestamp timestampInDB = TimestampUtils.convertStringToTimestamp(updateDateInDB);
+            Timestamp timestampInPayload = TimestampUtils.convertStringToTimestamp(updateDateInPayload);
+            if (timestampInDB != null) {
+                if (timestampInDB.before(timestampInPayload)) {
+                    updateClient(clientPayload, clientFromDB);
+                }
+            }
+        } else saveClient(clientPayload);
+        return null;
+    }
+
     public ClientDTO saveClient(ClientPayload clientPayload) {
         ClientDTO clientDTO = clientPayload.getClient();
         if (clientDTO.getClientPhoto() != null) {
-            ClientPhotoDTO clientPhotoDTO = clientPhotoService.save(clientDTO.getClientPhoto());
-            clientDTO.setClientPhoto(clientPhotoDTO);
+            ClientPhotoDTO savedClientPhoto = clientPhotoService.save(clientDTO.getClientPhoto());
+            clientDTO.setClientPhoto(savedClientPhoto);
         }
         if (clientDTO.getClientVenueStats() != null) {
             ClientVenueStatsDTO clientVenueStatsSaved = clientVenueStatsService.save(clientDTO.getClientVenueStats());
@@ -80,16 +101,23 @@ public class ClientPersistenceServiceImpl implements ClientPersistenceService {
         return clientDTO;
     }
 
-    public ClientDTO updateClient(ClientPayload clientPayload) {
+    public ClientDTO updateClient(ClientPayload clientPayload, ClientDTO clientFromDB) {
+        ClientDTO clientDTO = clientPayload.getClient();
+        if (clientDTO.getClientPhoto() != null) {
+            ClientPhotoDTO savedClientPhoto = clientPhotoService.save(clientDTO.getClientPhoto());
+            clientDTO.setClientPhoto(savedClientPhoto);
+        }
         return null;
     }
 
     @Override
     public void deleteClient(ClientPayload clientPayload) {
         String clientId = clientPayload.getClient().getClientId();
-        Long id = clientService.findByClientId(clientId).get().getId();
         if (clientService.findByClientId(clientId).isPresent()) {
-            clientService.delete(id);
+            Long id = clientService.findByClientId(clientId).get().getId();
+            if (clientService.findByClientId(clientId).isPresent()) {
+                clientService.delete(id);
+            }
         }
     }
 }

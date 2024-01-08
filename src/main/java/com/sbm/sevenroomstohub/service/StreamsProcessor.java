@@ -3,7 +3,6 @@ package com.sbm.sevenroomstohub.service;
 import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.serdes.CustomSerdes;
-import com.sbm.sevenroomstohub.web.rest.UserResource;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -52,15 +51,13 @@ public class StreamsProcessor {
 
     private void clientsProcessor(ClientPayload clientPayload) {
         try {
-            if (clientPayload.getEvent_type().equalsIgnoreCase("created")) {
-                System.out.println("Create Payload");
-                clientPersistenceService.saveClient(clientPayload);
-            } else if (clientPayload.getEvent_type().equalsIgnoreCase("updated")) {
-                System.out.println("Update Payload");
-                clientPersistenceService.updateClient(clientPayload);
-            } else if (clientPayload.getEvent_type().equalsIgnoreCase("deleted")) {
-                System.out.println("Delete Payload");
-                clientPersistenceService.deleteClient(clientPayload);
+            switch (clientPayload.getEvent_type()) {
+                case "created", "updated":
+                    clientPersistenceService.saveClient(clientPayload);
+                    break;
+                case "deleted":
+                    clientPersistenceService.deleteClient(clientPayload);
+                    break;
             }
             logger.info(clientPayload.toString());
         } catch (Exception e) {
@@ -70,18 +67,16 @@ public class StreamsProcessor {
 
     private void reservationsProcessor(ReservationPayload reservationPayload) {
         try {
-            if (reservationPayload.getEvent_type().equalsIgnoreCase("created")) {
-                System.out.println("Create Payload");
-                reservationPersistenceService.saveReservation(reservationPayload);
-            } else if (reservationPayload.getEvent_type().equalsIgnoreCase("updated")) {
-                System.out.println("Update Payload");
-                reservationPersistenceService.saveReservation(reservationPayload);
-            } else if (reservationPayload.getEvent_type().equalsIgnoreCase("deleted")) {
-                System.out.println("Delete Payload");
-                reservationPersistenceService.deleteReservation(reservationPayload);
+            switch (reservationPayload.getEvent_type()) {
+                case "created", "updated":
+                    reservationPersistenceService.saveReservation(reservationPayload);
+                    break;
+                case "deleted":
+                    reservationPersistenceService.deleteReservation(reservationPayload);
+                    break;
             }
         } catch (Exception e) {
-            logger.error("Exception", e);
+            logger.error(e.getMessage(), e.getClass());
         }
     }
 }

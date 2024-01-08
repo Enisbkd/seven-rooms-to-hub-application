@@ -2,7 +2,6 @@ package com.sbm.sevenroomstohub.service.impl;
 
 import static com.sbm.sevenroomstohub.service.dto.ResPosTicketDTO.buildResposticketDto;
 
-import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.service.*;
@@ -76,9 +75,11 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
     @Override
     public void deleteReservation(ReservationPayload reservationPayload) {
         String resvId = reservationPayload.getReservation().getResvId();
-        Long id = reservationService.findByResvId(resvId).get().getId();
-        if (id != null) {
-            reservationService.delete(id);
+        if (reservationService.findByResvId(resvId).isPresent()) {
+            Long id = reservationService.findByResvId(resvId).get().getId();
+            if (id != null) {
+                reservationService.delete(id);
+            }
         }
     }
 }
