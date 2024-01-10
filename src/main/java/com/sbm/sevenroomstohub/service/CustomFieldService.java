@@ -55,4 +55,6 @@ public interface CustomFieldService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    void deleteCustomFieldsByClientId(Long clientId);
 }

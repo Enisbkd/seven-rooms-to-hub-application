@@ -76,6 +76,9 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
         JsonNode customFieldsNode = clientEntity.get("custom_fields");
         if (customFieldsNode != null) {
             Set<CustomFieldDTO> customFields = objectMapper.convertValue(customFieldsNode, new TypeReference<Set<CustomFieldDTO>>() {});
+            for (CustomFieldDTO customFieldDTO : customFields) {
+                customFieldDTO.setClient(clientPayload.getClient());
+            }
             clientPayload.setCustomFields(customFields);
         }
     }
@@ -84,6 +87,9 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
         JsonNode clientTagsNode = clientEntity.get("client_tags");
         if (clientTagsNode != null) {
             Set<ClientTagDTO> clientTags = objectMapper.convertValue(clientTagsNode, new TypeReference<Set<ClientTagDTO>>() {});
+            for (ClientTagDTO clientTagDTO : clientTags) {
+                clientTagDTO.setClient(clientPayload.getClient());
+            }
             clientPayload.setClientTags(clientTags);
         }
     }
@@ -122,6 +128,9 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
         JsonNode memberGroupsNode = clientEntity.get("member_groups");
         if (memberGroupsNode != null) {
             Set<MemberGroupDTO> memberGroups = objectMapper.convertValue(memberGroupsNode, new TypeReference<Set<MemberGroupDTO>>() {});
+            for (MemberGroupDTO memberGroupDTO : memberGroups) {
+                memberGroupDTO.setClient(clientPayload.getClient());
+            }
             clientPayload.setMemberGroups(memberGroups);
         }
     }
@@ -146,6 +155,9 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
                 Set<String> bookedByNames = objectMapper.convertValue(bookedByNamesNode, new TypeReference<Set<String>>() {});
                 for (String name : bookedByNames) {
                     bookingNameDTOS.add(new BookingNameDTO(name));
+                }
+                for (BookingNameDTO bookingNameDTO : bookingNameDTOS) {
+                    bookingNameDTO.setClientVenueStats(clientVenueStats);
                 }
                 clientPayload.setBookingNames(bookingNameDTOS);
             }

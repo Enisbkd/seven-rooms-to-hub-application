@@ -1,6 +1,7 @@
 package com.sbm.sevenroomstohub.service.impl;
 
 import com.sbm.sevenroomstohub.domain.Client;
+import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.repository.ClientRepository;
 import com.sbm.sevenroomstohub.service.ClientService;
 import com.sbm.sevenroomstohub.service.dto.ClientDTO;

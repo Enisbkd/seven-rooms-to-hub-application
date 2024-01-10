@@ -32,6 +32,7 @@ public class Client implements Serializable {
 
     @Column(name = "client_id")
     @JsonProperty("id")
+    //id 7 rooms
     private String clientId;
 
     @Column(name = "created_date")
@@ -272,7 +273,7 @@ public class Client implements Serializable {
     @JsonProperty("custom_fields")
     private Set<CustomField> customFields = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
     @JsonProperty("client_tags")

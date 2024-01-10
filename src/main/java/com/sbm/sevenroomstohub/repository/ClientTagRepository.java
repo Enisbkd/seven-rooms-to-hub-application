@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ClientTagRepository extends JpaRepository<ClientTag, Long> {}
+public interface ClientTagRepository extends JpaRepository<ClientTag, Long> {
+    void deleteAllByClient_Id();
+}

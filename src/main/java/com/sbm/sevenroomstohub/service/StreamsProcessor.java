@@ -53,13 +53,12 @@ public class StreamsProcessor {
         try {
             switch (clientPayload.getEvent_type()) {
                 case "created", "updated":
-                    clientPersistenceService.saveClient(clientPayload);
+                    clientPersistenceService.upsertClient(clientPayload);
                     break;
                 case "deleted":
                     clientPersistenceService.deleteClient(clientPayload);
                     break;
             }
-            logger.info(clientPayload.toString());
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());
         }
