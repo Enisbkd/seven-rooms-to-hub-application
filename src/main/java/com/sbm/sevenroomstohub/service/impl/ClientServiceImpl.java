@@ -41,6 +41,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client save(ClientPayload clientPayload) {
+        log.debug("Request to save Client : {}", clientPayload.getClient());
+        Client client = clientPayload.getClient();
+        client = clientRepository.save(client);
+        return client;
+    }
+
+    @Override
     public ClientDTO update(ClientDTO clientDTO) {
         log.debug("Request to update Client : {}", clientDTO);
         Client client = clientMapper.toEntity(clientDTO);
@@ -79,9 +87,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ClientDTO> findByClientId(String clientId) {
+    public Optional<Client> findByClientId(String clientId) {
         log.debug("Request to get Client by Id : {}", clientId);
-        return clientRepository.findByClientId(clientId).map(clientMapper::toDto);
+        return clientRepository.findByClientId(clientId);
     }
 
     @Override

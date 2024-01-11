@@ -68,7 +68,7 @@ public class StreamsProcessor {
         try {
             switch (reservationPayload.getEvent_type()) {
                 case "created", "updated":
-                    reservationPersistenceService.saveReservation(reservationPayload);
+                    reservationPersistenceService.upsertReservation(reservationPayload);
                     break;
                 case "deleted":
                     reservationPersistenceService.deleteReservation(reservationPayload);

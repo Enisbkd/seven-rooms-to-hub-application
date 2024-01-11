@@ -7,9 +7,11 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
 
 /**
  * A ResPosTicket.
@@ -95,10 +97,11 @@ public class ResPosTicket implements Serializable {
     @Column(name = "tech_comment")
     private String techComment;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resPosTicket")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resPosTicket", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "resPosTicket" }, allowSetters = true)
     @JsonProperty("items")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<ResPosticketsItem> resPosticketsItems = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -388,13 +391,11 @@ public class ResPosTicket implements Serializable {
 
     public ResPosTicket addResPosticketsItem(ResPosticketsItem resPosticketsItem) {
         this.resPosticketsItems.add(resPosticketsItem);
-        resPosticketsItem.setResPosTicket(this);
         return this;
     }
 
     public ResPosTicket removeResPosticketsItem(ResPosticketsItem resPosticketsItem) {
         this.resPosticketsItems.remove(resPosticketsItem);
-        resPosticketsItem.setResPosTicket(null);
         return this;
     }
 
@@ -415,19 +416,61 @@ public class ResPosTicket implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof ResPosTicket)) {
-            return false;
-        }
-        return getId() != null && getId().equals(((ResPosTicket) o).getId());
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResPosTicket that = (ResPosTicket) o;
+        return (
+            Objects.equals(id, that.id) &&
+            Objects.equals(status, that.status) &&
+            Objects.equals(adminFee, that.adminFee) &&
+            Objects.equals(code, that.code) &&
+            Objects.equals(tableNo, that.tableNo) &&
+            Objects.equals(tax, that.tax) &&
+            Objects.equals(businessId, that.businessId) &&
+            Objects.equals(ticketId, that.ticketId) &&
+            Objects.equals(localPosticketId, that.localPosticketId) &&
+            Objects.equals(employeeName, that.employeeName) &&
+            Objects.equals(total, that.total) &&
+            Objects.equals(subtotal, that.subtotal) &&
+            Objects.equals(startTime, that.startTime) &&
+            Objects.equals(serviceCharge, that.serviceCharge) &&
+            Objects.equals(endtime, that.endtime) &&
+            Objects.equals(techLineage, that.techLineage) &&
+            Objects.equals(techCreatedDate, that.techCreatedDate) &&
+            Objects.equals(techUpdatedDate, that.techUpdatedDate) &&
+            Objects.equals(techMapping, that.techMapping) &&
+            Objects.equals(techComment, that.techComment) &&
+            Objects.equals(resPosticketsItems, that.resPosticketsItems) &&
+            Objects.equals(reservation, that.reservation)
+        );
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hash(
+            id,
+            status,
+            adminFee,
+            code,
+            tableNo,
+            tax,
+            businessId,
+            ticketId,
+            localPosticketId,
+            employeeName,
+            total,
+            subtotal,
+            startTime,
+            serviceCharge,
+            endtime,
+            techLineage,
+            techCreatedDate,
+            techUpdatedDate,
+            techMapping,
+            techComment,
+            resPosticketsItems,
+            reservation
+        );
     }
 
     @Override

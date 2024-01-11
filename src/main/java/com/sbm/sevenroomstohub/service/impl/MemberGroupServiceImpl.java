@@ -87,10 +87,4 @@ public class MemberGroupServiceImpl implements MemberGroupService {
         log.debug("Request to delete MemberGroup : {}", id);
         memberGroupRepository.deleteById(id);
     }
-
-    @Override
-    public void deleteMemberGroupsByClientId(Long clientId) {
-        Query query = entityManager.createQuery("Delete from MemberGroup where client.id=" + clientId);
-        query.executeUpdate();
-    }
 }

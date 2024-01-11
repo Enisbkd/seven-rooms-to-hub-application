@@ -16,16 +16,12 @@ package com.sbm.sevenroomstohub.serdes;
  * limitations under the License.
  */
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.domain.ResPosTicket;
-import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
-import com.sbm.sevenroomstohub.service.dto.*;
+import com.sbm.sevenroomstohub.domain.Client;
+import com.sbm.sevenroomstohub.domain.Reservation;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.slf4j.Logger;
@@ -74,19 +70,14 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
                 com.sbm.sevenroomstohub.domain.ReservationPayload.class
             );
 
-            ReservationDTO reservation = reservationPayload.getReservation();
+            Reservation reservation = reservationPayload.getReservation();
 
             JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
 
             if (resEntity != null) {
                 userDeserializer(resEntity, reservation);
-                tagsDeserializer(resEntity, reservationPayload);
-                posTicketsDeserializer(resEntity, reservationPayload);
-                customFieldsDeserializer(resEntity, reservationPayload);
-                tableNumbersDeserializer(resEntity, reservationPayload);
-
                 String clientId = String.valueOf(resEntity.get("client_id"));
-                ClientDTO client = new ClientDTO();
+                Client client = new Client();
                 client.setClientId(clientId);
                 reservation.setClient(client);
 
@@ -98,46 +89,7 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
         }
     }
 
-    private void tableNumbersDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
-        JsonNode tableNumbersNode = resEntity.get("table_numbers");
-        if (tableNumbersNode != null) {
-            Set<ResTableDTO> tableNumbers = objectMapper.convertValue(tableNumbersNode, new TypeReference<Set<ResTableDTO>>() {});
-            reservationPayload.setResTables(tableNumbers);
-        }
-    }
-
-    private void customFieldsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
-        JsonNode customFieldsNode = resEntity.get("custom_fields");
-        if (customFieldsNode != null) {
-            Set<ResCustomFieldDTO> customFields = objectMapper.convertValue(
-                customFieldsNode,
-                new TypeReference<Set<ResCustomFieldDTO>>() {}
-            );
-            reservationPayload.setResCustomFields(customFields);
-        }
-    }
-
-    private void posTicketsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload)
-        throws IOException {
-        JsonNode posTicketsNode = resEntity.get("pos_tickets");
-        if (posTicketsNode != null) {
-            Set<ResPosTicketPayload> posTickets = objectMapper.convertValue(
-                posTicketsNode,
-                new TypeReference<Set<ResPosTicketPayload>>() {}
-            );
-            reservationPayload.setResPosTickets(posTickets);
-        }
-    }
-
-    private void tagsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
-        JsonNode tagsNode = resEntity.get("tags");
-        if (tagsNode != null) {
-            Set<ResTagDTO> tags = objectMapper.convertValue(tagsNode, new TypeReference<Set<ResTagDTO>>() {});
-            reservationPayload.setResTags(tags);
-        }
-    }
-
-    private static void userDeserializer(JsonNode resEntity, ReservationDTO reservation) {
+    private static void userDeserializer(JsonNode resEntity, Reservation reservation) {
         JsonNode userNode = resEntity.get("user");
         if (userNode != null) {
             String userId = String.valueOf(userNode.get("id"));

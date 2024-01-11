@@ -54,8 +54,6 @@ public interface ClientTagService {
      */
     Optional<ClientTagDTO> findOne(Long id);
 
-    void deleteTagsByClientId(Long clientId);
-
     /**
      * Delete the "id" clientTag.
      *

@@ -55,6 +55,4 @@ public interface MemberGroupService {
      * @param id the id of the entity.
      */
     void delete(Long id);
-
-    void deleteMemberGroupsByClientId(Long clientId);
 }

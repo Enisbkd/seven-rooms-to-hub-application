@@ -86,12 +86,6 @@ public class ClientTagServiceImpl implements ClientTagService {
     }
 
     @Override
-    public void deleteTagsByClientId(Long clientId) {
-        Query query = entityManager.createQuery("Delete from ClientTag where client.id=" + clientId);
-        query.executeUpdate();
-    }
-
-    @Override
     public void delete(Long id) {
         log.debug("Request to delete ClientTag : {}", id);
         clientTagRepository.deleteById(id);

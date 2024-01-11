@@ -145,9 +145,10 @@ public class ClientVenueStats implements Serializable {
     @Column(name = "tech_comment")
     private String techComment;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clientVenueStats")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clientVenueStats", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "clientVenueStats" }, allowSetters = true)
+    @JsonProperty("booked_by_names")
     private Set<BookingName> bookingNames = new HashSet<>();
 
     @JsonIgnoreProperties(
