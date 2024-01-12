@@ -96,4 +96,10 @@ public class ReservationServiceImpl implements ReservationService {
         log.debug("Request to delete Reservation : {}", id);
         reservationRepository.deleteById(id);
     }
+
+    @Override
+    public void delete(Reservation reservation) {
+        log.debug("Request to delete Reservation : {}", reservation.getId());
+        reservationRepository.deleteById(reservation.getId());
+    }
 }

@@ -2,7 +2,6 @@ package com.sbm.sevenroomstohub.service.impl;
 
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
-import com.sbm.sevenroomstohub.repository.ReservationRepository;
 import com.sbm.sevenroomstohub.service.ReservationPersistenceService;
 import com.sbm.sevenroomstohub.service.ReservationService;
 import com.sbm.sevenroomstohub.utils.TimestampUtils;
@@ -20,9 +19,6 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
 
     @Autowired
     ReservationService reservationService;
-
-    @Autowired
-    ReservationRepository reservationRepository;
 
     public void upsertReservation(ReservationPayload reservationPayload) {
         Reservation payloadRes = reservationPayload.getReservation();
@@ -42,7 +38,7 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
                 if (timestampInPayload.after(timestampInDB)) {
                     logger.debug("Payload record is newer, updating Entity ...");
                     reservationPayload.getReservation().setId(resvFromDB.get().getId());
-                    reservationRepository.delete(resvFromDB.get());
+                    reservationService.delete(resvFromDB.get());
                     reservationService.save(reservationPayload);
                 }
             }

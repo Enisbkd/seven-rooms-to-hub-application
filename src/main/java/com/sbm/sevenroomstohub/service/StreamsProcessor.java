@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -51,13 +52,15 @@ public class StreamsProcessor {
 
     private void clientsProcessor(ClientPayload clientPayload) {
         try {
-            switch (clientPayload.getEvent_type()) {
-                case "created", "updated":
-                    clientPersistenceService.upsertClient(clientPayload);
-                    break;
-                case "deleted":
-                    clientPersistenceService.deleteClient(clientPayload);
-                    break;
+            if (clientPayload != null) {
+                switch (clientPayload.getEvent_type()) {
+                    case "created", "updated":
+                        clientPersistenceService.upsertClient(clientPayload);
+                        break;
+                    case "deleted":
+                        clientPersistenceService.deleteClient(clientPayload);
+                        break;
+                }
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());
@@ -66,13 +69,15 @@ public class StreamsProcessor {
 
     private void reservationsProcessor(ReservationPayload reservationPayload) {
         try {
-            switch (reservationPayload.getEvent_type()) {
-                case "created", "updated":
-                    reservationPersistenceService.upsertReservation(reservationPayload);
-                    break;
-                case "deleted":
-                    reservationPersistenceService.deleteReservation(reservationPayload);
-                    break;
+            if (reservationPayload != null) {
+                switch (reservationPayload.getEvent_type()) {
+                    case "created", "updated":
+                        reservationPersistenceService.upsertReservation(reservationPayload);
+                        break;
+                    case "deleted":
+                        reservationPersistenceService.deleteReservation(reservationPayload);
+                        break;
+                }
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());

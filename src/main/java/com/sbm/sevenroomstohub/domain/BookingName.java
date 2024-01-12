@@ -71,7 +71,17 @@ public class BookingName implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public BookingName(Long id, String name, ClientVenueStats clientVenueStats) {
+        this.id = id;
+        this.name = name;
+        this.clientVenueStats = clientVenueStats;
+    }
+
+    public BookingName(String name) {
+        this.name = name;
+    }
+
+    public BookingName() {}
 
     @Override
     public boolean equals(Object o) {

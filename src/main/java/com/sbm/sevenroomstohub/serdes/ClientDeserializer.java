@@ -3,6 +3,7 @@ package com.sbm.sevenroomstohub.serdes;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sbm.sevenroomstohub.BadEntityTypeException;
 import com.sbm.sevenroomstohub.domain.BookingName;
 import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.ClientPhoto;
@@ -13,12 +14,13 @@ import java.util.Map;
 import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.apache.kafka.streams.errors.StreamsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPayload> {
 
-    private static final Logger log = LoggerFactory.getLogger(JacksonDeserializer.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientDeserializer.class);
     private final ObjectMapper objectMapper;
     Class<ClientPayload> cls;
     private JacksonDeserializerConfig config;
@@ -53,21 +55,25 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
             return null;
         }
         try {
-            com.sbm.sevenroomstohub.domain.ClientPayload clientPayload = objectMapper.readValue(
-                bytes,
-                com.sbm.sevenroomstohub.domain.ClientPayload.class
-            );
-            Client client = clientPayload.getClient();
+            String entityType = String.valueOf(objectMapper.readTree(bytes).get("entity_type"));
+            if (entityType.contains("client")) {
+                com.sbm.sevenroomstohub.domain.ClientPayload clientPayload = objectMapper.readValue(
+                    bytes,
+                    com.sbm.sevenroomstohub.domain.ClientPayload.class
+                );
+                Client client = clientPayload.getClient();
 
-            JsonNode clientEntity = objectMapper.readTree(bytes).get("entity");
-            if (clientEntity != null) {
-                userDeserializer(clientEntity, client);
-                photoCropDeserializer(clientEntity, client);
-                venueStatsDeserializer(clientEntity, client);
-                clientPayload.setClient(client);
-            }
-            return (ClientPayload) clientPayload;
-        } catch (IOException e) {
+                JsonNode clientEntity = objectMapper.readTree(bytes).get("entity");
+                if (clientEntity != null) {
+                    userDeserializer(clientEntity, client);
+                    photoCropDeserializer(clientEntity, client);
+                    venueStatsDeserializer(clientEntity, client);
+                    clientPayload.setClient(client);
+                }
+
+                return (ClientPayload) clientPayload;
+            } else throw new BadEntityTypeException("Entity type is not client , expected : Client , found :" + entityType);
+        } catch (IOException | BadEntityTypeException | StreamsException e) {
             throw new SerializationException(e);
         }
     }
@@ -110,6 +116,20 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
             JsonNode clientVenueStatsNode = venue_stats.get(venue_field_name);
 
             ClientVenueStats clientVenueStats = objectMapper.convertValue(clientVenueStatsNode, ClientVenueStats.class);
+
+            JsonNode bookedByNamesNode = clientVenueStatsNode.get("booked_by_names");
+
+            if (bookedByNamesNode != null) {
+                Set<BookingName> bookingNameS = new HashSet<>();
+                Set<String> bookedByNames = objectMapper.convertValue(bookedByNamesNode, new TypeReference<Set<String>>() {});
+                for (String name : bookedByNames) {
+                    bookingNameS.add(new BookingName(name));
+                }
+                for (BookingName bookingName : bookingNameS) {
+                    bookingName.setClientVenueStats(clientVenueStats);
+                }
+                clientVenueStats.setBookingNames(bookingNameS);
+            }
 
             client.setClientVenueStats(clientVenueStats);
         }

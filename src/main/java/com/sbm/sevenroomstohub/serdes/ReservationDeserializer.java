@@ -16,20 +16,21 @@ package com.sbm.sevenroomstohub.serdes;
  * limitations under the License.
  */
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sbm.sevenroomstohub.BadEntityTypeException;
 import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import java.io.IOException;
 import java.util.Map;
-import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ReservationDeserializer<ReservationPayload> implements Deserializer<ReservationPayload> {
 
-    private static final Logger log = LoggerFactory.getLogger(JacksonDeserializer.class);
+    private static final Logger log = LoggerFactory.getLogger(ReservationDeserializer.class);
     private final ObjectMapper objectMapper;
     Class<ReservationPayload> cls;
     private JacksonDeserializerConfig config;
@@ -63,30 +64,32 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
         if (null == bytes) {
             return null;
         }
-
         try {
-            com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload = objectMapper.readValue(
-                bytes,
-                com.sbm.sevenroomstohub.domain.ReservationPayload.class
-            );
+            String entityType = String.valueOf(objectMapper.readTree(bytes).get("entity_type"));
+            if (entityType.contains("reservation")) {
+                com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload = objectMapper.readValue(
+                    bytes,
+                    com.sbm.sevenroomstohub.domain.ReservationPayload.class
+                );
+                Reservation reservation = reservationPayload.getReservation();
 
-            Reservation reservation = reservationPayload.getReservation();
+                JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
 
-            JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
+                if (resEntity != null) {
+                    userDeserializer(resEntity, reservation);
+                    String clientId = String.valueOf(resEntity.get("client_id"));
+                    Client client = new Client();
+                    client.setClientId(clientId);
+                    reservation.setClient(client);
 
-            if (resEntity != null) {
-                userDeserializer(resEntity, reservation);
-                String clientId = String.valueOf(resEntity.get("client_id"));
-                Client client = new Client();
-                client.setClientId(clientId);
-                reservation.setClient(client);
-
-                reservationPayload.setReservation(reservation);
-            }
-            return (ReservationPayload) reservationPayload;
-        } catch (IOException e) {
-            throw new SerializationException(e);
+                    reservationPayload.setReservation(reservation);
+                }
+                return (ReservationPayload) reservationPayload;
+            } else throw new BadEntityTypeException("Entity type is not Reservation , expected : Reservation , found :" + entityType);
+        } catch (IOException | BadEntityTypeException e) {
+            log.debug(String.valueOf(e));
         }
+        return null;
     }
 
     private static void userDeserializer(JsonNode resEntity, Reservation reservation) {

@@ -162,9 +162,18 @@ spring:
     bootstrap-servers: localhost:9092
     properties:
       application.id: dev2_7rooms
+      key.serializer: org.apache.kafka.common.serialization.StringSerializer
+      value.serializer: org.apache.kafka.common.serialization.StringSerializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key.serializer: org.apache.kafka.common.serialization.StringSerializer
+      value.serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
     streams:
       client-topic: data-7rooms-client
       reservation-topic: data-7rooms-reservation
+      dead-letters-topic: data-7rooms-deadletters
 #      security.protocol: SASL_SSL
 #      sasl.mechanism: SCRAM-SHA-512
 #      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="dev2_bsed1_7rooms" password="1G3aDJ7zR8Q";
