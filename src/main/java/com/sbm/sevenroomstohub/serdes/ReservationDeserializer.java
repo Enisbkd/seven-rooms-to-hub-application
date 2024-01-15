@@ -16,12 +16,11 @@ package com.sbm.sevenroomstohub.serdes;
  * limitations under the License.
  */
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.BadEntityTypeException;
 import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.Reservation;
+import com.sbm.sevenroomstohub.exceptions.BadEntityTypeException;
 import java.io.IOException;
 import java.util.Map;
 import org.apache.kafka.common.serialization.Deserializer;

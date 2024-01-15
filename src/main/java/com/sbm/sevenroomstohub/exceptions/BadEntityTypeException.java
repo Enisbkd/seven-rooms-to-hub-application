@@ -1,4 +1,4 @@
-package com.sbm.sevenroomstohub;
+package com.sbm.sevenroomstohub.exceptions;
 
 public class BadEntityTypeException extends RuntimeException {
 

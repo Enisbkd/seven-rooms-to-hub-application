@@ -5,7 +5,7 @@ import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.service.ReservationPersistenceService;
 import com.sbm.sevenroomstohub.service.ReservationService;
 import com.sbm.sevenroomstohub.utils.TimestampUtils;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,22 +28,20 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
             String updateDateInDB = resvFromDB.get().getUpdated();
             String updateDateInPayload = reservationPayload.getReservation().getUpdated();
 
-            Timestamp timestampInDB = TimestampUtils.convertStringToTimestamp(updateDateInDB);
-            Timestamp timestampInPayload = TimestampUtils.convertStringToTimestamp(updateDateInPayload);
+            LocalDateTime timestampInDB = TimestampUtils.convertStringToTimestamp(updateDateInDB);
+            LocalDateTime timestampInPayload = TimestampUtils.convertStringToTimestamp(updateDateInPayload);
 
             logger.debug("updateDate in DB : " + timestampInDB);
             logger.debug("updateDate in Payload : " + timestampInPayload);
 
-            if (timestampInPayload != null) {
-                if (timestampInPayload.after(timestampInDB)) {
-                    logger.debug("Payload record is newer, updating Entity ...");
-                    reservationPayload.getReservation().setId(resvFromDB.get().getId());
-                    reservationService.delete(resvFromDB.get());
-                    reservationService.save(reservationPayload);
-                }
+            if (timestampInPayload.isAfter(timestampInDB)) {
+                logger.debug("Payload record is newer, updating Entity having id : " + resvFromDB.get().getId());
+                reservationPayload.getReservation().setId(resvFromDB.get().getId());
+                reservationService.delete(resvFromDB.get());
+                reservationService.save(reservationPayload);
             }
         } else {
-            logger.debug("Reservation with externalID " + resvId + "does not exist in DB , Inserting ...");
+            logger.debug("Reservation with externalID " + resvId + " does not exist in DB , Inserting ...");
             reservationService.save(reservationPayload);
         }
     }

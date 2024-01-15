@@ -6,6 +6,7 @@ import com.sbm.sevenroomstohub.service.ClientPersistenceService;
 import com.sbm.sevenroomstohub.service.ClientService;
 import com.sbm.sevenroomstohub.utils.TimestampUtils;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,23 +28,21 @@ public class ClientPersistenceServiceImpl implements ClientPersistenceService {
             String updateDateInDB = clientFromDB.get().getUpdatedDate();
             String updateDateInPayload = clientPayload.getClient().getUpdatedDate();
 
-            Timestamp timestampInDB = TimestampUtils.convertStringToTimestamp(updateDateInDB);
-            Timestamp timestampInPayload = TimestampUtils.convertStringToTimestamp(updateDateInPayload);
+            LocalDateTime timestampInDB = TimestampUtils.convertStringToTimestamp(updateDateInDB);
+            LocalDateTime timestampInPayload = TimestampUtils.convertStringToTimestamp(updateDateInPayload);
 
             logger.debug("updateDate in DB : " + timestampInDB);
             logger.debug("updateDate in Payload : " + timestampInPayload);
 
-            if (timestampInPayload != null) {
-                if (timestampInPayload.after(timestampInDB)) {
-                    logger.debug("Payload record is newer, updating Entity ...");
-                    clientPayload.getClient().setId(clientFromDB.get().getId());
-                    clientService.save(clientPayload);
-                } else {
-                    logger.debug("Payload record is older, Aborting update ...");
-                }
+            if (timestampInPayload.isAfter(timestampInDB)) {
+                logger.debug("Payload record is newer, updating Entity having id : " + clientFromDB.get().getId());
+                clientPayload.getClient().setId(clientFromDB.get().getId());
+                clientService.save(clientPayload);
+            } else {
+                logger.debug("Payload record is older, Aborting update ...");
             }
         } else {
-            logger.debug("Client with externalID " + clientId + "does not exist in DB , Inserting ...");
+            logger.debug("Client with externalID " + clientId + " does not exist in DB , Inserting ...");
             clientService.save(clientPayload);
         }
     }

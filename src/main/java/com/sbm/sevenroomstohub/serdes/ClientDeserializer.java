@@ -3,15 +3,14 @@ package com.sbm.sevenroomstohub.serdes;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.BadEntityTypeException;
 import com.sbm.sevenroomstohub.domain.BookingName;
 import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.ClientPhoto;
 import com.sbm.sevenroomstohub.domain.ClientVenueStats;
+import com.sbm.sevenroomstohub.exceptions.BadEntityTypeException;
+import com.sbm.sevenroomstohub.exceptions.BadEventTypeException;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.streams.errors.StreamsException;
@@ -24,6 +23,8 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
     private final ObjectMapper objectMapper;
     Class<ClientPayload> cls;
     private JacksonDeserializerConfig config;
+
+    List<String> eventTypes = Arrays.asList(new String[] { "created", "updated", "deleted" });
 
     public ClientDeserializer() {
         this.objectMapper = new ObjectMapper();
@@ -56,24 +57,30 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
         }
         try {
             String entityType = String.valueOf(objectMapper.readTree(bytes).get("entity_type"));
+            String eventType = String.valueOf(objectMapper.readTree(bytes).get("event_type"));
+            eventType = eventType.replace("\"", "");
             if (entityType.contains("client")) {
-                com.sbm.sevenroomstohub.domain.ClientPayload clientPayload = objectMapper.readValue(
-                    bytes,
-                    com.sbm.sevenroomstohub.domain.ClientPayload.class
+                if (eventTypes.contains(eventType)) {
+                    com.sbm.sevenroomstohub.domain.ClientPayload clientPayload = objectMapper.readValue(
+                        bytes,
+                        com.sbm.sevenroomstohub.domain.ClientPayload.class
+                    );
+                    Client client = clientPayload.getClient();
+
+                    JsonNode clientEntity = objectMapper.readTree(bytes).get("entity");
+                    if (clientEntity != null) {
+                        userDeserializer(clientEntity, client);
+                        photoCropDeserializer(clientEntity, client);
+                        venueStatsDeserializer(clientEntity, client);
+                        clientPayload.setClient(client);
+                    }
+
+                    return (ClientPayload) clientPayload;
+                } else throw new BadEventTypeException(
+                    "Event type is not recognized , accepted values : " + eventTypes.toString() + " found :" + eventType
                 );
-                Client client = clientPayload.getClient();
-
-                JsonNode clientEntity = objectMapper.readTree(bytes).get("entity");
-                if (clientEntity != null) {
-                    userDeserializer(clientEntity, client);
-                    photoCropDeserializer(clientEntity, client);
-                    venueStatsDeserializer(clientEntity, client);
-                    clientPayload.setClient(client);
-                }
-
-                return (ClientPayload) clientPayload;
             } else throw new BadEntityTypeException("Entity type is not client , expected : Client , found :" + entityType);
-        } catch (IOException | BadEntityTypeException | StreamsException e) {
+        } catch (IOException | BadEntityTypeException | StreamsException | BadEventTypeException e) {
             throw new SerializationException(e);
         }
     }

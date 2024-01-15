@@ -9,7 +9,7 @@
     <!--
         Added the entity CustomField.
     -->
-    <changeSet id="20231220092307-1" author="anis">
+    <changeSet id="20231220092307-1" author="jhipster">
         <createTable tableName="custom_field">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>

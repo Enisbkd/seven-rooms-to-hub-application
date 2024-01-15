@@ -9,7 +9,7 @@
     <!--
         Added the entity MemberGroup.
     -->
-    <changeSet id="20231220092107-1" author="anis">
+    <changeSet id="20231220092107-1" author="jhipster">
         <createTable tableName="member_group">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>

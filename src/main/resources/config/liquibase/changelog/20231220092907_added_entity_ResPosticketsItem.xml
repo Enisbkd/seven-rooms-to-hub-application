@@ -9,7 +9,7 @@
     <!--
         Added the entity ResPosticketsItem.
     -->
-    <changeSet id="20231220092907-1" author="anis">
+    <changeSet id="20231220092907-1" author="jhipster">
         <createTable tableName="res_postickets_item">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>

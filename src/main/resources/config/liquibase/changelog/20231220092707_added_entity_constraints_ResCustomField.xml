@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity ResCustomField.
     -->
-    <changeSet id="20231220092707-2" author="anis">
+    <changeSet id="20231220092707-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="reservation_id"
                                  baseTableName="res_custom_field"

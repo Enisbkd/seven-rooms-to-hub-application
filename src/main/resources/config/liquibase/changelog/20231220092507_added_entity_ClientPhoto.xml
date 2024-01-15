@@ -9,7 +9,7 @@
     <!--
         Added the entity ClientPhoto.
     -->
-    <changeSet id="20231220092507-1" author="anis">
+    <changeSet id="20231220092507-1" author="jhipster">
         <createTable tableName="client_photo">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>

@@ -9,7 +9,7 @@
     <!--
         Added the entity ClientTag.
     -->
-    <changeSet id="20231220092207-1" author="anis">
+    <changeSet id="20231220092207-1" author="jhipster">
         <createTable tableName="client_tag">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>

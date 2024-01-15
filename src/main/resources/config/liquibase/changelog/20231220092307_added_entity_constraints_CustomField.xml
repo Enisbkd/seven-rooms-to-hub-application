@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity CustomField.
     -->
-    <changeSet id="20231220092307-2" author="anis">
+    <changeSet id="20231220092307-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="client_id"
                                  baseTableName="custom_field"

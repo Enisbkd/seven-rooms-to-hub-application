@@ -9,7 +9,7 @@
     <!--
         Added the entity ResCustomField.
     -->
-    <changeSet id="20231220092707-1" author="anis">
+    <changeSet id="20231220092707-1" author="jhipster">
         <createTable tableName="res_custom_field">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>

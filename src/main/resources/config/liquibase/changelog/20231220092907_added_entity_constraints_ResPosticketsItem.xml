@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity ResPosticketsItem.
     -->
-    <changeSet id="20231220092907-2" author="anis">
+    <changeSet id="20231220092907-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="res_pos_ticket_id"
                                  baseTableName="res_postickets_item"
