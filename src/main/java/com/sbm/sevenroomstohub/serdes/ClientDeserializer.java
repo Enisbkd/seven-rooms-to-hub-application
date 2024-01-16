@@ -57,8 +57,7 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
         }
         try {
             String entityType = String.valueOf(objectMapper.readTree(bytes).get("entity_type"));
-            String eventType = String.valueOf(objectMapper.readTree(bytes).get("event_type"));
-            eventType = eventType.replace("\"", "");
+            String eventType = String.valueOf(objectMapper.readTree(bytes).get("event_type")).replace("\"", "");
             if (entityType.contains("client")) {
                 if (eventTypes.contains(eventType)) {
                     com.sbm.sevenroomstohub.domain.ClientPayload clientPayload = objectMapper.readValue(

@@ -22,6 +22,8 @@ import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.exceptions.BadEntityTypeException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.slf4j.Logger;
@@ -33,6 +35,8 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
     private final ObjectMapper objectMapper;
     Class<ReservationPayload> cls;
     private JacksonDeserializerConfig config;
+
+    List<String> eventTypes = Arrays.asList(new String[] { "created", "updated", "deleted" });
 
     public ReservationDeserializer() {
         this.objectMapper = new ObjectMapper();
@@ -65,25 +69,28 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
         }
         try {
             String entityType = String.valueOf(objectMapper.readTree(bytes).get("entity_type"));
+            String eventType = String.valueOf(objectMapper.readTree(bytes).get("event_type")).replace("\"", "");
             if (entityType.contains("reservation")) {
-                com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload = objectMapper.readValue(
-                    bytes,
-                    com.sbm.sevenroomstohub.domain.ReservationPayload.class
-                );
-                Reservation reservation = reservationPayload.getReservation();
+                if (eventTypes.contains(eventType)) {
+                    com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload = objectMapper.readValue(
+                        bytes,
+                        com.sbm.sevenroomstohub.domain.ReservationPayload.class
+                    );
+                    Reservation reservation = reservationPayload.getReservation();
 
-                JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
+                    JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
 
-                if (resEntity != null) {
-                    userDeserializer(resEntity, reservation);
-                    String clientId = String.valueOf(resEntity.get("client_id"));
-                    Client client = new Client();
-                    client.setClientId(clientId);
-                    reservation.setClient(client);
+                    if (resEntity != null) {
+                        userDeserializer(resEntity, reservation);
+                        String clientId = String.valueOf(resEntity.get("client_id"));
+                        Client client = new Client();
+                        client.setClientId(clientId);
+                        reservation.setClient(client);
 
-                    reservationPayload.setReservation(reservation);
+                        reservationPayload.setReservation(reservation);
+                    }
+                    return (ReservationPayload) reservationPayload;
                 }
-                return (ReservationPayload) reservationPayload;
             } else throw new BadEntityTypeException("Entity type is not Reservation , expected : Reservation , found :" + entityType);
         } catch (IOException | BadEntityTypeException e) {
             log.debug(String.valueOf(e));
