@@ -21,7 +21,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 @Configuration
 public class SecurityJwtConfiguration {
 
-    @Value("${jhipster.security.authentication.jwt.base64-secret}")
+    @Value("${springApp.security.authentication.jwt.base64-secret}")
     private String jwtKey;
 
     @Bean

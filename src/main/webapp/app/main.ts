@@ -21,8 +21,6 @@ import TranslationService from '@/locale/translation.service';
 
 const pinia = createPinia();
 
-// jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
-
 initBootstrapVue(Vue);
 
 Vue.configureCompat({
@@ -152,7 +150,6 @@ const app = createApp({
 
     provide('translationService', translationService);
     provide('accountService', accountService);
-    // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here
   },
 });
 

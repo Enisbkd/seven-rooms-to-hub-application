@@ -6,7 +6,7 @@
 
     <logger name="com.sbm.sevenroomstohub" level="INFO"/>
 
-    <logger name="tech.jhipster" level="WARN"/>
+    <logger name="tech" level="WARN"/>
 
     <!-- https://www.testcontainers.org/supported_docker_environment/logging_config/ -->
     <logger name="org.testcontainers" level="INFO"/>

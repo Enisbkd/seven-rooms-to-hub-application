@@ -34,7 +34,7 @@ public class ClientVenueStatsResource {
 
     private static final String ENTITY_NAME = "clientVenueStats";
 
-    @Value("${jhipster.clientApp.name}")
+    @Value("${springApp.clientApp.name}")
     private String applicationName;
 
     private final ClientVenueStatsService clientVenueStatsService;

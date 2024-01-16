@@ -33,7 +33,7 @@ public class ResCustomFieldResource {
 
     private static final String ENTITY_NAME = "resCustomField";
 
-    @Value("${jhipster.clientApp.name}")
+    @Value("${springApp.clientApp.name}")
     private String applicationName;
 
     private final ResCustomFieldService resCustomFieldService;

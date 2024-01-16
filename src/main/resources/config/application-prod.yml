@@ -16,7 +16,7 @@
 logging:
   level:
     ROOT: INFO
-    tech.jhipster: INFO
+    tech: INFO
     com.sbm.sevenroomstohub: INFO
 
 management:
@@ -78,12 +78,10 @@ server:
     min-response-size: 1024
 
 # ===================================================================
-# JHipster specific properties
-#
-# Full reference is available at: https://www.jhipster.tech/common-application-properties/
+# SpringApp specific properties
 # ===================================================================
 
-jhipster:
+springApp:
   http:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461
@@ -98,12 +96,12 @@ jhipster:
         # As this is the PRODUCTION configuration, you MUST change the default key, and store it securely:
         # - In the Consul configserver
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
-        # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
+        # - In the `SPRINGAPP_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
         base64-secret: YjNmMGYzMDc3NjRjMWM1MTg5NGZmZTU1MTk5ODAzMWUxMTc0Mzc2ZjRkODQzNWFlNTI2ZWI2NTMyZTQ1MjI5NjM0Zjk5YjQ4NGJkNjgxZTI1YjE1NmEyYzc1NzM1OTY2MDA3MWFiZmQ0YzJmMTFkY2ExOGZkYTU2YjI3Njg2NTA=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
-  mail: # specific JHipster mail property, for standard properties see MailProperties
+  mail: # specific Spring mail property, for standard properties see MailProperties
     base-url: http://my-server-url-to-change # Modify according to your server's URL
   logging:
     use-json-format: false # By default, logs are not in Json format
@@ -112,13 +110,4 @@ jhipster:
       host: localhost
       port: 5000
       ring-buffer-size: 512
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
 # application:

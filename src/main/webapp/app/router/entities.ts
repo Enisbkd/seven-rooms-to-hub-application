@@ -55,8 +55,6 @@ const ResTable = () => import('@/entities/res-table/res-table.vue');
 const ResTableUpdate = () => import('@/entities/res-table/res-table-update.vue');
 const ResTableDetails = () => import('@/entities/res-table/res-table-details.vue');
 
-// jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
-
 export default {
   path: '/',
   component: Entities,

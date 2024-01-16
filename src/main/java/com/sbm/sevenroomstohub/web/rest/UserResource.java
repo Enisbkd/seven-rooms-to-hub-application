@@ -7,6 +7,9 @@ import com.sbm.sevenroomstohub.security.AuthoritiesConstants;
 import com.sbm.sevenroomstohub.service.MailService;
 import com.sbm.sevenroomstohub.service.UserService;
 import com.sbm.sevenroomstohub.service.dto.AdminUserDTO;
+import com.sbm.sevenroomstohub.utils.HeaderUtil;
+import com.sbm.sevenroomstohub.utils.PaginationUtil;
+import com.sbm.sevenroomstohub.utils.ResponseUtil;
 import com.sbm.sevenroomstohub.web.rest.errors.BadRequestAlertException;
 import com.sbm.sevenroomstohub.web.rest.errors.EmailAlreadyUsedException;
 import com.sbm.sevenroomstohub.web.rest.errors.LoginAlreadyUsedException;
@@ -14,8 +17,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +33,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
-import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing users.
@@ -78,7 +80,7 @@ public class UserResource {
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
-    @Value("${jhipster.clientApp.name}")
+    @Value("${springApp.clientApp.name}")
     private String applicationName;
 
     private final UserService userService;
@@ -102,7 +104,7 @@ public class UserResource {
      *
      * @param userDTO the user to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws URISyntaxException       if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
