@@ -63,10 +63,30 @@
     <logger name="LiquibaseSchemaResolver" level="INFO"/>
     <!-- jhipster-needle-logback-add-log - JHipster will add a new log with level -->
 
+    <appender name="kafka-appender" class="com.sbm.sevenroomstohub.logs.KafkaLogbackAppender">
+        <BrokerList>localhost:9092</BrokerList>
+        <Topic>logs</Topic>
+        <SyncSend>false</SyncSend>
+
+<!--        <SecurityProtocol>SASL_PLAINTEXT</SecurityProtocol>-->
+<!--        <SaslKerberosServiceName>kafka</SaslKerberosServiceName>-->
+<!--        <ClientJaasConfPath>c:/work/jaas.conf</ClientJaasConfPath>-->
+<!--        <Kerb5ConfPath>c:/work/krb5.conf</Kerb5ConfPath>-->
+<!--        <saslMechanism>GSSAPI</saslMechanism>-->
+
+        <encoder>
+            <pattern>%date{yyyy-MM-dd'T'HH:mm:ss.SSS'Z', UTC+1} %-5p [%c{1}] %m</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
     <springProperty name="log.level" source="logging.level.root" defaultValue="INFO" />
     <root level="${log.level}">
         <appender-ref ref="CONSOLE" />
+        <appender-ref ref="kafka-appender"/>
     </root>
+
+
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
