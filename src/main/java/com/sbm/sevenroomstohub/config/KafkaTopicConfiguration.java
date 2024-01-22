@@ -15,6 +15,21 @@ public class KafkaTopicConfiguration {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
+    @Value(value = "${spring.kafka.topics.client-topic}")
+    private String clientsTopic;
+
+    @Value(value = "${spring.kafka.topics.reservation-topic}")
+    private String reservationsTopic;
+
+    @Value(value = "${spring.kafka.topics.client-dead-letters-topic}")
+    private String clientsDeadLettersTopic;
+
+    @Value(value = "${spring.kafka.topics.reservation-dead-letters-topic}")
+    private String reservationsDeadLettersTopic;
+
+    @Value(value = "${spring.kafka.topics.logs-topic}")
+    private String logsTopic;
+
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
@@ -24,16 +39,25 @@ public class KafkaTopicConfiguration {
 
     @Bean
     public NewTopic clientTopic() {
-        return new NewTopic("data-7rooms-client", 3, (short) 1);
+        return new NewTopic(clientsTopic, 3, (short) 1);
     }
 
     @Bean
     public NewTopic reservationTopic() {
-        return new NewTopic("data-7rooms-reservation", 3, (short) 1);
+        return new NewTopic(reservationsTopic, 3, (short) 1);
     }
 
     @Bean
-    public NewTopic deadLetterTopic() {
-        return new NewTopic("data-7rooms-deadletters", 3, (short) 1);
+    public NewTopic clientDeadLetterTopic() {
+        return new NewTopic(clientsDeadLettersTopic, 3, (short) 1);
+    }
+
+    public NewTopic reservationDeadLetterTopic() {
+        return new NewTopic(reservationsDeadLettersTopic, 3, (short) 1);
+    }
+
+    @Bean
+    public NewTopic logsTopic() {
+        return new NewTopic(logsTopic, 3, (short) 1);
     }
 }

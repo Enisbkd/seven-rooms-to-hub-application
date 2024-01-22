@@ -34,7 +34,7 @@ entity Client {
 	loyaltyTier String
 	marketingOptin Boolean
 	marketingOptints String
-    	marketingOptOutts String
+    marketingOptOutts String
 	hasBillingProfile Boolean
 	notes String
 	privateNotes String
@@ -53,8 +53,8 @@ entity Client {
 	birthdayAltDay Integer
 	userId String
 	userName String
-    	totalOrderCount Integer
-    	preferredLanguageCode String
+    totalOrderCount Integer
+    preferredLanguageCode String
 	techLineage String
 	techCreatedDate ZonedDateTime
 	techUpdatedDate ZonedDateTime
@@ -104,17 +104,17 @@ entity ClientVenueStats {
 	totalSpendLocal Double
 	totalSpendLocalPerVisit Double
 	totalVisits Integer
-    	grossTotal Double
-    	totalOrderCount Double
-    	totalOrderCancellations Double
+    grossTotal Double
+    totalOrderCount Double
+    totalOrderCancellations Double
 	totalOrderSpend Double
-    	grossOrderTotal Double
+    grossOrderTotal Double
 	totalOrderSpendLocal Double
 	lastOrderDate String
 	totalSpendperOrder Double
 	totalSpendLocalperOrder Double
 	venueId String
-    	venueMarketingOptin Boolean
+    venueMarketingOptin Boolean
 	venueMarketingOptints String
 	techLineage String
 	techCreatedDate ZonedDateTime
@@ -230,7 +230,7 @@ entity Reservation{
 	sourceClientId String
 	userId String
 	userName String
-    	accessPersistentId String
+    accessPersistentId String
 	techLineage String
 	techCreatedDate ZonedDateTime
 	techUpdatedDate ZonedDateTime

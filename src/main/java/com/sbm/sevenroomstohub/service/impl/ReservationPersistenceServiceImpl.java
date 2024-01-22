@@ -1,7 +1,9 @@
 package com.sbm.sevenroomstohub.service.impl;
 
+import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
+import com.sbm.sevenroomstohub.service.ClientService;
 import com.sbm.sevenroomstohub.service.ReservationPersistenceService;
 import com.sbm.sevenroomstohub.service.ReservationService;
 import com.sbm.sevenroomstohub.utils.TimestampUtils;
@@ -20,10 +22,17 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
     @Autowired
     ReservationService reservationService;
 
+    @Autowired
+    ClientService clientService;
+
     public void upsertReservation(ReservationPayload reservationPayload) {
         Reservation payloadRes = reservationPayload.getReservation();
         String resvId = payloadRes.getResvId();
         Optional<Reservation> resvFromDB = reservationService.findByResvId(resvId);
+
+        String clientId = payloadRes.getClient().getClientId();
+        Optional<Client> clientFromDB = clientService.findByClientId(clientId);
+
         if (resvFromDB.isPresent()) {
             String updateDateInDB = resvFromDB.get().getUpdated();
             String updateDateInPayload = reservationPayload.getReservation().getUpdated();
@@ -36,6 +45,13 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
 
             if (timestampInPayload.isAfter(timestampInDB)) {
                 logger.debug("Payload record is newer, updating Entity having id : " + resvFromDB.get().getId());
+
+                if (clientFromDB.isPresent()) {
+                    Long idFromDB = clientFromDB.get().getId();
+                    payloadRes.getClient().setId(idFromDB);
+                    clientService.delete(clientFromDB.get().getId());
+                }
+
                 reservationPayload.getReservation().setId(resvFromDB.get().getId());
                 reservationService.delete(resvFromDB.get());
                 reservationService.save(reservationPayload);

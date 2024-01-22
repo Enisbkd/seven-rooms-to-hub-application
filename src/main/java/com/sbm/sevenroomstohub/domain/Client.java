@@ -30,7 +30,7 @@ public class Client implements Serializable {
     @JsonIgnore
     private Long id;
 
-    @Column(name = "client_id")
+    @Column(name = "client_id", unique = true)
     @JsonProperty("id")
     //id 7 rooms
     private String clientId;

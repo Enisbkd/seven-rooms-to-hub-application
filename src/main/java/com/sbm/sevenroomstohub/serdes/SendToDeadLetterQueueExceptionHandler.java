@@ -15,7 +15,6 @@ public class SendToDeadLetterQueueExceptionHandler implements DeserializationExc
     private static final Logger log = LoggerFactory.getLogger(SendToDeadLetterQueueExceptionHandler.class);
 
     KafkaProducer dlqProducer;
-    String dlqTopic;
 
     @Override
     public DeserializationHandlerResponse handle(
@@ -37,8 +36,7 @@ public class SendToDeadLetterQueueExceptionHandler implements DeserializationExc
         String decodedValue = "";
         if (record.key() != null) decodedKey = new String(record.key(), StandardCharsets.UTF_8);
         if (record.value() != null) decodedValue = new String(record.value(), StandardCharsets.UTF_8);
-
-        dlqProducer.send(new ProducerRecord<>(dlqTopic, decodedKey, decodedValue));
+        dlqProducer.send(new ProducerRecord<>(record.topic() + "-deadletters", decodedKey, decodedValue));
 
         return DeserializationHandlerResponse.CONTINUE;
     }
@@ -46,6 +44,5 @@ public class SendToDeadLetterQueueExceptionHandler implements DeserializationExc
     @Override
     public void configure(final Map<String, ?> configs) {
         dlqProducer = new KafkaProducer(configs);
-        dlqTopic = "data-7rooms-deadletters";
     }
 }

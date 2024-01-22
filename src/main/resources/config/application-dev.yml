@@ -13,6 +13,8 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+env: dev
+
 logging:
   level:
     ROOT: DEBUG
@@ -30,6 +32,23 @@ spring:
   jackson:
     serialization:
       indent-output: true
+
+  kafka:
+    #    bootstrap-servers: bsed1-d1-ap-kafka4.sbm.interne:9092,bsed1-d2-ap-kafka5.sbm.interne:9092,bsed1-d3-ap-kafka6.sbm.interne:9092
+    bootstrap-servers: localhost:9092
+    properties:
+      application.id: dev2_7rooms
+      security.protocol: SASL_SSL
+      sasl.mechanism: SCRAM-SHA-512
+      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="dev2_bsed1_7rooms" password="1G3aDJ7zR8Q";
+
+    topics:
+      client-topic: data-7rooms-client
+      reservation-topic: data-7rooms-reservation
+      client-dead-letters-topic: data-7rooms-client-deadletters
+      reservation-dead-letters-topic: data-7rooms-reservation-deadletters
+      logs-topic: log-7rooms-app
+
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:oracle:thin:@localhost:1521:xe

@@ -5,6 +5,7 @@
     </div>
     <div class="col-md-9">
       <h1 class="display-4" v-text="t$('home.title')"></h1>
+      ?
       <p class="lead" v-text="t$('home.subtitle')"></p>
 
       <div>

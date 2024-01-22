@@ -24,10 +24,10 @@ public class StreamsProcessor {
     private static final Serde<ClientPayload> CLIENT_PAYLOAD_SERDE = CustomSerdes.ClientPayload();
     private static final Serde<ReservationPayload> RESERVATION_PAYLOAD_SERDE = CustomSerdes.ReservationPayload();
 
-    @Value(value = "${spring.kafka.streams.client-topic}")
+    @Value(value = "${spring.kafka.topics.client-topic}")
     private String clientTopic;
 
-    @Value(value = "${spring.kafka.streams.reservation-topic}")
+    @Value(value = "${spring.kafka.topics.reservation-topic}")
     private String reservationTopic;
 
     @Autowired

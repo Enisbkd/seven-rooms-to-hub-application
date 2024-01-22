@@ -21,11 +21,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.exceptions.BadEntityTypeException;
+import com.sbm.sevenroomstohub.exceptions.BadEventTypeException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.apache.kafka.streams.errors.StreamsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +72,7 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
         }
         try {
             String entityType = String.valueOf(objectMapper.readTree(bytes).get("entity_type"));
+            //Removing quotes because field is parsed with quotes.
             String eventType = String.valueOf(objectMapper.readTree(bytes).get("event_type")).replace("\"", "");
             if (entityType.contains("reservation")) {
                 if (eventTypes.contains(eventType)) {
@@ -82,20 +86,23 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
 
                     if (resEntity != null) {
                         userDeserializer(resEntity, reservation);
-                        String clientId = String.valueOf(resEntity.get("client_id"));
                         Client client = new Client();
+                        String clientId = String.valueOf(resEntity.get("client_id"));
                         client.setClientId(clientId);
+                        client = setClientFromResrvation(reservationPayload);
+
                         reservation.setClient(client);
 
                         reservationPayload.setReservation(reservation);
                     }
                     return (ReservationPayload) reservationPayload;
-                }
+                } else throw new BadEventTypeException(
+                    "Event type is not recognized , accepted values : " + eventTypes.toString() + " found :" + eventType
+                );
             } else throw new BadEntityTypeException("Entity type is not Reservation , expected : Reservation , found :" + entityType);
-        } catch (IOException | BadEntityTypeException e) {
-            log.debug(String.valueOf(e));
+        } catch (IOException | BadEntityTypeException | StreamsException | BadEventTypeException e) {
+            throw new SerializationException(e);
         }
-        return null;
     }
 
     private static void userDeserializer(JsonNode resEntity, Reservation reservation) {
@@ -106,6 +113,33 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
             reservation.setUserId(userId);
             reservation.setUserName(userName);
         }
+    }
+
+    private Client setClientFromResrvation(com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
+        Client client = new Client();
+        Reservation reservationEntity = reservationPayload.getReservation();
+        client.setUserId(reservationEntity.getUserId());
+        client.setUserName(reservationEntity.getUserName());
+        client.setLastname(reservationEntity.getLastname());
+        client.setFirstname(reservationEntity.getFirstname());
+        client.setEmail(reservationEntity.getEmail());
+        client.setPostalCode(reservationEntity.getPostalCode());
+        client.setVenueGroupId(reservationEntity.getVenueGroupId());
+        client.setReferenceCode(reservationEntity.getClientReferenceCode());
+        client.setAddress(reservationEntity.getAddress());
+        client.setAddress2(reservationEntity.getAddress2());
+        client.setPhoneNumber(reservationEntity.getPhoneNumber());
+        client.setLoyaltyId(reservationEntity.getLoyaltyId());
+        client.setLoyaltyRank(reservationEntity.getLoyaltyRank());
+        client.setLoyaltyTier(reservationEntity.getLoyaltyTier());
+        client.setCity(reservationEntity.getCity());
+        client.setCountry(reservationEntity.getCountry());
+        client.setState(reservationEntity.getState());
+        //        client.setVenueGroupId(reservationEntity.get);
+        //        client.setTags(reservationEntity.getResTags());
+        //        client.setCustomFields(reservationEntity.getResCustomFields());
+
+        return client;
     }
 
     @Override
