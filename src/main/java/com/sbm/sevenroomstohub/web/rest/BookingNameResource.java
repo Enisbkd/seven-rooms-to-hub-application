@@ -33,7 +33,7 @@ public class BookingNameResource {
 
     private static final String ENTITY_NAME = "bookingName";
 
-    @Value("${jhipster.clientApp.name}")
+    @Value("${common.clientApp.name}")
     private String applicationName;
 
     private final BookingNameService bookingNameService;

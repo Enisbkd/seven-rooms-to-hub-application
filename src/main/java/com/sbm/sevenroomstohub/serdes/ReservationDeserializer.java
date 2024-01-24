@@ -118,6 +118,7 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
     private Client setClientFromResrvation(com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
         Client client = new Client();
         Reservation reservationEntity = reservationPayload.getReservation();
+        client.setClientId(reservationEntity.getClient().getClientId());
         client.setUserId(reservationEntity.getUserId());
         client.setUserName(reservationEntity.getUserName());
         client.setLastname(reservationEntity.getLastname());
@@ -135,10 +136,6 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
         client.setCity(reservationEntity.getCity());
         client.setCountry(reservationEntity.getCountry());
         client.setState(reservationEntity.getState());
-        //        client.setVenueGroupId(reservationEntity.get);
-        //        client.setTags(reservationEntity.getResTags());
-        //        client.setCustomFields(reservationEntity.getResCustomFields());
-
         return client;
     }
 

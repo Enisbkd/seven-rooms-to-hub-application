@@ -33,7 +33,7 @@ public class ResTagResource {
 
     private static final String ENTITY_NAME = "resTag";
 
-    @Value("${jhipster.clientApp.name}")
+    @Value("${common.clientApp.name}")
     private String applicationName;
 
     private final ResTagService resTagService;

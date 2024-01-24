@@ -1,9 +1,3 @@
-<template>
-  <div class="ribbon" v-if="ribbonEnabled">
-    <a href="" v-text="t$('global.ribbon.' + ribbonEnv)"></a>
-  </div>
-</template>
-
 <script lang="ts" src="./ribbon.component.ts"></script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

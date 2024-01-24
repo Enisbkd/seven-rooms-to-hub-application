@@ -81,7 +81,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - /home/enis/Workspace/seven-rooms-to-hub-application/src/main/resources/config:/app/ressources/config
+      - /home/enis/Workspace/seven-rooms-to-hub-application/src/main/resources/config:/app/resources/config
     depends_on:
       - broker
       - db
