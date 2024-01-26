@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity ResTag.
     -->
-    <changeSet id="20231220093007-2" author="developer">
+    <changeSet id="20231220093007-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="reservation_id"
                                  baseTableName="res_tag"

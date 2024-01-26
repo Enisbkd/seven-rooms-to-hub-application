@@ -118,7 +118,6 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
     private Client setClientFromResrvation(com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
         Client client = new Client();
         Reservation reservationEntity = reservationPayload.getReservation();
-        client.setClientId(reservationEntity.getClient().getClientId());
         client.setUserId(reservationEntity.getUserId());
         client.setUserName(reservationEntity.getUserName());
         client.setLastname(reservationEntity.getLastname());
