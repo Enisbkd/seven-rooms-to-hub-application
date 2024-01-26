@@ -1,10 +1,8 @@
 /* tslint:disable max-line-length */
 import axios from 'axios';
 import sinon from 'sinon';
-import dayjs from 'dayjs';
 
 import ResPosTicketService from './res-pos-ticket.service';
-import { DATE_TIME_FORMAT } from '@/shared/composables/date-format';
 import { ResPosTicket } from '@/shared/model/res-pos-ticket.model';
 
 const error = {
@@ -28,44 +26,15 @@ describe('Service Tests', () => {
   describe('ResPosTicket Service', () => {
     let service: ResPosTicketService;
     let elemDefault;
-    let currentDate: Date;
 
     beforeEach(() => {
       service = new ResPosTicketService();
-      currentDate = new Date();
-      elemDefault = new ResPosTicket(
-        123,
-        'AAAAAAA',
-        0,
-        0,
-        'AAAAAAA',
-        0,
-        0,
-        0,
-        'AAAAAAA',
-        'AAAAAAA',
-        0,
-        0,
-        'AAAAAAA',
-        0,
-        'AAAAAAA',
-        'AAAAAAA',
-        currentDate,
-        currentDate,
-        'AAAAAAA',
-        'AAAAAAA',
-      );
+      elemDefault = new ResPosTicket(123, 'AAAAAAA', 0, 0, 'AAAAAAA', 0, 0, 0, 'AAAAAAA', 'AAAAAAA', 0, 0, 'AAAAAAA', 0, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
       it('should find an element', async () => {
-        const returnedFromService = Object.assign(
-          {
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-          },
-          elemDefault,
-        );
+        const returnedFromService = Object.assign({}, elemDefault);
         axiosStub.get.resolves({ data: returnedFromService });
 
         return service.find(123).then(res => {
@@ -87,18 +56,10 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 123,
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
           },
           elemDefault,
         );
-        const expected = Object.assign(
-          {
-            techCreatedDate: currentDate,
-            techUpdatedDate: currentDate,
-          },
-          returnedFromService,
-        );
+        const expected = Object.assign({}, returnedFromService);
 
         axiosStub.post.resolves({ data: returnedFromService });
         return service.create({}).then(res => {
@@ -134,22 +95,11 @@ describe('Service Tests', () => {
             startTime: 'BBBBBB',
             serviceCharge: 1,
             endtime: 'BBBBBB',
-            techLineage: 'BBBBBB',
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techMapping: 'BBBBBB',
-            techComment: 'BBBBBB',
           },
           elemDefault,
         );
 
-        const expected = Object.assign(
-          {
-            techCreatedDate: currentDate,
-            techUpdatedDate: currentDate,
-          },
-          returnedFromService,
-        );
+        const expected = Object.assign({}, returnedFromService);
         axiosStub.put.resolves({ data: returnedFromService });
 
         return service.update(expected).then(res => {
@@ -173,25 +123,17 @@ describe('Service Tests', () => {
           {
             status: 'BBBBBB',
             adminFee: 1,
-            code: 1,
-            employeeName: 'BBBBBB',
-            subtotal: 1,
-            serviceCharge: 1,
+            tableNo: 'BBBBBB',
+            businessId: 1,
+            ticketId: 1,
+            localPosticketId: 'BBBBBB',
             endtime: 'BBBBBB',
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
           },
           new ResPosTicket(),
         );
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
-        const expected = Object.assign(
-          {
-            techCreatedDate: currentDate,
-            techUpdatedDate: currentDate,
-          },
-          returnedFromService,
-        );
+        const expected = Object.assign({}, returnedFromService);
         axiosStub.patch.resolves({ data: returnedFromService });
 
         return service.partialUpdate(patchObject).then(res => {
@@ -227,21 +169,10 @@ describe('Service Tests', () => {
             startTime: 'BBBBBB',
             serviceCharge: 1,
             endtime: 'BBBBBB',
-            techLineage: 'BBBBBB',
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techMapping: 'BBBBBB',
-            techComment: 'BBBBBB',
           },
           elemDefault,
         );
-        const expected = Object.assign(
-          {
-            techCreatedDate: currentDate,
-            techUpdatedDate: currentDate,
-          },
-          returnedFromService,
-        );
+        const expected = Object.assign({}, returnedFromService);
         axiosStub.get.resolves([returnedFromService]);
         return service.retrieve({ sort: {}, page: 0, size: 10 }).then(res => {
           expect(res).toContainEqual(expected);

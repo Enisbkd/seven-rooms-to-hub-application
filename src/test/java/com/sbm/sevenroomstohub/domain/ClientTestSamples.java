@@ -57,10 +57,7 @@ public class ClientTestSamples {
             .userId("userId1")
             .userName("userName1")
             .totalOrderCount(1)
-            .preferredLanguageCode("preferredLanguageCode1")
-            .techLineage("techLineage1")
-            .techMapping("techMapping1")
-            .techComment("techComment1");
+            .preferredLanguageCode("preferredLanguageCode1");
     }
 
     public static Client getClientSample2() {
@@ -109,10 +106,7 @@ public class ClientTestSamples {
             .userId("userId2")
             .userName("userName2")
             .totalOrderCount(2)
-            .preferredLanguageCode("preferredLanguageCode2")
-            .techLineage("techLineage2")
-            .techMapping("techMapping2")
-            .techComment("techComment2");
+            .preferredLanguageCode("preferredLanguageCode2");
     }
 
     public static Client getClientRandomSampleGenerator() {
@@ -161,9 +155,6 @@ public class ClientTestSamples {
             .userId(UUID.randomUUID().toString())
             .userName(UUID.randomUUID().toString())
             .totalOrderCount(intCount.incrementAndGet())
-            .preferredLanguageCode(UUID.randomUUID().toString())
-            .techLineage(UUID.randomUUID().toString())
-            .techMapping(UUID.randomUUID().toString())
-            .techComment(UUID.randomUUID().toString());
+            .preferredLanguageCode(UUID.randomUUID().toString());
     }
 }

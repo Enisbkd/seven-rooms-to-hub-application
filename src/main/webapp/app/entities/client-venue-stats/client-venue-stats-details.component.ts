@@ -3,7 +3,6 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import ClientVenueStatsService from './client-venue-stats.service';
-import { useDateFormat } from '@/shared/composables';
 import { type IClientVenueStats } from '@/shared/model/client-venue-stats.model';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -11,7 +10,6 @@ export default defineComponent({
   compatConfig: { MODE: 3 },
   name: 'ClientVenueStatsDetails',
   setup() {
-    const dateFormat = useDateFormat();
     const clientVenueStatsService = inject('clientVenueStatsService', () => new ClientVenueStatsService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -35,7 +33,6 @@ export default defineComponent({
     }
 
     return {
-      ...dateFormat,
       alertService,
       clientVenueStats,
 

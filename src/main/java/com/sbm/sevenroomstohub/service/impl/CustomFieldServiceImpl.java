@@ -3,12 +3,8 @@ package com.sbm.sevenroomstohub.service.impl;
 import com.sbm.sevenroomstohub.domain.CustomField;
 import com.sbm.sevenroomstohub.repository.CustomFieldRepository;
 import com.sbm.sevenroomstohub.service.CustomFieldService;
-import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import com.sbm.sevenroomstohub.service.dto.CustomFieldDTO;
 import com.sbm.sevenroomstohub.service.mapper.CustomFieldMapper;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +25,6 @@ public class CustomFieldServiceImpl implements CustomFieldService {
     private final CustomFieldRepository customFieldRepository;
 
     private final CustomFieldMapper customFieldMapper;
-
-    @PersistenceContext
-    EntityManager entityManager;
 
     public CustomFieldServiceImpl(CustomFieldRepository customFieldRepository, CustomFieldMapper customFieldMapper) {
         this.customFieldRepository = customFieldRepository;
@@ -81,11 +74,6 @@ public class CustomFieldServiceImpl implements CustomFieldService {
     public Optional<CustomFieldDTO> findOne(Long id) {
         log.debug("Request to get CustomField : {}", id);
         return customFieldRepository.findById(id).map(customFieldMapper::toDto);
-    }
-
-    public void deleteCustomFieldsByClientId(Long clientId) {
-        Query query = entityManager.createQuery("Delete from CustomField where client.id=" + clientId);
-        query.executeUpdate();
     }
 
     @Override

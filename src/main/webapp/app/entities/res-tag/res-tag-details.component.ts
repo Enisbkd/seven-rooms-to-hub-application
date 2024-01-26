@@ -3,7 +3,6 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import ResTagService from './res-tag.service';
-import { useDateFormat } from '@/shared/composables';
 import { type IResTag } from '@/shared/model/res-tag.model';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -11,7 +10,6 @@ export default defineComponent({
   compatConfig: { MODE: 3 },
   name: 'ResTagDetails',
   setup() {
-    const dateFormat = useDateFormat();
     const resTagService = inject('resTagService', () => new ResTagService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -35,7 +33,6 @@ export default defineComponent({
     }
 
     return {
-      ...dateFormat,
       alertService,
       resTag,
 

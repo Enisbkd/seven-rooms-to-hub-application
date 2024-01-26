@@ -56,28 +56,11 @@
             <column name="endtime" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="tech_lineage" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="tech_created_date" type="${datetimeType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="tech_updated_date" type="${datetimeType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="tech_mapping" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="tech_comment" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="reservation_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="res_pos_ticket" columnName="tech_created_date" columnDataType="${datetimeType}"/>
-        <dropDefaultValue tableName="res_pos_ticket" columnName="tech_updated_date" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -111,11 +94,6 @@
             <column name="start_time" type="string"/>
             <column name="service_charge" type="numeric"/>
             <column name="endtime" type="string"/>
-            <column name="tech_lineage" type="string"/>
-            <column name="tech_created_date" type="date"/>
-            <column name="tech_updated_date" type="date"/>
-            <column name="tech_mapping" type="string"/>
-            <column name="tech_comment" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

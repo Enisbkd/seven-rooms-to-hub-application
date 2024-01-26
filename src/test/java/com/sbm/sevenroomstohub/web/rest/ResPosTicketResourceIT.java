@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.web.rest;
 
-import static com.sbm.sevenroomstohub.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -12,10 +11,6 @@ import com.sbm.sevenroomstohub.repository.ResPosTicketRepository;
 import com.sbm.sevenroomstohub.service.dto.ResPosTicketDTO;
 import com.sbm.sevenroomstohub.service.mapper.ResPosTicketMapper;
 import jakarta.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -78,21 +73,6 @@ class ResPosTicketResourceIT {
     private static final String DEFAULT_ENDTIME = "AAAAAAAAAA";
     private static final String UPDATED_ENDTIME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TECH_LINEAGE = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_LINEAGE = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_TECH_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_TECH_UPDATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_UPDATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final String DEFAULT_TECH_MAPPING = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_MAPPING = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TECH_COMMENT = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_COMMENT = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/res-pos-tickets";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -134,12 +114,7 @@ class ResPosTicketResourceIT {
             .subtotal(DEFAULT_SUBTOTAL)
             .startTime(DEFAULT_START_TIME)
             .serviceCharge(DEFAULT_SERVICE_CHARGE)
-            .endtime(DEFAULT_ENDTIME)
-            .techLineage(DEFAULT_TECH_LINEAGE)
-            .techCreatedDate(DEFAULT_TECH_CREATED_DATE)
-            .techUpdatedDate(DEFAULT_TECH_UPDATED_DATE)
-            .techMapping(DEFAULT_TECH_MAPPING)
-            .techComment(DEFAULT_TECH_COMMENT);
+            .endtime(DEFAULT_ENDTIME);
         return resPosTicket;
     }
 
@@ -164,12 +139,7 @@ class ResPosTicketResourceIT {
             .subtotal(UPDATED_SUBTOTAL)
             .startTime(UPDATED_START_TIME)
             .serviceCharge(UPDATED_SERVICE_CHARGE)
-            .endtime(UPDATED_ENDTIME)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .endtime(UPDATED_ENDTIME);
         return resPosTicket;
     }
 
@@ -208,11 +178,6 @@ class ResPosTicketResourceIT {
         assertThat(testResPosTicket.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testResPosTicket.getServiceCharge()).isEqualTo(DEFAULT_SERVICE_CHARGE);
         assertThat(testResPosTicket.getEndtime()).isEqualTo(DEFAULT_ENDTIME);
-        assertThat(testResPosTicket.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testResPosTicket.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testResPosTicket.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testResPosTicket.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testResPosTicket.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -261,12 +226,7 @@ class ResPosTicketResourceIT {
             .andExpect(jsonPath("$.[*].subtotal").value(hasItem(DEFAULT_SUBTOTAL.doubleValue())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME)))
             .andExpect(jsonPath("$.[*].serviceCharge").value(hasItem(DEFAULT_SERVICE_CHARGE.doubleValue())))
-            .andExpect(jsonPath("$.[*].endtime").value(hasItem(DEFAULT_ENDTIME)))
-            .andExpect(jsonPath("$.[*].techLineage").value(hasItem(DEFAULT_TECH_LINEAGE)))
-            .andExpect(jsonPath("$.[*].techCreatedDate").value(hasItem(sameInstant(DEFAULT_TECH_CREATED_DATE))))
-            .andExpect(jsonPath("$.[*].techUpdatedDate").value(hasItem(sameInstant(DEFAULT_TECH_UPDATED_DATE))))
-            .andExpect(jsonPath("$.[*].techMapping").value(hasItem(DEFAULT_TECH_MAPPING)))
-            .andExpect(jsonPath("$.[*].techComment").value(hasItem(DEFAULT_TECH_COMMENT)));
+            .andExpect(jsonPath("$.[*].endtime").value(hasItem(DEFAULT_ENDTIME)));
     }
 
     @Test
@@ -294,12 +254,7 @@ class ResPosTicketResourceIT {
             .andExpect(jsonPath("$.subtotal").value(DEFAULT_SUBTOTAL.doubleValue()))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME))
             .andExpect(jsonPath("$.serviceCharge").value(DEFAULT_SERVICE_CHARGE.doubleValue()))
-            .andExpect(jsonPath("$.endtime").value(DEFAULT_ENDTIME))
-            .andExpect(jsonPath("$.techLineage").value(DEFAULT_TECH_LINEAGE))
-            .andExpect(jsonPath("$.techCreatedDate").value(sameInstant(DEFAULT_TECH_CREATED_DATE)))
-            .andExpect(jsonPath("$.techUpdatedDate").value(sameInstant(DEFAULT_TECH_UPDATED_DATE)))
-            .andExpect(jsonPath("$.techMapping").value(DEFAULT_TECH_MAPPING))
-            .andExpect(jsonPath("$.techComment").value(DEFAULT_TECH_COMMENT));
+            .andExpect(jsonPath("$.endtime").value(DEFAULT_ENDTIME));
     }
 
     @Test
@@ -335,12 +290,7 @@ class ResPosTicketResourceIT {
             .subtotal(UPDATED_SUBTOTAL)
             .startTime(UPDATED_START_TIME)
             .serviceCharge(UPDATED_SERVICE_CHARGE)
-            .endtime(UPDATED_ENDTIME)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .endtime(UPDATED_ENDTIME);
         ResPosTicketDTO resPosTicketDTO = resPosTicketMapper.toDto(updatedResPosTicket);
 
         restResPosTicketMockMvc
@@ -369,11 +319,6 @@ class ResPosTicketResourceIT {
         assertThat(testResPosTicket.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testResPosTicket.getServiceCharge()).isEqualTo(UPDATED_SERVICE_CHARGE);
         assertThat(testResPosTicket.getEndtime()).isEqualTo(UPDATED_ENDTIME);
-        assertThat(testResPosTicket.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testResPosTicket.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testResPosTicket.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testResPosTicket.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testResPosTicket.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -464,10 +409,7 @@ class ResPosTicketResourceIT {
             .subtotal(UPDATED_SUBTOTAL)
             .startTime(UPDATED_START_TIME)
             .serviceCharge(UPDATED_SERVICE_CHARGE)
-            .endtime(UPDATED_ENDTIME)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING);
+            .endtime(UPDATED_ENDTIME);
 
         restResPosTicketMockMvc
             .perform(
@@ -495,11 +437,6 @@ class ResPosTicketResourceIT {
         assertThat(testResPosTicket.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testResPosTicket.getServiceCharge()).isEqualTo(UPDATED_SERVICE_CHARGE);
         assertThat(testResPosTicket.getEndtime()).isEqualTo(UPDATED_ENDTIME);
-        assertThat(testResPosTicket.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testResPosTicket.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testResPosTicket.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testResPosTicket.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testResPosTicket.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -528,12 +465,7 @@ class ResPosTicketResourceIT {
             .subtotal(UPDATED_SUBTOTAL)
             .startTime(UPDATED_START_TIME)
             .serviceCharge(UPDATED_SERVICE_CHARGE)
-            .endtime(UPDATED_ENDTIME)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .endtime(UPDATED_ENDTIME);
 
         restResPosTicketMockMvc
             .perform(
@@ -561,11 +493,6 @@ class ResPosTicketResourceIT {
         assertThat(testResPosTicket.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testResPosTicket.getServiceCharge()).isEqualTo(UPDATED_SERVICE_CHARGE);
         assertThat(testResPosTicket.getEndtime()).isEqualTo(UPDATED_ENDTIME);
-        assertThat(testResPosTicket.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testResPosTicket.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testResPosTicket.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testResPosTicket.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testResPosTicket.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test

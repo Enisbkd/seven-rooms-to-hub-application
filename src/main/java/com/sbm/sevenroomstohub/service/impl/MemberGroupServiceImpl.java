@@ -5,9 +5,6 @@ import com.sbm.sevenroomstohub.repository.MemberGroupRepository;
 import com.sbm.sevenroomstohub.service.MemberGroupService;
 import com.sbm.sevenroomstohub.service.dto.MemberGroupDTO;
 import com.sbm.sevenroomstohub.service.mapper.MemberGroupMapper;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +25,6 @@ public class MemberGroupServiceImpl implements MemberGroupService {
     private final MemberGroupRepository memberGroupRepository;
 
     private final MemberGroupMapper memberGroupMapper;
-
-    @PersistenceContext
-    EntityManager entityManager;
 
     public MemberGroupServiceImpl(MemberGroupRepository memberGroupRepository, MemberGroupMapper memberGroupMapper) {
         this.memberGroupRepository = memberGroupRepository;
@@ -86,11 +80,5 @@ public class MemberGroupServiceImpl implements MemberGroupService {
     public void delete(Long id) {
         log.debug("Request to delete MemberGroup : {}", id);
         memberGroupRepository.deleteById(id);
-    }
-
-    @Override
-    public void deleteMemberGroupsByClientId(Long clientId) {
-        Query query = entityManager.createQuery("Delete from MemberGroup where client.id=" + clientId);
-        query.executeUpdate();
     }
 }

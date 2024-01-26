@@ -1,14 +1,9 @@
 package com.sbm.sevenroomstohub.service;
 
-import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import com.sbm.sevenroomstohub.service.dto.ClientTagDTO;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service Interface for managing {@link com.sbm.sevenroomstohub.domain.ClientTag}.
@@ -53,8 +48,6 @@ public interface ClientTagService {
      * @return the entity.
      */
     Optional<ClientTagDTO> findOne(Long id);
-
-    void deleteTagsByClientId(Long clientId);
 
     /**
      * Delete the "id" clientTag.

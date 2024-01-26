@@ -1,10 +1,8 @@
 /* tslint:disable max-line-length */
 import axios from 'axios';
 import sinon from 'sinon';
-import dayjs from 'dayjs';
 
 import ClientService from './client.service';
-import { DATE_TIME_FORMAT } from '@/shared/composables/date-format';
 import { Client } from '@/shared/model/client.model';
 
 const error = {
@@ -28,11 +26,9 @@ describe('Service Tests', () => {
   describe('Client Service', () => {
     let service: ClientService;
     let elemDefault;
-    let currentDate: Date;
 
     beforeEach(() => {
       service = new ClientService();
-      currentDate = new Date();
       elemDefault = new Client(
         123,
         'AAAAAAA',
@@ -91,23 +87,12 @@ describe('Service Tests', () => {
         'AAAAAAA',
         0,
         'AAAAAAA',
-        'AAAAAAA',
-        currentDate,
-        currentDate,
-        'AAAAAAA',
-        'AAAAAAA',
       );
     });
 
     describe('Service methods', () => {
       it('should find an element', async () => {
-        const returnedFromService = Object.assign(
-          {
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-          },
-          elemDefault,
-        );
+        const returnedFromService = Object.assign({}, elemDefault);
         axiosStub.get.resolves({ data: returnedFromService });
 
         return service.find(123).then(res => {
@@ -129,18 +114,10 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 123,
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
           },
           elemDefault,
         );
-        const expected = Object.assign(
-          {
-            techCreatedDate: currentDate,
-            techUpdatedDate: currentDate,
-          },
-          returnedFromService,
-        );
+        const expected = Object.assign({}, returnedFromService);
 
         axiosStub.post.resolves({ data: returnedFromService });
         return service.create({}).then(res => {
@@ -218,22 +195,11 @@ describe('Service Tests', () => {
             userName: 'BBBBBB',
             totalOrderCount: 1,
             preferredLanguageCode: 'BBBBBB',
-            techLineage: 'BBBBBB',
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techMapping: 'BBBBBB',
-            techComment: 'BBBBBB',
           },
           elemDefault,
         );
 
-        const expected = Object.assign(
-          {
-            techCreatedDate: currentDate,
-            techUpdatedDate: currentDate,
-          },
-          returnedFromService,
-        );
+        const expected = Object.assign({}, returnedFromService);
         axiosStub.put.resolves({ data: returnedFromService });
 
         return service.update(expected).then(res => {
@@ -255,57 +221,47 @@ describe('Service Tests', () => {
       it('should partial update a Client', async () => {
         const patchObject = Object.assign(
           {
-            clientId: 'BBBBBB',
-            createdDate: 'BBBBBB',
-            updatedDate: 'BBBBBB',
-            deletedDate: 'BBBBBB',
             lastname: 'BBBBBB',
+            firstname: 'BBBBBB',
             gender: 'BBBBBB',
+            salutation: 'BBBBBB',
             title: 'BBBBBB',
             birthdayDay: 1,
-            birthdayMonth: 1,
-            anniversaryDay: 1,
+            birthdayAltMonth: 1,
             anniversaryMonth: 1,
+            company: 'BBBBBB',
             email: 'BBBBBB',
-            emailAlt: 'BBBBBB',
+            phoneNumber: 'BBBBBB',
             phoneNumberlocale: 'BBBBBB',
-            phoneNumberalt: 'BBBBBB',
             phoneNumberaltlocale: 'BBBBBB',
-            address2: 'BBBBBB',
+            address: 'BBBBBB',
+            city: 'BBBBBB',
+            postalCode: 'BBBBBB',
+            state: 'BBBBBB',
             isContactPrivate: true,
-            isOnetimeGuest: true,
-            status: 'BBBBBB',
-            loyaltyRank: 1,
+            loyaltyTier: 'BBBBBB',
             marketingOptin: true,
             marketingOptints: 'BBBBBB',
-            notes: 'BBBBBB',
+            hasBillingProfile: true,
+            privateNotes: 'BBBBBB',
             tags: 'BBBBBB',
-            totalVisits: 1,
-            totalCovers: 1,
             totalCancellations: 1,
-            totalNoShows: 1,
             totalSpend: 1,
             totalSpendPerCover: 1,
             totalspendPerVisit: 1,
+            avgRating: 1,
             referenceCode: 'BBBBBB',
+            externalUserId: 'BBBBBB',
             venueGroupId: 'BBBBBB',
             birthdayAltDay: 1,
-            userId: 'BBBBBB',
             userName: 'BBBBBB',
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techMapping: 'BBBBBB',
+            preferredLanguageCode: 'BBBBBB',
           },
           new Client(),
         );
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
-        const expected = Object.assign(
-          {
-            techCreatedDate: currentDate,
-            techUpdatedDate: currentDate,
-          },
-          returnedFromService,
-        );
+        const expected = Object.assign({}, returnedFromService);
         axiosStub.patch.resolves({ data: returnedFromService });
 
         return service.partialUpdate(patchObject).then(res => {
@@ -383,21 +339,10 @@ describe('Service Tests', () => {
             userName: 'BBBBBB',
             totalOrderCount: 1,
             preferredLanguageCode: 'BBBBBB',
-            techLineage: 'BBBBBB',
-            techCreatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techUpdatedDate: dayjs(currentDate).format(DATE_TIME_FORMAT),
-            techMapping: 'BBBBBB',
-            techComment: 'BBBBBB',
           },
           elemDefault,
         );
-        const expected = Object.assign(
-          {
-            techCreatedDate: currentDate,
-            techUpdatedDate: currentDate,
-          },
-          returnedFromService,
-        );
+        const expected = Object.assign({}, returnedFromService);
         axiosStub.get.resolves([returnedFromService]);
         return service.retrieve({ sort: {}, page: 0, size: 10 }).then(res => {
           expect(res).toContainEqual(expected);

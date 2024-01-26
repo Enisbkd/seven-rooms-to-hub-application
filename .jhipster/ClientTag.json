@@ -27,23 +27,7 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "techLineage",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "techCreatedDate",
-      "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldName": "techUpdatedDate",
-      "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldName": "techMapping",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "techComment",
+      "fieldName": "tagSearchQuery",
       "fieldType": "String"
     }
   ],
