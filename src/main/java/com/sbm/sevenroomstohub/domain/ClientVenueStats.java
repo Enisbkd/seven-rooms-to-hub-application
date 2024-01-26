@@ -130,30 +130,13 @@ public class ClientVenueStats implements Serializable {
     @JsonProperty("venue_marketing_optints")
     private String venueMarketingOptints;
 
-    @Column(name = "tech_lineage")
-    private String techLineage;
-
-    @Column(name = "tech_created_date")
-    private ZonedDateTime techCreatedDate;
-
-    @Column(name = "tech_updated_date")
-    private ZonedDateTime techUpdatedDate;
-
-    @Column(name = "tech_mapping")
-    private String techMapping;
-
-    @Column(name = "tech_comment")
-    private String techComment;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clientVenueStats")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clientVenueStats", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "clientVenueStats" }, allowSetters = true)
+    @JsonProperty("booked_by_names")
     private Set<BookingName> bookingNames = new HashSet<>();
 
-    @JsonIgnoreProperties(
-        value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "memberGroups" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "clientVenueStats")
     private Client client;
 
@@ -497,71 +480,6 @@ public class ClientVenueStats implements Serializable {
         this.venueMarketingOptints = venueMarketingOptints;
     }
 
-    public String getTechLineage() {
-        return this.techLineage;
-    }
-
-    public ClientVenueStats techLineage(String techLineage) {
-        this.setTechLineage(techLineage);
-        return this;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return this.techCreatedDate;
-    }
-
-    public ClientVenueStats techCreatedDate(ZonedDateTime techCreatedDate) {
-        this.setTechCreatedDate(techCreatedDate);
-        return this;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return this.techUpdatedDate;
-    }
-
-    public ClientVenueStats techUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.setTechUpdatedDate(techUpdatedDate);
-        return this;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return this.techMapping;
-    }
-
-    public ClientVenueStats techMapping(String techMapping) {
-        this.setTechMapping(techMapping);
-        return this;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return this.techComment;
-    }
-
-    public ClientVenueStats techComment(String techComment) {
-        this.setTechComment(techComment);
-        return this;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     public Set<BookingName> getBookingNames() {
         return this.bookingNames;
     }
@@ -661,11 +579,6 @@ public class ClientVenueStats implements Serializable {
             ", venueId='" + getVenueId() + "'" +
             ", venueMarketingOptin='" + getVenueMarketingOptin() + "'" +
             ", venueMarketingOptints='" + getVenueMarketingOptints() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
             "}";
     }
 }

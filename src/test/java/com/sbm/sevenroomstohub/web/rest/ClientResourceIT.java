@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.web.rest;
 
-import static com.sbm.sevenroomstohub.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -12,10 +11,6 @@ import com.sbm.sevenroomstohub.repository.ClientRepository;
 import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import com.sbm.sevenroomstohub.service.mapper.ClientMapper;
 import jakarta.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -204,21 +199,6 @@ class ClientResourceIT {
     private static final String DEFAULT_PREFERRED_LANGUAGE_CODE = "AAAAAAAAAA";
     private static final String UPDATED_PREFERRED_LANGUAGE_CODE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TECH_LINEAGE = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_LINEAGE = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_TECH_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_TECH_UPDATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_UPDATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final String DEFAULT_TECH_MAPPING = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_MAPPING = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TECH_COMMENT = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_COMMENT = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/clients";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -302,12 +282,7 @@ class ClientResourceIT {
             .userId(DEFAULT_USER_ID)
             .userName(DEFAULT_USER_NAME)
             .totalOrderCount(DEFAULT_TOTAL_ORDER_COUNT)
-            .preferredLanguageCode(DEFAULT_PREFERRED_LANGUAGE_CODE)
-            .techLineage(DEFAULT_TECH_LINEAGE)
-            .techCreatedDate(DEFAULT_TECH_CREATED_DATE)
-            .techUpdatedDate(DEFAULT_TECH_UPDATED_DATE)
-            .techMapping(DEFAULT_TECH_MAPPING)
-            .techComment(DEFAULT_TECH_COMMENT);
+            .preferredLanguageCode(DEFAULT_PREFERRED_LANGUAGE_CODE);
         return client;
     }
 
@@ -374,12 +349,7 @@ class ClientResourceIT {
             .userId(UPDATED_USER_ID)
             .userName(UPDATED_USER_NAME)
             .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
-            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE);
         return client;
     }
 
@@ -458,11 +428,6 @@ class ClientResourceIT {
         assertThat(testClient.getUserName()).isEqualTo(DEFAULT_USER_NAME);
         assertThat(testClient.getTotalOrderCount()).isEqualTo(DEFAULT_TOTAL_ORDER_COUNT);
         assertThat(testClient.getPreferredLanguageCode()).isEqualTo(DEFAULT_PREFERRED_LANGUAGE_CODE);
-        assertThat(testClient.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testClient.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testClient.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testClient.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testClient.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -551,12 +516,7 @@ class ClientResourceIT {
             .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID)))
             .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME)))
             .andExpect(jsonPath("$.[*].totalOrderCount").value(hasItem(DEFAULT_TOTAL_ORDER_COUNT)))
-            .andExpect(jsonPath("$.[*].preferredLanguageCode").value(hasItem(DEFAULT_PREFERRED_LANGUAGE_CODE)))
-            .andExpect(jsonPath("$.[*].techLineage").value(hasItem(DEFAULT_TECH_LINEAGE)))
-            .andExpect(jsonPath("$.[*].techCreatedDate").value(hasItem(sameInstant(DEFAULT_TECH_CREATED_DATE))))
-            .andExpect(jsonPath("$.[*].techUpdatedDate").value(hasItem(sameInstant(DEFAULT_TECH_UPDATED_DATE))))
-            .andExpect(jsonPath("$.[*].techMapping").value(hasItem(DEFAULT_TECH_MAPPING)))
-            .andExpect(jsonPath("$.[*].techComment").value(hasItem(DEFAULT_TECH_COMMENT)));
+            .andExpect(jsonPath("$.[*].preferredLanguageCode").value(hasItem(DEFAULT_PREFERRED_LANGUAGE_CODE)));
     }
 
     @Test
@@ -626,12 +586,7 @@ class ClientResourceIT {
             .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID))
             .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME))
             .andExpect(jsonPath("$.totalOrderCount").value(DEFAULT_TOTAL_ORDER_COUNT))
-            .andExpect(jsonPath("$.preferredLanguageCode").value(DEFAULT_PREFERRED_LANGUAGE_CODE))
-            .andExpect(jsonPath("$.techLineage").value(DEFAULT_TECH_LINEAGE))
-            .andExpect(jsonPath("$.techCreatedDate").value(sameInstant(DEFAULT_TECH_CREATED_DATE)))
-            .andExpect(jsonPath("$.techUpdatedDate").value(sameInstant(DEFAULT_TECH_UPDATED_DATE)))
-            .andExpect(jsonPath("$.techMapping").value(DEFAULT_TECH_MAPPING))
-            .andExpect(jsonPath("$.techComment").value(DEFAULT_TECH_COMMENT));
+            .andExpect(jsonPath("$.preferredLanguageCode").value(DEFAULT_PREFERRED_LANGUAGE_CODE));
     }
 
     @Test
@@ -709,12 +664,7 @@ class ClientResourceIT {
             .userId(UPDATED_USER_ID)
             .userName(UPDATED_USER_NAME)
             .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
-            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE);
         ClientDTO clientDTO = clientMapper.toDto(updatedClient);
 
         restClientMockMvc
@@ -785,11 +735,6 @@ class ClientResourceIT {
         assertThat(testClient.getUserName()).isEqualTo(UPDATED_USER_NAME);
         assertThat(testClient.getTotalOrderCount()).isEqualTo(UPDATED_TOTAL_ORDER_COUNT);
         assertThat(testClient.getPreferredLanguageCode()).isEqualTo(UPDATED_PREFERRED_LANGUAGE_CODE);
-        assertThat(testClient.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testClient.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testClient.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testClient.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testClient.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -903,8 +848,7 @@ class ClientResourceIT {
             .totalSpendPerCover(UPDATED_TOTAL_SPEND_PER_COVER)
             .referenceCode(UPDATED_REFERENCE_CODE)
             .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
-            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE)
-            .techComment(UPDATED_TECH_COMMENT);
+            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE);
 
         restClientMockMvc
             .perform(
@@ -974,11 +918,6 @@ class ClientResourceIT {
         assertThat(testClient.getUserName()).isEqualTo(DEFAULT_USER_NAME);
         assertThat(testClient.getTotalOrderCount()).isEqualTo(UPDATED_TOTAL_ORDER_COUNT);
         assertThat(testClient.getPreferredLanguageCode()).isEqualTo(UPDATED_PREFERRED_LANGUAGE_CODE);
-        assertThat(testClient.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testClient.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testClient.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testClient.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testClient.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -1049,12 +988,7 @@ class ClientResourceIT {
             .userId(UPDATED_USER_ID)
             .userName(UPDATED_USER_NAME)
             .totalOrderCount(UPDATED_TOTAL_ORDER_COUNT)
-            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .preferredLanguageCode(UPDATED_PREFERRED_LANGUAGE_CODE);
 
         restClientMockMvc
             .perform(
@@ -1124,11 +1058,6 @@ class ClientResourceIT {
         assertThat(testClient.getUserName()).isEqualTo(UPDATED_USER_NAME);
         assertThat(testClient.getTotalOrderCount()).isEqualTo(UPDATED_TOTAL_ORDER_COUNT);
         assertThat(testClient.getPreferredLanguageCode()).isEqualTo(UPDATED_PREFERRED_LANGUAGE_CODE);
-        assertThat(testClient.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testClient.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testClient.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testClient.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testClient.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test

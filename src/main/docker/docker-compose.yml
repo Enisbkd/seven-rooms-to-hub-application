@@ -30,6 +30,13 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_JMX_PORT: 9101
 
+  kafka-exporter:
+    container_name: kafka-exporter
+    image: danielqsj/kafka-exporter
+    command: ['--kafka.server=broker:9092']
+    ports:
+      - 9308:9308
+
   akhq:
     image: tchiotludo/akhq
     ports:
@@ -44,6 +51,7 @@ services:
 
   db:
     image: gvenzl/oracle-xe
+    container_name: oracle_db
     ports:
       - 1521:1521
     environment:
@@ -56,6 +64,30 @@ services:
       - 8000:8000
       - 9443:9443
     restart: always
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - portainer_data:/data
+    volumes:
+      - portainer_data:/data
+
+  portainer_agent:
+    image: portainer/agent:2.19.4
+    ports:
+      - 9001:9001
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+
+  7roomsapp:
+    image: sevenroomstohubapplication:0.0.1-SNAPSHOT
+    ports:
+      - 8080:8080
+    volumes:
+      - /home/enis/Workspace/seven-rooms-to-hub-application/src/main/resources/config:/app/resources/config
+    depends_on:
+      - broker
+      - db
+
+volumes:
+  portainer_data:
+
+networks:
+  network1:

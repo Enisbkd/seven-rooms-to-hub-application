@@ -16,27 +16,29 @@ package com.sbm.sevenroomstohub.serdes;
  * limitations under the License.
  */
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.domain.ResPosTicket;
-import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
-import com.sbm.sevenroomstohub.service.dto.*;
+import com.sbm.sevenroomstohub.domain.Reservation;
+import com.sbm.sevenroomstohub.exceptions.BadEntityTypeException;
+import com.sbm.sevenroomstohub.exceptions.BadEventTypeException;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.apache.kafka.streams.errors.StreamsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ReservationDeserializer<ReservationPayload> implements Deserializer<ReservationPayload> {
 
-    private static final Logger log = LoggerFactory.getLogger(JacksonDeserializer.class);
+    private static final Logger log = LoggerFactory.getLogger(ReservationDeserializer.class);
     private final ObjectMapper objectMapper;
     Class<ReservationPayload> cls;
     private JacksonDeserializerConfig config;
+
+    List<String> eventTypes = Arrays.asList(new String[] { "created", "updated", "deleted" });
 
     public ReservationDeserializer() {
         this.objectMapper = new ObjectMapper();
@@ -67,77 +69,35 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
         if (null == bytes) {
             return null;
         }
-
         try {
-            com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload = objectMapper.readValue(
-                bytes,
-                com.sbm.sevenroomstohub.domain.ReservationPayload.class
-            );
+            String entityType = String.valueOf(objectMapper.readTree(bytes).get("entity_type"));
+            //Removing quotes because field is parsed with quotes.
+            String eventType = String.valueOf(objectMapper.readTree(bytes).get("event_type")).replace("\"", "");
+            if (entityType.contains("reservation")) {
+                if (eventTypes.contains(eventType)) {
+                    com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload = objectMapper.readValue(
+                        bytes,
+                        com.sbm.sevenroomstohub.domain.ReservationPayload.class
+                    );
+                    Reservation reservation = reservationPayload.getReservation();
 
-            ReservationDTO reservation = reservationPayload.getReservation();
+                    JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
 
-            JsonNode resEntity = objectMapper.readTree(bytes).get("entity");
-
-            if (resEntity != null) {
-                userDeserializer(resEntity, reservation);
-                tagsDeserializer(resEntity, reservationPayload);
-                posTicketsDeserializer(resEntity, reservationPayload);
-                customFieldsDeserializer(resEntity, reservationPayload);
-                tableNumbersDeserializer(resEntity, reservationPayload);
-
-                String clientId = String.valueOf(resEntity.get("client_id"));
-                ClientDTO client = new ClientDTO();
-                client.setClientId(clientId);
-                reservation.setClient(client);
-
-                reservationPayload.setReservation(reservation);
-            }
-            return (ReservationPayload) reservationPayload;
-        } catch (IOException e) {
+                    if (resEntity != null) {
+                        userDeserializer(resEntity, reservation);
+                        reservationPayload.setReservation(reservation);
+                    }
+                    return (ReservationPayload) reservationPayload;
+                } else throw new BadEventTypeException(
+                    "Event type is not recognized , accepted values : " + eventTypes.toString() + " found :" + eventType
+                );
+            } else throw new BadEntityTypeException("Entity type is not Reservation , expected : Reservation , found :" + entityType);
+        } catch (IOException | BadEntityTypeException | StreamsException | BadEventTypeException e) {
             throw new SerializationException(e);
         }
     }
 
-    private void tableNumbersDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
-        JsonNode tableNumbersNode = resEntity.get("table_numbers");
-        if (tableNumbersNode != null) {
-            Set<ResTableDTO> tableNumbers = objectMapper.convertValue(tableNumbersNode, new TypeReference<Set<ResTableDTO>>() {});
-            reservationPayload.setResTables(tableNumbers);
-        }
-    }
-
-    private void customFieldsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
-        JsonNode customFieldsNode = resEntity.get("custom_fields");
-        if (customFieldsNode != null) {
-            Set<ResCustomFieldDTO> customFields = objectMapper.convertValue(
-                customFieldsNode,
-                new TypeReference<Set<ResCustomFieldDTO>>() {}
-            );
-            reservationPayload.setResCustomFields(customFields);
-        }
-    }
-
-    private void posTicketsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload)
-        throws IOException {
-        JsonNode posTicketsNode = resEntity.get("pos_tickets");
-        if (posTicketsNode != null) {
-            Set<ResPosTicketPayload> posTickets = objectMapper.convertValue(
-                posTicketsNode,
-                new TypeReference<Set<ResPosTicketPayload>>() {}
-            );
-            reservationPayload.setResPosTickets(posTickets);
-        }
-    }
-
-    private void tagsDeserializer(JsonNode resEntity, com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
-        JsonNode tagsNode = resEntity.get("tags");
-        if (tagsNode != null) {
-            Set<ResTagDTO> tags = objectMapper.convertValue(tagsNode, new TypeReference<Set<ResTagDTO>>() {});
-            reservationPayload.setResTags(tags);
-        }
-    }
-
-    private static void userDeserializer(JsonNode resEntity, ReservationDTO reservation) {
+    private static void userDeserializer(JsonNode resEntity, Reservation reservation) {
         JsonNode userNode = resEntity.get("user");
         if (userNode != null) {
             String userId = String.valueOf(userNode.get("id"));

@@ -17,9 +17,7 @@ public class ResTagTestSamples {
             .group("group1")
             .groupDisplay("groupDisplay1")
             .color("color1")
-            .techLineage("techLineage1")
-            .techMapping("techMapping1")
-            .techComment("techComment1");
+            .tagSearchQuery("tagSearchQuery1");
     }
 
     public static ResTag getResTagSample2() {
@@ -30,9 +28,7 @@ public class ResTagTestSamples {
             .group("group2")
             .groupDisplay("groupDisplay2")
             .color("color2")
-            .techLineage("techLineage2")
-            .techMapping("techMapping2")
-            .techComment("techComment2");
+            .tagSearchQuery("tagSearchQuery2");
     }
 
     public static ResTag getResTagRandomSampleGenerator() {
@@ -43,8 +39,6 @@ public class ResTagTestSamples {
             .group(UUID.randomUUID().toString())
             .groupDisplay(UUID.randomUUID().toString())
             .color(UUID.randomUUID().toString())
-            .techLineage(UUID.randomUUID().toString())
-            .techMapping(UUID.randomUUID().toString())
-            .techComment(UUID.randomUUID().toString());
+            .tagSearchQuery(UUID.randomUUID().toString());
     }
 }

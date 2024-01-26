@@ -1,5 +1,7 @@
 package com.sbm.sevenroomstohub.service;
 
+import com.sbm.sevenroomstohub.domain.Reservation;
+import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
 import java.util.Optional;
@@ -17,6 +19,8 @@ public interface ReservationService {
      * @return the persisted entity.
      */
     ReservationDTO save(ReservationDTO reservationDTO);
+
+    Reservation save(ReservationPayload reservationPayload);
 
     /**
      * Updates a reservation.
@@ -56,7 +60,7 @@ public interface ReservationService {
      * @param resvId the Business id of the entity.
      * @return the entity.
      */
-    Optional<ReservationDTO> findByResvId(String resvId);
+    Optional<Reservation> findByResvId(String resvId);
 
     /**
      * Delete the "id" reservation.
@@ -64,4 +68,6 @@ public interface ReservationService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    void delete(Reservation reservation);
 }

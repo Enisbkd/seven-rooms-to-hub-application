@@ -3,15 +3,15 @@ package com.sbm.sevenroomstohub.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
 
 /**
  * A Reservation.
@@ -32,7 +32,7 @@ public class Reservation implements Serializable {
     @JsonIgnore
     private Long id;
 
-    @Column(name = "resv_id")
+    @Column(name = "resv_id", unique = true)
     @JsonProperty("id")
     private String resvId;
 
@@ -282,47 +282,26 @@ public class Reservation implements Serializable {
     @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "tech_lineage")
-    private String techLineage;
-
-    @Column(name = "tech_created_date")
-    private ZonedDateTime techCreatedDate;
-
-    @Column(name = "tech_updated_date")
-    private ZonedDateTime techUpdatedDate;
-
-    @Column(name = "tech_mapping")
-    private String techMapping;
-
-    @Column(name = "tech_comment")
-    private String techComment;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonProperty("tags")
     private Set<ResTag> resTags = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonProperty("pos_tickets")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<ResPosTicket> resPosTickets = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonProperty("custom_fields")
     private Set<ResCustomField> resCustomFields = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonProperty("table_numbers")
     private Set<ResTable> resTables = new HashSet<>();
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(
-        value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
-        allowSetters = true
-    )
-    private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -1210,71 +1189,6 @@ public class Reservation implements Serializable {
         this.userName = userName;
     }
 
-    public String getTechLineage() {
-        return this.techLineage;
-    }
-
-    public Reservation techLineage(String techLineage) {
-        this.setTechLineage(techLineage);
-        return this;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return this.techCreatedDate;
-    }
-
-    public Reservation techCreatedDate(ZonedDateTime techCreatedDate) {
-        this.setTechCreatedDate(techCreatedDate);
-        return this;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return this.techUpdatedDate;
-    }
-
-    public Reservation techUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.setTechUpdatedDate(techUpdatedDate);
-        return this;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return this.techMapping;
-    }
-
-    public Reservation techMapping(String techMapping) {
-        this.setTechMapping(techMapping);
-        return this;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return this.techComment;
-    }
-
-    public Reservation techComment(String techComment) {
-        this.setTechComment(techComment);
-        return this;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     public Set<ResTag> getResTags() {
         return this.resTags;
     }
@@ -1327,13 +1241,11 @@ public class Reservation implements Serializable {
 
     public Reservation addResPosTicket(ResPosTicket resPosTicket) {
         this.resPosTickets.add(resPosTicket);
-        resPosTicket.setReservation(this);
         return this;
     }
 
     public Reservation removeResPosTicket(ResPosTicket resPosTicket) {
         this.resPosTickets.remove(resPosTicket);
-        resPosTicket.setReservation(null);
         return this;
     }
 
@@ -1396,19 +1308,6 @@ public class Reservation implements Serializable {
     public Reservation removeResTable(ResTable resTable) {
         this.resTables.remove(resTable);
         resTable.setReservation(null);
-        return this;
-    }
-
-    public Client getClient() {
-        return this.client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Reservation client(Client client) {
-        this.setClient(client);
         return this;
     }
 
@@ -1503,11 +1402,6 @@ public class Reservation implements Serializable {
             ", sourceClientId='" + getSourceClientId() + "'" +
             ", userId='" + getUserId() + "'" +
             ", userName='" + getUserName() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
             "}";
     }
 }

@@ -72,6 +72,4 @@ let config = defineConfig({
   },
 });
 
-// jhipster-needle-add-vite-config - JHipster will add custom config
-
 export default config;

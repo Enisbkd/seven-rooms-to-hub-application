@@ -1,8 +1,6 @@
 package com.sbm.sevenroomstohub.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -13,25 +11,13 @@ public class ResCustomFieldDTO implements Serializable {
 
     private Long id;
 
-    @JsonProperty("system_name")
     private String systemName;
 
-    @JsonProperty("display_order")
     private Integer displayOrder;
 
     private String name;
 
     private String value;
-
-    private String techLineage;
-
-    private ZonedDateTime techCreatedDate;
-
-    private ZonedDateTime techUpdatedDate;
-
-    private String techMapping;
-
-    private String techComment;
 
     private ReservationDTO reservation;
 
@@ -75,46 +61,6 @@ public class ResCustomFieldDTO implements Serializable {
         this.value = value;
     }
 
-    public String getTechLineage() {
-        return techLineage;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return techCreatedDate;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return techUpdatedDate;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return techMapping;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return techComment;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     public ReservationDTO getReservation() {
         return reservation;
     }
@@ -153,11 +99,6 @@ public class ResCustomFieldDTO implements Serializable {
             ", displayOrder=" + getDisplayOrder() +
             ", name='" + getName() + "'" +
             ", value='" + getValue() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
             ", reservation=" + getReservation() +
             "}";
     }

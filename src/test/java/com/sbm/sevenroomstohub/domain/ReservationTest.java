@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.domain;
 
-import static com.sbm.sevenroomstohub.domain.ClientTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResCustomFieldTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResPosTicketTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ResTableTestSamples.*;
@@ -115,17 +114,5 @@ class ReservationTest {
         reservation.setResTables(new HashSet<>());
         assertThat(reservation.getResTables()).doesNotContain(resTableBack);
         assertThat(resTableBack.getReservation()).isNull();
-    }
-
-    @Test
-    void clientTest() throws Exception {
-        Reservation reservation = getReservationRandomSampleGenerator();
-        Client clientBack = getClientRandomSampleGenerator();
-
-        reservation.setClient(clientBack);
-        assertThat(reservation.getClient()).isEqualTo(clientBack);
-
-        reservation.client(null);
-        assertThat(reservation.getClient()).isNull();
     }
 }

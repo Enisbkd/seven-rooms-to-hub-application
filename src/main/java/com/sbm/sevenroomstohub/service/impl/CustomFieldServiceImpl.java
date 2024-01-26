@@ -83,11 +83,6 @@ public class CustomFieldServiceImpl implements CustomFieldService {
         return customFieldRepository.findById(id).map(customFieldMapper::toDto);
     }
 
-    public void deleteCustomFieldsByClientId(Long clientId) {
-        Query query = entityManager.createQuery("Delete from CustomField where client.id=" + clientId);
-        query.executeUpdate();
-    }
-
     @Override
     public void delete(Long id) {
         log.debug("Request to delete CustomField : {}", id);

@@ -2,30 +2,14 @@
 <!DOCTYPE configuration>
 
 <configuration scan="true">
-    <!-- Patterns based on https://github.com/spring-projects/spring-boot/blob/v3.0.0/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
-    <conversionRule conversionWord="crlf" converterClass="com.sbm.sevenroomstohub.config.CRLFLogConverter" />
-    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %crlf(%m){red} %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
-    <!--
-    <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } &#45;&#45;&#45; [%t] %-40.40logger{39} : %crlf(%m) %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    -->
+    <conversionRule conversionWord="crlf" converterClass="com.sbm.sevenroomstohub.config.CRLFLogConverter"/>
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %crlf(%m){red} %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-    <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
-    <!--
-    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
-
-    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <queueSize>512</queueSize>
-        <appender-ref ref="FILE"/>
-    </appender>
-
-    <root level="${logging.level.root}">
-        <appender-ref ref="ASYNC"/>
-    </root>
-    -->
 
     <logger name="angus.activation" level="WARN"/>
     <logger name="jakarta.activation" level="WARN"/>
@@ -55,18 +39,39 @@
     <logger name="io.swagger.v3" level="INFO"/>
     <logger name="sun.rmi" level="WARN"/>
     <logger name="sun.rmi.transport" level="WARN"/>
-    <!-- See https://github.com/jhipster/generator-jhipster/issues/13835 -->
     <logger name="Validator" level="INFO"/>
-    <!-- See https://github.com/jhipster/generator-jhipster/issues/14444 -->
     <logger name="_org.springframework.web.servlet.HandlerMapping.Mappings" level="INFO"/>
     <logger name="liquibase" level="WARN"/>
     <logger name="LiquibaseSchemaResolver" level="INFO"/>
-    <!-- jhipster-needle-logback-add-log - JHipster will add a new log with level -->
 
-    <springProperty name="log.level" source="logging.level.root" defaultValue="INFO" />
+    <springProperty scope="context" name="kafka.bootstrap.servers" source="spring.kafka.bootstrap-servers"/>
+    <springProperty scope="context" name="kafka.logs.topic" source="spring.kafka.topics.logs-topic"/>
+    <springProperty scope="context" name="env" source="env"/>
+
+
+    <appender name="kafka-appender" class="com.sbm.sevenroomstohub.logs.KafkaLogbackAppender">
+        <BrokerList>${kafka.bootstrap.servers}</BrokerList>
+        <Topic>${kafka.logs.topic}</Topic>
+        <SyncSend>false</SyncSend>
+
+        <!--        <SecurityProtocol>SASL_PLAINTEXT</SecurityProtocol>-->
+        <!--        <SaslKerberosServiceName>kafka</SaslKerberosServiceName>-->
+        <!--        <ClientJaasConfPath>c:/work/jaas.conf</ClientJaasConfPath>-->
+        <!--        <Kerb5ConfPath>c:/work/krb5.conf</Kerb5ConfPath>-->
+        <!--        <saslMechanism>GSSAPI</saslMechanism>-->
+
+        <encoder class="co.elastic.logging.logback.EcsEncoder">
+            <serviceName>SevenRoomsToHubApplication</serviceName>
+            <serviceEnvironment>${env}</serviceEnvironment>
+        </encoder>
+    </appender>
+
+    <springProperty name="log.level" source="logging.level.root" defaultValue="INFO"/>
     <root level="${log.level}">
-        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="kafka-appender"/>
     </root>
+
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>

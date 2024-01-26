@@ -1,6 +1,7 @@
 package com.sbm.sevenroomstohub.service.impl;
 
 import com.sbm.sevenroomstohub.domain.Reservation;
+import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.repository.ReservationRepository;
 import com.sbm.sevenroomstohub.service.ReservationService;
 import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
@@ -37,6 +38,14 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = reservationMapper.toEntity(reservationDTO);
         reservation = reservationRepository.save(reservation);
         return reservationMapper.toDto(reservation);
+    }
+
+    @Override
+    public Reservation save(ReservationPayload reservationPayload) {
+        log.debug("Request to save Reservation : {}", reservationPayload.getReservation());
+        Reservation reservation = reservationPayload.getReservation();
+        reservation = reservationRepository.save(reservation);
+        return reservation;
     }
 
     @Override
@@ -77,14 +86,20 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Optional<ReservationDTO> findByResvId(String resvId) {
+    public Optional<Reservation> findByResvId(String resvId) {
         log.debug("Request to get Reservation : {}", resvId);
-        return reservationRepository.findByResvId(resvId).map(reservationMapper::toDto);
+        return reservationRepository.findByResvId(resvId);
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Reservation : {}", id);
         reservationRepository.deleteById(id);
+    }
+
+    @Override
+    public void delete(Reservation reservation) {
+        log.debug("Request to delete Reservation : {}", reservation.getId());
+        reservationRepository.deleteById(reservation.getId());
     }
 }

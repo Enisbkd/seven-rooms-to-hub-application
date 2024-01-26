@@ -74,16 +74,10 @@
       "userName": "User Name",
       "totalOrderCount": "Total Order Count",
       "preferredLanguageCode": "Preferred Language Code",
-      "techLineage": "Tech Lineage",
-      "techCreatedDate": "Tech Created Date",
-      "techUpdatedDate": "Tech Updated Date",
-      "techMapping": "Tech Mapping",
-      "techComment": "Tech Comment",
       "clientPhoto": "Client Photo",
       "clientVenueStats": "Client Venue Stats",
       "customField": "Custom Field",
       "clientTag": "Client Tag",
-      "reservation": "Reservation",
       "memberGroup": "Member Group"
     }
   }

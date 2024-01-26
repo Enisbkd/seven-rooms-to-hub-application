@@ -28,7 +28,7 @@ public class ResTableResource {
 
     private static final String ENTITY_NAME = "resTable";
 
-    @Value("${jhipster.clientApp.name}")
+    @Value("${common.clientApp.name}")
     private String applicationName;
 
     private final ResTableService resTableService;

@@ -74,10 +74,7 @@ public class ReservationTestSamples {
             .reservationType("reservationType1")
             .sourceClientId("sourceClientId1")
             .userId("userId1")
-            .userName("userName1")
-            .techLineage("techLineage1")
-            .techMapping("techMapping1")
-            .techComment("techComment1");
+            .userName("userName1");
     }
 
     public static Reservation getReservationSample2() {
@@ -143,10 +140,7 @@ public class ReservationTestSamples {
             .reservationType("reservationType2")
             .sourceClientId("sourceClientId2")
             .userId("userId2")
-            .userName("userName2")
-            .techLineage("techLineage2")
-            .techMapping("techMapping2")
-            .techComment("techComment2");
+            .userName("userName2");
     }
 
     public static Reservation getReservationRandomSampleGenerator() {
@@ -212,9 +206,6 @@ public class ReservationTestSamples {
             .reservationType(UUID.randomUUID().toString())
             .sourceClientId(UUID.randomUUID().toString())
             .userId(UUID.randomUUID().toString())
-            .userName(UUID.randomUUID().toString())
-            .techLineage(UUID.randomUUID().toString())
-            .techMapping(UUID.randomUUID().toString())
-            .techComment(UUID.randomUUID().toString());
+            .userName(UUID.randomUUID().toString());
     }
 }

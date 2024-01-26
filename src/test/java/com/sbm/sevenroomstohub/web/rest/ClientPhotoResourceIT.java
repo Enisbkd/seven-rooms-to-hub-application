@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.web.rest;
 
-import static com.sbm.sevenroomstohub.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -12,10 +11,6 @@ import com.sbm.sevenroomstohub.repository.ClientPhotoRepository;
 import com.sbm.sevenroomstohub.service.dto.ClientPhotoDTO;
 import com.sbm.sevenroomstohub.service.mapper.ClientPhotoMapper;
 import jakarta.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -78,21 +73,6 @@ class ClientPhotoResourceIT {
     private static final Double DEFAULT_CROP_WIDTH = 1D;
     private static final Double UPDATED_CROP_WIDTH = 2D;
 
-    private static final String DEFAULT_TECH_LINEAGE = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_LINEAGE = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_TECH_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_TECH_UPDATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_UPDATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final String DEFAULT_TECH_MAPPING = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_MAPPING = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TECH_COMMENT = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_COMMENT = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/client-photos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -134,12 +114,7 @@ class ClientPhotoResourceIT {
             .cropx(DEFAULT_CROPX)
             .cropy(DEFAULT_CROPY)
             .cropHeight(DEFAULT_CROP_HEIGHT)
-            .cropWidth(DEFAULT_CROP_WIDTH)
-            .techLineage(DEFAULT_TECH_LINEAGE)
-            .techCreatedDate(DEFAULT_TECH_CREATED_DATE)
-            .techUpdatedDate(DEFAULT_TECH_UPDATED_DATE)
-            .techMapping(DEFAULT_TECH_MAPPING)
-            .techComment(DEFAULT_TECH_COMMENT);
+            .cropWidth(DEFAULT_CROP_WIDTH);
         return clientPhoto;
     }
 
@@ -164,12 +139,7 @@ class ClientPhotoResourceIT {
             .cropx(UPDATED_CROPX)
             .cropy(UPDATED_CROPY)
             .cropHeight(UPDATED_CROP_HEIGHT)
-            .cropWidth(UPDATED_CROP_WIDTH)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .cropWidth(UPDATED_CROP_WIDTH);
         return clientPhoto;
     }
 
@@ -208,11 +178,6 @@ class ClientPhotoResourceIT {
         assertThat(testClientPhoto.getCropy()).isEqualTo(DEFAULT_CROPY);
         assertThat(testClientPhoto.getCropHeight()).isEqualTo(DEFAULT_CROP_HEIGHT);
         assertThat(testClientPhoto.getCropWidth()).isEqualTo(DEFAULT_CROP_WIDTH);
-        assertThat(testClientPhoto.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testClientPhoto.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testClientPhoto.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testClientPhoto.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testClientPhoto.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -261,12 +226,7 @@ class ClientPhotoResourceIT {
             .andExpect(jsonPath("$.[*].cropx").value(hasItem(DEFAULT_CROPX)))
             .andExpect(jsonPath("$.[*].cropy").value(hasItem(DEFAULT_CROPY)))
             .andExpect(jsonPath("$.[*].cropHeight").value(hasItem(DEFAULT_CROP_HEIGHT.doubleValue())))
-            .andExpect(jsonPath("$.[*].cropWidth").value(hasItem(DEFAULT_CROP_WIDTH.doubleValue())))
-            .andExpect(jsonPath("$.[*].techLineage").value(hasItem(DEFAULT_TECH_LINEAGE)))
-            .andExpect(jsonPath("$.[*].techCreatedDate").value(hasItem(sameInstant(DEFAULT_TECH_CREATED_DATE))))
-            .andExpect(jsonPath("$.[*].techUpdatedDate").value(hasItem(sameInstant(DEFAULT_TECH_UPDATED_DATE))))
-            .andExpect(jsonPath("$.[*].techMapping").value(hasItem(DEFAULT_TECH_MAPPING)))
-            .andExpect(jsonPath("$.[*].techComment").value(hasItem(DEFAULT_TECH_COMMENT)));
+            .andExpect(jsonPath("$.[*].cropWidth").value(hasItem(DEFAULT_CROP_WIDTH.doubleValue())));
     }
 
     @Test
@@ -294,12 +254,7 @@ class ClientPhotoResourceIT {
             .andExpect(jsonPath("$.cropx").value(DEFAULT_CROPX))
             .andExpect(jsonPath("$.cropy").value(DEFAULT_CROPY))
             .andExpect(jsonPath("$.cropHeight").value(DEFAULT_CROP_HEIGHT.doubleValue()))
-            .andExpect(jsonPath("$.cropWidth").value(DEFAULT_CROP_WIDTH.doubleValue()))
-            .andExpect(jsonPath("$.techLineage").value(DEFAULT_TECH_LINEAGE))
-            .andExpect(jsonPath("$.techCreatedDate").value(sameInstant(DEFAULT_TECH_CREATED_DATE)))
-            .andExpect(jsonPath("$.techUpdatedDate").value(sameInstant(DEFAULT_TECH_UPDATED_DATE)))
-            .andExpect(jsonPath("$.techMapping").value(DEFAULT_TECH_MAPPING))
-            .andExpect(jsonPath("$.techComment").value(DEFAULT_TECH_COMMENT));
+            .andExpect(jsonPath("$.cropWidth").value(DEFAULT_CROP_WIDTH.doubleValue()));
     }
 
     @Test
@@ -335,12 +290,7 @@ class ClientPhotoResourceIT {
             .cropx(UPDATED_CROPX)
             .cropy(UPDATED_CROPY)
             .cropHeight(UPDATED_CROP_HEIGHT)
-            .cropWidth(UPDATED_CROP_WIDTH)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .cropWidth(UPDATED_CROP_WIDTH);
         ClientPhotoDTO clientPhotoDTO = clientPhotoMapper.toDto(updatedClientPhoto);
 
         restClientPhotoMockMvc
@@ -369,11 +319,6 @@ class ClientPhotoResourceIT {
         assertThat(testClientPhoto.getCropy()).isEqualTo(UPDATED_CROPY);
         assertThat(testClientPhoto.getCropHeight()).isEqualTo(UPDATED_CROP_HEIGHT);
         assertThat(testClientPhoto.getCropWidth()).isEqualTo(UPDATED_CROP_WIDTH);
-        assertThat(testClientPhoto.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testClientPhoto.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testClientPhoto.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testClientPhoto.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testClientPhoto.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -460,9 +405,7 @@ class ClientPhotoResourceIT {
             .mediumWidth(UPDATED_MEDIUM_WIDTH)
             .raw(UPDATED_RAW)
             .cropy(UPDATED_CROPY)
-            .cropHeight(UPDATED_CROP_HEIGHT)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING);
+            .cropHeight(UPDATED_CROP_HEIGHT);
 
         restClientPhotoMockMvc
             .perform(
@@ -490,11 +433,6 @@ class ClientPhotoResourceIT {
         assertThat(testClientPhoto.getCropy()).isEqualTo(UPDATED_CROPY);
         assertThat(testClientPhoto.getCropHeight()).isEqualTo(UPDATED_CROP_HEIGHT);
         assertThat(testClientPhoto.getCropWidth()).isEqualTo(DEFAULT_CROP_WIDTH);
-        assertThat(testClientPhoto.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testClientPhoto.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testClientPhoto.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testClientPhoto.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testClientPhoto.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -523,12 +461,7 @@ class ClientPhotoResourceIT {
             .cropx(UPDATED_CROPX)
             .cropy(UPDATED_CROPY)
             .cropHeight(UPDATED_CROP_HEIGHT)
-            .cropWidth(UPDATED_CROP_WIDTH)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .cropWidth(UPDATED_CROP_WIDTH);
 
         restClientPhotoMockMvc
             .perform(
@@ -556,11 +489,6 @@ class ClientPhotoResourceIT {
         assertThat(testClientPhoto.getCropy()).isEqualTo(UPDATED_CROPY);
         assertThat(testClientPhoto.getCropHeight()).isEqualTo(UPDATED_CROP_HEIGHT);
         assertThat(testClientPhoto.getCropWidth()).isEqualTo(UPDATED_CROP_WIDTH);
-        assertThat(testClientPhoto.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testClientPhoto.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testClientPhoto.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testClientPhoto.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testClientPhoto.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test

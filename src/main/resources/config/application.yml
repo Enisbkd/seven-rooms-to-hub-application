@@ -103,7 +103,7 @@ spring:
         # Uncomment to activate TLS for the dev profile
         #- tls
   jmx:
-    enabled: false
+    enabled: true
   data:
     jpa:
       repositories:
@@ -129,7 +129,7 @@ spring:
       hibernate.query.fail_on_pagination_over_collection_fetch: true
       hibernate.query.in_clause_parameter_padding: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
@@ -157,18 +157,6 @@ spring:
     ansi:
       console-available: true
 
-  kafka:
-    #    bootstrap-servers: bsed1-d1-ap-kafka4.sbm.interne:9092,bsed1-d2-ap-kafka5.sbm.interne:9092,bsed1-d3-ap-kafka6.sbm.interne:9092
-    bootstrap-servers: localhost:9092
-    properties:
-      application.id: dev2_7rooms
-    streams:
-      client-topic: data-7rooms-client
-      reservation-topic: data-7rooms-reservation
-#      security.protocol: SASL_SSL
-#      sasl.mechanism: SCRAM-SHA-512
-#      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="dev2_bsed1_7rooms" password="1G3aDJ7zR8Q";
-
 server:
   servlet:
     session:
@@ -183,13 +171,7 @@ info:
   # Comma separated list of profiles that will trigger the ribbon to show
   display-ribbon-on-profiles: 'dev'
 
-# ===================================================================
-# JHipster specific properties
-#
-# Full reference is available at: https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-jhipster:
+common:
   clientApp:
     name: 'sevenRoomsToHubApplicationApp'
   # By default CORS is disabled. Uncomment to enable.
@@ -197,7 +179,7 @@ jhipster:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"
   #   allowed-methods: "*"
   #   allowed-headers: "*"
-  #   exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
+  #   exposed-headers: "Authorization,Link,X-Total-Count,X-${common.clientApp.name}-alert,X-${common.clientApp.name}-error,X-${common.clientApp.name}-params"
   #   allow-credentials: true
   #   max-age: 1800
   mail:
@@ -216,13 +198,4 @@ jhipster:
     license-url:
   security:
     content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
 # application:

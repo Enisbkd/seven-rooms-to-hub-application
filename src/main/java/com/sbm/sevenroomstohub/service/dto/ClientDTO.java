@@ -1,39 +1,26 @@
 package com.sbm.sevenroomstohub.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
  * A DTO for the {@link com.sbm.sevenroomstohub.domain.Client} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClientDTO implements Serializable {
 
-    @JsonIgnore
     private Long id;
 
-    @JsonProperty("id")
     private String clientId;
 
-    @JsonProperty("created")
     private String createdDate;
 
-    @JsonProperty("updated")
     private String updatedDate;
 
-    @JsonProperty("deleted")
     private String deletedDate;
 
-    @JsonProperty("last_name")
     private String lastname;
 
-    @JsonProperty("first_name")
     private String firstname;
 
     private String gender;
@@ -42,147 +29,100 @@ public class ClientDTO implements Serializable {
 
     private String title;
 
-    @JsonProperty("birthday_day")
     private Integer birthdayDay;
 
-    @JsonProperty("birthday_month")
     private Integer birthdayMonth;
 
-    @JsonProperty("birthday_alt_month")
     private Integer birthdayAltMonth;
 
-    @JsonProperty("anniversary_day")
     private Integer anniversaryDay;
 
-    @JsonProperty("anniversary_month")
     private Integer anniversaryMonth;
 
     private String company;
 
     private String email;
 
-    @JsonProperty("email_alt")
     private String emailAlt;
 
-    @JsonProperty("phone_number")
     private String phoneNumber;
 
-    @JsonProperty("phone_number_locale")
     private String phoneNumberlocale;
 
-    @JsonProperty("phone_number_alt")
     private String phoneNumberalt;
 
-    @JsonProperty("phone_number_alt_locale")
     private String phoneNumberaltlocale;
 
     private String address;
 
-    @JsonProperty("address_2")
     private String address2;
 
     private String city;
 
-    @JsonProperty("postal_code")
     private String postalCode;
 
     private String state;
 
     private String country;
 
-    @JsonProperty("is_contact_private")
     private Boolean isContactPrivate;
 
-    @JsonProperty("is_one_time_guest")
     private Boolean isOnetimeGuest;
 
     private String status;
 
-    @JsonProperty("loyalty_id")
     private String loyaltyId;
 
-    @JsonProperty("loyalty_rank")
     private Integer loyaltyRank;
 
-    @JsonProperty("loyalty_tier")
     private String loyaltyTier;
 
-    @JsonProperty("marketing_opt_in")
     private Boolean marketingOptin;
 
-    @JsonProperty("marketing_opt_in_ts")
     private String marketingOptints;
 
-    @JsonProperty("marketing_opt_out_ts")
     private String marketingOptOutts;
 
-    @JsonProperty("has_billing_profile")
     private Boolean hasBillingProfile;
 
     private String notes;
 
-    @JsonProperty("private_notes")
     private String privateNotes;
 
     private String tags;
 
-    @JsonProperty("total_visits")
     private Double totalVisits;
 
-    @JsonProperty("total_covers")
     private Double totalCovers;
 
-    @JsonProperty("total_cancellations")
     private Double totalCancellations;
 
-    @JsonProperty("total_noshows")
     private Double totalNoShows;
 
-    @JsonProperty("total_spend")
     private Double totalSpend;
 
-    @JsonProperty("total_spend_per_cover")
     private Double totalSpendPerCover;
 
-    @JsonProperty("total_spend_per_visit")
     private Double totalspendPerVisit;
 
-    @JsonProperty("avg_rating")
     private Double avgRating;
 
-    @JsonProperty("reference_code")
     private String referenceCode;
 
-    @JsonProperty("external_user_id")
     private String externalUserId;
 
-    @JsonProperty("venue_group_id")
     private String venueGroupId;
 
-    @JsonProperty("birthday_alt_day")
     private Integer birthdayAltDay;
 
     private String userId;
 
     private String userName;
 
-    @JsonProperty("total_order_count")
     private Integer totalOrderCount;
 
-    @JsonProperty("preferred_language_code")
     private String preferredLanguageCode;
 
-    private String techLineage;
-
-    private ZonedDateTime techCreatedDate;
-
-    private ZonedDateTime techUpdatedDate;
-
-    private String techMapping;
-
-    private String techComment;
-
-    @JsonProperty("photo")
     private ClientPhotoDTO clientPhoto;
 
     private ClientVenueStatsDTO clientVenueStats;
@@ -643,46 +583,6 @@ public class ClientDTO implements Serializable {
         this.preferredLanguageCode = preferredLanguageCode;
     }
 
-    public String getTechLineage() {
-        return techLineage;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return techCreatedDate;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return techUpdatedDate;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return techMapping;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return techComment;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     public ClientPhotoDTO getClientPhoto() {
         return clientPhoto;
     }
@@ -781,11 +681,6 @@ public class ClientDTO implements Serializable {
             ", userName='" + getUserName() + "'" +
             ", totalOrderCount=" + getTotalOrderCount() +
             ", preferredLanguageCode='" + getPreferredLanguageCode() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
             ", clientPhoto=" + getClientPhoto() +
             ", clientVenueStats=" + getClientVenueStats() +
             "}";

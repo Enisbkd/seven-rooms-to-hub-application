@@ -3,8 +3,6 @@
 #
 # This configuration overrides the application.yml file.
 #
-# More information on profiles: https://www.jhipster.tech/profiles/
-# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
 # ===================================================================
@@ -12,6 +10,8 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
+
+env: prod
 
 logging:
   level:
@@ -83,7 +83,7 @@ server:
 # Full reference is available at: https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-jhipster:
+common:
   http:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461
@@ -112,13 +112,4 @@ jhipster:
       host: localhost
       port: 5000
       ring-buffer-size: 512
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
 # application:

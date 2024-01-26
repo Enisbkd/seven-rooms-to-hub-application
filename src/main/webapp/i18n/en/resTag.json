@@ -23,11 +23,7 @@
       "group": "Group",
       "groupDisplay": "Group Display",
       "color": "Color",
-      "techLineage": "Tech Lineage",
-      "techCreatedDate": "Tech Created Date",
-      "techUpdatedDate": "Tech Updated Date",
-      "techMapping": "Tech Mapping",
-      "techComment": "Tech Comment",
+      "tagSearchQuery": "Tag Search Query",
       "reservation": "Reservation"
     }
   }

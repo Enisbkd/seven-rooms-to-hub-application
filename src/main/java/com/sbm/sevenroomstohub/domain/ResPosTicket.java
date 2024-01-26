@@ -7,9 +7,11 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
 
 /**
  * A ResPosTicket.
@@ -80,29 +82,15 @@ public class ResPosTicket implements Serializable {
     @JsonProperty("end_time")
     private String endtime;
 
-    @Column(name = "tech_lineage")
-    private String techLineage;
-
-    @Column(name = "tech_created_date")
-    private ZonedDateTime techCreatedDate;
-
-    @Column(name = "tech_updated_date")
-    private ZonedDateTime techUpdatedDate;
-
-    @Column(name = "tech_mapping")
-    private String techMapping;
-
-    @Column(name = "tech_comment")
-    private String techComment;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resPosTicket")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resPosTicket", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "resPosTicket" }, allowSetters = true)
     @JsonProperty("items")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<ResPosticketsItem> resPosticketsItems = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables" }, allowSetters = true)
     private Reservation reservation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -302,71 +290,6 @@ public class ResPosTicket implements Serializable {
         this.endtime = endtime;
     }
 
-    public String getTechLineage() {
-        return this.techLineage;
-    }
-
-    public ResPosTicket techLineage(String techLineage) {
-        this.setTechLineage(techLineage);
-        return this;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return this.techCreatedDate;
-    }
-
-    public ResPosTicket techCreatedDate(ZonedDateTime techCreatedDate) {
-        this.setTechCreatedDate(techCreatedDate);
-        return this;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return this.techUpdatedDate;
-    }
-
-    public ResPosTicket techUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.setTechUpdatedDate(techUpdatedDate);
-        return this;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return this.techMapping;
-    }
-
-    public ResPosTicket techMapping(String techMapping) {
-        this.setTechMapping(techMapping);
-        return this;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return this.techComment;
-    }
-
-    public ResPosTicket techComment(String techComment) {
-        this.setTechComment(techComment);
-        return this;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     public Set<ResPosticketsItem> getResPosticketsItems() {
         return this.resPosticketsItems;
     }
@@ -388,13 +311,11 @@ public class ResPosTicket implements Serializable {
 
     public ResPosTicket addResPosticketsItem(ResPosticketsItem resPosticketsItem) {
         this.resPosticketsItems.add(resPosticketsItem);
-        resPosticketsItem.setResPosTicket(this);
         return this;
     }
 
     public ResPosTicket removeResPosticketsItem(ResPosticketsItem resPosticketsItem) {
         this.resPosticketsItems.remove(resPosticketsItem);
-        resPosticketsItem.setResPosTicket(null);
         return this;
     }
 
@@ -415,19 +336,51 @@ public class ResPosTicket implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof ResPosTicket)) {
-            return false;
-        }
-        return getId() != null && getId().equals(((ResPosTicket) o).getId());
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResPosTicket that = (ResPosTicket) o;
+        return (
+            Objects.equals(id, that.id) &&
+            Objects.equals(status, that.status) &&
+            Objects.equals(adminFee, that.adminFee) &&
+            Objects.equals(code, that.code) &&
+            Objects.equals(tableNo, that.tableNo) &&
+            Objects.equals(tax, that.tax) &&
+            Objects.equals(businessId, that.businessId) &&
+            Objects.equals(ticketId, that.ticketId) &&
+            Objects.equals(localPosticketId, that.localPosticketId) &&
+            Objects.equals(employeeName, that.employeeName) &&
+            Objects.equals(total, that.total) &&
+            Objects.equals(subtotal, that.subtotal) &&
+            Objects.equals(startTime, that.startTime) &&
+            Objects.equals(serviceCharge, that.serviceCharge) &&
+            Objects.equals(endtime, that.endtime) &&
+            Objects.equals(resPosticketsItems, that.resPosticketsItems) &&
+            Objects.equals(reservation, that.reservation)
+        );
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hash(
+            id,
+            status,
+            adminFee,
+            code,
+            tableNo,
+            tax,
+            businessId,
+            ticketId,
+            localPosticketId,
+            employeeName,
+            total,
+            subtotal,
+            startTime,
+            serviceCharge,
+            endtime,
+            resPosticketsItems,
+            reservation
+        );
     }
 
     @Override
@@ -469,19 +422,6 @@ public class ResPosTicket implements Serializable {
             serviceCharge +
             ", endtime='" +
             endtime +
-            '\'' +
-            ", techLineage='" +
-            techLineage +
-            '\'' +
-            ", techCreatedDate=" +
-            techCreatedDate +
-            ", techUpdatedDate=" +
-            techUpdatedDate +
-            ", techMapping='" +
-            techMapping +
-            '\'' +
-            ", techComment='" +
-            techComment +
             '\'' +
             ", resPosticketsItems=" +
             resPosticketsItems +

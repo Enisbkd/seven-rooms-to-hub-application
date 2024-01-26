@@ -1,75 +1,55 @@
 package com.sbm.sevenroomstohub.service.impl;
 
-import static com.sbm.sevenroomstohub.service.dto.ResPosTicketDTO.buildResposticketDto;
-
-import com.sbm.sevenroomstohub.domain.ResPosTicketPayload;
+import com.sbm.sevenroomstohub.domain.Client;
+import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
-import com.sbm.sevenroomstohub.service.*;
-import com.sbm.sevenroomstohub.service.dto.*;
-import java.util.Set;
+import com.sbm.sevenroomstohub.service.ClientService;
+import com.sbm.sevenroomstohub.service.ReservationPersistenceService;
+import com.sbm.sevenroomstohub.service.ReservationService;
+import com.sbm.sevenroomstohub.utils.TimestampUtils;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReservationPersistenceServiceImpl implements ReservationPersistenceService {
 
+    private final Logger logger = LoggerFactory.getLogger(ReservationPersistenceServiceImpl.class);
+
     @Autowired
     ReservationService reservationService;
 
     @Autowired
-    ResCustomFieldService resCustomFieldService;
+    ClientService clientService;
 
-    @Autowired
-    ResTagService resTagService;
+    public void upsertReservation(ReservationPayload reservationPayload) {
+        Reservation payloadRes = reservationPayload.getReservation();
+        String resvId = payloadRes.getResvId();
+        Optional<Reservation> resvFromDB = reservationService.findByResvId(resvId);
 
-    @Autowired
-    ResTableService resTableService;
+        if (resvFromDB.isPresent()) {
+            String updateDateInDB = resvFromDB.get().getUpdated();
+            String updateDateInPayload = reservationPayload.getReservation().getUpdated();
 
-    @Autowired
-    ResPosTicketService resPosTicketService;
+            LocalDateTime timestampInDB = TimestampUtils.convertStringToTimestamp(updateDateInDB);
+            LocalDateTime timestampInPayload = TimestampUtils.convertStringToTimestamp(updateDateInPayload);
 
-    @Autowired
-    ResPosticketsItemService resPosticketsItemService;
+            logger.debug("updateDate in DB : " + timestampInDB);
+            logger.debug("updateDate in Payload : " + timestampInPayload);
 
-    @Override
-    public ReservationDTO saveReservation(ReservationPayload reservationPayload) {
-        ReservationDTO reservationDTO = reservationPayload.getReservation();
-        ReservationDTO savedReservation = reservationService.save(reservationDTO);
-
-        Set<ResCustomFieldDTO> customFields = reservationPayload.getResCustomFields();
-
-        for (ResCustomFieldDTO customFieldDTO : customFields) {
-            customFieldDTO.setReservation(savedReservation);
-            resCustomFieldService.save(customFieldDTO);
-        }
-
-        Set<ResTagDTO> resTagServices = reservationPayload.getResTags();
-
-        for (ResTagDTO resTagDTO : resTagServices) {
-            resTagDTO.setReservation(savedReservation);
-            resTagService.save(resTagDTO);
-        }
-
-        Set<ResTableDTO> resTables = reservationPayload.getResTables();
-
-        for (ResTableDTO resTable : resTables) {
-            resTable.setReservation(savedReservation);
-            resTableService.save(resTable);
-        }
-
-        Set<ResPosTicketPayload> resPosTickets = reservationPayload.getResPosTickets();
-        if (resPosTickets != null) {
-            for (ResPosTicketPayload resPosTicket : resPosTickets) {
-                resPosTicket.setReservation(savedReservation);
-                ResPosTicketDTO resPosTicketDTO = buildResposticketDto(resPosTicket);
-                ResPosTicketDTO savedResPosTicket = resPosTicketService.save(resPosTicketDTO);
-                for (ResPosticketsItemDTO resPosticketsItemDTO : resPosTicket.getResPosticketsItems()) {
-                    resPosticketsItemDTO.setResPosTicket(savedResPosTicket);
-                    resPosticketsItemService.save(resPosticketsItemDTO);
-                }
+            if (timestampInPayload.isAfter(timestampInDB)) {
+                logger.debug("Payload record is newer, updating Entity having id : " + resvFromDB.get().getId());
+                reservationPayload.getReservation().setId(resvFromDB.get().getId());
+                reservationService.delete(resvFromDB.get());
+                reservationService.save(reservationPayload);
             }
+        } else {
+            logger.debug("Reservation with externalID " + resvId + " does not exist in DB , Inserting ...");
+            reservationService.save(reservationPayload);
         }
-        return reservationDTO;
     }
 
     @Override
@@ -78,6 +58,7 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
         if (reservationService.findByResvId(resvId).isPresent()) {
             Long id = reservationService.findByResvId(resvId).get().getId();
             if (id != null) {
+                logger.debug("Deleting Reservation with id = " + id);
                 reservationService.delete(id);
             }
         }

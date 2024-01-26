@@ -2,7 +2,6 @@ import { type IResTag } from '@/shared/model/res-tag.model';
 import { type IResPosTicket } from '@/shared/model/res-pos-ticket.model';
 import { type IResCustomField } from '@/shared/model/res-custom-field.model';
 import { type IResTable } from '@/shared/model/res-table.model';
-import { type IClient } from '@/shared/model/client.model';
 
 export interface IReservation {
   id?: number;
@@ -73,16 +72,10 @@ export interface IReservation {
   sourceClientId?: string | null;
   userId?: string | null;
   userName?: string | null;
-  techLineage?: string | null;
-  techCreatedDate?: Date | null;
-  techUpdatedDate?: Date | null;
-  techMapping?: string | null;
-  techComment?: string | null;
   resTags?: IResTag[] | null;
   resPosTickets?: IResPosTicket[] | null;
   resCustomFields?: IResCustomField[] | null;
   resTables?: IResTable[] | null;
-  client?: IClient | null;
 }
 
 export class Reservation implements IReservation {
@@ -155,16 +148,10 @@ export class Reservation implements IReservation {
     public sourceClientId?: string | null,
     public userId?: string | null,
     public userName?: string | null,
-    public techLineage?: string | null,
-    public techCreatedDate?: Date | null,
-    public techUpdatedDate?: Date | null,
-    public techMapping?: string | null,
-    public techComment?: string | null,
     public resTags?: IResTag[] | null,
     public resPosTickets?: IResPosTicket[] | null,
     public resCustomFields?: IResCustomField[] | null,
     public resTables?: IResTable[] | null,
-    public client?: IClient | null,
   ) {
     this.isvip = this.isvip ?? false;
     this.reservationSmsOptin = this.reservationSmsOptin ?? false;

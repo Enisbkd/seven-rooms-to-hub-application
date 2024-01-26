@@ -26,6 +26,9 @@ scrape_configs:
     # password: admin
     metrics_path: /management/prometheus
     static_configs:
-      - targets:
-          # On MacOS, replace localhost by host.docker.internal
-          - localhost:8080
+      - targets: ['172.17.0.1:8080']
+
+  - job_name: kafka
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['kafka-exporter:9308']

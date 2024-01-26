@@ -256,26 +256,6 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.client.preferredLanguageCode')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'preferredLanguageCode'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('techLineage')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techLineage')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techCreatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techUpdatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techMapping')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techMapping')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techComment')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.client.techComment')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
-            </th>
             <th scope="row" v-on:click="changeOrder('clientPhoto.id')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.client.clientPhoto')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'clientPhoto.id'"></jhi-sort-indicator>
@@ -348,11 +328,6 @@
             <td>{{ client.userName }}</td>
             <td>{{ client.totalOrderCount }}</td>
             <td>{{ client.preferredLanguageCode }}</td>
-            <td>{{ client.techLineage }}</td>
-            <td>{{ formatDateShort(client.techCreatedDate) || '' }}</td>
-            <td>{{ formatDateShort(client.techUpdatedDate) || '' }}</td>
-            <td>{{ client.techMapping }}</td>
-            <td>{{ client.techComment }}</td>
             <td>
               <div v-if="client.clientPhoto">
                 <router-link :to="{ name: 'ClientPhotoView', params: { clientPhotoId: client.clientPhoto.id } }">{{

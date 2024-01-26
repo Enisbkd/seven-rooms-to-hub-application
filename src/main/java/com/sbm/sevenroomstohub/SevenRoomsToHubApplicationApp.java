@@ -16,11 +16,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
+import org.springframework.kafka.annotation.EnableKafka;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
+@EnableKafka
 public class SevenRoomsToHubApplicationApp {
 
     private static final Logger log = LoggerFactory.getLogger(SevenRoomsToHubApplicationApp.class);
