@@ -91,36 +91,6 @@
             <span>{{ resPosTicket.endtime }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.techLineage')"></span>
-          </dt>
-          <dd>
-            <span>{{ resPosTicket.techLineage }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.techCreatedDate')"></span>
-          </dt>
-          <dd>
-            <span v-if="resPosTicket.techCreatedDate">{{ formatDateLong(resPosTicket.techCreatedDate) }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.techUpdatedDate')"></span>
-          </dt>
-          <dd>
-            <span v-if="resPosTicket.techUpdatedDate">{{ formatDateLong(resPosTicket.techUpdatedDate) }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.techMapping')"></span>
-          </dt>
-          <dd>
-            <span>{{ resPosTicket.techMapping }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.techComment')"></span>
-          </dt>
-          <dd>
-            <span>{{ resPosTicket.techComment }}</span>
-          </dd>
-          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.resPosTicket.reservation')"></span>
           </dt>
           <dd>

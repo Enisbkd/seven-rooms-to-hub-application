@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.web.rest;
 
-import static com.sbm.sevenroomstohub.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -12,10 +11,6 @@ import com.sbm.sevenroomstohub.repository.ClientVenueStatsRepository;
 import com.sbm.sevenroomstohub.service.dto.ClientVenueStatsDTO;
 import com.sbm.sevenroomstohub.service.mapper.ClientVenueStatsMapper;
 import jakarta.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -111,21 +106,6 @@ class ClientVenueStatsResourceIT {
     private static final String DEFAULT_VENUE_MARKETING_OPTINTS = "AAAAAAAAAA";
     private static final String UPDATED_VENUE_MARKETING_OPTINTS = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TECH_LINEAGE = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_LINEAGE = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_TECH_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_TECH_UPDATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_UPDATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final String DEFAULT_TECH_MAPPING = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_MAPPING = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TECH_COMMENT = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_COMMENT = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/client-venue-stats";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -178,12 +158,7 @@ class ClientVenueStatsResourceIT {
             .totalSpendLocalperOrder(DEFAULT_TOTAL_SPEND_LOCALPER_ORDER)
             .venueId(DEFAULT_VENUE_ID)
             .venueMarketingOptin(DEFAULT_VENUE_MARKETING_OPTIN)
-            .venueMarketingOptints(DEFAULT_VENUE_MARKETING_OPTINTS)
-            .techLineage(DEFAULT_TECH_LINEAGE)
-            .techCreatedDate(DEFAULT_TECH_CREATED_DATE)
-            .techUpdatedDate(DEFAULT_TECH_UPDATED_DATE)
-            .techMapping(DEFAULT_TECH_MAPPING)
-            .techComment(DEFAULT_TECH_COMMENT);
+            .venueMarketingOptints(DEFAULT_VENUE_MARKETING_OPTINTS);
         return clientVenueStats;
     }
 
@@ -219,12 +194,7 @@ class ClientVenueStatsResourceIT {
             .totalSpendLocalperOrder(UPDATED_TOTAL_SPEND_LOCALPER_ORDER)
             .venueId(UPDATED_VENUE_ID)
             .venueMarketingOptin(UPDATED_VENUE_MARKETING_OPTIN)
-            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS);
         return clientVenueStats;
     }
 
@@ -274,11 +244,6 @@ class ClientVenueStatsResourceIT {
         assertThat(testClientVenueStats.getVenueId()).isEqualTo(DEFAULT_VENUE_ID);
         assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(DEFAULT_VENUE_MARKETING_OPTIN);
         assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(DEFAULT_VENUE_MARKETING_OPTINTS);
-        assertThat(testClientVenueStats.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testClientVenueStats.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testClientVenueStats.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testClientVenueStats.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testClientVenueStats.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -338,12 +303,7 @@ class ClientVenueStatsResourceIT {
             .andExpect(jsonPath("$.[*].totalSpendLocalperOrder").value(hasItem(DEFAULT_TOTAL_SPEND_LOCALPER_ORDER.doubleValue())))
             .andExpect(jsonPath("$.[*].venueId").value(hasItem(DEFAULT_VENUE_ID)))
             .andExpect(jsonPath("$.[*].venueMarketingOptin").value(hasItem(DEFAULT_VENUE_MARKETING_OPTIN.booleanValue())))
-            .andExpect(jsonPath("$.[*].venueMarketingOptints").value(hasItem(DEFAULT_VENUE_MARKETING_OPTINTS)))
-            .andExpect(jsonPath("$.[*].techLineage").value(hasItem(DEFAULT_TECH_LINEAGE)))
-            .andExpect(jsonPath("$.[*].techCreatedDate").value(hasItem(sameInstant(DEFAULT_TECH_CREATED_DATE))))
-            .andExpect(jsonPath("$.[*].techUpdatedDate").value(hasItem(sameInstant(DEFAULT_TECH_UPDATED_DATE))))
-            .andExpect(jsonPath("$.[*].techMapping").value(hasItem(DEFAULT_TECH_MAPPING)))
-            .andExpect(jsonPath("$.[*].techComment").value(hasItem(DEFAULT_TECH_COMMENT)));
+            .andExpect(jsonPath("$.[*].venueMarketingOptints").value(hasItem(DEFAULT_VENUE_MARKETING_OPTINTS)));
     }
 
     @Test
@@ -382,12 +342,7 @@ class ClientVenueStatsResourceIT {
             .andExpect(jsonPath("$.totalSpendLocalperOrder").value(DEFAULT_TOTAL_SPEND_LOCALPER_ORDER.doubleValue()))
             .andExpect(jsonPath("$.venueId").value(DEFAULT_VENUE_ID))
             .andExpect(jsonPath("$.venueMarketingOptin").value(DEFAULT_VENUE_MARKETING_OPTIN.booleanValue()))
-            .andExpect(jsonPath("$.venueMarketingOptints").value(DEFAULT_VENUE_MARKETING_OPTINTS))
-            .andExpect(jsonPath("$.techLineage").value(DEFAULT_TECH_LINEAGE))
-            .andExpect(jsonPath("$.techCreatedDate").value(sameInstant(DEFAULT_TECH_CREATED_DATE)))
-            .andExpect(jsonPath("$.techUpdatedDate").value(sameInstant(DEFAULT_TECH_UPDATED_DATE)))
-            .andExpect(jsonPath("$.techMapping").value(DEFAULT_TECH_MAPPING))
-            .andExpect(jsonPath("$.techComment").value(DEFAULT_TECH_COMMENT));
+            .andExpect(jsonPath("$.venueMarketingOptints").value(DEFAULT_VENUE_MARKETING_OPTINTS));
     }
 
     @Test
@@ -434,12 +389,7 @@ class ClientVenueStatsResourceIT {
             .totalSpendLocalperOrder(UPDATED_TOTAL_SPEND_LOCALPER_ORDER)
             .venueId(UPDATED_VENUE_ID)
             .venueMarketingOptin(UPDATED_VENUE_MARKETING_OPTIN)
-            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS);
         ClientVenueStatsDTO clientVenueStatsDTO = clientVenueStatsMapper.toDto(updatedClientVenueStats);
 
         restClientVenueStatsMockMvc
@@ -479,11 +429,6 @@ class ClientVenueStatsResourceIT {
         assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
         assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(UPDATED_VENUE_MARKETING_OPTIN);
         assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(UPDATED_VENUE_MARKETING_OPTINTS);
-        assertThat(testClientVenueStats.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testClientVenueStats.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testClientVenueStats.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testClientVenueStats.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testClientVenueStats.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -574,8 +519,7 @@ class ClientVenueStatsResourceIT {
             .grossOrderTotal(UPDATED_GROSS_ORDER_TOTAL)
             .totalSpendLocalperOrder(UPDATED_TOTAL_SPEND_LOCALPER_ORDER)
             .venueId(UPDATED_VENUE_ID)
-            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS)
-            .techMapping(UPDATED_TECH_MAPPING);
+            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS);
 
         restClientVenueStatsMockMvc
             .perform(
@@ -614,11 +558,6 @@ class ClientVenueStatsResourceIT {
         assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
         assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(DEFAULT_VENUE_MARKETING_OPTIN);
         assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(UPDATED_VENUE_MARKETING_OPTINTS);
-        assertThat(testClientVenueStats.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testClientVenueStats.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testClientVenueStats.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testClientVenueStats.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testClientVenueStats.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -658,12 +597,7 @@ class ClientVenueStatsResourceIT {
             .totalSpendLocalperOrder(UPDATED_TOTAL_SPEND_LOCALPER_ORDER)
             .venueId(UPDATED_VENUE_ID)
             .venueMarketingOptin(UPDATED_VENUE_MARKETING_OPTIN)
-            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .venueMarketingOptints(UPDATED_VENUE_MARKETING_OPTINTS);
 
         restClientVenueStatsMockMvc
             .perform(
@@ -702,11 +636,6 @@ class ClientVenueStatsResourceIT {
         assertThat(testClientVenueStats.getVenueId()).isEqualTo(UPDATED_VENUE_ID);
         assertThat(testClientVenueStats.getVenueMarketingOptin()).isEqualTo(UPDATED_VENUE_MARKETING_OPTIN);
         assertThat(testClientVenueStats.getVenueMarketingOptints()).isEqualTo(UPDATED_VENUE_MARKETING_OPTINTS);
-        assertThat(testClientVenueStats.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testClientVenueStats.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testClientVenueStats.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testClientVenueStats.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testClientVenueStats.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test

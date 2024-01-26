@@ -55,11 +55,6 @@ entity Client {
 	userName String
     totalOrderCount Integer
     preferredLanguageCode String
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
 }
 
 entity MemberGroup {
@@ -72,22 +67,13 @@ entity ClientTag {
 	group String
 	groupDisplay String
 	color String
-	techLineage String
-	techCreatedDate ZonedDateTime
- 	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
+	tagSearchQuery String	
 }
 entity CustomField {
 	systemName String
 	displayOrder Integer
 	name String
 	value String
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
 }
 
 entity ClientVenueStats {
@@ -116,11 +102,6 @@ entity ClientVenueStats {
 	venueId String
     venueMarketingOptin Boolean
 	venueMarketingOptints String
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
 }
 
 entity BookingName{
@@ -142,17 +123,12 @@ entity ClientPhoto{
 	cropy Integer
 	cropHeight Double
 	cropWidth Double
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
+  
 }
 
 relationship OneToMany {
   Client to CustomField
   Client to ClientTag
-  Client to Reservation
   Client to MemberGroup
   ClientVenueStats to BookingName
 }
@@ -231,11 +207,7 @@ entity Reservation{
 	userId String
 	userName String
     accessPersistentId String
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
+  
 }
 
 entity ResCustomField{
@@ -243,11 +215,7 @@ entity ResCustomField{
 	displayOrder Integer
 	name String
 	value String
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
+  
 }
 
 entity ResPosTicket{
@@ -265,22 +233,14 @@ entity ResPosTicket{
 	startTime String
 	serviceCharge Double
 	endtime String
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
+  
 }
 
 entity ResPosticketsItem{
 	price Double
 	name String
 	quantity Integer
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
+  
 }
 
 entity ResTag{
@@ -289,11 +249,7 @@ entity ResTag{
 	group String
 	groupDisplay String
 	color String
-	techLineage String
-	techCreatedDate ZonedDateTime
-	techUpdatedDate ZonedDateTime
-	techMapping String
-	techComment String
+	tagSearchQuery String
 }
 
 entity ResTable{

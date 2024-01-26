@@ -22,10 +22,7 @@ public class ResPosTicketTestSamples {
             .localPosticketId("localPosticketId1")
             .employeeName("employeeName1")
             .startTime("startTime1")
-            .endtime("endtime1")
-            .techLineage("techLineage1")
-            .techMapping("techMapping1")
-            .techComment("techComment1");
+            .endtime("endtime1");
     }
 
     public static ResPosTicket getResPosTicketSample2() {
@@ -39,10 +36,7 @@ public class ResPosTicketTestSamples {
             .localPosticketId("localPosticketId2")
             .employeeName("employeeName2")
             .startTime("startTime2")
-            .endtime("endtime2")
-            .techLineage("techLineage2")
-            .techMapping("techMapping2")
-            .techComment("techComment2");
+            .endtime("endtime2");
     }
 
     public static ResPosTicket getResPosTicketRandomSampleGenerator() {
@@ -56,9 +50,6 @@ public class ResPosTicketTestSamples {
             .localPosticketId(UUID.randomUUID().toString())
             .employeeName(UUID.randomUUID().toString())
             .startTime(UUID.randomUUID().toString())
-            .endtime(UUID.randomUUID().toString())
-            .techLineage(UUID.randomUUID().toString())
-            .techMapping(UUID.randomUUID().toString())
-            .techComment(UUID.randomUUID().toString());
+            .endtime(UUID.randomUUID().toString());
     }
 }

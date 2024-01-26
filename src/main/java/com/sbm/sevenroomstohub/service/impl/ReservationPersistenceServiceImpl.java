@@ -30,9 +30,6 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
         String resvId = payloadRes.getResvId();
         Optional<Reservation> resvFromDB = reservationService.findByResvId(resvId);
 
-        String clientId = payloadRes.getClient().getClientId();
-        Optional<Client> clientFromDB = clientService.findByClientId(clientId);
-
         if (resvFromDB.isPresent()) {
             String updateDateInDB = resvFromDB.get().getUpdated();
             String updateDateInPayload = reservationPayload.getReservation().getUpdated();
@@ -45,13 +42,6 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
 
             if (timestampInPayload.isAfter(timestampInDB)) {
                 logger.debug("Payload record is newer, updating Entity having id : " + resvFromDB.get().getId());
-
-                if (clientFromDB.isPresent()) {
-                    Long idFromDB = clientFromDB.get().getId();
-                    payloadRes.getClient().setId(idFromDB);
-                    clientService.delete(clientFromDB.get().getId());
-                }
-
                 reservationPayload.getReservation().setId(resvFromDB.get().getId());
                 reservationService.delete(resvFromDB.get());
                 reservationService.save(reservationPayload);

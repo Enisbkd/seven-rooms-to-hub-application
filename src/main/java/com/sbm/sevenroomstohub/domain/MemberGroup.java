@@ -24,10 +24,7 @@ public class MemberGroup implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(
-        value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "memberGroups" }, allowSetters = true)
     private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

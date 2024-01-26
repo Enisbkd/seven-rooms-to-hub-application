@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.web.rest;
 
-import static com.sbm.sevenroomstohub.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -12,10 +11,6 @@ import com.sbm.sevenroomstohub.repository.CustomFieldRepository;
 import com.sbm.sevenroomstohub.service.dto.CustomFieldDTO;
 import com.sbm.sevenroomstohub.service.mapper.CustomFieldMapper;
 import jakarta.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -48,21 +43,6 @@ class CustomFieldResourceIT {
     private static final String DEFAULT_VALUE = "AAAAAAAAAA";
     private static final String UPDATED_VALUE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TECH_LINEAGE = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_LINEAGE = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_TECH_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_TECH_UPDATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_UPDATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final String DEFAULT_TECH_MAPPING = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_MAPPING = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TECH_COMMENT = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_COMMENT = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/custom-fields";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -94,12 +74,7 @@ class CustomFieldResourceIT {
             .systemName(DEFAULT_SYSTEM_NAME)
             .displayOrder(DEFAULT_DISPLAY_ORDER)
             .name(DEFAULT_NAME)
-            .value(DEFAULT_VALUE)
-            .techLineage(DEFAULT_TECH_LINEAGE)
-            .techCreatedDate(DEFAULT_TECH_CREATED_DATE)
-            .techUpdatedDate(DEFAULT_TECH_UPDATED_DATE)
-            .techMapping(DEFAULT_TECH_MAPPING)
-            .techComment(DEFAULT_TECH_COMMENT);
+            .value(DEFAULT_VALUE);
         return customField;
     }
 
@@ -114,12 +89,7 @@ class CustomFieldResourceIT {
             .systemName(UPDATED_SYSTEM_NAME)
             .displayOrder(UPDATED_DISPLAY_ORDER)
             .name(UPDATED_NAME)
-            .value(UPDATED_VALUE)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .value(UPDATED_VALUE);
         return customField;
     }
 
@@ -148,11 +118,6 @@ class CustomFieldResourceIT {
         assertThat(testCustomField.getDisplayOrder()).isEqualTo(DEFAULT_DISPLAY_ORDER);
         assertThat(testCustomField.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testCustomField.getValue()).isEqualTo(DEFAULT_VALUE);
-        assertThat(testCustomField.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testCustomField.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testCustomField.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testCustomField.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testCustomField.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -191,12 +156,7 @@ class CustomFieldResourceIT {
             .andExpect(jsonPath("$.[*].systemName").value(hasItem(DEFAULT_SYSTEM_NAME)))
             .andExpect(jsonPath("$.[*].displayOrder").value(hasItem(DEFAULT_DISPLAY_ORDER)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE)))
-            .andExpect(jsonPath("$.[*].techLineage").value(hasItem(DEFAULT_TECH_LINEAGE)))
-            .andExpect(jsonPath("$.[*].techCreatedDate").value(hasItem(sameInstant(DEFAULT_TECH_CREATED_DATE))))
-            .andExpect(jsonPath("$.[*].techUpdatedDate").value(hasItem(sameInstant(DEFAULT_TECH_UPDATED_DATE))))
-            .andExpect(jsonPath("$.[*].techMapping").value(hasItem(DEFAULT_TECH_MAPPING)))
-            .andExpect(jsonPath("$.[*].techComment").value(hasItem(DEFAULT_TECH_COMMENT)));
+            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE)));
     }
 
     @Test
@@ -214,12 +174,7 @@ class CustomFieldResourceIT {
             .andExpect(jsonPath("$.systemName").value(DEFAULT_SYSTEM_NAME))
             .andExpect(jsonPath("$.displayOrder").value(DEFAULT_DISPLAY_ORDER))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE))
-            .andExpect(jsonPath("$.techLineage").value(DEFAULT_TECH_LINEAGE))
-            .andExpect(jsonPath("$.techCreatedDate").value(sameInstant(DEFAULT_TECH_CREATED_DATE)))
-            .andExpect(jsonPath("$.techUpdatedDate").value(sameInstant(DEFAULT_TECH_UPDATED_DATE)))
-            .andExpect(jsonPath("$.techMapping").value(DEFAULT_TECH_MAPPING))
-            .andExpect(jsonPath("$.techComment").value(DEFAULT_TECH_COMMENT));
+            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE));
     }
 
     @Test
@@ -241,16 +196,7 @@ class CustomFieldResourceIT {
         CustomField updatedCustomField = customFieldRepository.findById(customField.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedCustomField are not directly saved in db
         em.detach(updatedCustomField);
-        updatedCustomField
-            .systemName(UPDATED_SYSTEM_NAME)
-            .displayOrder(UPDATED_DISPLAY_ORDER)
-            .name(UPDATED_NAME)
-            .value(UPDATED_VALUE)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+        updatedCustomField.systemName(UPDATED_SYSTEM_NAME).displayOrder(UPDATED_DISPLAY_ORDER).name(UPDATED_NAME).value(UPDATED_VALUE);
         CustomFieldDTO customFieldDTO = customFieldMapper.toDto(updatedCustomField);
 
         restCustomFieldMockMvc
@@ -269,11 +215,6 @@ class CustomFieldResourceIT {
         assertThat(testCustomField.getDisplayOrder()).isEqualTo(UPDATED_DISPLAY_ORDER);
         assertThat(testCustomField.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testCustomField.getValue()).isEqualTo(UPDATED_VALUE);
-        assertThat(testCustomField.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testCustomField.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testCustomField.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testCustomField.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testCustomField.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -353,7 +294,7 @@ class CustomFieldResourceIT {
         CustomField partialUpdatedCustomField = new CustomField();
         partialUpdatedCustomField.setId(customField.getId());
 
-        partialUpdatedCustomField.systemName(UPDATED_SYSTEM_NAME).value(UPDATED_VALUE).techUpdatedDate(UPDATED_TECH_UPDATED_DATE);
+        partialUpdatedCustomField.systemName(UPDATED_SYSTEM_NAME).value(UPDATED_VALUE);
 
         restCustomFieldMockMvc
             .perform(
@@ -371,11 +312,6 @@ class CustomFieldResourceIT {
         assertThat(testCustomField.getDisplayOrder()).isEqualTo(DEFAULT_DISPLAY_ORDER);
         assertThat(testCustomField.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testCustomField.getValue()).isEqualTo(UPDATED_VALUE);
-        assertThat(testCustomField.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testCustomField.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testCustomField.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testCustomField.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testCustomField.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -394,12 +330,7 @@ class CustomFieldResourceIT {
             .systemName(UPDATED_SYSTEM_NAME)
             .displayOrder(UPDATED_DISPLAY_ORDER)
             .name(UPDATED_NAME)
-            .value(UPDATED_VALUE)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .value(UPDATED_VALUE);
 
         restCustomFieldMockMvc
             .perform(
@@ -417,11 +348,6 @@ class CustomFieldResourceIT {
         assertThat(testCustomField.getDisplayOrder()).isEqualTo(UPDATED_DISPLAY_ORDER);
         assertThat(testCustomField.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testCustomField.getValue()).isEqualTo(UPDATED_VALUE);
-        assertThat(testCustomField.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testCustomField.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testCustomField.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testCustomField.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testCustomField.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test

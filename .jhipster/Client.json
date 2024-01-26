@@ -229,26 +229,6 @@
     {
       "fieldName": "preferredLanguageCode",
       "fieldType": "String"
-    },
-    {
-      "fieldName": "techLineage",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "techCreatedDate",
-      "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldName": "techUpdatedDate",
-      "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldName": "techMapping",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "techComment",
-      "fieldType": "String"
     }
   ],
   "name": "Client",
@@ -279,13 +259,6 @@
       "otherEntityName": "clientTag",
       "otherEntityRelationshipName": "client",
       "relationshipName": "clientTag",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "reservation",
-      "otherEntityRelationshipName": "client",
-      "relationshipName": "reservation",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },

@@ -18,7 +18,6 @@ package com.sbm.sevenroomstohub.serdes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.exceptions.BadEntityTypeException;
 import com.sbm.sevenroomstohub.exceptions.BadEventTypeException;
@@ -86,13 +85,6 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
 
                     if (resEntity != null) {
                         userDeserializer(resEntity, reservation);
-                        Client client = new Client();
-                        String clientId = String.valueOf(resEntity.get("client_id"));
-                        client.setClientId(clientId);
-                        client = setClientFromResrvation(reservationPayload);
-
-                        reservation.setClient(client);
-
                         reservationPayload.setReservation(reservation);
                     }
                     return (ReservationPayload) reservationPayload;
@@ -113,29 +105,6 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
             reservation.setUserId(userId);
             reservation.setUserName(userName);
         }
-    }
-
-    private Client setClientFromResrvation(com.sbm.sevenroomstohub.domain.ReservationPayload reservationPayload) {
-        Client client = new Client();
-        Reservation reservationEntity = reservationPayload.getReservation();
-        client.setUserId(reservationEntity.getUserId());
-        client.setUserName(reservationEntity.getUserName());
-        client.setLastname(reservationEntity.getLastname());
-        client.setFirstname(reservationEntity.getFirstname());
-        client.setEmail(reservationEntity.getEmail());
-        client.setPostalCode(reservationEntity.getPostalCode());
-        client.setVenueGroupId(reservationEntity.getVenueGroupId());
-        client.setReferenceCode(reservationEntity.getClientReferenceCode());
-        client.setAddress(reservationEntity.getAddress());
-        client.setAddress2(reservationEntity.getAddress2());
-        client.setPhoneNumber(reservationEntity.getPhoneNumber());
-        client.setLoyaltyId(reservationEntity.getLoyaltyId());
-        client.setLoyaltyRank(reservationEntity.getLoyaltyRank());
-        client.setLoyaltyTier(reservationEntity.getLoyaltyTier());
-        client.setCity(reservationEntity.getCity());
-        client.setCountry(reservationEntity.getCountry());
-        client.setState(reservationEntity.getState());
-        return client;
     }
 
     @Override

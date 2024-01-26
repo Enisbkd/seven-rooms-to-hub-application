@@ -6,7 +6,6 @@ import static com.sbm.sevenroomstohub.domain.ClientTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.ClientVenueStatsTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.CustomFieldTestSamples.*;
 import static com.sbm.sevenroomstohub.domain.MemberGroupTestSamples.*;
-import static com.sbm.sevenroomstohub.domain.ReservationTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sbm.sevenroomstohub.web.rest.TestUtil;
@@ -96,28 +95,6 @@ class ClientTest {
         client.setClientTags(new HashSet<>());
         assertThat(client.getClientTags()).doesNotContain(clientTagBack);
         assertThat(clientTagBack.getClient()).isNull();
-    }
-
-    @Test
-    void reservationTest() throws Exception {
-        Client client = getClientRandomSampleGenerator();
-        Reservation reservationBack = getReservationRandomSampleGenerator();
-
-        client.addReservation(reservationBack);
-        assertThat(client.getReservations()).containsOnly(reservationBack);
-        assertThat(reservationBack.getClient()).isEqualTo(client);
-
-        client.removeReservation(reservationBack);
-        assertThat(client.getReservations()).doesNotContain(reservationBack);
-        assertThat(reservationBack.getClient()).isNull();
-
-        client.reservations(new HashSet<>(Set.of(reservationBack)));
-        assertThat(client.getReservations()).containsOnly(reservationBack);
-        assertThat(reservationBack.getClient()).isEqualTo(client);
-
-        client.setReservations(new HashSet<>());
-        assertThat(client.getReservations()).doesNotContain(reservationBack);
-        assertThat(reservationBack.getClient()).isNull();
     }
 
     @Test

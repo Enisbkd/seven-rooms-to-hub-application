@@ -52,25 +52,9 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.color')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'color'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('techLineage')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techLineage')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techCreatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techUpdatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techMapping')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techMapping')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techComment')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techComment')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
+            <th scope="row" v-on:click="changeOrder('tagSearchQuery')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.tagSearchQuery')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'tagSearchQuery'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('reservation.id')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.reservation')"></span>
@@ -89,11 +73,7 @@
             <td>{{ resTag.group }}</td>
             <td>{{ resTag.groupDisplay }}</td>
             <td>{{ resTag.color }}</td>
-            <td>{{ resTag.techLineage }}</td>
-            <td>{{ formatDateShort(resTag.techCreatedDate) || '' }}</td>
-            <td>{{ formatDateShort(resTag.techUpdatedDate) || '' }}</td>
-            <td>{{ resTag.techMapping }}</td>
-            <td>{{ resTag.techComment }}</td>
+            <td>{{ resTag.tagSearchQuery }}</td>
             <td>
               <div v-if="resTag.reservation">
                 <router-link :to="{ name: 'ReservationView', params: { reservationId: resTag.reservation.id } }">{{

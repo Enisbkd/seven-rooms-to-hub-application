@@ -241,21 +241,6 @@ public class Client implements Serializable {
     @JsonProperty("preferred_language_code")
     private String preferredLanguageCode;
 
-    @Column(name = "tech_lineage")
-    private String techLineage;
-
-    @Column(name = "tech_created_date")
-    private ZonedDateTime techCreatedDate;
-
-    @Column(name = "tech_updated_date")
-    private ZonedDateTime techUpdatedDate;
-
-    @Column(name = "tech_mapping")
-    private String techMapping;
-
-    @Column(name = "tech_comment")
-    private String techComment;
-
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
@@ -279,12 +264,7 @@ public class Client implements Serializable {
     @JsonProperty("client_tags")
     private Set<ClientTag> clientTags = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client" }, allowSetters = true)
-    private Set<Reservation> reservations = new HashSet<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
     @JsonProperty("member_groups")
@@ -1033,71 +1013,6 @@ public class Client implements Serializable {
         this.preferredLanguageCode = preferredLanguageCode;
     }
 
-    public String getTechLineage() {
-        return this.techLineage;
-    }
-
-    public Client techLineage(String techLineage) {
-        this.setTechLineage(techLineage);
-        return this;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return this.techCreatedDate;
-    }
-
-    public Client techCreatedDate(ZonedDateTime techCreatedDate) {
-        this.setTechCreatedDate(techCreatedDate);
-        return this;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return this.techUpdatedDate;
-    }
-
-    public Client techUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.setTechUpdatedDate(techUpdatedDate);
-        return this;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return this.techMapping;
-    }
-
-    public Client techMapping(String techMapping) {
-        this.setTechMapping(techMapping);
-        return this;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return this.techComment;
-    }
-
-    public Client techComment(String techComment) {
-        this.setTechComment(techComment);
-        return this;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     public ClientPhoto getClientPhoto() {
         return this.clientPhoto;
     }
@@ -1183,37 +1098,6 @@ public class Client implements Serializable {
     public Client removeClientTag(ClientTag clientTag) {
         this.clientTags.remove(clientTag);
         clientTag.setClient(null);
-        return this;
-    }
-
-    public Set<Reservation> getReservations() {
-        return this.reservations;
-    }
-
-    public void setReservations(Set<Reservation> reservations) {
-        if (this.reservations != null) {
-            this.reservations.forEach(i -> i.setClient(null));
-        }
-        if (reservations != null) {
-            reservations.forEach(i -> i.setClient(this));
-        }
-        this.reservations = reservations;
-    }
-
-    public Client reservations(Set<Reservation> reservations) {
-        this.setReservations(reservations);
-        return this;
-    }
-
-    public Client addReservation(Reservation reservation) {
-        this.reservations.add(reservation);
-        reservation.setClient(this);
-        return this;
-    }
-
-    public Client removeReservation(Reservation reservation) {
-        this.reservations.remove(reservation);
-        reservation.setClient(null);
         return this;
     }
 
@@ -1328,11 +1212,6 @@ public class Client implements Serializable {
             ", userName='" + getUserName() + "'" +
             ", totalOrderCount=" + getTotalOrderCount() +
             ", preferredLanguageCode='" + getPreferredLanguageCode() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
             ", clientPhoto='" + getClientPhoto() + "'" +
             ", clientTags='" + getClientTags() + "'" +
             ", customField ='" + getCustomFields() + "'" +

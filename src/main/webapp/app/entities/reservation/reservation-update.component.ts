@@ -4,11 +4,9 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ReservationService from './reservation.service';
-import { useValidation, useDateFormat } from '@/shared/composables';
+import { useValidation } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
-import ClientService from '@/entities/client/client.service';
-import { type IClient } from '@/shared/model/client.model';
 import { type IReservation, Reservation } from '@/shared/model/reservation.model';
 
 export default defineComponent({
@@ -19,10 +17,6 @@ export default defineComponent({
     const alertService = inject('alertService', () => useAlertService(), true);
 
     const reservation: Ref<IReservation> = ref(new Reservation());
-
-    const clientService = inject('clientService', () => new ClientService());
-
-    const clients: Ref<IClient[]> = ref([]);
     const isSaving = ref(false);
     const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? 'en'), true);
 
@@ -34,8 +28,6 @@ export default defineComponent({
     const retrieveReservation = async reservationId => {
       try {
         const res = await reservationService().find(reservationId);
-        res.techCreatedDate = new Date(res.techCreatedDate);
-        res.techUpdatedDate = new Date(res.techUpdatedDate);
         reservation.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -46,13 +38,7 @@ export default defineComponent({
       retrieveReservation(route.params.reservationId);
     }
 
-    const initRelationships = () => {
-      clientService()
-        .retrieve()
-        .then(res => {
-          clients.value = res.data;
-        });
-    };
+    const initRelationships = () => {};
 
     initRelationships();
 
@@ -126,16 +112,10 @@ export default defineComponent({
       sourceClientId: {},
       userId: {},
       userName: {},
-      techLineage: {},
-      techCreatedDate: {},
-      techUpdatedDate: {},
-      techMapping: {},
-      techComment: {},
       resTags: {},
       resPosTickets: {},
       resCustomFields: {},
       resTables: {},
-      client: {},
     };
     const v$ = useVuelidate(validationRules, reservation as any);
     v$.value.$validate();
@@ -147,9 +127,7 @@ export default defineComponent({
       previousState,
       isSaving,
       currentLanguage,
-      clients,
       v$,
-      ...useDateFormat({ entityRef: reservation }),
       t$,
     };
   },

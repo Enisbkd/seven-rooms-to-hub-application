@@ -21,11 +21,6 @@
       "price": "Price",
       "name": "Name",
       "quantity": "Quantity",
-      "techLineage": "Tech Lineage",
-      "techCreatedDate": "Tech Created Date",
-      "techUpdatedDate": "Tech Updated Date",
-      "techMapping": "Tech Mapping",
-      "techComment": "Tech Comment",
       "resPosTicket": "Res Pos Ticket"
     }
   }

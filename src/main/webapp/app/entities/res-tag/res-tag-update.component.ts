@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ResTagService from './res-tag.service';
-import { useValidation, useDateFormat } from '@/shared/composables';
+import { useValidation } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 import ReservationService from '@/entities/reservation/reservation.service';
@@ -34,8 +34,6 @@ export default defineComponent({
     const retrieveResTag = async resTagId => {
       try {
         const res = await resTagService().find(resTagId);
-        res.techCreatedDate = new Date(res.techCreatedDate);
-        res.techUpdatedDate = new Date(res.techUpdatedDate);
         resTag.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -64,11 +62,7 @@ export default defineComponent({
       group: {},
       groupDisplay: {},
       color: {},
-      techLineage: {},
-      techCreatedDate: {},
-      techUpdatedDate: {},
-      techMapping: {},
-      techComment: {},
+      tagSearchQuery: {},
       reservation: {},
     };
     const v$ = useVuelidate(validationRules, resTag as any);
@@ -83,7 +77,6 @@ export default defineComponent({
       currentLanguage,
       reservations,
       v$,
-      ...useDateFormat({ entityRef: resTag }),
       t$,
     };
   },

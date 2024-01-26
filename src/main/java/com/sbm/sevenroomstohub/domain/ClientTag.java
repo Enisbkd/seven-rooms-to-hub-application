@@ -42,26 +42,12 @@ public class ClientTag implements Serializable {
     @Column(name = "color")
     private String color;
 
-    @Column(name = "tech_lineage")
-    private String techLineage;
-
-    @Column(name = "tech_created_date")
-    private ZonedDateTime techCreatedDate;
-
-    @Column(name = "tech_updated_date")
-    private ZonedDateTime techUpdatedDate;
-
-    @Column(name = "tech_mapping")
-    private String techMapping;
-
-    @Column(name = "tech_comment")
-    private String techComment;
+    @Column(name = "tag_search_query")
+    @JsonProperty("tag_search_query")
+    private String tagSearchQuery;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties(
-        value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "memberGroups" }, allowSetters = true)
     private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -144,69 +130,17 @@ public class ClientTag implements Serializable {
         this.color = color;
     }
 
-    public String getTechLineage() {
-        return this.techLineage;
+    public String getTagSearchQuery() {
+        return this.tagSearchQuery;
     }
 
-    public ClientTag techLineage(String techLineage) {
-        this.setTechLineage(techLineage);
+    public ClientTag tagSearchQuery(String tagSearchQuery) {
+        this.setTagSearchQuery(tagSearchQuery);
         return this;
     }
 
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return this.techCreatedDate;
-    }
-
-    public ClientTag techCreatedDate(ZonedDateTime techCreatedDate) {
-        this.setTechCreatedDate(techCreatedDate);
-        return this;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return this.techUpdatedDate;
-    }
-
-    public ClientTag techUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.setTechUpdatedDate(techUpdatedDate);
-        return this;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return this.techMapping;
-    }
-
-    public ClientTag techMapping(String techMapping) {
-        this.setTechMapping(techMapping);
-        return this;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return this.techComment;
-    }
-
-    public ClientTag techComment(String techComment) {
-        this.setTechComment(techComment);
-        return this;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
+    public void setTagSearchQuery(String tagSearchQuery) {
+        this.tagSearchQuery = tagSearchQuery;
     }
 
     public Client getClient() {
@@ -251,11 +185,7 @@ public class ClientTag implements Serializable {
             ", group='" + getGroup() + "'" +
             ", groupDisplay='" + getGroupDisplay() + "'" +
             ", color='" + getColor() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
+            ", tagSearchQuery='" + getTagSearchQuery() + "'" +
             "}";
     }
 }

@@ -148,26 +148,6 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.venueMarketingOptints')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'venueMarketingOptints'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('techLineage')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techLineage')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techCreatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techUpdatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techMapping')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techMapping')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techComment')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techComment')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
-            </th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -203,11 +183,6 @@
             <td>{{ clientVenueStats.venueId }}</td>
             <td>{{ clientVenueStats.venueMarketingOptin }}</td>
             <td>{{ clientVenueStats.venueMarketingOptints }}</td>
-            <td>{{ clientVenueStats.techLineage }}</td>
-            <td>{{ formatDateShort(clientVenueStats.techCreatedDate) || '' }}</td>
-            <td>{{ formatDateShort(clientVenueStats.techUpdatedDate) || '' }}</td>
-            <td>{{ clientVenueStats.techMapping }}</td>
-            <td>{{ clientVenueStats.techComment }}</td>
             <td class="text-right">
               <div class="btn-group">
                 <router-link
