@@ -1,10 +1,8 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
-import java.util.Map;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,77 +23,49 @@ public class ClientPhoto implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "large", length = 1000)
+    @Column(name = "large")
     private String large;
 
     @Column(name = "large_height")
-    @JsonProperty("large_height")
     private Integer largeHeight;
 
     @Column(name = "large_width")
-    @JsonProperty("large_width")
     private Integer largeWidth;
 
-    @Column(name = "medium", length = 1000)
+    @Column(name = "medium")
     private String medium;
 
-    @Column(name = "medium_height", length = 1000)
-    @JsonProperty("medium_height")
+    @Column(name = "medium_height")
     private Integer mediumHeight;
 
     @Column(name = "medium_width")
-    @JsonProperty("medium_width")
     private Integer mediumWidth;
 
-    @Column(name = "small", length = 1000)
+    @Column(name = "small")
     private String small;
 
     @Column(name = "small_height")
-    @JsonProperty("small_height")
     private Integer smallHeight;
 
     @Column(name = "small_width")
-    @JsonProperty("small_width")
     private Integer smallWidth;
 
-    @Column(name = "photo_raw", length = 1000)
+    @Column(name = "jhi_raw")
     private String raw;
 
     @Column(name = "cropx")
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Integer cropx;
 
     @Column(name = "cropy")
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Integer cropy;
 
     @Column(name = "crop_height")
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Double cropHeight;
 
     @Column(name = "crop_width")
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private Double cropWidth;
 
-    @Column(name = "tech_lineage")
-    private String techLineage;
-
-    @Column(name = "tech_created_date")
-    private ZonedDateTime techCreatedDate;
-
-    @Column(name = "tech_updated_date")
-    private ZonedDateTime techUpdatedDate;
-
-    @Column(name = "tech_mapping")
-    private String techMapping;
-
-    @Column(name = "tech_comment")
-    private String techComment;
-
-    @JsonIgnoreProperties(
-        value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "reservations", "memberGroups" },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "clientPhoto", "clientVenueStats", "customFields", "clientTags", "memberGroups" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "clientPhoto")
     private Client client;
 
@@ -296,71 +266,6 @@ public class ClientPhoto implements Serializable {
         this.cropWidth = cropWidth;
     }
 
-    public String getTechLineage() {
-        return this.techLineage;
-    }
-
-    public ClientPhoto techLineage(String techLineage) {
-        this.setTechLineage(techLineage);
-        return this;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return this.techCreatedDate;
-    }
-
-    public ClientPhoto techCreatedDate(ZonedDateTime techCreatedDate) {
-        this.setTechCreatedDate(techCreatedDate);
-        return this;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return this.techUpdatedDate;
-    }
-
-    public ClientPhoto techUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.setTechUpdatedDate(techUpdatedDate);
-        return this;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return this.techMapping;
-    }
-
-    public ClientPhoto techMapping(String techMapping) {
-        this.setTechMapping(techMapping);
-        return this;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return this.techComment;
-    }
-
-    public ClientPhoto techComment(String techComment) {
-        this.setTechComment(techComment);
-        return this;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     public Client getClient() {
         return this.client;
     }
@@ -418,11 +323,6 @@ public class ClientPhoto implements Serializable {
             ", cropy=" + getCropy() +
             ", cropHeight=" + getCropHeight() +
             ", cropWidth=" + getCropWidth() +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
             "}";
     }
 }

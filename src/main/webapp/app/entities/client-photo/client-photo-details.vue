@@ -90,36 +90,6 @@
           <dd>
             <span>{{ clientPhoto.cropWidth }}</span>
           </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techLineage')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientPhoto.techLineage }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techCreatedDate')"></span>
-          </dt>
-          <dd>
-            <span v-if="clientPhoto.techCreatedDate">{{ formatDateLong(clientPhoto.techCreatedDate) }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techUpdatedDate')"></span>
-          </dt>
-          <dd>
-            <span v-if="clientPhoto.techUpdatedDate">{{ formatDateLong(clientPhoto.techUpdatedDate) }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techMapping')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientPhoto.techMapping }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techComment')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientPhoto.techComment }}</span>
-          </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.back')"></span>

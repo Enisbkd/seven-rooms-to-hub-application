@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.web.rest;
 
-import static com.sbm.sevenroomstohub.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -12,10 +11,6 @@ import com.sbm.sevenroomstohub.repository.ReservationRepository;
 import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
 import com.sbm.sevenroomstohub.service.mapper.ReservationMapper;
 import jakarta.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -237,21 +232,6 @@ class ReservationResourceIT {
     private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TECH_LINEAGE = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_LINEAGE = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_TECH_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_TECH_UPDATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TECH_UPDATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final String DEFAULT_TECH_MAPPING = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_MAPPING = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TECH_COMMENT = "AAAAAAAAAA";
-    private static final String UPDATED_TECH_COMMENT = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/reservations";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -346,12 +326,7 @@ class ReservationResourceIT {
             .sendreminderSms(DEFAULT_SENDREMINDER_SMS)
             .sourceClientId(DEFAULT_SOURCE_CLIENT_ID)
             .userId(DEFAULT_USER_ID)
-            .userName(DEFAULT_USER_NAME)
-            .techLineage(DEFAULT_TECH_LINEAGE)
-            .techCreatedDate(DEFAULT_TECH_CREATED_DATE)
-            .techUpdatedDate(DEFAULT_TECH_UPDATED_DATE)
-            .techMapping(DEFAULT_TECH_MAPPING)
-            .techComment(DEFAULT_TECH_COMMENT);
+            .userName(DEFAULT_USER_NAME);
         return reservation;
     }
 
@@ -429,12 +404,7 @@ class ReservationResourceIT {
             .sendreminderSms(UPDATED_SENDREMINDER_SMS)
             .sourceClientId(UPDATED_SOURCE_CLIENT_ID)
             .userId(UPDATED_USER_ID)
-            .userName(UPDATED_USER_NAME)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .userName(UPDATED_USER_NAME);
         return reservation;
     }
 
@@ -526,11 +496,6 @@ class ReservationResourceIT {
         assertThat(testReservation.getSourceClientId()).isEqualTo(DEFAULT_SOURCE_CLIENT_ID);
         assertThat(testReservation.getUserId()).isEqualTo(DEFAULT_USER_ID);
         assertThat(testReservation.getUserName()).isEqualTo(DEFAULT_USER_NAME);
-        assertThat(testReservation.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testReservation.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testReservation.getTechUpdatedDate()).isEqualTo(DEFAULT_TECH_UPDATED_DATE);
-        assertThat(testReservation.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testReservation.getTechComment()).isEqualTo(DEFAULT_TECH_COMMENT);
     }
 
     @Test
@@ -632,12 +597,7 @@ class ReservationResourceIT {
             .andExpect(jsonPath("$.[*].sendreminderSms").value(hasItem(DEFAULT_SENDREMINDER_SMS.booleanValue())))
             .andExpect(jsonPath("$.[*].sourceClientId").value(hasItem(DEFAULT_SOURCE_CLIENT_ID)))
             .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID)))
-            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME)))
-            .andExpect(jsonPath("$.[*].techLineage").value(hasItem(DEFAULT_TECH_LINEAGE)))
-            .andExpect(jsonPath("$.[*].techCreatedDate").value(hasItem(sameInstant(DEFAULT_TECH_CREATED_DATE))))
-            .andExpect(jsonPath("$.[*].techUpdatedDate").value(hasItem(sameInstant(DEFAULT_TECH_UPDATED_DATE))))
-            .andExpect(jsonPath("$.[*].techMapping").value(hasItem(DEFAULT_TECH_MAPPING)))
-            .andExpect(jsonPath("$.[*].techComment").value(hasItem(DEFAULT_TECH_COMMENT)));
+            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME)));
     }
 
     @Test
@@ -718,12 +678,7 @@ class ReservationResourceIT {
             .andExpect(jsonPath("$.sendreminderSms").value(DEFAULT_SENDREMINDER_SMS.booleanValue()))
             .andExpect(jsonPath("$.sourceClientId").value(DEFAULT_SOURCE_CLIENT_ID))
             .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID))
-            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME))
-            .andExpect(jsonPath("$.techLineage").value(DEFAULT_TECH_LINEAGE))
-            .andExpect(jsonPath("$.techCreatedDate").value(sameInstant(DEFAULT_TECH_CREATED_DATE)))
-            .andExpect(jsonPath("$.techUpdatedDate").value(sameInstant(DEFAULT_TECH_UPDATED_DATE)))
-            .andExpect(jsonPath("$.techMapping").value(DEFAULT_TECH_MAPPING))
-            .andExpect(jsonPath("$.techComment").value(DEFAULT_TECH_COMMENT));
+            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME));
     }
 
     @Test
@@ -812,12 +767,7 @@ class ReservationResourceIT {
             .sendreminderSms(UPDATED_SENDREMINDER_SMS)
             .sourceClientId(UPDATED_SOURCE_CLIENT_ID)
             .userId(UPDATED_USER_ID)
-            .userName(UPDATED_USER_NAME)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .userName(UPDATED_USER_NAME);
         ReservationDTO reservationDTO = reservationMapper.toDto(updatedReservation);
 
         restReservationMockMvc
@@ -899,11 +849,6 @@ class ReservationResourceIT {
         assertThat(testReservation.getSourceClientId()).isEqualTo(UPDATED_SOURCE_CLIENT_ID);
         assertThat(testReservation.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testReservation.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testReservation.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testReservation.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testReservation.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testReservation.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testReservation.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -1011,9 +956,7 @@ class ReservationResourceIT {
             .sendReminderEmail(UPDATED_SEND_REMINDER_EMAIL)
             .sourceClientId(UPDATED_SOURCE_CLIENT_ID)
             .userId(UPDATED_USER_ID)
-            .userName(UPDATED_USER_NAME)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techComment(UPDATED_TECH_COMMENT);
+            .userName(UPDATED_USER_NAME);
 
         restReservationMockMvc
             .perform(
@@ -1094,11 +1037,6 @@ class ReservationResourceIT {
         assertThat(testReservation.getSourceClientId()).isEqualTo(UPDATED_SOURCE_CLIENT_ID);
         assertThat(testReservation.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testReservation.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testReservation.getTechLineage()).isEqualTo(DEFAULT_TECH_LINEAGE);
-        assertThat(testReservation.getTechCreatedDate()).isEqualTo(DEFAULT_TECH_CREATED_DATE);
-        assertThat(testReservation.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testReservation.getTechMapping()).isEqualTo(DEFAULT_TECH_MAPPING);
-        assertThat(testReservation.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test
@@ -1180,12 +1118,7 @@ class ReservationResourceIT {
             .sendreminderSms(UPDATED_SENDREMINDER_SMS)
             .sourceClientId(UPDATED_SOURCE_CLIENT_ID)
             .userId(UPDATED_USER_ID)
-            .userName(UPDATED_USER_NAME)
-            .techLineage(UPDATED_TECH_LINEAGE)
-            .techCreatedDate(UPDATED_TECH_CREATED_DATE)
-            .techUpdatedDate(UPDATED_TECH_UPDATED_DATE)
-            .techMapping(UPDATED_TECH_MAPPING)
-            .techComment(UPDATED_TECH_COMMENT);
+            .userName(UPDATED_USER_NAME);
 
         restReservationMockMvc
             .perform(
@@ -1266,11 +1199,6 @@ class ReservationResourceIT {
         assertThat(testReservation.getSourceClientId()).isEqualTo(UPDATED_SOURCE_CLIENT_ID);
         assertThat(testReservation.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testReservation.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testReservation.getTechLineage()).isEqualTo(UPDATED_TECH_LINEAGE);
-        assertThat(testReservation.getTechCreatedDate()).isEqualTo(UPDATED_TECH_CREATED_DATE);
-        assertThat(testReservation.getTechUpdatedDate()).isEqualTo(UPDATED_TECH_UPDATED_DATE);
-        assertThat(testReservation.getTechMapping()).isEqualTo(UPDATED_TECH_MAPPING);
-        assertThat(testReservation.getTechComment()).isEqualTo(UPDATED_TECH_COMMENT);
     }
 
     @Test

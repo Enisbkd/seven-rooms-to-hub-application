@@ -50,19 +50,9 @@ public interface ClientService {
     Optional<ClientDTO> findOne(Long id);
 
     /**
-     * Get the "clientId" client.
-     *
-     * @param clientId the business id of the entity.
-     * @return the entity.
-     */
-
-    Optional<ClientDTO> findByClientId(String clientId);
-
-    /**
      * Delete the "id" client.
      *
      * @param id the id of the entity.
      */
-
     void delete(Long id);
 }

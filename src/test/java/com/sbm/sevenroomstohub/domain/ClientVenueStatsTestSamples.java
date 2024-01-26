@@ -23,10 +23,7 @@ public class ClientVenueStatsTestSamples {
             .totalVisits(1)
             .lastOrderDate("lastOrderDate1")
             .venueId("venueId1")
-            .venueMarketingOptints("venueMarketingOptints1")
-            .techLineage("techLineage1")
-            .techMapping("techMapping1")
-            .techComment("techComment1");
+            .venueMarketingOptints("venueMarketingOptints1");
     }
 
     public static ClientVenueStats getClientVenueStatsSample2() {
@@ -41,10 +38,7 @@ public class ClientVenueStatsTestSamples {
             .totalVisits(2)
             .lastOrderDate("lastOrderDate2")
             .venueId("venueId2")
-            .venueMarketingOptints("venueMarketingOptints2")
-            .techLineage("techLineage2")
-            .techMapping("techMapping2")
-            .techComment("techComment2");
+            .venueMarketingOptints("venueMarketingOptints2");
     }
 
     public static ClientVenueStats getClientVenueStatsRandomSampleGenerator() {
@@ -59,9 +53,6 @@ public class ClientVenueStatsTestSamples {
             .totalVisits(intCount.incrementAndGet())
             .lastOrderDate(UUID.randomUUID().toString())
             .venueId(UUID.randomUUID().toString())
-            .venueMarketingOptints(UUID.randomUUID().toString())
-            .techLineage(UUID.randomUUID().toString())
-            .techMapping(UUID.randomUUID().toString())
-            .techComment(UUID.randomUUID().toString());
+            .venueMarketingOptints(UUID.randomUUID().toString());
     }
 }

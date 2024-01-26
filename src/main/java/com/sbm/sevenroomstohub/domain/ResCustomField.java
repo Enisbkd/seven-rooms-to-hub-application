@@ -1,10 +1,8 @@
 package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,11 +24,9 @@ public class ResCustomField implements Serializable {
     private Long id;
 
     @Column(name = "system_name")
-    @JsonProperty("system_name")
     private String systemName;
 
     @Column(name = "display_order")
-    @JsonProperty("display_order")
     private Integer displayOrder;
 
     @Column(name = "name")
@@ -39,23 +35,8 @@ public class ResCustomField implements Serializable {
     @Column(name = "jhi_value")
     private String value;
 
-    @Column(name = "tech_lineage")
-    private String techLineage;
-
-    @Column(name = "tech_created_date")
-    private ZonedDateTime techCreatedDate;
-
-    @Column(name = "tech_updated_date")
-    private ZonedDateTime techUpdatedDate;
-
-    @Column(name = "tech_mapping")
-    private String techMapping;
-
-    @Column(name = "tech_comment")
-    private String techComment;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables" }, allowSetters = true)
     private Reservation reservation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -125,71 +106,6 @@ public class ResCustomField implements Serializable {
         this.value = value;
     }
 
-    public String getTechLineage() {
-        return this.techLineage;
-    }
-
-    public ResCustomField techLineage(String techLineage) {
-        this.setTechLineage(techLineage);
-        return this;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return this.techCreatedDate;
-    }
-
-    public ResCustomField techCreatedDate(ZonedDateTime techCreatedDate) {
-        this.setTechCreatedDate(techCreatedDate);
-        return this;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return this.techUpdatedDate;
-    }
-
-    public ResCustomField techUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.setTechUpdatedDate(techUpdatedDate);
-        return this;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return this.techMapping;
-    }
-
-    public ResCustomField techMapping(String techMapping) {
-        this.setTechMapping(techMapping);
-        return this;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return this.techComment;
-    }
-
-    public ResCustomField techComment(String techComment) {
-        this.setTechComment(techComment);
-        return this;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     public Reservation getReservation() {
         return this.reservation;
     }
@@ -231,11 +147,6 @@ public class ResCustomField implements Serializable {
             ", displayOrder=" + getDisplayOrder() +
             ", name='" + getName() + "'" +
             ", value='" + getValue() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
             "}";
     }
 }

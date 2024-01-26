@@ -156,36 +156,6 @@
           <dd>
             <span>{{ clientVenueStats.venueMarketingOptints }}</span>
           </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techLineage')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.techLineage }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techCreatedDate')"></span>
-          </dt>
-          <dd>
-            <span v-if="clientVenueStats.techCreatedDate">{{ formatDateLong(clientVenueStats.techCreatedDate) }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techUpdatedDate')"></span>
-          </dt>
-          <dd>
-            <span v-if="clientVenueStats.techUpdatedDate">{{ formatDateLong(clientVenueStats.techUpdatedDate) }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techMapping')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.techMapping }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientVenueStats.techComment')"></span>
-          </dt>
-          <dd>
-            <span>{{ clientVenueStats.techComment }}</span>
-          </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.back')"></span>

@@ -25,10 +25,7 @@ public class ClientPhotoTestSamples {
             .smallWidth(1)
             .raw("raw1")
             .cropx(1)
-            .cropy(1)
-            .techLineage("techLineage1")
-            .techMapping("techMapping1")
-            .techComment("techComment1");
+            .cropy(1);
     }
 
     public static ClientPhoto getClientPhotoSample2() {
@@ -45,10 +42,7 @@ public class ClientPhotoTestSamples {
             .smallWidth(2)
             .raw("raw2")
             .cropx(2)
-            .cropy(2)
-            .techLineage("techLineage2")
-            .techMapping("techMapping2")
-            .techComment("techComment2");
+            .cropy(2);
     }
 
     public static ClientPhoto getClientPhotoRandomSampleGenerator() {
@@ -65,9 +59,6 @@ public class ClientPhotoTestSamples {
             .smallWidth(intCount.incrementAndGet())
             .raw(UUID.randomUUID().toString())
             .cropx(intCount.incrementAndGet())
-            .cropy(intCount.incrementAndGet())
-            .techLineage(UUID.randomUUID().toString())
-            .techMapping(UUID.randomUUID().toString())
-            .techComment(UUID.randomUUID().toString());
+            .cropy(intCount.incrementAndGet());
     }
 }

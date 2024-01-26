@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ClientTagService from './client-tag.service';
-import { useValidation, useDateFormat } from '@/shared/composables';
+import { useValidation } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 import ClientService from '@/entities/client/client.service';
@@ -34,8 +34,6 @@ export default defineComponent({
     const retrieveClientTag = async clientTagId => {
       try {
         const res = await clientTagService().find(clientTagId);
-        res.techCreatedDate = new Date(res.techCreatedDate);
-        res.techUpdatedDate = new Date(res.techUpdatedDate);
         clientTag.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -64,11 +62,7 @@ export default defineComponent({
       group: {},
       groupDisplay: {},
       color: {},
-      techLineage: {},
-      techCreatedDate: {},
-      techUpdatedDate: {},
-      techMapping: {},
-      techComment: {},
+      tagSearchQuery: {},
       client: {},
     };
     const v$ = useVuelidate(validationRules, clientTag as any);
@@ -83,7 +77,6 @@ export default defineComponent({
       currentLanguage,
       clients,
       v$,
-      ...useDateFormat({ entityRef: clientTag }),
       t$,
     };
   },

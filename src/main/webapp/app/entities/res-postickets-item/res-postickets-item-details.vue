@@ -25,36 +25,6 @@
             <span>{{ resPosticketsItem.quantity }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techLineage')"></span>
-          </dt>
-          <dd>
-            <span>{{ resPosticketsItem.techLineage }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techCreatedDate')"></span>
-          </dt>
-          <dd>
-            <span v-if="resPosticketsItem.techCreatedDate">{{ formatDateLong(resPosticketsItem.techCreatedDate) }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techUpdatedDate')"></span>
-          </dt>
-          <dd>
-            <span v-if="resPosticketsItem.techUpdatedDate">{{ formatDateLong(resPosticketsItem.techUpdatedDate) }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techMapping')"></span>
-          </dt>
-          <dd>
-            <span>{{ resPosticketsItem.techMapping }}</span>
-          </dd>
-          <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techComment')"></span>
-          </dt>
-          <dd>
-            <span>{{ resPosticketsItem.techComment }}</span>
-          </dd>
-          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.resPosTicket')"></span>
           </dt>
           <dd>

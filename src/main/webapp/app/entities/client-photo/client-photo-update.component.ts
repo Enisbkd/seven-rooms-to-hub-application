@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ClientPhotoService from './client-photo.service';
-import { useValidation, useDateFormat } from '@/shared/composables';
+import { useValidation } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 import { type IClientPhoto, ClientPhoto } from '@/shared/model/client-photo.model';
@@ -28,8 +28,6 @@ export default defineComponent({
     const retrieveClientPhoto = async clientPhotoId => {
       try {
         const res = await clientPhotoService().find(clientPhotoId);
-        res.techCreatedDate = new Date(res.techCreatedDate);
-        res.techUpdatedDate = new Date(res.techUpdatedDate);
         clientPhoto.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -61,11 +59,6 @@ export default defineComponent({
       cropy: {},
       cropHeight: {},
       cropWidth: {},
-      techLineage: {},
-      techCreatedDate: {},
-      techUpdatedDate: {},
-      techMapping: {},
-      techComment: {},
       client: {},
     };
     const v$ = useVuelidate(validationRules, clientPhoto as any);
@@ -79,7 +72,6 @@ export default defineComponent({
       isSaving,
       currentLanguage,
       v$,
-      ...useDateFormat({ entityRef: clientPhoto }),
       t$,
     };
   },

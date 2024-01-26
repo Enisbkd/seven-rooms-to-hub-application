@@ -3,7 +3,6 @@ import { useI18n } from 'vue-i18n';
 
 import CustomFieldService from './custom-field.service';
 import { type ICustomField } from '@/shared/model/custom-field.model';
-import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 export default defineComponent({
@@ -11,7 +10,6 @@ export default defineComponent({
   name: 'CustomField',
   setup() {
     const { t: t$ } = useI18n();
-    const dateFormat = useDateFormat();
     const customFieldService = inject('customFieldService', () => new CustomFieldService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -118,7 +116,6 @@ export default defineComponent({
       isFetching,
       retrieveCustomFields,
       clear,
-      ...dateFormat,
       removeId,
       removeEntity,
       prepareRemove,

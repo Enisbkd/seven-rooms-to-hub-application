@@ -27,7 +27,7 @@ public class ResTable implements Serializable {
     private Integer tableNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables" }, allowSetters = true)
     private Reservation reservation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

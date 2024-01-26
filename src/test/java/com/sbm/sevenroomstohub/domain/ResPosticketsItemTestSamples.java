@@ -12,32 +12,17 @@ public class ResPosticketsItemTestSamples {
     private static final AtomicInteger intCount = new AtomicInteger(random.nextInt() + (2 * Short.MAX_VALUE));
 
     public static ResPosticketsItem getResPosticketsItemSample1() {
-        return new ResPosticketsItem()
-            .id(1L)
-            .name("name1")
-            .quantity(1)
-            .techLineage("techLineage1")
-            .techMapping("techMapping1")
-            .techComment("techComment1");
+        return new ResPosticketsItem().id(1L).name("name1").quantity(1);
     }
 
     public static ResPosticketsItem getResPosticketsItemSample2() {
-        return new ResPosticketsItem()
-            .id(2L)
-            .name("name2")
-            .quantity(2)
-            .techLineage("techLineage2")
-            .techMapping("techMapping2")
-            .techComment("techComment2");
+        return new ResPosticketsItem().id(2L).name("name2").quantity(2);
     }
 
     public static ResPosticketsItem getResPosticketsItemRandomSampleGenerator() {
         return new ResPosticketsItem()
             .id(longCount.incrementAndGet())
             .name(UUID.randomUUID().toString())
-            .quantity(intCount.incrementAndGet())
-            .techLineage(UUID.randomUUID().toString())
-            .techMapping(UUID.randomUUID().toString())
-            .techComment(UUID.randomUUID().toString());
+            .quantity(intCount.incrementAndGet());
     }
 }

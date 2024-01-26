@@ -7,11 +7,7 @@ export interface IResTag {
   group?: string | null;
   groupDisplay?: string | null;
   color?: string | null;
-  techLineage?: string | null;
-  techCreatedDate?: Date | null;
-  techUpdatedDate?: Date | null;
-  techMapping?: string | null;
-  techComment?: string | null;
+  tagSearchQuery?: string | null;
   reservation?: IReservation | null;
 }
 
@@ -23,11 +19,7 @@ export class ResTag implements IResTag {
     public group?: string | null,
     public groupDisplay?: string | null,
     public color?: string | null,
-    public techLineage?: string | null,
-    public techCreatedDate?: Date | null,
-    public techUpdatedDate?: Date | null,
-    public techMapping?: string | null,
-    public techComment?: string | null,
+    public tagSearchQuery?: string | null,
     public reservation?: IReservation | null,
   ) {}
 }

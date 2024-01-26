@@ -1,10 +1,8 @@
 package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,36 +27,22 @@ public class ResTag implements Serializable {
     private String tag;
 
     @Column(name = "tag_display")
-    @JsonProperty("tag_display")
     private String tagDisplay;
 
     @Column(name = "jhi_group")
     private String group;
 
     @Column(name = "group_display")
-    @JsonProperty("group_display")
     private String groupDisplay;
 
     @Column(name = "color")
     private String color;
 
-    @Column(name = "tech_lineage")
-    private String techLineage;
-
-    @Column(name = "tech_created_date")
-    private ZonedDateTime techCreatedDate;
-
-    @Column(name = "tech_updated_date")
-    private ZonedDateTime techUpdatedDate;
-
-    @Column(name = "tech_mapping")
-    private String techMapping;
-
-    @Column(name = "tech_comment")
-    private String techComment;
+    @Column(name = "tag_search_query")
+    private String tagSearchQuery;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables" }, allowSetters = true)
     private Reservation reservation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -141,69 +125,17 @@ public class ResTag implements Serializable {
         this.color = color;
     }
 
-    public String getTechLineage() {
-        return this.techLineage;
+    public String getTagSearchQuery() {
+        return this.tagSearchQuery;
     }
 
-    public ResTag techLineage(String techLineage) {
-        this.setTechLineage(techLineage);
+    public ResTag tagSearchQuery(String tagSearchQuery) {
+        this.setTagSearchQuery(tagSearchQuery);
         return this;
     }
 
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return this.techCreatedDate;
-    }
-
-    public ResTag techCreatedDate(ZonedDateTime techCreatedDate) {
-        this.setTechCreatedDate(techCreatedDate);
-        return this;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return this.techUpdatedDate;
-    }
-
-    public ResTag techUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.setTechUpdatedDate(techUpdatedDate);
-        return this;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return this.techMapping;
-    }
-
-    public ResTag techMapping(String techMapping) {
-        this.setTechMapping(techMapping);
-        return this;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return this.techComment;
-    }
-
-    public ResTag techComment(String techComment) {
-        this.setTechComment(techComment);
-        return this;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
+    public void setTagSearchQuery(String tagSearchQuery) {
+        this.tagSearchQuery = tagSearchQuery;
     }
 
     public Reservation getReservation() {
@@ -248,11 +180,7 @@ public class ResTag implements Serializable {
             ", group='" + getGroup() + "'" +
             ", groupDisplay='" + getGroupDisplay() + "'" +
             ", color='" + getColor() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
+            ", tagSearchQuery='" + getTagSearchQuery() + "'" +
             "}";
     }
 }

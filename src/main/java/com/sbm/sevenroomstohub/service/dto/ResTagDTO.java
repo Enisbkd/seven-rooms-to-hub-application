@@ -1,8 +1,6 @@
 package com.sbm.sevenroomstohub.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -15,25 +13,15 @@ public class ResTagDTO implements Serializable {
 
     private String tag;
 
-    @JsonProperty("tag_display")
     private String tagDisplay;
 
     private String group;
 
-    @JsonProperty("group_display")
     private String groupDisplay;
 
     private String color;
 
-    private String techLineage;
-
-    private ZonedDateTime techCreatedDate;
-
-    private ZonedDateTime techUpdatedDate;
-
-    private String techMapping;
-
-    private String techComment;
+    private String tagSearchQuery;
 
     private ReservationDTO reservation;
 
@@ -85,44 +73,12 @@ public class ResTagDTO implements Serializable {
         this.color = color;
     }
 
-    public String getTechLineage() {
-        return techLineage;
+    public String getTagSearchQuery() {
+        return tagSearchQuery;
     }
 
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return techCreatedDate;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return techUpdatedDate;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return techMapping;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return techComment;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
+    public void setTagSearchQuery(String tagSearchQuery) {
+        this.tagSearchQuery = tagSearchQuery;
     }
 
     public ReservationDTO getReservation() {
@@ -164,11 +120,7 @@ public class ResTagDTO implements Serializable {
             ", group='" + getGroup() + "'" +
             ", groupDisplay='" + getGroupDisplay() + "'" +
             ", color='" + getColor() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
+            ", tagSearchQuery='" + getTagSearchQuery() + "'" +
             ", reservation=" + getReservation() +
             "}";
     }

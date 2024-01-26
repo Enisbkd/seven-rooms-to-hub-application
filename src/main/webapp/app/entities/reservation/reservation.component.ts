@@ -3,7 +3,6 @@ import { useI18n } from 'vue-i18n';
 
 import ReservationService from './reservation.service';
 import { type IReservation } from '@/shared/model/reservation.model';
-import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 export default defineComponent({
@@ -11,7 +10,6 @@ export default defineComponent({
   name: 'Reservation',
   setup() {
     const { t: t$ } = useI18n();
-    const dateFormat = useDateFormat();
     const reservationService = inject('reservationService', () => new ReservationService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -118,7 +116,6 @@ export default defineComponent({
       isFetching,
       retrieveReservations,
       clear,
-      ...dateFormat,
       removeId,
       removeEntity,
       prepareRemove,

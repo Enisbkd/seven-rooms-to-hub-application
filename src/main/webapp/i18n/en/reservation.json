@@ -85,16 +85,10 @@
       "sourceClientId": "Source Client Id",
       "userId": "User Id",
       "userName": "User Name",
-      "techLineage": "Tech Lineage",
-      "techCreatedDate": "Tech Created Date",
-      "techUpdatedDate": "Tech Updated Date",
-      "techMapping": "Tech Mapping",
-      "techComment": "Tech Comment",
       "resTag": "Res Tag",
       "resPosTicket": "Res Pos Ticket",
       "resCustomField": "Res Custom Field",
-      "resTable": "Res Table",
-      "client": "Client"
+      "resTable": "Res Table"
     }
   }
 }

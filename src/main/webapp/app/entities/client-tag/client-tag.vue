@@ -52,25 +52,9 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.color')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'color'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('techLineage')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techLineage')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techCreatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techUpdatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techMapping')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techMapping')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techComment')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techComment')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
+            <th scope="row" v-on:click="changeOrder('tagSearchQuery')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.tagSearchQuery')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'tagSearchQuery'"></jhi-sort-indicator>
             </th>
             <th scope="row" v-on:click="changeOrder('client.id')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.client')"></span>
@@ -89,11 +73,7 @@
             <td>{{ clientTag.group }}</td>
             <td>{{ clientTag.groupDisplay }}</td>
             <td>{{ clientTag.color }}</td>
-            <td>{{ clientTag.techLineage }}</td>
-            <td>{{ formatDateShort(clientTag.techCreatedDate) || '' }}</td>
-            <td>{{ formatDateShort(clientTag.techUpdatedDate) || '' }}</td>
-            <td>{{ clientTag.techMapping }}</td>
-            <td>{{ clientTag.techComment }}</td>
+            <td>{{ clientTag.tagSearchQuery }}</td>
             <td>
               <div v-if="clientTag.client">
                 <router-link :to="{ name: 'ClientView', params: { clientId: clientTag.client.id } }">{{ clientTag.client.id }}</router-link>

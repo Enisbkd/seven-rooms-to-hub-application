@@ -1,107 +1,65 @@
 package com.sbm.sevenroomstohub.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
  * A DTO for the {@link com.sbm.sevenroomstohub.domain.ClientVenueStats} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClientVenueStatsDTO implements Serializable {
 
-    @JsonIgnore
     private Long id;
 
-    @JsonProperty("total_spend_local_per_cover")
     private Double totalSpendLocalperCover;
 
-    @JsonProperty("last_visit_date")
     private String lastVisitDate;
 
-    @JsonProperty("total_cancellations")
     private Integer totalCancellations;
 
-    @JsonProperty("total_covers")
     private Integer totalCovers;
 
-    @JsonProperty("avg_rating")
     private Integer avgRating;
 
-    @JsonProperty("total_spend_per_cover")
     private Double totalSpendperCover;
 
-    @JsonProperty("total_spend")
     private Double totalSpend;
 
-    @JsonProperty("total_noshows")
     private Integer totalNoShows;
 
-    @JsonProperty("num_ratings")
     private Integer numRatings;
 
-    @JsonProperty("total_spend_per_visit")
     private Double totalSpendPerVisit;
 
-    @JsonProperty("total_spend_local")
     private Double totalSpendLocal;
 
-    @JsonProperty("total_spend_local_per_visit")
     private Double totalSpendLocalPerVisit;
 
-    @JsonProperty("total_visits")
     private Integer totalVisits;
 
-    @JsonProperty("gross_total")
     private Double grossTotal;
 
-    @JsonProperty("total_order_count")
     private Double totalOrderCount;
 
-    @JsonProperty("total_order_cancellations")
     private Double totalOrderCancellations;
 
-    @JsonProperty("total_order_spend")
     private Double totalOrderSpend;
 
-    @JsonProperty("gross_order_total")
     private Double grossOrderTotal;
 
-    @JsonProperty("total_order_spend_local")
     private Double totalOrderSpendLocal;
 
-    @JsonProperty("last_order_date")
     private String lastOrderDate;
 
-    @JsonProperty("total_spend_per_order")
     private Double totalSpendperOrder;
 
-    @JsonProperty("total_spend_local_per_order")
     private Double totalSpendLocalperOrder;
 
-    @JsonProperty("venue_id")
     private String venueId;
 
-    @JsonProperty("venue_marketing_optin")
     private Boolean venueMarketingOptin;
 
-    @JsonProperty("venue_marketing_optints")
     private String venueMarketingOptints;
-
-    private String techLineage;
-
-    private ZonedDateTime techCreatedDate;
-
-    private ZonedDateTime techUpdatedDate;
-
-    private String techMapping;
-
-    private String techComment;
 
     public Long getId() {
         return id;
@@ -311,46 +269,6 @@ public class ClientVenueStatsDTO implements Serializable {
         this.venueMarketingOptints = venueMarketingOptints;
     }
 
-    public String getTechLineage() {
-        return techLineage;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return techCreatedDate;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return techUpdatedDate;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return techMapping;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return techComment;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -402,11 +320,6 @@ public class ClientVenueStatsDTO implements Serializable {
             ", venueId='" + getVenueId() + "'" +
             ", venueMarketingOptin='" + getVenueMarketingOptin() + "'" +
             ", venueMarketingOptints='" + getVenueMarketingOptints() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
             "}";
     }
 }

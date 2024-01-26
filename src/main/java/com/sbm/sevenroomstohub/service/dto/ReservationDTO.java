@@ -1,23 +1,16 @@
 package com.sbm.sevenroomstohub.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
  * A DTO for the {@link com.sbm.sevenroomstohub.domain.Reservation} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ReservationDTO implements Serializable {
 
-    @JsonIgnore
     private Long id;
 
-    @JsonProperty("id")
     private String resvId;
 
     private String created;
@@ -26,191 +19,131 @@ public class ReservationDTO implements Serializable {
 
     private String deleted;
 
-    @JsonProperty("venue_group_client_id")
     private String venueGroupClientId;
 
-    @JsonProperty("venue_group_id")
     private String venueGroupId;
 
-    @JsonProperty("venue_id")
     private String venueId;
 
     private String date;
 
     private Integer duration;
 
-    @JsonProperty("check_numbers")
     private String checkNumbers;
 
-    @JsonProperty("shift_category")
     private String shiftCategory;
 
-    @JsonProperty("shift_persistent_id")
     private String shiftPersistentId;
 
-    @JsonProperty("max_guests")
     private Integer maxGuests;
 
-    @JsonProperty("mf_ratio_male")
     private Integer mfratioMale;
 
-    @JsonProperty("mf_ratio_female")
     private Integer mfratioFemale;
 
     private String status;
 
-    @JsonProperty("status_display")
     private String statusDisplay;
 
-    @JsonProperty("status_simple")
     private String statusSimple;
 
-    @JsonProperty("access_persistent_id")
     private String accessPersistentId;
 
-    @JsonProperty("arrived_guests")
     private Integer arrivedGuests;
 
-    @JsonProperty("is_vip")
     private Boolean isvip;
 
-    @JsonProperty("booked_by")
     private String bookedby;
 
-    @JsonProperty("client_reference_code")
     private String clientReferenceCode;
 
-    @JsonProperty("last_name")
     private String lastname;
 
-    @JsonProperty("first_name")
     private String firstname;
 
     private String email;
 
-    @JsonProperty("phone_number")
     private String phoneNumber;
 
     private String address;
 
-    @JsonProperty("address_2")
     private String address2;
 
     private String city;
 
-    @JsonProperty("postal_code")
     private String postalCode;
 
     private String state;
 
     private String country;
 
-    @JsonProperty("loyalty_id")
     private String loyaltyId;
 
-    @JsonProperty("loyalty_rank")
     private Integer loyaltyRank;
 
-    @JsonProperty("loyalty_tier")
     private String loyaltyTier;
 
     private String notes;
 
-    @JsonProperty("arrival_time")
     private String arrivalTime;
 
-    @JsonProperty("seated_time")
     private String seatedTime;
 
-    @JsonProperty("left_time")
     private String leftTime;
 
-    @JsonProperty("client_requests")
     private String clientRequests;
 
     private Integer comps;
 
-    @JsonProperty("comps_price_type")
     private String compsPriceType;
 
-    @JsonProperty("cost_option")
     private Integer costOption;
 
     private String policy;
 
-    @JsonProperty("min_price")
     private Integer minPrice;
 
-    @JsonProperty("prepayment")
     private Double prePayment;
 
-    @JsonProperty("onsite_payment")
     private Double onsitePayment;
 
-    @JsonProperty("total_payment")
     private Integer totalPayment;
 
-    @JsonProperty("paid_by")
     private String paidBy;
 
-    @JsonProperty("served_by")
     private String servedBy;
 
     private Integer rating;
 
     private String problems;
 
-    @JsonProperty("auto_assignments")
     private String autoAssignments;
 
-    @JsonProperty("external_client_id")
     private String externalClientId;
 
-    @JsonProperty("external_id")
     private String externalId;
 
-    @JsonProperty("external_reference_code")
     private String externalReferenceCode;
 
-    @JsonProperty("external_user_id")
     private String externalUserId;
 
-    @JsonProperty("modify_reservation_link")
     private String modifyReservationLink;
 
-    @JsonProperty("reference_code")
     private String referenceCode;
 
-    @JsonProperty("reservation_sms_opt_in")
     private Boolean reservationSmsOptin;
 
-    @JsonProperty("reservation_type")
     private String reservationType;
 
-    @JsonProperty("send_reminder_email")
     private Boolean sendReminderEmail;
 
-    @JsonProperty("send_reminder_sms")
     private Boolean sendreminderSms;
 
-    @JsonProperty("source_client_id")
     private String sourceClientId;
 
     private String userId;
 
     private String userName;
-
-    private String techLineage;
-
-    private ZonedDateTime techCreatedDate;
-
-    private ZonedDateTime techUpdatedDate;
-
-    private String techMapping;
-
-    private String techComment;
-
-    private ClientDTO client;
 
     public Long getId() {
         return id;
@@ -756,54 +689,6 @@ public class ReservationDTO implements Serializable {
         this.userName = userName;
     }
 
-    public String getTechLineage() {
-        return techLineage;
-    }
-
-    public void setTechLineage(String techLineage) {
-        this.techLineage = techLineage;
-    }
-
-    public ZonedDateTime getTechCreatedDate() {
-        return techCreatedDate;
-    }
-
-    public void setTechCreatedDate(ZonedDateTime techCreatedDate) {
-        this.techCreatedDate = techCreatedDate;
-    }
-
-    public ZonedDateTime getTechUpdatedDate() {
-        return techUpdatedDate;
-    }
-
-    public void setTechUpdatedDate(ZonedDateTime techUpdatedDate) {
-        this.techUpdatedDate = techUpdatedDate;
-    }
-
-    public String getTechMapping() {
-        return techMapping;
-    }
-
-    public void setTechMapping(String techMapping) {
-        this.techMapping = techMapping;
-    }
-
-    public String getTechComment() {
-        return techComment;
-    }
-
-    public void setTechComment(String techComment) {
-        this.techComment = techComment;
-    }
-
-    public ClientDTO getClient() {
-        return client;
-    }
-
-    public void setClient(ClientDTO client) {
-        this.client = client;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -897,12 +782,6 @@ public class ReservationDTO implements Serializable {
             ", sourceClientId='" + getSourceClientId() + "'" +
             ", userId='" + getUserId() + "'" +
             ", userName='" + getUserName() + "'" +
-            ", techLineage='" + getTechLineage() + "'" +
-            ", techCreatedDate='" + getTechCreatedDate() + "'" +
-            ", techUpdatedDate='" + getTechUpdatedDate() + "'" +
-            ", techMapping='" + getTechMapping() + "'" +
-            ", techComment='" + getTechComment() + "'" +
-            ", client=" + getClient() +
             "}";
     }
 }

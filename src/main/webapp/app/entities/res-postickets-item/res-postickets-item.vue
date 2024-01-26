@@ -44,26 +44,6 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.quantity')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'quantity'"></jhi-sort-indicator>
             </th>
-            <th scope="row" v-on:click="changeOrder('techLineage')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techLineage')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techCreatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techUpdatedDate')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techMapping')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techMapping')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" v-on:click="changeOrder('techComment')">
-              <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.techComment')"></span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
-            </th>
             <th scope="row" v-on:click="changeOrder('resPosTicket.id')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.resPosticketsItem.resPosTicket')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'resPosTicket.id'"></jhi-sort-indicator>
@@ -81,11 +61,6 @@
             <td>{{ resPosticketsItem.price }}</td>
             <td>{{ resPosticketsItem.name }}</td>
             <td>{{ resPosticketsItem.quantity }}</td>
-            <td>{{ resPosticketsItem.techLineage }}</td>
-            <td>{{ formatDateShort(resPosticketsItem.techCreatedDate) || '' }}</td>
-            <td>{{ formatDateShort(resPosticketsItem.techUpdatedDate) || '' }}</td>
-            <td>{{ resPosticketsItem.techMapping }}</td>
-            <td>{{ resPosticketsItem.techComment }}</td>
             <td>
               <div v-if="resPosticketsItem.resPosTicket">
                 <router-link :to="{ name: 'ResPosTicketView', params: { resPosTicketId: resPosticketsItem.resPosTicket.id } }">{{

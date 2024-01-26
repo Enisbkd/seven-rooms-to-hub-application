@@ -3,7 +3,6 @@ import { useI18n } from 'vue-i18n';
 
 import ClientService from './client.service';
 import { type IClient } from '@/shared/model/client.model';
-import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 export default defineComponent({
@@ -11,7 +10,6 @@ export default defineComponent({
   name: 'Client',
   setup() {
     const { t: t$ } = useI18n();
-    const dateFormat = useDateFormat();
     const clientService = inject('clientService', () => new ClientService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -118,7 +116,6 @@ export default defineComponent({
       isFetching,
       retrieveClients,
       clear,
-      ...dateFormat,
       removeId,
       removeEntity,
       prepareRemove,
