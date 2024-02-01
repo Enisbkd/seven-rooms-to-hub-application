@@ -40,7 +40,7 @@ spring:
       application.id: dev2_7rooms
     #      security.protocol: SASL_SSL
     #      sasl.mechanism: SCRAM-SHA-512
-    #      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="dev2_bsed1_7rooms" password="1G3aDJ7zR8Q";
+    #      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="" password="";
 
     topics:
       client-topic: data-7rooms-client
