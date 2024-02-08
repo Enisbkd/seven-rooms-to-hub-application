@@ -26,7 +26,7 @@
             <column name="deleted" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="venue_group_client_id" type="varchar(255)">
+            <column name="venue_group_client_id" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
             <column name="venue_group_id" type="varchar(255)">
@@ -188,7 +188,7 @@
             <column name="external_user_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="modify_reservation_link" type="varchar(255)">
+            <column name="modify_reservation_link" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
             <column name="reference_code" type="varchar(255)">

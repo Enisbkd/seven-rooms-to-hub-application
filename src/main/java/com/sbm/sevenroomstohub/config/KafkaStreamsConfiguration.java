@@ -2,11 +2,13 @@ package com.sbm.sevenroomstohub.config;
 
 import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG;
+import static org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.*;
 
 import com.sbm.sevenroomstohub.serdes.SendToDeadLetterQueueExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.kafka.common.config.SaslConfigs;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,14 +26,14 @@ public class KafkaStreamsConfiguration {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
-    //    @Value(value = "${spring.kafka.properties.security.protocol}")
-    //    private String protocolConfig;
-    //
-    //    @Value(value = "${spring.kafka.properties.sasl.jaas.config}")
-    //    private String saslJaasConfig;
-    //
-    //    @Value(value = "${spring.kafka.properties.sasl.mechanism}")
-    //    private String saslMechanism;
+    @Value(value = "${spring.kafka.properties.security.protocol}")
+    private String protocolConfig;
+
+    @Value(value = "${spring.kafka.properties.sasl.jaas.config}")
+    private String saslJaasConfig;
+
+    @Value(value = "${spring.kafka.properties.sasl.mechanism}")
+    private String saslMechanism;
 
     @Value(value = "${spring.kafka.properties.application.id}")
     private String applicationId;
@@ -46,9 +48,9 @@ public class KafkaStreamsConfiguration {
         props.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG, SendToDeadLetterQueueExceptionHandler.class);
-        //        props.put(SECURITY_PROTOCOL_CONFIG, protocolConfig);
-        //        props.put(SaslConfigs.SASL_JAAS_CONFIG, saslJaasConfig);
-        //        props.put(SaslConfigs.SASL_MECHANISM, saslMechanism);
+        props.put(SECURITY_PROTOCOL_CONFIG, protocolConfig);
+        props.put(SASL_JAAS_CONFIG, saslJaasConfig);
+        props.put(SaslConfigs.SASL_MECHANISM, saslMechanism);
 
         return new org.springframework.kafka.config.KafkaStreamsConfiguration(props);
     }

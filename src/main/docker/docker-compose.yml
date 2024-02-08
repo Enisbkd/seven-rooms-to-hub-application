@@ -30,14 +30,14 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_JMX_PORT: 9101
 
-  kafka-exporter:
-    container_name: kafka-exporter
-    image: danielqsj/kafka-exporter
-    command: ['--kafka.server=broker:9092']
-    ports:
-      - 9308:9308
+  # kafka-exporter:
+  #   container_name: kafka-exporter
+  #   image: danielqsj/kafka-exporter
+  #   command: ['--kafka.server=broker:9092']
+  #   ports:
+  #     - 9308:9308
 
-  akhq:
+  akhq-local:
     image: tchiotludo/akhq
     ports:
       - '1111:8080'

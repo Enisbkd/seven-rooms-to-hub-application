@@ -34,13 +34,12 @@ spring:
       indent-output: true
 
   kafka:
-    #    bootstrap-servers: bsed1-d1-ap-kafka4.sbm.interne:9092,bsed1-d2-ap-kafka5.sbm.interne:9092,bsed1-d3-ap-kafka6.sbm.interne:9092
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: bsed1-d1-ap-kafka4.sbm.interne:9092,bsed1-d2-ap-kafka5.sbm.interne:9092,bsed1-d3-ap-kafka6.sbm.interne:9092
     properties:
       application.id: dev2_7rooms
-    #      security.protocol: SASL_SSL
-    #      sasl.mechanism: SCRAM-SHA-512
-    #      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="" password="";
+      security.protocol: SASL_SSL
+      sasl.mechanism: SCRAM-SHA-512
+      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="dev2_bsed1_7rooms" password="1G3aDJ7zR8Q";
 
     topics:
       client-topic: data-7rooms-client
@@ -51,9 +50,9 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: system
-    password: oracle
+    url: jdbc:oracle:thin:@datahubdbtst.sbm.resort:1521:datahubdbtst
+    username: sevenRoomsToHub
+    password: hdQFslOBxPHGtF63xyl6
     hikari:
       poolName: Hikari
       auto-commit: false

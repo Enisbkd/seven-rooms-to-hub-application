@@ -47,18 +47,21 @@
     <springProperty scope="context" name="kafka.bootstrap.servers" source="spring.kafka.bootstrap-servers"/>
     <springProperty scope="context" name="kafka.logs.topic" source="spring.kafka.topics.logs-topic"/>
     <springProperty scope="context" name="env" source="env"/>
+    <springProperty scope="context" name="kafka.sasl.mechanism" source="spring.kafka.properties.sasl.mechanism"/>
+    <springProperty scope="context" name="kafka.sasl.jaas.config" source="spring.kafka.properties.sasl.jaas.config"/>
+    <springProperty scope="context" name="kafka.security.protocol" source="spring.kafka.properties.security.protocol"/>
 
 
     <appender name="kafka-appender" class="com.sbm.sevenroomstohub.logs.KafkaLogbackAppender">
         <BrokerList>${kafka.bootstrap.servers}</BrokerList>
         <Topic>${kafka.logs.topic}</Topic>
+
+        <SecurityProtocol>SASL_SSL</SecurityProtocol>
+        <saslMechanism>${kafka.sasl.mechanism}</saslMechanism>
+        <clientJaasConf>${kafka.sasl.jaas.config}</clientJaasConf>
+
         <SyncSend>false</SyncSend>
 
-        <!--        <SecurityProtocol>SASL_PLAINTEXT</SecurityProtocol>-->
-        <!--        <SaslKerberosServiceName>kafka</SaslKerberosServiceName>-->
-        <!--        <ClientJaasConfPath>c:/work/jaas.conf</ClientJaasConfPath>-->
-        <!--        <Kerb5ConfPath>c:/work/krb5.conf</Kerb5ConfPath>-->
-        <!--        <saslMechanism>GSSAPI</saslMechanism>-->
 
         <encoder class="co.elastic.logging.logback.EcsEncoder">
             <serviceName>SevenRoomsToHubApplication</serviceName>
