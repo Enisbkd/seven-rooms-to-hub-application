@@ -19,8 +19,8 @@ export default mergeConfig(
         'vitest-sonar-reporter': fileURLToPath(new URL('./build/test-results/TESTS-results-vitest.xml', import.meta.url)),
       },
       coverage: {
-        provider: 'v8',
         statements: 85,
+        provider: 'v8',
         branches: 75,
         lines: 85,
         reportsDirectory: fileURLToPath(new URL('./target/vite-coverage', import.meta.url)),

@@ -3,8 +3,8 @@
   "include": ["src/main/webapp//**/*", "src/main/webapp/app/**/*.vue"],
   "exclude": ["src/main/webapp/app/**/*.spec.ts"],
   "compilerOptions": {
-    "composite": true,
     "baseUrl": "src/main/webapp/app",
+    "composite": true,
     "outDir": "build/out-tsc/dist",
     "paths": {
       "@/*": ["./src/main/webapp/app/*"]
