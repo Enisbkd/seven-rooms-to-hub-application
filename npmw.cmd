@@ -21,7 +21,7 @@ if not exist %NPM_EXE% (
 )
 
 if exist %NODE_EXE% (
-  Rem execute local npm with local node, whilst adding local node location to the PATH for this CMD session
+  Rem execute local npm with local node , whilst adding local node location to the PATH for this CMD session
   endlocal & echo "%PATH%"|find /i "%NODE_PATH%;">nul || set "PATH=%NODE_PATH%;%PATH%" & call %NODE_EXE% %NPM_EXE% %*
 ) else if exist %NPM_EXE% (
   Rem execute local npm, whilst adding local npm location to the PATH for this CMD session

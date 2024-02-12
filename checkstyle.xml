@@ -10,6 +10,7 @@
     <!-- For detailed checkstyle configuration, see https://github.com/spring-io/nohttp/tree/master/nohttp-checkstyle -->
     <module name="io.spring.nohttp.checkstyle.check.NoHttpCheck">
     </module>
+
     <!-- Allow suppression with comments
        // CHECKSTYLE:OFF
        ... ignored content ...

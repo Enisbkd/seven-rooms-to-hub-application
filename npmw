@@ -37,6 +37,6 @@ if [ ! -x "$NPM_EXE" ]; then
   echo "Local npm not found, using npm installed globally"
   npm "$@"
 else
-  echo "Using npm installed locally $($NODE_EXE $NPM_EXE --version)"
+  echo "Using npm installed locally $($NODE_EXE $NPM_EXE --version) "
   $NODE_EXE $NPM_EXE "$@"
 fi
