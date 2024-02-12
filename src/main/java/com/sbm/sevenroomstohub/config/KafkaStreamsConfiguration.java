@@ -38,6 +38,12 @@ public class KafkaStreamsConfiguration {
     @Value(value = "${spring.kafka.properties.application.id}")
     private String applicationId;
 
+    @Value(value = "${spring.kafka.properties.ssl.sslTruststoreLocation}")
+    private String trustStoreLocation;
+
+    @Value(value = "${spring.kafka.properties.ssl.sslTruststorePassword}")
+    private String trustStorePassword;
+
     @Bean(name = KafkaStreamsDefaultConfiguration.DEFAULT_STREAMS_CONFIG_BEAN_NAME)
     org.springframework.kafka.config.KafkaStreamsConfiguration kStreamsConfig() {
         Map<String, Object> props = new HashMap<>();
@@ -51,6 +57,8 @@ public class KafkaStreamsConfiguration {
         props.put(SECURITY_PROTOCOL_CONFIG, protocolConfig);
         props.put(SASL_JAAS_CONFIG, saslJaasConfig);
         props.put(SaslConfigs.SASL_MECHANISM, saslMechanism);
+        props.put("ssl.truststore.location", trustStoreLocation);
+        props.put("ssl.truststore.password", trustStorePassword);
 
         return new org.springframework.kafka.config.KafkaStreamsConfiguration(props);
     }

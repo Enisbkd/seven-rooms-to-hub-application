@@ -50,6 +50,8 @@
     <springProperty scope="context" name="kafka.sasl.mechanism" source="spring.kafka.properties.sasl.mechanism"/>
     <springProperty scope="context" name="kafka.sasl.jaas.config" source="spring.kafka.properties.sasl.jaas.config"/>
     <springProperty scope="context" name="kafka.security.protocol" source="spring.kafka.properties.security.protocol"/>
+    <springProperty scope="context" name="kafka.ssl.sslTruststoreLocation" source="spring.kafka.properties.ssl.sslTruststoreLocation"/>
+    <springProperty scope="context" name="kafka.ssl.sslTruststorePassword" source="spring.kafka.properties.ssl.sslTruststorePassword"/>
 
 
     <appender name="kafka-appender" class="com.sbm.sevenroomstohub.logs.KafkaLogbackAppender">
@@ -59,6 +61,8 @@
         <SecurityProtocol>SASL_SSL</SecurityProtocol>
         <saslMechanism>${kafka.sasl.mechanism}</saslMechanism>
         <clientJaasConf>${kafka.sasl.jaas.config}</clientJaasConf>
+        <sslTruststoreLocation>${kafka.ssl.sslTruststoreLocation}</sslTruststoreLocation>
+        <sslTruststorePassword>${kafka.ssl.sslTruststorePassword}</sslTruststorePassword>
 
         <SyncSend>false</SyncSend>
 

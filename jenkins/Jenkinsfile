@@ -1,0 +1,53 @@
+
+pipeline{
+	agent any
+
+    environment {
+
+			SBM_PROJECT_DIR="$WORKSPACE/projects" // unused
+
+    }
+	stages{
+	
+
+		
+		stage('prepare files'){
+			steps{
+				script{
+                    sh(" cp -f $WORKSPACE/jenkins/build.gradle $WORKSPACE/build.gradle")
+                    sh(" cp -f $WORKSPACE/jenkins/gradle-wrapper.properties $WORKSPACE/gradle/wrapper/gradle-wrapper.properties")
+                    sh(" cp -f $WORKSPACE/jenkins/gradle.properties $WORKSPACE/gradle.properties")
+                    sh(" cp -f  $WORKSPACE/jenkins/settings.gradle $WORKSPACE/settings.gradle")
+                    sh(" cp -f  $WORKSPACE/jenkins/docker.gradle $WORKSPACE/gradle/docker.gradle")
+  				}
+			}
+        }
+		
+		stage('ls'){
+			steps{
+				script{
+                  
+                    sh( "ls -la $WORKSPACE/")
+                    sh( "cat  $WORKSPACE/build.gradle")
+                    sh( "cat  $WORKSPACE/gradle/wrapper/gradle-wrapper.properties")
+                    sh( "cat  $WORKSPACE/gradle.properties")
+                    sh( "cat  $WORKSPACE/settings.gradle")
+  				}
+			}
+        }
+		
+		stage('create image '){
+			steps{
+				script{
+					// sh("dotnet nuget add source projects/applicationserver/Nuget")
+					//sh(" cd $WORKSPACE/ &&  ./gradlew  jibDockerBuild")
+					sh(" cd $WORKSPACE/ &&  ./gradlew -Pdev jib")
+  				}
+			}
+        }
+
+
+
+	}
+    
+}
