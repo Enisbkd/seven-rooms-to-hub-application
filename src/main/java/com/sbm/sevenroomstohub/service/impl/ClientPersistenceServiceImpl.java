@@ -5,7 +5,6 @@ import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.service.ClientPersistenceService;
 import com.sbm.sevenroomstohub.service.ClientService;
 import com.sbm.sevenroomstohub.utils.TimestampUtils;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
