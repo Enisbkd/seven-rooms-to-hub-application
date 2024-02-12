@@ -3,8 +3,8 @@ src/main/docker/
 src/test/javascript/jest.conf.js
 webpack/
 target/
-build/
 node/
+build/
 coverage/
 postcss.config.js
 build/resources/main/static/
