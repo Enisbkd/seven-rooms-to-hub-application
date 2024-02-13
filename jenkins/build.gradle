@@ -276,6 +276,7 @@ if (project.hasProperty("nodeInstall")) {
     node {
         version = "18.18.2"
         npmVersion = "10.2.4"
+        distBaseUrl = "repo01.sbm.admin/files/src/projt/dev"
         download = true
     }
 
