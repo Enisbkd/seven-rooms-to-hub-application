@@ -1,4 +1,3 @@
-
 pipeline{
 	agent any
 
@@ -32,6 +31,7 @@ pipeline{
                     sh( "cat  $WORKSPACE/gradle/wrapper/gradle-wrapper.properties")
                     sh( "cat  $WORKSPACE/gradle.properties")
                     sh( "cat  $WORKSPACE/settings.gradle")
+					//sh( "curl https://repo01.sbm.admin/files/src/projet/dev/node-v18.18.2-linux-x64.tar.gz -o )
   				}
 			}
         }
