@@ -41,7 +41,7 @@ pipeline{
 				script{
 					// sh("dotnet nuget add source projects/applicationserver/Nuget")
 					//sh(" cd $WORKSPACE/ &&  ./gradlew  jibDockerBuild")
-					sh(" cd $WORKSPACE/ &&  ./gradlew -Pdev jib")
+					sh(" cd $WORKSPACE/ &&  ./gradlew bootJar -Pdev jib")
   				}
 			}
         }
