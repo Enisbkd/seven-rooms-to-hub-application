@@ -4,6 +4,7 @@ pipeline{
     environment {
 
 			SBM_PROJECT_DIR="$WORKSPACE/projects" // unused
+			npm_config_registry="https://proxycache.sbm.admin/repository/proxy_npm_npmjsorg npm i express"
 
     }
 	stages{
