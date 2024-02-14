@@ -18,6 +18,7 @@ pipeline{
                     sh(" cp -f $WORKSPACE/jenkins/gradle.properties $WORKSPACE/gradle.properties")
                     sh(" cp -f  $WORKSPACE/jenkins/settings.gradle $WORKSPACE/settings.gradle")
                     sh(" cp -f  $WORKSPACE/jenkins/docker.gradle $WORKSPACE/gradle/docker.gradle")
+					sh(" mkdir tmp")
   				}
 			}
         }
@@ -31,7 +32,8 @@ pipeline{
                     sh( "cat  $WORKSPACE/gradle/wrapper/gradle-wrapper.properties")
                     sh( "cat  $WORKSPACE/gradle.properties")
                     sh( "cat  $WORKSPACE/settings.gradle")
-					sh( "curl https://repo01.sbm.admin/files/src/projet/dev/node-v18.18.2-linux-x64.tar.gz -o $WORKSPACE/node-v18.18.2-linux-x64.tar.gz")
+					sh(" mkdir tmp/v18.18.2")
+					sh( "curl https://repo01.sbm.admin/files/src/projet/dev/node-v18.18.2-linux-x64.tar.gz -o $WORKSPACE/tmp/v18.18.2/node-v18.18.2-linux-x64.tar.gz")
   				}
 			}
         }
