@@ -38,7 +38,7 @@ spring:
       sasl.mechanism: SCRAM-SHA-512
       sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="dev2_bsed1_7rooms" password="";
       ssl.sslTruststoreLocation: /app/resources/sbm-truststore.jks
-      ssl.sslTruststorePassword: changeit
+      ssl.sslTruststorePassword:
 
     topics:
       client-topic: data-7rooms-client
