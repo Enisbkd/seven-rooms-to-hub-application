@@ -18,6 +18,7 @@ pipeline{
                     sh(" cp -f $WORKSPACE/jenkins/gradle.properties $WORKSPACE/gradle.properties")
                     sh(" cp -f  $WORKSPACE/jenkins/settings.gradle $WORKSPACE/settings.gradle")
                     sh(" cp -f  $WORKSPACE/jenkins/docker.gradle $WORKSPACE/gradle/docker.gradle")
+					sh(" find tmp")
 					sh(" mkdir tmp")
   				}
 			}
