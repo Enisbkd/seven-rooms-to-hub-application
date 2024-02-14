@@ -156,9 +156,9 @@ repositories {
     maven {
         url "https://proxycache.sbm.admin/repository/gradle-plugins/"
     }
-    npm {
-       url "https://proxycache.sbm.admin/repository/proxy_npm_npmjsorg/"
-    }
+    // npm {
+    //    url "https://proxycache.sbm.admin/repository/proxy_npm_npmjsorg/"
+    // }
 }
 dependencies {
     // import JHipster dependencies BOM
