@@ -5,7 +5,7 @@ pipeline{
 
 			SBM_PROJECT_DIR="$WORKSPACE/projects" // unused
 			npm_config_registry="https://proxycache.sbm.admin/repository/proxy_npm_npmjsorg"
-			NODE_EXTRA_CA_CERTS="/etc/pki/ca-trust/source/anchors/ca-sbm-admin.pem"
+			NODE_EXTRA_CA_CERTS="/var/lib/jenkins/.ca-trust-sbm/ca-sbm-admin.pem"
 
     }
 	stages{
