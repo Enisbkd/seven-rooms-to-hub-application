@@ -156,6 +156,9 @@ repositories {
     maven {
         url "https://proxycache.sbm.admin/repository/gradle-plugins/"
     }
+    npm {
+       " https://proxycache.sbm.admin/repository/proxy_npm_npmjsorg/"
+    }
 }
 dependencies {
     // import JHipster dependencies BOM
@@ -276,7 +279,7 @@ if (project.hasProperty("nodeInstall")) {
     node {
         version = "18.18.2"
         npmVersion = "10.2.4"
-        distBaseUrl = "node-v18.18.2-linux-x64.tar.gz"
+        distBaseUrl = "tmp"
         download = true
     }
 
