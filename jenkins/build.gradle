@@ -157,7 +157,7 @@ repositories {
         url "https://proxycache.sbm.admin/repository/gradle-plugins/"
     }
     npm {
-       " https://proxycache.sbm.admin/repository/proxy_npm_npmjsorg/"
+       url "https://proxycache.sbm.admin/repository/proxy_npm_npmjsorg/"
     }
 }
 dependencies {
