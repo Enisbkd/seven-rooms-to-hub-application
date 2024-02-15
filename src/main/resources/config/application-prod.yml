@@ -11,8 +11,6 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
-env: prod
-
 logging:
   level:
     ROOT: INFO

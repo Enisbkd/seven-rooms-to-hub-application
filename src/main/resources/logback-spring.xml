@@ -46,7 +46,7 @@
 
     <springProperty scope="context" name="kafka.bootstrap.servers" source="spring.kafka.bootstrap-servers"/>
     <springProperty scope="context" name="kafka.logs.topic" source="spring.kafka.topics.logs-topic"/>
-    <springProperty scope="context" name="env" source="env"/>
+    <springProperty name="spring.profiles.active" source="spring.profiles.active"/>
     <springProperty scope="context" name="kafka.sasl.mechanism" source="spring.kafka.properties.sasl.mechanism"/>
     <springProperty scope="context" name="kafka.sasl.jaas.config" source="spring.kafka.properties.sasl.jaas.config"/>
     <springProperty scope="context" name="kafka.security.protocol" source="spring.kafka.properties.security.protocol"/>
@@ -69,7 +69,7 @@
 
         <encoder class="co.elastic.logging.logback.EcsEncoder">
             <serviceName>SevenRoomsToHubApplication</serviceName>
-            <serviceEnvironment>${env}</serviceEnvironment>
+            <serviceEnvironment>${spring.profiles.active}</serviceEnvironment>
         </encoder>
     </appender>
 
