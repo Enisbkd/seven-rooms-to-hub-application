@@ -1,10 +1,8 @@
 package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,11 +24,9 @@ public class ResCustomField implements Serializable {
     private Long id;
 
     @Column(name = "system_name")
-    @JsonProperty("system_name")
     private String systemName;
 
     @Column(name = "display_order")
-    @JsonProperty("display_order")
     private Integer displayOrder;
 
     @Column(name = "name")
