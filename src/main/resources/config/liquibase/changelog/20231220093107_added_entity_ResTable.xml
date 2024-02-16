@@ -9,7 +9,7 @@
     <!--
         Added the entity ResTable.
     -->
-    <changeSet id="20231220093107-1" author="devteam">
+    <changeSet id="20231220093107-2" author="devteam">
         <createTable tableName="res_table">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
