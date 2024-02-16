@@ -253,7 +253,7 @@ entity ResTag{
 }
 
 entity ResTable{
-	tableNumber Integer
+	tableNumber String
 }
 
 relationship OneToMany {
