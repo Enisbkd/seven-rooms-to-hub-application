@@ -1,12 +1,9 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,7 +14,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "client")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Client implements Serializable {
 
@@ -27,32 +23,24 @@ public class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
-    @JsonIgnore
     private Long id;
 
-    @Column(name = "client_id", unique = true)
-    @JsonProperty("id")
-    //id 7 rooms
+    @Column(name = "client_id")
     private String clientId;
 
     @Column(name = "created_date")
-    @JsonProperty("created")
     private String createdDate;
 
     @Column(name = "updated_date")
-    @JsonProperty("updated")
     private String updatedDate;
 
     @Column(name = "deleted_date")
-    @JsonProperty("deleted")
     private String deletedDate;
 
     @Column(name = "lastname")
-    @JsonProperty("last_name")
     private String lastname;
 
     @Column(name = "firstname")
-    @JsonProperty("first_name")
     private String firstname;
 
     @Column(name = "gender")
@@ -65,23 +53,18 @@ public class Client implements Serializable {
     private String title;
 
     @Column(name = "birthday_day")
-    @JsonProperty("birthday_day")
     private Integer birthdayDay;
 
     @Column(name = "birthday_month")
-    @JsonProperty("birthday_month")
     private Integer birthdayMonth;
 
     @Column(name = "birthday_alt_month")
-    @JsonProperty("birthday_alt_month")
     private Integer birthdayAltMonth;
 
     @Column(name = "anniversary_day")
-    @JsonProperty("anniversary_day")
     private Integer anniversaryDay;
 
     @Column(name = "anniversary_month")
-    @JsonProperty("anniversary_month")
     private Integer anniversaryMonth;
 
     @Column(name = "company")
@@ -91,37 +74,30 @@ public class Client implements Serializable {
     private String email;
 
     @Column(name = "email_alt")
-    @JsonProperty("email_alt")
     private String emailAlt;
 
     @Column(name = "phone_number")
-    @JsonProperty("phone_number")
     private String phoneNumber;
 
     @Column(name = "phone_numberlocale")
-    @JsonProperty("phone_number_locale")
     private String phoneNumberlocale;
 
     @Column(name = "phone_numberalt")
-    @JsonProperty("phone_number_alt")
     private String phoneNumberalt;
 
     @Column(name = "phone_numberaltlocale")
-    @JsonProperty("phone_number_alt_locale")
     private String phoneNumberaltlocale;
 
     @Column(name = "address")
     private String address;
 
     @Column(name = "address_2")
-    @JsonProperty("address_2")
     private String address2;
 
     @Column(name = "city")
     private String city;
 
     @Column(name = "postal_code")
-    @JsonProperty("postal_code")
     private String postalCode;
 
     @Column(name = "state")
@@ -131,100 +107,78 @@ public class Client implements Serializable {
     private String country;
 
     @Column(name = "is_contact_private")
-    @JsonProperty("is_contact_private")
     private Boolean isContactPrivate;
 
     @Column(name = "is_onetime_guest")
-    @JsonProperty("is_one_time_guest")
     private Boolean isOnetimeGuest;
 
     @Column(name = "status")
     private String status;
 
     @Column(name = "loyalty_id")
-    @JsonProperty("loyalty_id")
     private String loyaltyId;
 
     @Column(name = "loyalty_rank")
-    @JsonProperty("loyalty_rank")
     private Integer loyaltyRank;
 
     @Column(name = "loyalty_tier")
-    @JsonProperty("loyalty_tier")
     private String loyaltyTier;
 
     @Column(name = "marketing_optin")
-    @JsonProperty("marketing_opt_in")
     private Boolean marketingOptin;
 
     @Column(name = "marketing_optints")
-    @JsonProperty("marketing_opt_in_ts")
     private String marketingOptints;
 
     @Column(name = "marketing_opt_outts")
-    @JsonProperty("marketing_opt_out_ts")
     private String marketingOptOutts;
 
     @Column(name = "has_billing_profile")
-    @JsonProperty("has_billing_profile")
     private Boolean hasBillingProfile;
 
     @Column(name = "notes")
     private String notes;
 
     @Column(name = "private_notes")
-    @JsonProperty("private_notes")
     private String privateNotes;
 
     @Column(name = "tags")
     private String tags;
 
     @Column(name = "total_visits")
-    @JsonProperty("total_visits")
     private Double totalVisits;
 
     @Column(name = "total_covers")
-    @JsonProperty("total_covers")
     private Double totalCovers;
 
     @Column(name = "total_cancellations")
-    @JsonProperty("total_cancellations")
     private Double totalCancellations;
 
     @Column(name = "total_no_shows")
-    @JsonProperty("total_noshows")
     private Double totalNoShows;
 
     @Column(name = "total_spend")
-    @JsonProperty("total_spend")
     private Double totalSpend;
 
     @Column(name = "total_spend_per_cover")
-    @JsonProperty("total_spend_per_cover")
     private Double totalSpendPerCover;
 
     @Column(name = "totalspend_per_visit")
-    @JsonProperty("total_spend_per_visit")
     private Double totalspendPerVisit;
 
     @Column(name = "avg_rating")
-    @JsonProperty("avg_rating")
     private Double avgRating;
 
     @Column(name = "reference_code")
-    @JsonProperty("reference_code")
     private String referenceCode;
 
     @Column(name = "external_user_id")
-    @JsonProperty("external_user_id")
     private String externalUserId;
 
     @Column(name = "venue_group_id")
-    @JsonProperty("venue_group_id")
     private String venueGroupId;
 
     @Column(name = "birthday_alt_day")
-    @JsonProperty("birthday_alt_day")
     private Integer birthdayAltDay;
 
     @Column(name = "user_id")
@@ -234,40 +188,34 @@ public class Client implements Serializable {
     private String userName;
 
     @Column(name = "total_order_count")
-    @JsonProperty("total_order_count")
     private Integer totalOrderCount;
 
     @Column(name = "preferred_language_code")
-    @JsonProperty("preferred_language_code")
     private String preferredLanguageCode;
 
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
-    @JsonProperty("photo")
     private ClientPhoto clientPhoto;
 
-    @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = { "bookingNames", "client" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
-    @JsonProperty("venue_stats")
     private ClientVenueStats clientVenueStats;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonProperty("custom_fields")
+    @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
     private Set<CustomField> customFields = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
-    @JsonProperty("client_tags")
     private Set<ClientTag> clientTags = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
-    @JsonProperty("member_groups")
     private Set<MemberGroup> memberGroups = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -1212,10 +1160,6 @@ public class Client implements Serializable {
             ", userName='" + getUserName() + "'" +
             ", totalOrderCount=" + getTotalOrderCount() +
             ", preferredLanguageCode='" + getPreferredLanguageCode() + "'" +
-            ", clientPhoto='" + getClientPhoto() + "'" +
-            ", clientTags='" + getClientTags() + "'" +
-            ", customField ='" + getCustomFields() + "'" +
-            ", clientVenueStats ='" + getClientVenueStats() + "'" +
             "}";
     }
 }
