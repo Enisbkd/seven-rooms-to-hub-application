@@ -300,10 +300,7 @@ public class Reservation implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonProperty("table_numbers")
     private Set<ResTable> resTables = new HashSet<>();
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
         return this.id;

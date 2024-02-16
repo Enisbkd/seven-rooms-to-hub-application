@@ -36,6 +36,15 @@ public class ResTable implements Serializable {
         return this.id;
     }
 
+    public ResTable(String tableNumber) {
+        this.tableNumber = tableNumber;
+    }
+
+    public ResTable(String tableNumber, Reservation reservation) {
+        this.tableNumber = tableNumber;
+        this.reservation = reservation;
+    }
+
     public ResTable id(Long id) {
         this.setId(id);
         return this;

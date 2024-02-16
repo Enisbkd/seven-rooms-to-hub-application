@@ -18,13 +18,16 @@ package com.sbm.sevenroomstohub.serdes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sbm.sevenroomstohub.domain.ResTable;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.exceptions.BadEntityTypeException;
 import com.sbm.sevenroomstohub.exceptions.BadEventTypeException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.streams.errors.StreamsException;
@@ -71,7 +74,7 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
         }
         try {
             String entityType = String.valueOf(objectMapper.readTree(bytes).get("entity_type"));
-            //Removing quotes because field is parsed with quotes.
+            // Removing quotes because field is parsed with quotes.
             String eventType = String.valueOf(objectMapper.readTree(bytes).get("event_type")).replace("\"", "");
             if (entityType.contains("reservation")) {
                 if (eventTypes.contains(eventType)) {
@@ -85,6 +88,7 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
 
                     if (resEntity != null) {
                         userDeserializer(resEntity, reservation);
+                        resTableDeserializer(resEntity, reservation);
                         reservationPayload.setReservation(reservation);
                     }
                     return (ReservationPayload) reservationPayload;
@@ -104,6 +108,20 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
             String userName = String.valueOf(userNode.get("name"));
             reservation.setUserId(userId);
             reservation.setUserName(userName);
+        }
+    }
+
+    private static void resTableDeserializer(JsonNode resEntity, Reservation reservation) {
+        JsonNode tableNumbersNode = resEntity.get("table_numbers");
+        Set<ResTable> resTables = new HashSet<>();
+
+        if (tableNumbersNode != null) {
+            if (tableNumbersNode.isArray()) {
+                for (JsonNode tableNumberNode : tableNumbersNode) {
+                    resTables.add(new ResTable(tableNumberNode.toString(), reservation));
+                }
+            }
+            reservation.setResTables(resTables);
         }
     }
 
