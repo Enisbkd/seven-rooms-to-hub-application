@@ -8,7 +8,7 @@
   "fields": [
     {
       "fieldName": "tableNumber",
-      "fieldType": "Integer"
+      "fieldType": "String"
     }
   ],
   "name": "ResTable",

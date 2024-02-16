@@ -29,7 +29,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new ResTableService();
-      elemDefault = new ResTable(123, 0);
+      elemDefault = new ResTable(123, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -81,7 +81,7 @@ describe('Service Tests', () => {
       it('should update a ResTable', async () => {
         const returnedFromService = Object.assign(
           {
-            tableNumber: 1,
+            tableNumber: 'BBBBBB',
           },
           elemDefault,
         );
@@ -108,7 +108,7 @@ describe('Service Tests', () => {
       it('should partial update a ResTable', async () => {
         const patchObject = Object.assign(
           {
-            tableNumber: 1,
+            tableNumber: 'BBBBBB',
           },
           new ResTable(),
         );
@@ -136,7 +136,7 @@ describe('Service Tests', () => {
       it('should return a list of ResTable', async () => {
         const returnedFromService = Object.assign(
           {
-            tableNumber: 1,
+            tableNumber: 'BBBBBB',
           },
           elemDefault,
         );
