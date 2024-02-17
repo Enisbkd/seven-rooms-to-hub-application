@@ -36,6 +36,8 @@ public class ResTable implements Serializable {
         return this.id;
     }
 
+    public ResTable() {}
+
     public ResTable(String tableNumber) {
         this.tableNumber = tableNumber;
     }
