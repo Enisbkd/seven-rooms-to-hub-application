@@ -52,14 +52,7 @@ public class StreamsProcessor {
     private void clientsProcessor(ClientPayload clientPayload) {
         try {
             if (clientPayload != null) {
-                switch (clientPayload.getEvent_type()) {
-                    case "created", "updated":
-                        clientPersistenceService.upsertClient(clientPayload);
-                        break;
-                    case "deleted":
-                        clientPersistenceService.deleteClient(clientPayload);
-                        break;
-                }
+                clientPersistenceService.upsertClient(clientPayload);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());
@@ -69,14 +62,7 @@ public class StreamsProcessor {
     private void reservationsProcessor(ReservationPayload reservationPayload) {
         try {
             if (reservationPayload != null) {
-                switch (reservationPayload.getEvent_type()) {
-                    case "created", "updated":
-                        reservationPersistenceService.upsertReservation(reservationPayload);
-                        break;
-                    case "deleted":
-                        reservationPersistenceService.deleteReservation(reservationPayload);
-                        break;
-                }
+                reservationPersistenceService.upsertReservation(reservationPayload);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());
