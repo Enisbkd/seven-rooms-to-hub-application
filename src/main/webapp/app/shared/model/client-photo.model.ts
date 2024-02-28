@@ -16,6 +16,11 @@ export interface IClientPhoto {
   cropy?: number | null;
   cropHeight?: number | null;
   cropWidth?: number | null;
+  techLineage?: string | null;
+  techCreatedDate?: Date | null;
+  techUpdatedDate?: Date | null;
+  techMapping?: string | null;
+  techComment?: string | null;
   client?: IClient | null;
 }
 
@@ -36,6 +41,11 @@ export class ClientPhoto implements IClientPhoto {
     public cropy?: number | null,
     public cropHeight?: number | null,
     public cropWidth?: number | null,
+    public techLineage?: string | null,
+    public techCreatedDate?: Date | null,
+    public techUpdatedDate?: Date | null,
+    public techMapping?: string | null,
+    public techComment?: string | null,
     public client?: IClient | null,
   ) {}
 }

@@ -88,6 +88,26 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.cropWidth')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'cropWidth'"></jhi-sort-indicator>
             </th>
+            <th scope="row" v-on:click="changeOrder('techLineage')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techLineage')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techCreatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techUpdatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techMapping')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techMapping')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techComment')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.clientPhoto.techComment')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -110,6 +130,11 @@
             <td>{{ clientPhoto.cropy }}</td>
             <td>{{ clientPhoto.cropHeight }}</td>
             <td>{{ clientPhoto.cropWidth }}</td>
+            <td>{{ clientPhoto.techLineage }}</td>
+            <td>{{ formatDateShort(clientPhoto.techCreatedDate) || '' }}</td>
+            <td>{{ formatDateShort(clientPhoto.techUpdatedDate) || '' }}</td>
+            <td>{{ clientPhoto.techMapping }}</td>
+            <td>{{ clientPhoto.techComment }}</td>
             <td class="text-right">
               <div class="btn-group">
                 <router-link :to="{ name: 'ClientPhotoView', params: { clientPhotoId: clientPhoto.id } }" custom v-slot="{ navigate }">

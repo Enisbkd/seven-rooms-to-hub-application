@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 
 import ClientPhotoService from './client-photo.service';
 import { type IClientPhoto } from '@/shared/model/client-photo.model';
+import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 export default defineComponent({
@@ -10,6 +11,7 @@ export default defineComponent({
   name: 'ClientPhoto',
   setup() {
     const { t: t$ } = useI18n();
+    const dateFormat = useDateFormat();
     const clientPhotoService = inject('clientPhotoService', () => new ClientPhotoService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -116,6 +118,7 @@ export default defineComponent({
       isFetching,
       retrieveClientPhotos,
       clear,
+      ...dateFormat,
       removeId,
       removeEntity,
       prepareRemove,

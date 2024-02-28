@@ -19,13 +19,13 @@
               for="res-table-tableNumber"
             ></label>
             <input
-              type="text"
+              type="number"
               class="form-control"
               name="tableNumber"
               id="res-table-tableNumber"
               data-cy="tableNumber"
               :class="{ valid: !v$.tableNumber.$invalid, invalid: v$.tableNumber.$invalid }"
-              v-model="v$.tableNumber.$model"
+              v-model.number="v$.tableNumber.$model"
             />
           </div>
           <div class="form-group">

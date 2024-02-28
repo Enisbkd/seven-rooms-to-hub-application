@@ -10,7 +10,7 @@
         Added the entity BookingName.
     -->
     <changeSet id="20231220092007-1" author="devteam">
-        <createTable tableName="booking_name">
+        <createTable tableName="svr_api_booking_name">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -20,7 +20,21 @@
             <column name="client_venue_stats_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+            <column name="tech_lineage" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_created_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_updated_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_mapping" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_comment" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
         </createTable>
     </changeSet>
 
@@ -38,7 +52,7 @@
         <loadData
                   file="config/liquibase/fake-data/booking_name.csv"
                   separator=";"
-                  tableName="booking_name"
+                  tableName="svr_api_booking_name"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>

@@ -408,6 +408,46 @@
           <dd>
             <span>{{ reservation.userName }}</span>
           </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.techLineage')"></span>
+          </dt>
+          <dd>
+            <span>{{ reservation.techLineage }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.techCreatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="reservation.techCreatedDate">{{ formatDateLong(reservation.techCreatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.techUpdatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="reservation.techUpdatedDate">{{ formatDateLong(reservation.techUpdatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.techMapping')"></span>
+          </dt>
+          <dd>
+            <span>{{ reservation.techMapping }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.techComment')"></span>
+          </dt>
+          <dd>
+            <span>{{ reservation.techComment }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.reservation.client')"></span>
+          </dt>
+          <dd>
+            <div v-if="reservation.client">
+              <router-link :to="{ name: 'ClientView', params: { clientId: reservation.client.id } }">{{
+                reservation.client.id
+              }}</router-link>
+            </div>
+          </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.back')"></span>

@@ -31,6 +31,36 @@
             <span>{{ customField.value }}</span>
           </dd>
           <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.customField.techLineage')"></span>
+          </dt>
+          <dd>
+            <span>{{ customField.techLineage }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.customField.techCreatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="customField.techCreatedDate">{{ formatDateLong(customField.techCreatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.customField.techUpdatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="customField.techUpdatedDate">{{ formatDateLong(customField.techUpdatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.customField.techMapping')"></span>
+          </dt>
+          <dd>
+            <span>{{ customField.techMapping }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.customField.techComment')"></span>
+          </dt>
+          <dd>
+            <span>{{ customField.techComment }}</span>
+          </dd>
+          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.customField.client')"></span>
           </dt>
           <dd>

@@ -29,14 +29,24 @@ spring:
       indent-output: true
 
   kafka:
-    bootstrap-servers: bsed1-d1-ap-kafka4.sbm.interne:9092,bsed1-d2-ap-kafka5.sbm.interne:9092,bsed1-d3-ap-kafka6.sbm.interne:9092
+    bootstrap-servers: localhost:9092
     properties:
       application.id: dev2_7rooms
-      security.protocol: SASL_SSL
-      sasl.mechanism: SCRAM-SHA-512
-      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="dev2_bsed1_7rooms" password="";
-      ssl.sslTruststoreLocation: /app/resources/sbm-truststore.jks
-      ssl.sslTruststorePassword:
+      security.protocol: 'PLAINTEXT'
+      sasl.mechanism: ''
+      sasl.jaas.config: ''
+      ssl.sslTruststoreLocation: ''
+      ssl.sslTruststorePassword: ''
+
+    # kafka:
+    #   bootstrap-servers: bsed1-d1-ap-kafka4.sbm.interne:9092,bsed1-d2-ap-kafka5.sbm.interne:9092,bsed1-d3-ap-kafka6.sbm.interne:9092
+    #   properties:
+    #     application.id: dev2_7rooms
+    #     security.protocol: SASL_SSL
+    #     sasl.mechanism: SCRAM-SHA-512
+    #     sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="dev2_bsed1_7rooms" password="";
+    #     ssl.sslTruststoreLocation: /app/resources/sbm-truststore.jks
+    #     ssl.sslTruststorePassword:
 
     topics:
       client-topic: data-7rooms-client
@@ -45,23 +55,23 @@ spring:
       reservation-dead-letters-topic: data-7rooms-reservation-deadletters
       logs-topic: log-7rooms-app
 
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin:@datahubdbtst.sbm.resort:1521:datahubdbtst
-    username: sevenRoomsToHub
-    password: hdQFslOBxPHGtF63xyl6
-    hikari:
-      poolName: Hikari
-      auto-commit: false
-
   # datasource:
   #   type: com.zaxxer.hikari.HikariDataSource
-  #   url: jdbc:oracle:thin:@localhost:1521:xe
-  #   username: system
-  #   password: oracle
+  #   url: jdbc:oracle:thin:@datahubdbtst.sbm.resort:1521:datahubdbtst
+  #   username: sevenRoomsToHub
+  #   password: hdQFslOBxPHGtF63xyl6
   #   hikari:
   #     poolName: Hikari
   #     auto-commit: false
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: system
+    password: oracle
+    hikari:
+      poolName: Hikari
+      auto-commit: false
 
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically

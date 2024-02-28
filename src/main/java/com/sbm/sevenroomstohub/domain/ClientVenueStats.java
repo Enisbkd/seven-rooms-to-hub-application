@@ -3,9 +3,17 @@ package com.sbm.sevenroomstohub.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.ZonedDateTime;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
@@ -15,11 +23,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A ClientVenueStats.
  */
 @Entity
-@Table(name = "client_venue_stats")
+@Table(name = "svr_api_client_venue_stats")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ClientVenueStats implements Serializable {
+public class ClientVenueStats extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -530,7 +538,8 @@ public class ClientVenueStats implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -545,7 +554,8 @@ public class ClientVenueStats implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -553,32 +563,33 @@ public class ClientVenueStats implements Serializable {
     @Override
     public String toString() {
         return "ClientVenueStats{" +
-            "id=" + getId() +
-            ", totalSpendLocalperCover=" + getTotalSpendLocalperCover() +
-            ", lastVisitDate='" + getLastVisitDate() + "'" +
-            ", totalCancellations=" + getTotalCancellations() +
-            ", totalCovers=" + getTotalCovers() +
-            ", avgRating=" + getAvgRating() +
-            ", totalSpendperCover=" + getTotalSpendperCover() +
-            ", totalSpend=" + getTotalSpend() +
-            ", totalNoShows=" + getTotalNoShows() +
-            ", numRatings=" + getNumRatings() +
-            ", totalSpendPerVisit=" + getTotalSpendPerVisit() +
-            ", totalSpendLocal=" + getTotalSpendLocal() +
-            ", totalSpendLocalPerVisit=" + getTotalSpendLocalPerVisit() +
-            ", totalVisits=" + getTotalVisits() +
-            ", grossTotal=" + getGrossTotal() +
-            ", totalOrderCount=" + getTotalOrderCount() +
-            ", totalOrderCancellations=" + getTotalOrderCancellations() +
-            ", totalOrderSpend=" + getTotalOrderSpend() +
-            ", grossOrderTotal=" + getGrossOrderTotal() +
-            ", totalOrderSpendLocal=" + getTotalOrderSpendLocal() +
-            ", lastOrderDate='" + getLastOrderDate() + "'" +
-            ", totalSpendperOrder=" + getTotalSpendperOrder() +
-            ", totalSpendLocalperOrder=" + getTotalSpendLocalperOrder() +
-            ", venueId='" + getVenueId() + "'" +
-            ", venueMarketingOptin='" + getVenueMarketingOptin() + "'" +
-            ", venueMarketingOptints='" + getVenueMarketingOptints() + "'" +
-            "}";
+                "id=" + getId() +
+                ", totalSpendLocalperCover=" + getTotalSpendLocalperCover() +
+                ", lastVisitDate='" + getLastVisitDate() + "'" +
+                ", totalCancellations=" + getTotalCancellations() +
+                ", totalCovers=" + getTotalCovers() +
+                ", avgRating=" + getAvgRating() +
+                ", totalSpendperCover=" + getTotalSpendperCover() +
+                ", totalSpend=" + getTotalSpend() +
+                ", totalNoShows=" + getTotalNoShows() +
+                ", numRatings=" + getNumRatings() +
+                ", totalSpendPerVisit=" + getTotalSpendPerVisit() +
+                ", totalSpendLocal=" + getTotalSpendLocal() +
+                ", totalSpendLocalPerVisit=" + getTotalSpendLocalPerVisit() +
+                ", totalVisits=" + getTotalVisits() +
+                ", grossTotal=" + getGrossTotal() +
+                ", totalOrderCount=" + getTotalOrderCount() +
+                ", totalOrderCancellations=" + getTotalOrderCancellations() +
+                ", totalOrderSpend=" + getTotalOrderSpend() +
+                ", grossOrderTotal=" + getGrossOrderTotal() +
+                ", totalOrderSpendLocal=" + getTotalOrderSpendLocal() +
+                ", lastOrderDate='" + getLastOrderDate() + "'" +
+                ", totalSpendperOrder=" + getTotalSpendperOrder() +
+                ", totalSpendLocalperOrder=" + getTotalSpendLocalperOrder() +
+                ", venueId='" + getVenueId() + "'" +
+                ", venueMarketingOptin='" + getVenueMarketingOptin() + "'" +
+                ", venueMarketingOptints='" + getVenueMarketingOptints() + "'" +
+                super.toString() +
+                "}";
     }
 }

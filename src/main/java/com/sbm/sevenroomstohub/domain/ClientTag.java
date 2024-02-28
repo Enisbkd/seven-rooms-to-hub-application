@@ -2,9 +2,16 @@ package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.ZonedDateTime;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -12,10 +19,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A ClientTag.
  */
 @Entity
-@Table(name = "client_tag")
+@Table(name = "svr_api_client_tag")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ClientTag implements Serializable {
+public class ClientTag extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -156,7 +163,8 @@ public class ClientTag implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -171,7 +179,8 @@ public class ClientTag implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -179,13 +188,14 @@ public class ClientTag implements Serializable {
     @Override
     public String toString() {
         return "ClientTag{" +
-            "id=" + getId() +
-            ", tag='" + getTag() + "'" +
-            ", tagDisplay='" + getTagDisplay() + "'" +
-            ", group='" + getGroup() + "'" +
-            ", groupDisplay='" + getGroupDisplay() + "'" +
-            ", color='" + getColor() + "'" +
-            ", tagSearchQuery='" + getTagSearchQuery() + "'" +
-            "}";
+                "id=" + getId() +
+                ", tag='" + getTag() + "'" +
+                ", tagDisplay='" + getTagDisplay() + "'" +
+                ", group='" + getGroup() + "'" +
+                ", groupDisplay='" + getGroupDisplay() + "'" +
+                ", color='" + getColor() + "'" +
+                ", tagSearchQuery='" + getTagSearchQuery() + "'" +
+                super.toString() +
+                "}";
     }
 }

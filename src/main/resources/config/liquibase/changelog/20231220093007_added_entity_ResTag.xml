@@ -10,7 +10,7 @@
         Added the entity ResTag.
     -->
     <changeSet id="20231220093007-1" author="devteam">
-        <createTable tableName="res_tag">
+        <createTable tableName="svr_api_resv_tag">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -29,10 +29,25 @@
             <column name="color" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="tag_search_query" type="varchar(255)">
+            <column name="tech_lineage" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_created_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_updated_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_mapping" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="reservation_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="tag_search_query" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -53,7 +68,7 @@
         <loadData
                   file="config/liquibase/fake-data/res_tag.csv"
                   separator=";"
-                  tableName="res_tag"
+                  tableName="svr_api_resv_tag"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="tag" type="string"/>
@@ -61,6 +76,11 @@
             <column name="jhi_group" type="string"/>
             <column name="group_display" type="string"/>
             <column name="color" type="string"/>
+            <column name="tech_lineage" type="string"/>
+            <column name="tech_created_date" type="date"/>
+            <column name="tech_updated_date" type="date"/>
+            <column name="tech_mapping" type="string"/>
+            <column name="tech_comment" type="string"/>
             <column name="tag_search_query" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

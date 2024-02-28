@@ -43,6 +43,11 @@
       "venueId": "Venue Id",
       "venueMarketingOptin": "Venue Marketing Optin",
       "venueMarketingOptints": "Venue Marketing Optints",
+      "techLineage": "Tech Lineage",
+      "techCreatedDate": "Tech Created Date",
+      "techUpdatedDate": "Tech Updated Date",
+      "techMapping": "Tech Mapping",
+      "techComment": "Tech Comment",
       "bookingName": "Booking Name",
       "client": "Client"
     }

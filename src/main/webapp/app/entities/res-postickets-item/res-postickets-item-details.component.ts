@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import ResPosticketsItemService from './res-postickets-item.service';
+import { useDateFormat } from '@/shared/composables';
 import { type IResPosticketsItem } from '@/shared/model/res-postickets-item.model';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -10,6 +11,7 @@ export default defineComponent({
   compatConfig: { MODE: 3 },
   name: 'ResPosticketsItemDetails',
   setup() {
+    const dateFormat = useDateFormat();
     const resPosticketsItemService = inject('resPosticketsItemService', () => new ResPosticketsItemService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -33,6 +35,7 @@ export default defineComponent({
     }
 
     return {
+      ...dateFormat,
       alertService,
       resPosticketsItem,
 

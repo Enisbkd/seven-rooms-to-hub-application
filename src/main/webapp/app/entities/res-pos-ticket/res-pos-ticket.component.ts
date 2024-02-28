@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 
 import ResPosTicketService from './res-pos-ticket.service';
 import { type IResPosTicket } from '@/shared/model/res-pos-ticket.model';
+import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 export default defineComponent({
@@ -10,6 +11,7 @@ export default defineComponent({
   name: 'ResPosTicket',
   setup() {
     const { t: t$ } = useI18n();
+    const dateFormat = useDateFormat();
     const resPosTicketService = inject('resPosTicketService', () => new ResPosTicketService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -116,6 +118,7 @@ export default defineComponent({
       isFetching,
       retrieveResPosTickets,
       clear,
+      ...dateFormat,
       removeId,
       removeEntity,
       prepareRemove,

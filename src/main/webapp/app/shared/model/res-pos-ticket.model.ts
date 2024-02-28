@@ -17,6 +17,11 @@ export interface IResPosTicket {
   startTime?: string | null;
   serviceCharge?: number | null;
   endtime?: string | null;
+  techLineage?: string | null;
+  techCreatedDate?: Date | null;
+  techUpdatedDate?: Date | null;
+  techMapping?: string | null;
+  techComment?: string | null;
   resPosticketsItems?: IResPosticketsItem[] | null;
   reservation?: IReservation | null;
 }
@@ -38,6 +43,11 @@ export class ResPosTicket implements IResPosTicket {
     public startTime?: string | null,
     public serviceCharge?: number | null,
     public endtime?: string | null,
+    public techLineage?: string | null,
+    public techCreatedDate?: Date | null,
+    public techUpdatedDate?: Date | null,
+    public techMapping?: string | null,
+    public techComment?: string | null,
     public resPosticketsItems?: IResPosticketsItem[] | null,
     public reservation?: IReservation | null,
   ) {}

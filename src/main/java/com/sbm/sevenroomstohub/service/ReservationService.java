@@ -2,7 +2,6 @@ package com.sbm.sevenroomstohub.service;
 
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
-import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import com.sbm.sevenroomstohub.service.dto.ReservationDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

@@ -37,10 +37,34 @@
             <span>{{ resTag.color }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.tagSearchQuery')"></span>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techLineage')"></span>
           </dt>
           <dd>
-            <span>{{ resTag.tagSearchQuery }}</span>
+            <span>{{ resTag.techLineage }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techCreatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="resTag.techCreatedDate">{{ formatDateLong(resTag.techCreatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techUpdatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="resTag.techUpdatedDate">{{ formatDateLong(resTag.techUpdatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techMapping')"></span>
+          </dt>
+          <dd>
+            <span>{{ resTag.techMapping }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.techComment')"></span>
+          </dt>
+          <dd>
+            <span>{{ resTag.techComment }}</span>
           </dd>
           <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.resTag.reservation')"></span>

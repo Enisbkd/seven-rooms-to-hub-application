@@ -1,10 +1,18 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.*;
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.ZonedDateTime;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -12,10 +20,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A ClientPhoto.
  */
 @Entity
-@Table(name = "client_photo")
+@Table(name = "svr_api_client_photo")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ClientPhoto implements Serializable {
+public class ClientPhoto extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,7 +66,7 @@ public class ClientPhoto implements Serializable {
     @JsonProperty("small_width")
     private Integer smallWidth;
 
-    @Column(name = "photo_raw", length = 1000)
+    @Column(name = "jhi_raw", length = 1000)
     private String raw;
 
     @Column(name = "cropx")

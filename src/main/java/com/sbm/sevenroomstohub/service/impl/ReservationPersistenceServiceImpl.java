@@ -1,6 +1,5 @@
 package com.sbm.sevenroomstohub.service.impl;
 
-import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.Reservation;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.service.ClientService;

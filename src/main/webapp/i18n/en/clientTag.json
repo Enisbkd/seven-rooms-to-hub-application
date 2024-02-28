@@ -23,7 +23,11 @@
       "group": "Group",
       "groupDisplay": "Group Display",
       "color": "Color",
-      "tagSearchQuery": "Tag Search Query",
+      "techLineage": "Tech Lineage",
+      "techCreatedDate": "Tech Created Date",
+      "techUpdatedDate": "Tech Updated Date",
+      "techMapping": "Tech Mapping",
+      "techComment": "Tech Comment",
       "client": "Client"
     }
   }

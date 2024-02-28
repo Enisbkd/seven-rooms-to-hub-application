@@ -32,6 +32,11 @@
       "startTime": "Start Time",
       "serviceCharge": "Service Charge",
       "endtime": "Endtime",
+      "techLineage": "Tech Lineage",
+      "techCreatedDate": "Tech Created Date",
+      "techUpdatedDate": "Tech Updated Date",
+      "techMapping": "Tech Mapping",
+      "techComment": "Tech Comment",
       "resPosticketsItem": "Res Postickets Item",
       "reservation": "Reservation"
     }

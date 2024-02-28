@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ClientVenueStatsService from './client-venue-stats.service';
-import { useValidation } from '@/shared/composables';
+import { useValidation, useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 import { type IClientVenueStats, ClientVenueStats } from '@/shared/model/client-venue-stats.model';
@@ -28,6 +28,8 @@ export default defineComponent({
     const retrieveClientVenueStats = async clientVenueStatsId => {
       try {
         const res = await clientVenueStatsService().find(clientVenueStatsId);
+        res.techCreatedDate = new Date(res.techCreatedDate);
+        res.techUpdatedDate = new Date(res.techUpdatedDate);
         clientVenueStats.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -70,6 +72,11 @@ export default defineComponent({
       venueId: {},
       venueMarketingOptin: {},
       venueMarketingOptints: {},
+      techLineage: {},
+      techCreatedDate: {},
+      techUpdatedDate: {},
+      techMapping: {},
+      techComment: {},
       bookingNames: {},
       client: {},
     };
@@ -84,6 +91,7 @@ export default defineComponent({
       isSaving,
       currentLanguage,
       v$,
+      ...useDateFormat({ entityRef: clientVenueStats }),
       t$,
     };
   },

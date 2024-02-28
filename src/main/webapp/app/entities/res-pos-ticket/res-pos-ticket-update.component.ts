@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ResPosTicketService from './res-pos-ticket.service';
-import { useValidation } from '@/shared/composables';
+import { useValidation, useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 import ReservationService from '@/entities/reservation/reservation.service';
@@ -34,6 +34,8 @@ export default defineComponent({
     const retrieveResPosTicket = async resPosTicketId => {
       try {
         const res = await resPosTicketService().find(resPosTicketId);
+        res.techCreatedDate = new Date(res.techCreatedDate);
+        res.techUpdatedDate = new Date(res.techUpdatedDate);
         resPosTicket.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -71,6 +73,11 @@ export default defineComponent({
       startTime: {},
       serviceCharge: {},
       endtime: {},
+      techLineage: {},
+      techCreatedDate: {},
+      techUpdatedDate: {},
+      techMapping: {},
+      techComment: {},
       resPosticketsItems: {},
       reservation: {},
     };
@@ -86,6 +93,7 @@ export default defineComponent({
       currentLanguage,
       reservations,
       v$,
+      ...useDateFormat({ entityRef: resPosTicket }),
       t$,
     };
   },

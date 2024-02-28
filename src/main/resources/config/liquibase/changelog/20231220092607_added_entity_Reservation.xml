@@ -10,7 +10,7 @@
         Added the entity Reservation.
     -->
     <changeSet id="20231220092607-1" author="devteam">
-        <createTable tableName="reservation">
+        <createTable tableName="svr_api_reservation">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -24,6 +24,9 @@
                 <constraints nullable="true" />
             </column>
             <column name="deleted" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="client_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="venue_group_client_id" type="varchar(1000)">
@@ -197,7 +200,7 @@
             <column name="reservation_sms_optin" type="boolean">
                 <constraints nullable="true" />
             </column>
-            <column name="reservation_type" type="varchar(255)">
+            <column name="reservation_type" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
             <column name="send_reminder_email" type="boolean">
@@ -213,6 +216,21 @@
                 <constraints nullable="true" />
             </column>
             <column name="user_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_lineage" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_created_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_updated_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_mapping" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -233,7 +251,7 @@
         <loadData
                   file="config/liquibase/fake-data/reservation.csv"
                   separator=";"
-                  tableName="reservation"
+                  tableName="svr_api_reservation"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="resv_id" type="string"/>
@@ -303,7 +321,12 @@
             <column name="source_client_id" type="string"/>
             <column name="user_id" type="string"/>
             <column name="user_name" type="string"/>
-            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+            <column name="tech_lineage" type="string"/>
+            <column name="tech_created_date" type="date"/>
+            <column name="tech_updated_date" type="date"/>
+            <column name="tech_mapping" type="string"/>
+            <column name="tech_comment" type="string"/>
+            <column name="client_id" type="string"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>

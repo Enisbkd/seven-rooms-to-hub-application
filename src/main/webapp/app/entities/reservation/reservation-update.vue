@@ -1076,6 +1076,109 @@
               v-model="v$.userName.$model"
             />
           </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.reservation.techLineage')"
+              for="reservation-techLineage"
+            ></label>
+            <input
+              type="text"
+              class="form-control"
+              name="techLineage"
+              id="reservation-techLineage"
+              data-cy="techLineage"
+              :class="{ valid: !v$.techLineage.$invalid, invalid: v$.techLineage.$invalid }"
+              v-model="v$.techLineage.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.reservation.techCreatedDate')"
+              for="reservation-techCreatedDate"
+            ></label>
+            <div class="d-flex">
+              <input
+                id="reservation-techCreatedDate"
+                data-cy="techCreatedDate"
+                type="datetime-local"
+                class="form-control"
+                name="techCreatedDate"
+                :class="{ valid: !v$.techCreatedDate.$invalid, invalid: v$.techCreatedDate.$invalid }"
+                :value="convertDateTimeFromServer(v$.techCreatedDate.$model)"
+                @change="updateZonedDateTimeField('techCreatedDate', $event)"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.reservation.techUpdatedDate')"
+              for="reservation-techUpdatedDate"
+            ></label>
+            <div class="d-flex">
+              <input
+                id="reservation-techUpdatedDate"
+                data-cy="techUpdatedDate"
+                type="datetime-local"
+                class="form-control"
+                name="techUpdatedDate"
+                :class="{ valid: !v$.techUpdatedDate.$invalid, invalid: v$.techUpdatedDate.$invalid }"
+                :value="convertDateTimeFromServer(v$.techUpdatedDate.$model)"
+                @change="updateZonedDateTimeField('techUpdatedDate', $event)"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.reservation.techMapping')"
+              for="reservation-techMapping"
+            ></label>
+            <input
+              type="text"
+              class="form-control"
+              name="techMapping"
+              id="reservation-techMapping"
+              data-cy="techMapping"
+              :class="{ valid: !v$.techMapping.$invalid, invalid: v$.techMapping.$invalid }"
+              v-model="v$.techMapping.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.reservation.techComment')"
+              for="reservation-techComment"
+            ></label>
+            <input
+              type="text"
+              class="form-control"
+              name="techComment"
+              id="reservation-techComment"
+              data-cy="techComment"
+              :class="{ valid: !v$.techComment.$invalid, invalid: v$.techComment.$invalid }"
+              v-model="v$.techComment.$model"
+            />
+          </div>
+          <div class="form-group">
+            <label
+              class="form-control-label"
+              v-text="t$('sevenRoomsToHubApplicationApp.reservation.client')"
+              for="reservation-client"
+            ></label>
+            <select class="form-control" id="reservation-client" data-cy="client" name="client" v-model="reservation.client">
+              <option v-bind:value="null"></option>
+              <option
+                v-bind:value="reservation.client && clientOption.id === reservation.client.id ? reservation.client : clientOption"
+                v-for="clientOption in clients"
+                :key="clientOption.id"
+              >
+                {{ clientOption.id }}
+              </option>
+            </select>
+          </div>
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" v-on:click="previousState()">

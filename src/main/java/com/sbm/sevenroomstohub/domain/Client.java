@@ -1,12 +1,21 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.*;
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.ZonedDateTime;
-import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -15,11 +24,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A Client.
  */
 @Entity
-@Table(name = "client")
+@Table(name = "svr_api_client")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Client implements Serializable {
+public class Client extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +41,7 @@ public class Client implements Serializable {
 
     @Column(name = "client_id", unique = true)
     @JsonProperty("id")
-    //id 7 rooms
+    // id 7 rooms
     private String clientId;
 
     @Column(name = "created_date")
@@ -267,7 +276,7 @@ public class Client implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "client" }, allowSetters = true)
-    @JsonProperty("member_groups")
+    @JsonIgnore
     private Set<MemberGroup> memberGroups = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -1132,7 +1141,8 @@ public class Client implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -1147,75 +1157,167 @@ public class Client implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "Client{" +
-            "id=" + getId() +
-            ", clientId='" + getClientId() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", updatedDate='" + getUpdatedDate() + "'" +
-            ", deletedDate='" + getDeletedDate() + "'" +
-            ", lastname='" + getLastname() + "'" +
-            ", firstname='" + getFirstname() + "'" +
-            ", gender='" + getGender() + "'" +
-            ", salutation='" + getSalutation() + "'" +
-            ", title='" + getTitle() + "'" +
-            ", birthdayDay=" + getBirthdayDay() +
-            ", birthdayMonth=" + getBirthdayMonth() +
-            ", birthdayAltMonth=" + getBirthdayAltMonth() +
-            ", anniversaryDay=" + getAnniversaryDay() +
-            ", anniversaryMonth=" + getAnniversaryMonth() +
-            ", company='" + getCompany() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", emailAlt='" + getEmailAlt() + "'" +
-            ", phoneNumber='" + getPhoneNumber() + "'" +
-            ", phoneNumberlocale='" + getPhoneNumberlocale() + "'" +
-            ", phoneNumberalt='" + getPhoneNumberalt() + "'" +
-            ", phoneNumberaltlocale='" + getPhoneNumberaltlocale() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", address2='" + getAddress2() + "'" +
-            ", city='" + getCity() + "'" +
-            ", postalCode='" + getPostalCode() + "'" +
-            ", state='" + getState() + "'" +
-            ", country='" + getCountry() + "'" +
-            ", isContactPrivate='" + getIsContactPrivate() + "'" +
-            ", isOnetimeGuest='" + getIsOnetimeGuest() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", loyaltyId='" + getLoyaltyId() + "'" +
-            ", loyaltyRank=" + getLoyaltyRank() +
-            ", loyaltyTier='" + getLoyaltyTier() + "'" +
-            ", marketingOptin='" + getMarketingOptin() + "'" +
-            ", marketingOptints='" + getMarketingOptints() + "'" +
-            ", marketingOptOutts='" + getMarketingOptOutts() + "'" +
-            ", hasBillingProfile='" + getHasBillingProfile() + "'" +
-            ", notes='" + getNotes() + "'" +
-            ", privateNotes='" + getPrivateNotes() + "'" +
-            ", tags='" + getTags() + "'" +
-            ", totalVisits=" + getTotalVisits() +
-            ", totalCovers=" + getTotalCovers() +
-            ", totalCancellations=" + getTotalCancellations() +
-            ", totalNoShows=" + getTotalNoShows() +
-            ", totalSpend=" + getTotalSpend() +
-            ", totalSpendPerCover=" + getTotalSpendPerCover() +
-            ", totalspendPerVisit=" + getTotalspendPerVisit() +
-            ", avgRating=" + getAvgRating() +
-            ", referenceCode='" + getReferenceCode() + "'" +
-            ", externalUserId='" + getExternalUserId() + "'" +
-            ", venueGroupId='" + getVenueGroupId() + "'" +
-            ", birthdayAltDay=" + getBirthdayAltDay() +
-            ", userId='" + getUserId() + "'" +
-            ", userName='" + getUserName() + "'" +
-            ", totalOrderCount=" + getTotalOrderCount() +
-            ", preferredLanguageCode='" + getPreferredLanguageCode() + "'" +
-            ", clientPhoto='" + getClientPhoto() + "'" +
-            ", clientTags='" + getClientTags() + "'" +
-            ", customField ='" + getCustomFields() + "'" +
-            ", clientVenueStats ='" + getClientVenueStats() + "'" +
-            "}";
+        return (
+            "Client{" +
+            "id=" +
+            id +
+            ", clientId='" +
+            clientId +
+            '\'' +
+            ", createdDate='" +
+            createdDate +
+            '\'' +
+            ", updatedDate='" +
+            updatedDate +
+            '\'' +
+            ", deletedDate='" +
+            deletedDate +
+            '\'' +
+            ", lastname='" +
+            lastname +
+            '\'' +
+            ", firstname='" +
+            firstname +
+            '\'' +
+            ", gender='" +
+            gender +
+            '\'' +
+            ", salutation='" +
+            salutation +
+            '\'' +
+            ", title='" +
+            title +
+            '\'' +
+            ", birthdayDay=" +
+            birthdayDay +
+            ", birthdayMonth=" +
+            birthdayMonth +
+            ", birthdayAltMonth=" +
+            birthdayAltMonth +
+            ", anniversaryDay=" +
+            anniversaryDay +
+            ", anniversaryMonth=" +
+            anniversaryMonth +
+            ", company='" +
+            company +
+            '\'' +
+            ", email='" +
+            email +
+            '\'' +
+            ", emailAlt='" +
+            emailAlt +
+            '\'' +
+            ", phoneNumber='" +
+            phoneNumber +
+            '\'' +
+            ", phoneNumberlocale='" +
+            phoneNumberlocale +
+            '\'' +
+            ", phoneNumberalt='" +
+            phoneNumberalt +
+            '\'' +
+            ", phoneNumberaltlocale='" +
+            phoneNumberaltlocale +
+            '\'' +
+            ", address='" +
+            address +
+            '\'' +
+            ", address2='" +
+            address2 +
+            '\'' +
+            ", city='" +
+            city +
+            '\'' +
+            ", postalCode='" +
+            postalCode +
+            '\'' +
+            ", state='" +
+            state +
+            '\'' +
+            ", country='" +
+            country +
+            '\'' +
+            ", isContactPrivate=" +
+            isContactPrivate +
+            ", isOnetimeGuest=" +
+            isOnetimeGuest +
+            ", status='" +
+            status +
+            '\'' +
+            ", loyaltyId='" +
+            loyaltyId +
+            '\'' +
+            ", loyaltyRank=" +
+            loyaltyRank +
+            ", loyaltyTier='" +
+            loyaltyTier +
+            '\'' +
+            ", marketingOptin=" +
+            marketingOptin +
+            ", marketingOptints='" +
+            marketingOptints +
+            '\'' +
+            ", marketingOptOutts='" +
+            marketingOptOutts +
+            '\'' +
+            ", hasBillingProfile=" +
+            hasBillingProfile +
+            ", notes='" +
+            notes +
+            '\'' +
+            ", privateNotes='" +
+            privateNotes +
+            '\'' +
+            ", tags='" +
+            tags +
+            '\'' +
+            ", totalVisits=" +
+            totalVisits +
+            ", totalCovers=" +
+            totalCovers +
+            ", totalCancellations=" +
+            totalCancellations +
+            ", totalNoShows=" +
+            totalNoShows +
+            ", totalSpend=" +
+            totalSpend +
+            ", totalSpendPerCover=" +
+            totalSpendPerCover +
+            ", totalspendPerVisit=" +
+            totalspendPerVisit +
+            ", avgRating=" +
+            avgRating +
+            ", referenceCode='" +
+            referenceCode +
+            '\'' +
+            ", externalUserId='" +
+            externalUserId +
+            '\'' +
+            ", venueGroupId='" +
+            venueGroupId +
+            '\'' +
+            ", birthdayAltDay=" +
+            birthdayAltDay +
+            ", userId='" +
+            userId +
+            '\'' +
+            ", userName='" +
+            userName +
+            '\'' +
+            ", totalOrderCount=" +
+            totalOrderCount +
+            ", preferredLanguageCode='" +
+            preferredLanguageCode +
+            '\'' +
+            super.toString() +
+            '}'
+        );
     }
 }

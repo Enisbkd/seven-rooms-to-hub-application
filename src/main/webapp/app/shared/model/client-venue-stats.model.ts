@@ -28,6 +28,11 @@ export interface IClientVenueStats {
   venueId?: string | null;
   venueMarketingOptin?: boolean | null;
   venueMarketingOptints?: string | null;
+  techLineage?: string | null;
+  techCreatedDate?: Date | null;
+  techUpdatedDate?: Date | null;
+  techMapping?: string | null;
+  techComment?: string | null;
   bookingNames?: IBookingName[] | null;
   client?: IClient | null;
 }
@@ -60,6 +65,11 @@ export class ClientVenueStats implements IClientVenueStats {
     public venueId?: string | null,
     public venueMarketingOptin?: boolean | null,
     public venueMarketingOptints?: string | null,
+    public techLineage?: string | null,
+    public techCreatedDate?: Date | null,
+    public techUpdatedDate?: Date | null,
+    public techMapping?: string | null,
+    public techComment?: string | null,
     public bookingNames?: IBookingName[] | null,
     public client?: IClient | null,
   ) {

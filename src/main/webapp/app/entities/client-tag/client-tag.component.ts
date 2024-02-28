@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 
 import ClientTagService from './client-tag.service';
 import { type IClientTag } from '@/shared/model/client-tag.model';
+import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 export default defineComponent({
@@ -10,6 +11,7 @@ export default defineComponent({
   name: 'ClientTag',
   setup() {
     const { t: t$ } = useI18n();
+    const dateFormat = useDateFormat();
     const clientTagService = inject('clientTagService', () => new ClientTagService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -116,6 +118,7 @@ export default defineComponent({
       isFetching,
       retrieveClientTags,
       clear,
+      ...dateFormat,
       removeId,
       removeEntity,
       prepareRemove,

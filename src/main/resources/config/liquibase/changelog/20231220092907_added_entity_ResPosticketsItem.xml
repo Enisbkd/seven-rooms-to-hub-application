@@ -10,7 +10,7 @@
         Added the entity ResPosticketsItem.
     -->
     <changeSet id="20231220092907-1" author="devteam">
-        <createTable tableName="res_postickets_item">
+        <createTable tableName="svr_api_resv_pos_tickets_item">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -21,6 +21,21 @@
                 <constraints nullable="true" />
             </column>
             <column name="quantity" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_lineage" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_created_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_updated_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_mapping" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="res_pos_ticket_id" type="bigint">
@@ -44,12 +59,17 @@
         <loadData
                   file="config/liquibase/fake-data/res_postickets_item.csv"
                   separator=";"
-                  tableName="res_postickets_item"
+                  tableName="svr_api_resv_pos_tickets_item"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="price" type="numeric"/>
             <column name="name" type="string"/>
             <column name="quantity" type="numeric"/>
+            <column name="tech_lineage" type="string"/>
+            <column name="tech_created_date" type="date"/>
+            <column name="tech_updated_date" type="date"/>
+            <column name="tech_mapping" type="string"/>
+            <column name="tech_comment" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

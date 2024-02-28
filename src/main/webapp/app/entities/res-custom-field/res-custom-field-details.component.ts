@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import ResCustomFieldService from './res-custom-field.service';
+import { useDateFormat } from '@/shared/composables';
 import { type IResCustomField } from '@/shared/model/res-custom-field.model';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -10,6 +11,7 @@ export default defineComponent({
   compatConfig: { MODE: 3 },
   name: 'ResCustomFieldDetails',
   setup() {
+    const dateFormat = useDateFormat();
     const resCustomFieldService = inject('resCustomFieldService', () => new ResCustomFieldService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -33,6 +35,7 @@ export default defineComponent({
     }
 
     return {
+      ...dateFormat,
       alertService,
       resCustomField,
 
