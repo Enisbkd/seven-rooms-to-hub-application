@@ -9,10 +9,10 @@
     <changeSet id="20231220092107-2" author="devteam">
 
         <addForeignKeyConstraint baseColumnNames="client_id"
-                                 baseTableName="member_group"
+                                 baseTableName="svr_api_member_group"
                                  constraintName="fk_member_group__client_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="client"
+                                 referencedTableName="svr_api_client"
                                  />
     </changeSet>
 </databaseChangeLog>

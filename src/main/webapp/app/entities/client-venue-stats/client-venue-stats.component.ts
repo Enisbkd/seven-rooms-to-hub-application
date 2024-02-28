@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 
 import ClientVenueStatsService from './client-venue-stats.service';
 import { type IClientVenueStats } from '@/shared/model/client-venue-stats.model';
+import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 export default defineComponent({
@@ -10,6 +11,7 @@ export default defineComponent({
   name: 'ClientVenueStats',
   setup() {
     const { t: t$ } = useI18n();
+    const dateFormat = useDateFormat();
     const clientVenueStatsService = inject('clientVenueStatsService', () => new ClientVenueStatsService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -116,6 +118,7 @@ export default defineComponent({
       isFetching,
       retrieveClientVenueStatss,
       clear,
+      ...dateFormat,
       removeId,
       removeEntity,
       prepareRemove,

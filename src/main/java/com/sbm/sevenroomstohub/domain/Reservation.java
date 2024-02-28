@@ -3,9 +3,16 @@ package com.sbm.sevenroomstohub.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.ZonedDateTime;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,11 +24,11 @@ import org.hibernate.annotations.Cascade;
  * A Reservation.
  */
 @Entity
-@Table(name = "reservation")
+@Table(name = "svr_api_reservation")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Reservation implements Serializable {
+public class Reservation extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,6 +51,10 @@ public class Reservation implements Serializable {
 
     @Column(name = "deleted")
     private String deleted;
+
+    @JsonProperty("client_id")
+    @Column(name = "client_id")
+    private String clientId;
 
     @Column(name = "venue_group_client_id")
     @JsonProperty("venue_group_client_id")
@@ -1308,97 +1319,366 @@ public class Reservation implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Reservation)) {
-            return false;
-        }
-        return getId() != null && getId().equals(((Reservation) o).getId());
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return (
+            Objects.equals(id, that.id) &&
+            Objects.equals(resvId, that.resvId) &&
+            Objects.equals(created, that.created) &&
+            Objects.equals(updated, that.updated) &&
+            Objects.equals(deleted, that.deleted) &&
+            Objects.equals(clientId, that.clientId) &&
+            Objects.equals(venueGroupClientId, that.venueGroupClientId) &&
+            Objects.equals(venueGroupId, that.venueGroupId) &&
+            Objects.equals(venueId, that.venueId) &&
+            Objects.equals(date, that.date) &&
+            Objects.equals(duration, that.duration) &&
+            Objects.equals(checkNumbers, that.checkNumbers) &&
+            Objects.equals(shiftCategory, that.shiftCategory) &&
+            Objects.equals(shiftPersistentId, that.shiftPersistentId) &&
+            Objects.equals(maxGuests, that.maxGuests) &&
+            Objects.equals(mfratioMale, that.mfratioMale) &&
+            Objects.equals(mfratioFemale, that.mfratioFemale) &&
+            Objects.equals(status, that.status) &&
+            Objects.equals(statusDisplay, that.statusDisplay) &&
+            Objects.equals(statusSimple, that.statusSimple) &&
+            Objects.equals(accessPersistentId, that.accessPersistentId) &&
+            Objects.equals(arrivedGuests, that.arrivedGuests) &&
+            Objects.equals(isvip, that.isvip) &&
+            Objects.equals(bookedby, that.bookedby) &&
+            Objects.equals(clientReferenceCode, that.clientReferenceCode) &&
+            Objects.equals(lastname, that.lastname) &&
+            Objects.equals(firstname, that.firstname) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(phoneNumber, that.phoneNumber) &&
+            Objects.equals(address, that.address) &&
+            Objects.equals(address2, that.address2) &&
+            Objects.equals(city, that.city) &&
+            Objects.equals(postalCode, that.postalCode) &&
+            Objects.equals(state, that.state) &&
+            Objects.equals(country, that.country) &&
+            Objects.equals(loyaltyId, that.loyaltyId) &&
+            Objects.equals(loyaltyRank, that.loyaltyRank) &&
+            Objects.equals(loyaltyTier, that.loyaltyTier) &&
+            Objects.equals(notes, that.notes) &&
+            Objects.equals(arrivalTime, that.arrivalTime) &&
+            Objects.equals(seatedTime, that.seatedTime) &&
+            Objects.equals(leftTime, that.leftTime) &&
+            Objects.equals(clientRequests, that.clientRequests) &&
+            Objects.equals(comps, that.comps) &&
+            Objects.equals(compsPriceType, that.compsPriceType) &&
+            Objects.equals(costOption, that.costOption) &&
+            Objects.equals(policy, that.policy) &&
+            Objects.equals(minPrice, that.minPrice) &&
+            Objects.equals(prePayment, that.prePayment) &&
+            Objects.equals(onsitePayment, that.onsitePayment) &&
+            Objects.equals(totalPayment, that.totalPayment) &&
+            Objects.equals(paidBy, that.paidBy) &&
+            Objects.equals(servedBy, that.servedBy) &&
+            Objects.equals(rating, that.rating) &&
+            Objects.equals(problems, that.problems) &&
+            Objects.equals(autoAssignments, that.autoAssignments) &&
+            Objects.equals(externalClientId, that.externalClientId) &&
+            Objects.equals(externalId, that.externalId) &&
+            Objects.equals(externalReferenceCode, that.externalReferenceCode) &&
+            Objects.equals(externalUserId, that.externalUserId) &&
+            Objects.equals(modifyReservationLink, that.modifyReservationLink) &&
+            Objects.equals(referenceCode, that.referenceCode) &&
+            Objects.equals(reservationSmsOptin, that.reservationSmsOptin) &&
+            Objects.equals(reservationType, that.reservationType) &&
+            Objects.equals(sendReminderEmail, that.sendReminderEmail) &&
+            Objects.equals(sendreminderSms, that.sendreminderSms) &&
+            Objects.equals(sourceClientId, that.sourceClientId) &&
+            Objects.equals(userId, that.userId) &&
+            Objects.equals(resTags, that.resTags) &&
+            Objects.equals(resPosTickets, that.resPosTickets) &&
+            Objects.equals(resCustomFields, that.resCustomFields) &&
+            Objects.equals(resTables, that.resTables)
+        );
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hash(
+            id,
+            resvId,
+            created,
+            updated,
+            deleted,
+            clientId,
+            venueGroupClientId,
+            venueGroupId,
+            venueId,
+            date,
+            duration,
+            checkNumbers,
+            shiftCategory,
+            shiftPersistentId,
+            maxGuests,
+            mfratioMale,
+            mfratioFemale,
+            status,
+            statusDisplay,
+            statusSimple,
+            accessPersistentId,
+            arrivedGuests,
+            isvip,
+            bookedby,
+            clientReferenceCode,
+            lastname,
+            firstname,
+            email,
+            phoneNumber,
+            address,
+            address2,
+            city,
+            postalCode,
+            state,
+            country,
+            loyaltyId,
+            loyaltyRank,
+            loyaltyTier,
+            notes,
+            arrivalTime,
+            seatedTime,
+            leftTime,
+            clientRequests,
+            comps,
+            compsPriceType,
+            costOption,
+            policy,
+            minPrice,
+            prePayment,
+            onsitePayment,
+            totalPayment,
+            paidBy,
+            servedBy,
+            rating,
+            problems,
+            autoAssignments,
+            externalClientId,
+            externalId,
+            externalReferenceCode,
+            externalUserId,
+            modifyReservationLink,
+            referenceCode,
+            reservationSmsOptin,
+            reservationType,
+            sendReminderEmail,
+            sendreminderSms,
+            sourceClientId,
+            userId,
+            userName
+        );
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "Reservation{" +
-            "id=" + getId() +
-            ", resvId='" + getResvId() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", updated='" + getUpdated() + "'" +
-            ", deleted='" + getDeleted() + "'" +
-            ", venueGroupClientId='" + getVenueGroupClientId() + "'" +
-            ", venueGroupId='" + getVenueGroupId() + "'" +
-            ", venueId='" + getVenueId() + "'" +
-            ", date='" + getDate() + "'" +
-            ", duration=" + getDuration() +
-            ", checkNumbers='" + getCheckNumbers() + "'" +
-            ", shiftCategory='" + getShiftCategory() + "'" +
-            ", shiftPersistentId='" + getShiftPersistentId() + "'" +
-            ", maxGuests=" + getMaxGuests() +
-            ", mfratioMale=" + getMfratioMale() +
-            ", mfratioFemale=" + getMfratioFemale() +
-            ", status='" + getStatus() + "'" +
-            ", statusDisplay='" + getStatusDisplay() + "'" +
-            ", statusSimple='" + getStatusSimple() + "'" +
-            ", accessPersistentId='" + getAccessPersistentId() + "'" +
-            ", arrivedGuests=" + getArrivedGuests() +
-            ", isvip='" + getIsvip() + "'" +
-            ", bookedby='" + getBookedby() + "'" +
-            ", clientReferenceCode='" + getClientReferenceCode() + "'" +
-            ", lastname='" + getLastname() + "'" +
-            ", firstname='" + getFirstname() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", phoneNumber='" + getPhoneNumber() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", address2='" + getAddress2() + "'" +
-            ", city='" + getCity() + "'" +
-            ", postalCode='" + getPostalCode() + "'" +
-            ", state='" + getState() + "'" +
-            ", country='" + getCountry() + "'" +
-            ", loyaltyId='" + getLoyaltyId() + "'" +
-            ", loyaltyRank=" + getLoyaltyRank() +
-            ", loyaltyTier='" + getLoyaltyTier() + "'" +
-            ", notes='" + getNotes() + "'" +
-            ", arrivalTime='" + getArrivalTime() + "'" +
-            ", seatedTime='" + getSeatedTime() + "'" +
-            ", leftTime='" + getLeftTime() + "'" +
-            ", clientRequests='" + getClientRequests() + "'" +
-            ", comps=" + getComps() +
-            ", compsPriceType='" + getCompsPriceType() + "'" +
-            ", costOption=" + getCostOption() +
-            ", policy='" + getPolicy() + "'" +
-            ", minPrice=" + getMinPrice() +
-            ", prePayment=" + getPrePayment() +
-            ", onsitePayment=" + getOnsitePayment() +
-            ", totalPayment=" + getTotalPayment() +
-            ", paidBy='" + getPaidBy() + "'" +
-            ", servedBy='" + getServedBy() + "'" +
-            ", rating=" + getRating() +
-            ", problems='" + getProblems() + "'" +
-            ", autoAssignments='" + getAutoAssignments() + "'" +
-            ", externalClientId='" + getExternalClientId() + "'" +
-            ", externalId='" + getExternalId() + "'" +
-            ", externalReferenceCode='" + getExternalReferenceCode() + "'" +
-            ", externalUserId='" + getExternalUserId() + "'" +
-            ", modifyReservationLink='" + getModifyReservationLink() + "'" +
-            ", referenceCode='" + getReferenceCode() + "'" +
-            ", reservationSmsOptin='" + getReservationSmsOptin() + "'" +
-            ", reservationType='" + getReservationType() + "'" +
-            ", sendReminderEmail='" + getSendReminderEmail() + "'" +
-            ", sendreminderSms='" + getSendreminderSms() + "'" +
-            ", sourceClientId='" + getSourceClientId() + "'" +
-            ", userId='" + getUserId() + "'" +
-            ", userName='" + getUserName() + "'" +
-            "}";
+        return (
+            "Reservation{" +
+            "id=" +
+            id +
+            ", resvId='" +
+            resvId +
+            '\'' +
+            ", created='" +
+            created +
+            '\'' +
+            ", updated='" +
+            updated +
+            '\'' +
+            ", deleted='" +
+            deleted +
+            '\'' +
+            ", clientId='" +
+            clientId +
+            '\'' +
+            ", venueGroupClientId='" +
+            venueGroupClientId +
+            '\'' +
+            ", venueGroupId='" +
+            venueGroupId +
+            '\'' +
+            ", venueId='" +
+            venueId +
+            '\'' +
+            ", date='" +
+            date +
+            '\'' +
+            ", duration=" +
+            duration +
+            ", checkNumbers='" +
+            checkNumbers +
+            '\'' +
+            ", shiftCategory='" +
+            shiftCategory +
+            '\'' +
+            ", shiftPersistentId='" +
+            shiftPersistentId +
+            '\'' +
+            ", maxGuests=" +
+            maxGuests +
+            ", mfratioMale=" +
+            mfratioMale +
+            ", mfratioFemale=" +
+            mfratioFemale +
+            ", status='" +
+            status +
+            '\'' +
+            ", statusDisplay='" +
+            statusDisplay +
+            '\'' +
+            ", statusSimple='" +
+            statusSimple +
+            '\'' +
+            ", accessPersistentId='" +
+            accessPersistentId +
+            '\'' +
+            ", arrivedGuests=" +
+            arrivedGuests +
+            ", isvip=" +
+            isvip +
+            ", bookedby='" +
+            bookedby +
+            '\'' +
+            ", clientReferenceCode='" +
+            clientReferenceCode +
+            '\'' +
+            ", lastname='" +
+            lastname +
+            '\'' +
+            ", firstname='" +
+            firstname +
+            '\'' +
+            ", email='" +
+            email +
+            '\'' +
+            ", phoneNumber='" +
+            phoneNumber +
+            '\'' +
+            ", address='" +
+            address +
+            '\'' +
+            ", address2='" +
+            address2 +
+            '\'' +
+            ", city='" +
+            city +
+            '\'' +
+            ", postalCode='" +
+            postalCode +
+            '\'' +
+            ", state='" +
+            state +
+            '\'' +
+            ", country='" +
+            country +
+            '\'' +
+            ", loyaltyId='" +
+            loyaltyId +
+            '\'' +
+            ", loyaltyRank=" +
+            loyaltyRank +
+            ", loyaltyTier='" +
+            loyaltyTier +
+            '\'' +
+            ", notes='" +
+            notes +
+            '\'' +
+            ", arrivalTime='" +
+            arrivalTime +
+            '\'' +
+            ", seatedTime='" +
+            seatedTime +
+            '\'' +
+            ", leftTime='" +
+            leftTime +
+            '\'' +
+            ", clientRequests='" +
+            clientRequests +
+            '\'' +
+            ", comps=" +
+            comps +
+            ", compsPriceType='" +
+            compsPriceType +
+            '\'' +
+            ", costOption=" +
+            costOption +
+            ", policy='" +
+            policy +
+            '\'' +
+            ", minPrice=" +
+            minPrice +
+            ", prePayment=" +
+            prePayment +
+            ", onsitePayment=" +
+            onsitePayment +
+            ", totalPayment=" +
+            totalPayment +
+            ", paidBy='" +
+            paidBy +
+            '\'' +
+            ", servedBy='" +
+            servedBy +
+            '\'' +
+            ", rating=" +
+            rating +
+            ", problems='" +
+            problems +
+            '\'' +
+            ", autoAssignments='" +
+            autoAssignments +
+            '\'' +
+            ", externalClientId='" +
+            externalClientId +
+            '\'' +
+            ", externalId='" +
+            externalId +
+            '\'' +
+            ", externalReferenceCode='" +
+            externalReferenceCode +
+            '\'' +
+            ", externalUserId='" +
+            externalUserId +
+            '\'' +
+            ", modifyReservationLink='" +
+            modifyReservationLink +
+            '\'' +
+            ", referenceCode='" +
+            referenceCode +
+            '\'' +
+            ", reservationSmsOptin=" +
+            reservationSmsOptin +
+            ", reservationType='" +
+            reservationType +
+            '\'' +
+            ", sendReminderEmail=" +
+            sendReminderEmail +
+            ", sendreminderSms=" +
+            sendreminderSms +
+            ", sourceClientId='" +
+            sourceClientId +
+            '\'' +
+            ", userId='" +
+            userId +
+            '\'' +
+            ", userName='" +
+            userName
+        );
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 }

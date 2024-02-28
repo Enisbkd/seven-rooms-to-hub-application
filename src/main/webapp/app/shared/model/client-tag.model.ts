@@ -7,7 +7,11 @@ export interface IClientTag {
   group?: string | null;
   groupDisplay?: string | null;
   color?: string | null;
-  tagSearchQuery?: string | null;
+  techLineage?: string | null;
+  techCreatedDate?: Date | null;
+  techUpdatedDate?: Date | null;
+  techMapping?: string | null;
+  techComment?: string | null;
   client?: IClient | null;
 }
 
@@ -19,7 +23,11 @@ export class ClientTag implements IClientTag {
     public group?: string | null,
     public groupDisplay?: string | null,
     public color?: string | null,
-    public tagSearchQuery?: string | null,
+    public techLineage?: string | null,
+    public techCreatedDate?: Date | null,
+    public techUpdatedDate?: Date | null,
+    public techMapping?: string | null,
+    public techComment?: string | null,
     public client?: IClient | null,
   ) {}
 }

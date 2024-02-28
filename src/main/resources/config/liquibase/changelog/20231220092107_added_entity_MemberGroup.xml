@@ -10,11 +10,26 @@
         Added the entity MemberGroup.
     -->
     <changeSet id="20231220092107-1" author="devteam">
-        <createTable tableName="member_group">
+        <createTable tableName="svr_api_member_group">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="client_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_lineage" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_created_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_updated_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_mapping" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -35,7 +50,7 @@
         <loadData
                   file="config/liquibase/fake-data/member_group.csv"
                   separator=";"
-                  tableName="member_group"
+                  tableName="svr_api_member_group"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

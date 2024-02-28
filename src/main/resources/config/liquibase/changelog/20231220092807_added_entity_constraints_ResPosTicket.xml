@@ -9,10 +9,10 @@
     <changeSet id="20231220092807-2" author="devteam">
 
         <addForeignKeyConstraint baseColumnNames="reservation_id"
-                                 baseTableName="res_pos_ticket"
+                                 baseTableName="svr_api_resv_pos_ticket"
                                  constraintName="fk_res_pos_ticket__reservation_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="reservation"
+                                 referencedTableName="svr_api_reservation"
                                  />
     </changeSet>
 </databaseChangeLog>

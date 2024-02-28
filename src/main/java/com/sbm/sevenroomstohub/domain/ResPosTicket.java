@@ -3,9 +3,17 @@ package com.sbm.sevenroomstohub.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.ZonedDateTime;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,10 +25,10 @@ import org.hibernate.annotations.Cascade;
  * A ResPosTicket.
  */
 @Entity
-@Table(name = "res_pos_ticket")
+@Table(name = "svr_api_resv_pos_ticket")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ResPosTicket implements Serializable {
+public class ResPosTicket extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -332,7 +340,8 @@ public class ResPosTicket implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -354,9 +363,7 @@ public class ResPosTicket implements Serializable {
             Objects.equals(subtotal, that.subtotal) &&
             Objects.equals(startTime, that.startTime) &&
             Objects.equals(serviceCharge, that.serviceCharge) &&
-            Objects.equals(endtime, that.endtime) &&
-            Objects.equals(resPosticketsItems, that.resPosticketsItems) &&
-            Objects.equals(reservation, that.reservation)
+            Objects.equals(endtime, that.endtime)
         );
     }
 
@@ -377,9 +384,7 @@ public class ResPosTicket implements Serializable {
             subtotal,
             startTime,
             serviceCharge,
-            endtime,
-            resPosticketsItems,
-            reservation
+            endtime
         );
     }
 
@@ -427,6 +432,7 @@ public class ResPosTicket implements Serializable {
             resPosticketsItems +
             ", reservation=" +
             reservation +
+            super.toString() +
             '}'
         );
     }

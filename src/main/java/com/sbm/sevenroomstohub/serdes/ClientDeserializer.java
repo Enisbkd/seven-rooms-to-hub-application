@@ -87,8 +87,8 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
     private static void userDeserializer(JsonNode clientEntity, Client client) {
         JsonNode userNode = clientEntity.get("user");
         if (userNode != null) {
-            String userId = String.valueOf(clientEntity.get("user").get("id"));
-            String userName = String.valueOf(clientEntity.get("user").get("name"));
+            String userId = String.valueOf(clientEntity.get("user").get("id")).replace("\"", "");
+            String userName = String.valueOf(clientEntity.get("user").get("name")).replace("\"", "");
             client.setUserId(userId);
             client.setUserName(userName);
         }

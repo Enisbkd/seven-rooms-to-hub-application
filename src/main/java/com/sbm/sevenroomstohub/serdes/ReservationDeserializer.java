@@ -104,8 +104,8 @@ public class ReservationDeserializer<ReservationPayload> implements Deserializer
     private static void userDeserializer(JsonNode resEntity, Reservation reservation) {
         JsonNode userNode = resEntity.get("user");
         if (userNode != null) {
-            String userId = String.valueOf(userNode.get("id"));
-            String userName = String.valueOf(userNode.get("name"));
+            String userId = String.valueOf(userNode.get("id")).replace("\"", "");
+            String userName = String.valueOf(userNode.get("name")).replace("\"", "");
             reservation.setUserId(userId);
             reservation.setUserName(userName);
         }

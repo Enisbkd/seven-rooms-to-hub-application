@@ -2,7 +2,6 @@ package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import java.io.Serializable;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,10 +9,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A MemberGroup.
  */
 @Entity
-@Table(name = "member_group")
+@Table(name = "svr_api_member_group")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class MemberGroup implements Serializable {
+public class MemberGroup extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,7 +54,8 @@ public class MemberGroup implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -70,7 +70,8 @@ public class MemberGroup implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -78,7 +79,8 @@ public class MemberGroup implements Serializable {
     @Override
     public String toString() {
         return "MemberGroup{" +
-            "id=" + getId() +
-            "}";
+                "id=" + getId() +
+                super.toString() +
+                "}";
     }
 }

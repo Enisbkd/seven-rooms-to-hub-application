@@ -2,9 +2,15 @@ package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.ZonedDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -12,10 +18,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A ResCustomField.
  */
 @Entity
-@Table(name = "res_custom_field")
+@Table(name = "svr_api_resv_custom_field")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ResCustomField implements Serializable {
+public class ResCustomField extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -123,7 +129,8 @@ public class ResCustomField implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -138,7 +145,8 @@ public class ResCustomField implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -146,11 +154,12 @@ public class ResCustomField implements Serializable {
     @Override
     public String toString() {
         return "ResCustomField{" +
-            "id=" + getId() +
-            ", systemName='" + getSystemName() + "'" +
-            ", displayOrder=" + getDisplayOrder() +
-            ", name='" + getName() + "'" +
-            ", value='" + getValue() + "'" +
-            "}";
+                "id=" + getId() +
+                ", systemName='" + getSystemName() + "'" +
+                ", displayOrder=" + getDisplayOrder() +
+                ", name='" + getName() + "'" +
+                ", value='" + getValue() + "'" +
+                super.toString() +
+                "}";
     }
 }

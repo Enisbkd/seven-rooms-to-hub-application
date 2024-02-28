@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ClientService from './client.service';
-import { useValidation } from '@/shared/composables';
+import { useValidation, useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 import ClientPhotoService from '@/entities/client-photo/client-photo.service';
@@ -40,6 +40,8 @@ export default defineComponent({
     const retrieveClient = async clientId => {
       try {
         const res = await clientService().find(clientId);
+        res.techCreatedDate = new Date(res.techCreatedDate);
+        res.techUpdatedDate = new Date(res.techUpdatedDate);
         client.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -124,10 +126,16 @@ export default defineComponent({
       userName: {},
       totalOrderCount: {},
       preferredLanguageCode: {},
+      techLineage: {},
+      techCreatedDate: {},
+      techUpdatedDate: {},
+      techMapping: {},
+      techComment: {},
       clientPhoto: {},
       clientVenueStats: {},
       customFields: {},
       clientTags: {},
+      reservations: {},
       memberGroups: {},
     };
     const v$ = useVuelidate(validationRules, client as any);
@@ -143,6 +151,7 @@ export default defineComponent({
       clientPhotos,
       clientVenueStats,
       v$,
+      ...useDateFormat({ entityRef: client }),
       t$,
     };
   },

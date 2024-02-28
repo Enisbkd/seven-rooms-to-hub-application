@@ -10,10 +10,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A BookingName.
  */
 @Entity
-@Table(name = "booking_name")
+@Table(name = "svr_api_booking_name")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class BookingName implements Serializable {
+public class BookingName extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -96,7 +96,8 @@ public class BookingName implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -104,8 +105,9 @@ public class BookingName implements Serializable {
     @Override
     public String toString() {
         return "BookingName{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+                "id=" + getId() +
+                ", name='" + getName() + "'" +
+                super.toString() +
+                "}";
     }
 }

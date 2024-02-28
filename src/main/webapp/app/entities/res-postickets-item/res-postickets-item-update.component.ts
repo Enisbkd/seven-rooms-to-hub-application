@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ResPosticketsItemService from './res-postickets-item.service';
-import { useValidation } from '@/shared/composables';
+import { useValidation, useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 import ResPosTicketService from '@/entities/res-pos-ticket/res-pos-ticket.service';
@@ -34,6 +34,8 @@ export default defineComponent({
     const retrieveResPosticketsItem = async resPosticketsItemId => {
       try {
         const res = await resPosticketsItemService().find(resPosticketsItemId);
+        res.techCreatedDate = new Date(res.techCreatedDate);
+        res.techUpdatedDate = new Date(res.techUpdatedDate);
         resPosticketsItem.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -60,6 +62,11 @@ export default defineComponent({
       price: {},
       name: {},
       quantity: {},
+      techLineage: {},
+      techCreatedDate: {},
+      techUpdatedDate: {},
+      techMapping: {},
+      techComment: {},
       resPosTicket: {},
     };
     const v$ = useVuelidate(validationRules, resPosticketsItem as any);
@@ -74,6 +81,7 @@ export default defineComponent({
       currentLanguage,
       resPosTickets,
       v$,
+      ...useDateFormat({ entityRef: resPosticketsItem }),
       t$,
     };
   },

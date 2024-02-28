@@ -31,6 +31,36 @@
             <span>{{ resCustomField.value }}</span>
           </dd>
           <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techLineage')"></span>
+          </dt>
+          <dd>
+            <span>{{ resCustomField.techLineage }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techCreatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="resCustomField.techCreatedDate">{{ formatDateLong(resCustomField.techCreatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techUpdatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="resCustomField.techUpdatedDate">{{ formatDateLong(resCustomField.techUpdatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techMapping')"></span>
+          </dt>
+          <dd>
+            <span>{{ resCustomField.techMapping }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techComment')"></span>
+          </dt>
+          <dd>
+            <span>{{ resCustomField.techComment }}</span>
+          </dd>
+          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.reservation')"></span>
           </dt>
           <dd>

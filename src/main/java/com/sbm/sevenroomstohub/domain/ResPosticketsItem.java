@@ -1,10 +1,15 @@
 package com.sbm.sevenroomstohub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.ZonedDateTime;
-import java.util.Objects;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -12,10 +17,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A ResPosticketsItem.
  */
 @Entity
-@Table(name = "res_postickets_item")
+@Table(name = "svr_api_resv_pos_tickets_item")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ResPosticketsItem implements Serializable {
+public class ResPosticketsItem extends AbstractAuditingEntitySBM<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -105,7 +110,8 @@ public class ResPosticketsItem implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -120,7 +126,8 @@ public class ResPosticketsItem implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -128,10 +135,11 @@ public class ResPosticketsItem implements Serializable {
     @Override
     public String toString() {
         return "ResPosticketsItem{" +
-            "id=" + getId() +
-            ", price=" + getPrice() +
-            ", name='" + getName() + "'" +
-            ", quantity=" + getQuantity() +
-            "}";
+                "id=" + getId() +
+                ", price=" + getPrice() +
+                ", name='" + getName() + "'" +
+                ", quantity=" + getQuantity() +
+                super.toString() +
+                "}";
     }
 }

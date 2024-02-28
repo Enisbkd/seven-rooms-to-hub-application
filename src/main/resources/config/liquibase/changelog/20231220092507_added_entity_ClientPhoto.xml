@@ -10,7 +10,7 @@
         Added the entity ClientPhoto.
     -->
     <changeSet id="20231220092507-1" author="devteam">
-        <createTable tableName="client_photo">
+        <createTable tableName="svr_api_client_photo">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -56,6 +56,21 @@
             <column name="crop_width" type="double">
                 <constraints nullable="true" />
             </column>
+            <column name="tech_lineage" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_created_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_updated_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_mapping" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_comment" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -74,7 +89,7 @@
         <loadData
                   file="config/liquibase/fake-data/client_photo.csv"
                   separator=";"
-                  tableName="client_photo"
+                  tableName="svr_api_client_photo"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="large" type="string"/>

@@ -2,6 +2,7 @@ import { type IClientPhoto } from '@/shared/model/client-photo.model';
 import { type IClientVenueStats } from '@/shared/model/client-venue-stats.model';
 import { type ICustomField } from '@/shared/model/custom-field.model';
 import { type IClientTag } from '@/shared/model/client-tag.model';
+import { type IReservation } from '@/shared/model/reservation.model';
 import { type IMemberGroup } from '@/shared/model/member-group.model';
 
 export interface IClient {
@@ -62,10 +63,16 @@ export interface IClient {
   userName?: string | null;
   totalOrderCount?: number | null;
   preferredLanguageCode?: string | null;
+  techLineage?: string | null;
+  techCreatedDate?: Date | null;
+  techUpdatedDate?: Date | null;
+  techMapping?: string | null;
+  techComment?: string | null;
   clientPhoto?: IClientPhoto | null;
   clientVenueStats?: IClientVenueStats | null;
   customFields?: ICustomField[] | null;
   clientTags?: IClientTag[] | null;
+  reservations?: IReservation[] | null;
   memberGroups?: IMemberGroup[] | null;
 }
 
@@ -128,10 +135,16 @@ export class Client implements IClient {
     public userName?: string | null,
     public totalOrderCount?: number | null,
     public preferredLanguageCode?: string | null,
+    public techLineage?: string | null,
+    public techCreatedDate?: Date | null,
+    public techUpdatedDate?: Date | null,
+    public techMapping?: string | null,
+    public techComment?: string | null,
     public clientPhoto?: IClientPhoto | null,
     public clientVenueStats?: IClientVenueStats | null,
     public customFields?: ICustomField[] | null,
     public clientTags?: IClientTag[] | null,
+    public reservations?: IReservation[] | null,
     public memberGroups?: IMemberGroup[] | null,
   ) {
     this.isContactPrivate = this.isContactPrivate ?? false;

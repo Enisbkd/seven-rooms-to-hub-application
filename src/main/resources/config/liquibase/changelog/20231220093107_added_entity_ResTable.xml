@@ -10,7 +10,7 @@
         Added the entity ResTable.
     -->
     <changeSet id="20231220093107-2" author="devteam">
-        <createTable tableName="res_table">
+        <createTable tableName="svr_api_resv_table">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -18,6 +18,21 @@
                 <constraints nullable="true" />
             </column>
             <column name="reservation_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_lineage" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_created_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_updated_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_mapping" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tech_comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -38,7 +53,7 @@
         <loadData
                   file="config/liquibase/fake-data/res_table.csv"
                   separator=";"
-                  tableName="res_table"
+                  tableName="svr_api_resv_table"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="table_number" type="string"/>

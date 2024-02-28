@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ResCustomFieldService from './res-custom-field.service';
-import { useValidation } from '@/shared/composables';
+import { useValidation, useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
 import ReservationService from '@/entities/reservation/reservation.service';
@@ -34,6 +34,8 @@ export default defineComponent({
     const retrieveResCustomField = async resCustomFieldId => {
       try {
         const res = await resCustomFieldService().find(resCustomFieldId);
+        res.techCreatedDate = new Date(res.techCreatedDate);
+        res.techUpdatedDate = new Date(res.techUpdatedDate);
         resCustomField.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
@@ -61,6 +63,11 @@ export default defineComponent({
       displayOrder: {},
       name: {},
       value: {},
+      techLineage: {},
+      techCreatedDate: {},
+      techUpdatedDate: {},
+      techMapping: {},
+      techComment: {},
       reservation: {},
     };
     const v$ = useVuelidate(validationRules, resCustomField as any);
@@ -75,6 +82,7 @@ export default defineComponent({
       currentLanguage,
       reservations,
       v$,
+      ...useDateFormat({ entityRef: resCustomField }),
       t$,
     };
   },

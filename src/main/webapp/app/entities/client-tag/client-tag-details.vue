@@ -37,10 +37,34 @@
             <span>{{ clientTag.color }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.tagSearchQuery')"></span>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techLineage')"></span>
           </dt>
           <dd>
-            <span>{{ clientTag.tagSearchQuery }}</span>
+            <span>{{ clientTag.techLineage }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techCreatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="clientTag.techCreatedDate">{{ formatDateLong(clientTag.techCreatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techUpdatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="clientTag.techUpdatedDate">{{ formatDateLong(clientTag.techUpdatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techMapping')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientTag.techMapping }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.techComment')"></span>
+          </dt>
+          <dd>
+            <span>{{ clientTag.techComment }}</span>
           </dd>
           <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.clientTag.client')"></span>

@@ -32,6 +32,11 @@
       "cropy": "Cropy",
       "cropHeight": "Crop Height",
       "cropWidth": "Crop Width",
+      "techLineage": "Tech Lineage",
+      "techCreatedDate": "Tech Created Date",
+      "techUpdatedDate": "Tech Updated Date",
+      "techMapping": "Tech Mapping",
+      "techComment": "Tech Comment",
       "client": "Client"
     }
   }

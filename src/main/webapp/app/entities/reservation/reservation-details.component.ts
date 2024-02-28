@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import ReservationService from './reservation.service';
+import { useDateFormat } from '@/shared/composables';
 import { type IReservation } from '@/shared/model/reservation.model';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -10,6 +11,7 @@ export default defineComponent({
   compatConfig: { MODE: 3 },
   name: 'ReservationDetails',
   setup() {
+    const dateFormat = useDateFormat();
     const reservationService = inject('reservationService', () => new ReservationService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -33,6 +35,7 @@ export default defineComponent({
     }
 
     return {
+      ...dateFormat,
       alertService,
       reservation,
 

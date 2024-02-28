@@ -9,17 +9,17 @@
     <changeSet id="20231220092007-2" author="devteam">
 
         <addForeignKeyConstraint baseColumnNames="client_photo_id"
-                                 baseTableName="client"
+                                 baseTableName="svr_api_client"
                                  constraintName="fk_client__client_photo_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="client_photo"
+                                 referencedTableName="svr_api_client_photo"
                                  />
 
         <addForeignKeyConstraint baseColumnNames="client_venue_stats_id"
-                                 baseTableName="client"
+                                 baseTableName="svr_api_client"
                                  constraintName="fk_client__client_venue_stats_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="client_venue_stats"
+                                 referencedTableName="svr_api_client_venue_stats"
                                  />
     </changeSet>
 </databaseChangeLog>

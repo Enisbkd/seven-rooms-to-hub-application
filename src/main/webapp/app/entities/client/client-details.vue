@@ -343,6 +343,36 @@
             <span>{{ client.preferredLanguageCode }}</span>
           </dd>
           <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.techLineage')"></span>
+          </dt>
+          <dd>
+            <span>{{ client.techLineage }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.techCreatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="client.techCreatedDate">{{ formatDateLong(client.techCreatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.techUpdatedDate')"></span>
+          </dt>
+          <dd>
+            <span v-if="client.techUpdatedDate">{{ formatDateLong(client.techUpdatedDate) }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.techMapping')"></span>
+          </dt>
+          <dd>
+            <span>{{ client.techMapping }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sevenRoomsToHubApplicationApp.client.techComment')"></span>
+          </dt>
+          <dd>
+            <span>{{ client.techComment }}</span>
+          </dd>
+          <dt>
             <span v-text="t$('sevenRoomsToHubApplicationApp.client.clientPhoto')"></span>
           </dt>
           <dd>

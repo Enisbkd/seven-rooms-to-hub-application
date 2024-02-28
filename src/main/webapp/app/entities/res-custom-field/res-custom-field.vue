@@ -48,6 +48,26 @@
               <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.value')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'value'"></jhi-sort-indicator>
             </th>
+            <th scope="row" v-on:click="changeOrder('techLineage')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techLineage')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techLineage'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techCreatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techCreatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techCreatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techUpdatedDate')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techUpdatedDate')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techUpdatedDate'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techMapping')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techMapping')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techMapping'"></jhi-sort-indicator>
+            </th>
+            <th scope="row" v-on:click="changeOrder('techComment')">
+              <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.techComment')"></span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'techComment'"></jhi-sort-indicator>
+            </th>
             <th scope="row" v-on:click="changeOrder('reservation.id')">
               <span v-text="t$('sevenRoomsToHubApplicationApp.resCustomField.reservation')"></span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'reservation.id'"></jhi-sort-indicator>
@@ -66,6 +86,11 @@
             <td>{{ resCustomField.displayOrder }}</td>
             <td>{{ resCustomField.name }}</td>
             <td>{{ resCustomField.value }}</td>
+            <td>{{ resCustomField.techLineage }}</td>
+            <td>{{ formatDateShort(resCustomField.techCreatedDate) || '' }}</td>
+            <td>{{ formatDateShort(resCustomField.techUpdatedDate) || '' }}</td>
+            <td>{{ resCustomField.techMapping }}</td>
+            <td>{{ resCustomField.techComment }}</td>
             <td>
               <div v-if="resCustomField.reservation">
                 <router-link :to="{ name: 'ReservationView', params: { reservationId: resCustomField.reservation.id } }">{{

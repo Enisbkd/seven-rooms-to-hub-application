@@ -48,17 +48,31 @@ public class KafkaStreamsConfiguration {
     org.springframework.kafka.config.KafkaStreamsConfiguration kStreamsConfig() {
         Map<String, Object> props = new HashMap<>();
         props.put(APPLICATION_ID_CONFIG, applicationId);
-        props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+
+        if (bootstrapAddress != null) {
+            props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        }
+        if (protocolConfig != null) {
+            props.put(SECURITY_PROTOCOL_CONFIG, protocolConfig);
+        }
+        if (saslJaasConfig != null) {
+            props.put(SaslConfigs.SASL_JAAS_CONFIG, saslJaasConfig);
+        }
+        if (saslMechanism != null) {
+            props.put(SaslConfigs.SASL_MECHANISM, saslMechanism);
+        }
+        if (trustStoreLocation != null) {
+            props.put("ssl.truststore.location", trustStoreLocation);
+        }
+        if (trustStorePassword != null) {
+            props.put("ssl.truststore.password", trustStorePassword);
+        }
+
         props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG, SendToDeadLetterQueueExceptionHandler.class);
-        props.put(SECURITY_PROTOCOL_CONFIG, protocolConfig);
-        props.put(SASL_JAAS_CONFIG, saslJaasConfig);
-        props.put(SaslConfigs.SASL_MECHANISM, saslMechanism);
-        props.put("ssl.truststore.location", trustStoreLocation);
-        props.put("ssl.truststore.password", trustStorePassword);
 
         return new org.springframework.kafka.config.KafkaStreamsConfiguration(props);
     }

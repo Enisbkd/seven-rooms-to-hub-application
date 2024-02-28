@@ -44,9 +44,9 @@
     <logger name="liquibase" level="WARN"/>
     <logger name="LiquibaseSchemaResolver" level="INFO"/>
 
+    <springProperty name="spring.profiles.active" source="spring.profiles.active"/>
     <springProperty scope="context" name="kafka.bootstrap.servers" source="spring.kafka.bootstrap-servers"/>
     <springProperty scope="context" name="kafka.logs.topic" source="spring.kafka.topics.logs-topic"/>
-    <springProperty name="spring.profiles.active" source="spring.profiles.active"/>
     <springProperty scope="context" name="kafka.sasl.mechanism" source="spring.kafka.properties.sasl.mechanism"/>
     <springProperty scope="context" name="kafka.sasl.jaas.config" source="spring.kafka.properties.sasl.jaas.config"/>
     <springProperty scope="context" name="kafka.security.protocol" source="spring.kafka.properties.security.protocol"/>
@@ -58,11 +58,12 @@
         <BrokerList>${kafka.bootstrap.servers}</BrokerList>
         <Topic>${kafka.logs.topic}</Topic>
 
-        <SecurityProtocol>SASL_SSL</SecurityProtocol>
+        <SecurityProtocol>${kafka.security.protocol}</SecurityProtocol>
         <saslMechanism>${kafka.sasl.mechanism}</saslMechanism>
         <clientJaasConf>${kafka.sasl.jaas.config}</clientJaasConf>
         <sslTruststoreLocation>${kafka.ssl.sslTruststoreLocation}</sslTruststoreLocation>
         <sslTruststorePassword>${kafka.ssl.sslTruststorePassword}</sslTruststorePassword>
+        <compressionType>gzip</compressionType>
 
         <SyncSend>false</SyncSend>
 
