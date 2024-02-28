@@ -24,7 +24,7 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
     @Autowired
     ClientService clientService;
 
-    public void upsertReservation(ReservationPayload reservationPayload) {
+    public ReservationPayload upsertReservation(ReservationPayload reservationPayload) {
         Reservation payloadRes = reservationPayload.getReservation();
         String resvId = payloadRes.getResvId();
         Optional<Reservation> resvFromDB = reservationService.findByResvId(resvId);
@@ -42,12 +42,16 @@ public class ReservationPersistenceServiceImpl implements ReservationPersistence
             if (timestampInPayload.isAfter(timestampInDB)) {
                 logger.debug("Payload record is newer, updating Entity having id : " + resvFromDB.get().getId());
                 reservationPayload.getReservation().setId(resvFromDB.get().getId());
-                reservationService.delete(resvFromDB.get());
                 reservationService.save(reservationPayload);
+                return reservationPayload;
+            } else {
+                logger.debug("Payload record is older, Aborting update ...");
+                return null;
             }
         } else {
             logger.debug("Reservation with externalID " + resvId + " does not exist in DB , Inserting ...");
             reservationService.save(reservationPayload);
+            return reservationPayload;
         }
     }
 

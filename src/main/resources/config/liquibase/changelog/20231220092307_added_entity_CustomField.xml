@@ -23,7 +23,7 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="jhi_value" type="varchar(255)">
+            <column name="custom_value" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="tech_lineage" type="varchar(255)">
@@ -68,7 +68,7 @@
             <column name="system_name" type="string"/>
             <column name="display_order" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="jhi_value" type="string"/>
+            <column name="custom_value" type="string"/>
             <column name="tech_lineage" type="string"/>
             <column name="tech_created_date" type="date"/>
             <column name="tech_updated_date" type="date"/>

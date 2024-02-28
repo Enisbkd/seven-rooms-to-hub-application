@@ -14,7 +14,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="resv_id" type="varchar(255)">
+            <column name="resv_id_name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="created" type="varchar(255)">
@@ -38,7 +38,7 @@
             <column name="venue_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="jhi_date" type="varchar(255)">
+            <column name="resv_date" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="duration" type="integer">
@@ -254,14 +254,14 @@
                   tableName="svr_api_resv"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="resv_id" type="string"/>
+            <column name="resv_id_name" type="string"/>
             <column name="created" type="string"/>
             <column name="updated" type="string"/>
             <column name="deleted" type="string"/>
             <column name="venue_group_client_id" type="string"/>
             <column name="venue_group_id" type="string"/>
             <column name="venue_id" type="string"/>
-            <column name="jhi_date" type="string"/>
+            <column name="resv_date" type="string"/>
             <column name="duration" type="numeric"/>
             <column name="check_numbers" type="string"/>
             <column name="shift_category" type="string"/>

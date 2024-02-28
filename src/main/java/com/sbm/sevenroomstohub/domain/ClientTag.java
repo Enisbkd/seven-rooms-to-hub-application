@@ -39,11 +39,11 @@ public class ClientTag extends AbstractAuditingEntitySBM<Long> {
     @JsonProperty("tag_display")
     private String tagDisplay;
 
-    @Column(name = "jhi_group")
+    @Column(name = "tag_group")
     private String group;
 
-    @Column(name = "group_display")
-    @JsonProperty("group_display")
+    @Column(name = "tag_group_display")
+    @JsonProperty("tag_group_display")
     private String groupDisplay;
 
     @Column(name = "color")

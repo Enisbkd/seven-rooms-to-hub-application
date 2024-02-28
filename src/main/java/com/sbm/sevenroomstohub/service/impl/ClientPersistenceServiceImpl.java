@@ -20,7 +20,7 @@ public class ClientPersistenceServiceImpl implements ClientPersistenceService {
     @Autowired
     ClientService clientService;
 
-    public void upsertClient(ClientPayload clientPayload) {
+    public ClientPayload upsertClient(ClientPayload clientPayload) {
         String clientId = clientPayload.getClient().getClientId();
         Optional<Client> clientFromDB = clientService.findByClientId(clientId);
         if (clientFromDB.isPresent()) {
@@ -37,12 +37,15 @@ public class ClientPersistenceServiceImpl implements ClientPersistenceService {
                 logger.debug("Payload record is newer, updating Entity having id : " + clientFromDB.get().getId());
                 clientPayload.getClient().setId(clientFromDB.get().getId());
                 clientService.save(clientPayload);
+                return clientPayload;
             } else {
                 logger.debug("Payload record is older, Aborting update ...");
+                return null;
             }
         } else {
             logger.debug("Client with externalID " + clientId + " does not exist in DB , Inserting ...");
             clientService.save(clientPayload);
+            return clientPayload;
         }
     }
 

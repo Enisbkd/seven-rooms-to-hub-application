@@ -42,7 +42,7 @@ public class CustomField extends AbstractAuditingEntitySBM<Long> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "jhi_value")
+    @Column(name = "custom_value")
     private String value;
 
     @ManyToOne(fetch = FetchType.LAZY)

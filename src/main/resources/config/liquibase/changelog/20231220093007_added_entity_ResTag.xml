@@ -20,10 +20,10 @@
             <column name="tag_display" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="jhi_group" type="varchar(255)">
+            <column name="tag_group" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="group_display" type="varchar(255)">
+            <column name="tag_group_display" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="color" type="varchar(255)">
@@ -44,7 +44,7 @@
             <column name="tech_comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="reservation_id" type="bigint">
+            <column name="resv_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="tag_search_query" type="varchar(255)">
@@ -73,8 +73,8 @@
             <column name="id" type="numeric"/>
             <column name="tag" type="string"/>
             <column name="tag_display" type="string"/>
-            <column name="jhi_group" type="string"/>
-            <column name="group_display" type="string"/>
+            <column name="tag_group" type="string"/>
+            <column name="tag_group_display" type="string"/>
             <column name="color" type="string"/>
             <column name="tech_lineage" type="string"/>
             <column name="tech_created_date" type="date"/>

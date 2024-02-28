@@ -39,7 +39,7 @@ public class Reservation extends AbstractAuditingEntitySBM<Long> {
     @JsonIgnore
     private Long id;
 
-    @Column(name = "resv_id", unique = true)
+    @Column(name = "resv_id_name", unique = true)
     @JsonProperty("id")
     private String resvId;
 
@@ -68,7 +68,7 @@ public class Reservation extends AbstractAuditingEntitySBM<Long> {
     @JsonProperty("venue_id")
     private String venueId;
 
-    @Column(name = "jhi_date")
+    @Column(name = "resv_date")
     private String date;
 
     @Column(name = "duration")
