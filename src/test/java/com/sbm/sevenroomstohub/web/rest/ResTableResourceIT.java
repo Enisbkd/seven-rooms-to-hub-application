@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ResTableResourceIT {
 
-    private static final Integer DEFAULT_TABLE_NUMBER = 1;
-    private static final Integer UPDATED_TABLE_NUMBER = 2;
+    private static final String DEFAULT_TABLE_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_TABLE_NUMBER = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/res-tables";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -261,6 +261,8 @@ class ResTableResourceIT {
         ResTable partialUpdatedResTable = new ResTable();
         partialUpdatedResTable.setId(resTable.getId());
 
+        partialUpdatedResTable.tableNumber(UPDATED_TABLE_NUMBER);
+
         restResTableMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedResTable.getId())
@@ -273,7 +275,7 @@ class ResTableResourceIT {
         List<ResTable> resTableList = resTableRepository.findAll();
         assertThat(resTableList).hasSize(databaseSizeBeforeUpdate);
         ResTable testResTable = resTableList.get(resTableList.size() - 1);
-        assertThat(testResTable.getTableNumber()).isEqualTo(DEFAULT_TABLE_NUMBER);
+        assertThat(testResTable.getTableNumber()).isEqualTo(UPDATED_TABLE_NUMBER);
     }
 
     @Test

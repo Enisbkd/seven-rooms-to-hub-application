@@ -3,15 +3,9 @@ package com.sbm.sevenroomstohub.service.impl;
 import com.sbm.sevenroomstohub.domain.ClientTag;
 import com.sbm.sevenroomstohub.repository.ClientTagRepository;
 import com.sbm.sevenroomstohub.service.ClientTagService;
-import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import com.sbm.sevenroomstohub.service.dto.ClientTagDTO;
 import com.sbm.sevenroomstohub.service.mapper.ClientTagMapper;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import java.util.Optional;
-import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -31,9 +25,6 @@ public class ClientTagServiceImpl implements ClientTagService {
     private final ClientTagRepository clientTagRepository;
 
     private final ClientTagMapper clientTagMapper;
-
-    @PersistenceContext
-    EntityManager entityManager;
 
     public ClientTagServiceImpl(ClientTagRepository clientTagRepository, ClientTagMapper clientTagMapper) {
         this.clientTagRepository = clientTagRepository;

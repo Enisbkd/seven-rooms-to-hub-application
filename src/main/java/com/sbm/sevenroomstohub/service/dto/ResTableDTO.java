@@ -11,7 +11,7 @@ public class ResTableDTO implements Serializable {
 
     private Long id;
 
-    private Integer tableNumber;
+    private String tableNumber;
 
     private ReservationDTO reservation;
 
@@ -23,11 +23,11 @@ public class ResTableDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getTableNumber() {
+    public String getTableNumber() {
         return tableNumber;
     }
 
-    public void setTableNumber(Integer tableNumber) {
+    public void setTableNumber(String tableNumber) {
         this.tableNumber = tableNumber;
     }
 
@@ -65,7 +65,7 @@ public class ResTableDTO implements Serializable {
     public String toString() {
         return "ResTableDTO{" +
             "id=" + getId() +
-            ", tableNumber=" + getTableNumber() +
+            ", tableNumber='" + getTableNumber() + "'" +
             ", reservation=" + getReservation() +
             "}";
     }

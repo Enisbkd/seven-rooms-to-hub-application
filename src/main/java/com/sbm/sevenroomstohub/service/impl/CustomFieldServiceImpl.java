@@ -3,12 +3,8 @@ package com.sbm.sevenroomstohub.service.impl;
 import com.sbm.sevenroomstohub.domain.CustomField;
 import com.sbm.sevenroomstohub.repository.CustomFieldRepository;
 import com.sbm.sevenroomstohub.service.CustomFieldService;
-import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import com.sbm.sevenroomstohub.service.dto.CustomFieldDTO;
 import com.sbm.sevenroomstohub.service.mapper.CustomFieldMapper;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +25,6 @@ public class CustomFieldServiceImpl implements CustomFieldService {
     private final CustomFieldRepository customFieldRepository;
 
     private final CustomFieldMapper customFieldMapper;
-
-    @PersistenceContext
-    EntityManager entityManager;
 
     public CustomFieldServiceImpl(CustomFieldRepository customFieldRepository, CustomFieldMapper customFieldMapper) {
         this.customFieldRepository = customFieldRepository;
