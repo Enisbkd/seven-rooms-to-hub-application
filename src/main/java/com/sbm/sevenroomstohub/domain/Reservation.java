@@ -24,7 +24,7 @@ import org.hibernate.annotations.Cascade;
  * A Reservation.
  */
 @Entity
-@Table(name = "svr_api_reservation")
+@Table(name = "svr_api_resv")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("common-java:DuplicatedBlocks")

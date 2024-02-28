@@ -12,7 +12,7 @@
                                  baseTableName="svr_api_resv_tag"
                                  constraintName="fk_res_tag__reservation_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="svr_api_reservation"
+                                 referencedTableName="svr_api_resv"
                                  />
     </changeSet>
 </databaseChangeLog>
