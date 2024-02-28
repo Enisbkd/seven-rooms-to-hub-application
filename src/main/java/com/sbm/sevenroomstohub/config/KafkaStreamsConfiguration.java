@@ -2,8 +2,12 @@ package com.sbm.sevenroomstohub.config;
 
 import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG;
-import static org.apache.kafka.common.config.SaslConfigs.SASL_JAAS_CONFIG;
-import static org.apache.kafka.streams.StreamsConfig.*;
+import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.SECURITY_PROTOCOL_CONFIG;
 
 import com.sbm.sevenroomstohub.serdes.SendToDeadLetterQueueExceptionHandler;
 import java.util.HashMap;
