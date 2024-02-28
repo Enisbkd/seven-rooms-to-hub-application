@@ -1,8 +1,6 @@
 package com.sbm.sevenroomstohub.repository;
 
-import com.sbm.sevenroomstohub.domain.Client;
 import com.sbm.sevenroomstohub.domain.Reservation;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    Optional<Reservation> findByResvId(String resvId);
-}
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {}

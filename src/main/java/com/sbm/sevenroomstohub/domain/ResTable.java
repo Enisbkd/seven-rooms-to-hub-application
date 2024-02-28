@@ -24,7 +24,7 @@ public class ResTable implements Serializable {
     private Long id;
 
     @Column(name = "table_number")
-    private Integer tableNumber;
+    private String tableNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "resTags", "resPosTickets", "resCustomFields", "resTables" }, allowSetters = true)
@@ -45,16 +45,16 @@ public class ResTable implements Serializable {
         this.id = id;
     }
 
-    public Integer getTableNumber() {
+    public String getTableNumber() {
         return this.tableNumber;
     }
 
-    public ResTable tableNumber(Integer tableNumber) {
+    public ResTable tableNumber(String tableNumber) {
         this.setTableNumber(tableNumber);
         return this;
     }
 
-    public void setTableNumber(Integer tableNumber) {
+    public void setTableNumber(String tableNumber) {
         this.tableNumber = tableNumber;
     }
 
@@ -95,7 +95,7 @@ public class ResTable implements Serializable {
     public String toString() {
         return "ResTable{" +
             "id=" + getId() +
-            ", tableNumber=" + getTableNumber() +
+            ", tableNumber='" + getTableNumber() + "'" +
             "}";
     }
 }

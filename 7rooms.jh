@@ -253,7 +253,7 @@ entity ResTag{
 }
 
 entity ResTable{
-	tableNumber Integer
+	tableNumber String
 }
 
 relationship OneToMany {
@@ -267,6 +267,40 @@ relationship OneToMany {
   Reservation to ResTable
 }
 
+
+
+
+entity Venue{
+address String
+blackLogo String
+country String
+crossStreet String
+currencyCode String
+externalVenueId String
+fullDiningBackend Boolean
+gridEnabled Boolean
+id	String
+internalName String
+membershipEnabled Boolean
+name String
+neighborhood String
+phoneNumber String
+policy String
+postalCode	String
+primaryColor String
+secondaryColor	String
+state String
+uniqueConfirmationPrefix String
+venueClass	String
+venueGroupId String
+venueGroupName String
+venueUrlKey String
+website	String
+whiteLogo String
+}
+
+
+
 paginate MemberGroup with pagination
 paginate ClientTag with pagination
 paginate CustomField with pagination
@@ -279,6 +313,7 @@ paginate ResPosticketsItem with pagination
 paginate ResTag with pagination
 paginate Client with pagination
 paginate BookingName with pagination
+paginate Venue with pagination
 
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

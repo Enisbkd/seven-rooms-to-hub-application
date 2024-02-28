@@ -1,7 +1,5 @@
 package com.sbm.sevenroomstohub.service;
 
-import com.sbm.sevenroomstohub.domain.Client;
-import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.service.dto.ClientDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -18,8 +16,6 @@ public interface ClientService {
      * @return the persisted entity.
      */
     ClientDTO save(ClientDTO clientDTO);
-
-    Client save(ClientPayload clientPayload);
 
     /**
      * Updates a client.
@@ -54,19 +50,9 @@ public interface ClientService {
     Optional<ClientDTO> findOne(Long id);
 
     /**
-     * Get the "clientId" client.
-     *
-     * @param clientId the business id of the entity.
-     * @return the entity.
-     */
-
-    Optional<Client> findByClientId(String clientId);
-
-    /**
      * Delete the "id" client.
      *
      * @param id the id of the entity.
      */
-
     void delete(Long id);
 }
