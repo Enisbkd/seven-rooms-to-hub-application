@@ -33,7 +33,7 @@ public class ResPosTicketResource {
 
     private static final String ENTITY_NAME = "resPosTicket";
 
-    @Value("${common.clientApp.name}")
+    @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final ResPosTicketService resPosTicketService;
