@@ -2,6 +2,7 @@ package com.sbm.sevenroomstohub.service;
 
 import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
+import com.sbm.sevenroomstohub.domain.Venue;
 import com.sbm.sevenroomstohub.serdes.CustomSerdes;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
@@ -22,6 +23,7 @@ public class StreamsProcessor {
     private static final Serde<String> STRING_SERDE = Serdes.String();
     private static final Serde<ClientPayload> CLIENT_PAYLOAD_SERDE = CustomSerdes.ClientPayload();
     private static final Serde<ReservationPayload> RESERVATION_PAYLOAD_SERDE = CustomSerdes.ReservationPayload();
+    private static final Serde<Venue> VENUE_PAYLOAD_SERDE = CustomSerdes.VenuePayload();
 
     @Value(value = "${spring.kafka.topics.client-topic}")
     private String clientTopic;
@@ -29,11 +31,17 @@ public class StreamsProcessor {
     @Value(value = "${spring.kafka.topics.reservation-topic}")
     private String reservationTopic;
 
+    @Value(value = "${spring.kafka.topics.venue-topic}")
+    private String venueTopic;
+
     @Autowired
     ClientPersistenceService clientPersistenceService;
 
     @Autowired
     ReservationPersistenceService reservationPersistenceService;
+
+    @Autowired
+    VenuePersistenceService venuePersistenceService;
 
     public StreamsProcessor() {}
 
@@ -47,6 +55,9 @@ public class StreamsProcessor {
             Consumed.with(STRING_SERDE, RESERVATION_PAYLOAD_SERDE)
         );
         reservationStream.foreach((key, value) -> reservationsProcessor(value));
+
+        KStream<String, Venue> venueStream = streamsBuilder.stream(reservationTopic, Consumed.with(STRING_SERDE, VENUE_PAYLOAD_SERDE));
+        venueStream.foreach((key, value) -> venuesProcessor(value));
     }
 
     private void clientsProcessor(ClientPayload clientPayload) {
@@ -67,6 +78,18 @@ public class StreamsProcessor {
                 reservationPersistenceService.upsertReservation(reservationPayload);
             } else {
                 logger.info("ClientPayload Empty , Aborting ...");
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e.getClass());
+        }
+    }
+
+    private void venuesProcessor(Venue venuePayload) {
+        try {
+            if (venuePayload != null) {
+                venuePersistenceService.createVenue(venuePayload);
+            } else {
+                logger.info("venuePayload Empty , Aborting ...");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());
