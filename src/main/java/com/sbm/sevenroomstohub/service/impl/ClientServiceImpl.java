@@ -1,7 +1,6 @@
 package com.sbm.sevenroomstohub.service.impl;
 
 import com.sbm.sevenroomstohub.domain.Client;
-import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.repository.ClientRepository;
 import com.sbm.sevenroomstohub.service.ClientService;
 import com.sbm.sevenroomstohub.service.dto.ClientDTO;
@@ -41,14 +40,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client save(ClientPayload clientPayload) {
-        log.debug("Request to save Client : {}", clientPayload.getClient());
-        Client client = clientPayload.getClient();
-        client = clientRepository.save(client);
-        return client;
-    }
-
-    @Override
     public ClientDTO update(ClientDTO clientDTO) {
         log.debug("Request to update Client : {}", clientDTO);
         Client client = clientMapper.toEntity(clientDTO);
@@ -83,13 +74,6 @@ public class ClientServiceImpl implements ClientService {
     public Optional<ClientDTO> findOne(Long id) {
         log.debug("Request to get Client : {}", id);
         return clientRepository.findById(id).map(clientMapper::toDto);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Client> findByClientId(String clientId) {
-        log.debug("Request to get Client by Id : {}", clientId);
-        return clientRepository.findByClientId(clientId);
     }
 
     @Override

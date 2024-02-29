@@ -34,7 +34,7 @@ public class ClientPhotoResource {
 
     private static final String ENTITY_NAME = "clientPhoto";
 
-    @Value("${common.clientApp.name}")
+    @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final ClientPhotoService clientPhotoService;

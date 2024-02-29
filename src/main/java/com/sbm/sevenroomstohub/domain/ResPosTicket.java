@@ -1,17 +1,12 @@
 package com.sbm.sevenroomstohub.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Cascade;
 
 /**
  * A ResPosTicket.
@@ -28,40 +23,33 @@ public class ResPosTicket implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
-    @JsonIgnore
     private Long id;
 
     @Column(name = "status")
     private String status;
 
     @Column(name = "admin_fee")
-    @JsonProperty("admin_fee")
     private Double adminFee;
 
     @Column(name = "code")
     private Integer code;
 
     @Column(name = "table_no")
-    @JsonProperty("table_no")
     private String tableNo;
 
     @Column(name = "tax")
     private Double tax;
 
     @Column(name = "business_id")
-    @JsonProperty("business_id")
     private Integer businessId;
 
     @Column(name = "ticket_id")
-    @JsonProperty("ticket_id")
     private Integer ticketId;
 
     @Column(name = "local_posticket_id")
-    @JsonProperty("local_pos_ticket_id")
     private String localPosticketId;
 
     @Column(name = "employee_name")
-    @JsonProperty("employee_name")
     private String employeeName;
 
     @Column(name = "total")
@@ -71,22 +59,17 @@ public class ResPosTicket implements Serializable {
     private Double subtotal;
 
     @Column(name = "start_time")
-    @JsonProperty("start_time")
     private String startTime;
 
     @Column(name = "service_charge")
-    @JsonProperty("service_charge")
     private Double serviceCharge;
 
     @Column(name = "endtime")
-    @JsonProperty("end_time")
     private String endtime;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resPosTicket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resPosTicket")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "resPosTicket" }, allowSetters = true)
-    @JsonProperty("items")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<ResPosticketsItem> resPosticketsItems = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -311,11 +294,13 @@ public class ResPosTicket implements Serializable {
 
     public ResPosTicket addResPosticketsItem(ResPosticketsItem resPosticketsItem) {
         this.resPosticketsItems.add(resPosticketsItem);
+        resPosticketsItem.setResPosTicket(this);
         return this;
     }
 
     public ResPosTicket removeResPosticketsItem(ResPosticketsItem resPosticketsItem) {
         this.resPosticketsItems.remove(resPosticketsItem);
+        resPosticketsItem.setResPosTicket(null);
         return this;
     }
 
@@ -336,98 +321,40 @@ public class ResPosTicket implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ResPosTicket that = (ResPosTicket) o;
-        return (
-            Objects.equals(id, that.id) &&
-            Objects.equals(status, that.status) &&
-            Objects.equals(adminFee, that.adminFee) &&
-            Objects.equals(code, that.code) &&
-            Objects.equals(tableNo, that.tableNo) &&
-            Objects.equals(tax, that.tax) &&
-            Objects.equals(businessId, that.businessId) &&
-            Objects.equals(ticketId, that.ticketId) &&
-            Objects.equals(localPosticketId, that.localPosticketId) &&
-            Objects.equals(employeeName, that.employeeName) &&
-            Objects.equals(total, that.total) &&
-            Objects.equals(subtotal, that.subtotal) &&
-            Objects.equals(startTime, that.startTime) &&
-            Objects.equals(serviceCharge, that.serviceCharge) &&
-            Objects.equals(endtime, that.endtime) &&
-            Objects.equals(resPosticketsItems, that.resPosticketsItems) &&
-            Objects.equals(reservation, that.reservation)
-        );
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ResPosTicket)) {
+            return false;
+        }
+        return getId() != null && getId().equals(((ResPosTicket) o).getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            status,
-            adminFee,
-            code,
-            tableNo,
-            tax,
-            businessId,
-            ticketId,
-            localPosticketId,
-            employeeName,
-            total,
-            subtotal,
-            startTime,
-            serviceCharge,
-            endtime,
-            resPosticketsItems,
-            reservation
-        );
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
-        return (
-            "ResPosTicket{" +
-            "id=" +
-            id +
-            ", status='" +
-            status +
-            '\'' +
-            ", adminFee=" +
-            adminFee +
-            ", code=" +
-            code +
-            ", tableNo='" +
-            tableNo +
-            '\'' +
-            ", tax=" +
-            tax +
-            ", businessId=" +
-            businessId +
-            ", ticketId=" +
-            ticketId +
-            ", localPosticketId='" +
-            localPosticketId +
-            '\'' +
-            ", employeeName='" +
-            employeeName +
-            '\'' +
-            ", total=" +
-            total +
-            ", subtotal=" +
-            subtotal +
-            ", startTime='" +
-            startTime +
-            '\'' +
-            ", serviceCharge=" +
-            serviceCharge +
-            ", endtime='" +
-            endtime +
-            '\'' +
-            ", resPosticketsItems=" +
-            resPosticketsItems +
-            ", reservation=" +
-            reservation +
-            '}'
-        );
+        return "ResPosTicket{" +
+            "id=" + getId() +
+            ", status='" + getStatus() + "'" +
+            ", adminFee=" + getAdminFee() +
+            ", code=" + getCode() +
+            ", tableNo='" + getTableNo() + "'" +
+            ", tax=" + getTax() +
+            ", businessId=" + getBusinessId() +
+            ", ticketId=" + getTicketId() +
+            ", localPosticketId='" + getLocalPosticketId() + "'" +
+            ", employeeName='" + getEmployeeName() + "'" +
+            ", total=" + getTotal() +
+            ", subtotal=" + getSubtotal() +
+            ", startTime='" + getStartTime() + "'" +
+            ", serviceCharge=" + getServiceCharge() +
+            ", endtime='" + getEndtime() + "'" +
+            "}";
     }
 }

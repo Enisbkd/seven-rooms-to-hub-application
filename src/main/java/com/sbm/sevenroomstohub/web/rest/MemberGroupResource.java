@@ -33,7 +33,7 @@ public class MemberGroupResource {
 
     private static final String ENTITY_NAME = "memberGroup";
 
-    @Value("${common.clientApp.name}")
+    @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final MemberGroupService memberGroupService;
