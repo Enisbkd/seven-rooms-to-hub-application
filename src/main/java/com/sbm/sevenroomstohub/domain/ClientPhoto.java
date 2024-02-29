@@ -67,6 +67,7 @@ public class ClientPhoto extends AbstractAuditingEntitySBM<Long> {
     private Integer smallWidth;
 
     @Column(name = "photo_raw", length = 1000)
+    @JsonProperty("raw_width")
     private String raw;
 
     @Column(name = "cropx")
