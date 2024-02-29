@@ -53,6 +53,8 @@ public class StreamsProcessor {
         try {
             if (clientPayload != null) {
                 clientPersistenceService.upsertClient(clientPayload);
+            } else {
+                logger.info("ClientPayload Empty , Aborting ...");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());
@@ -63,6 +65,8 @@ public class StreamsProcessor {
         try {
             if (reservationPayload != null) {
                 reservationPersistenceService.upsertReservation(reservationPayload);
+            } else {
+                logger.info("ClientPayload Empty , Aborting ...");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());
