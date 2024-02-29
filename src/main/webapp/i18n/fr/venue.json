@@ -1,0 +1,49 @@
+{
+  "sevenRoomsToHubApplicationApp": {
+    "venue": {
+      "home": {
+        "title": "Venues",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Venue",
+        "createOrEditLabel": "Créer ou éditer un Venue",
+        "notFound": "Aucun Venue trouvé"
+      },
+      "created": "Un nouveau Venue a été créé avec l'identifiant { param }",
+      "updated": "Le Venue avec l'identifiant { param } a été mis à jour",
+      "deleted": "Le Venue avec l'identifiant { param } a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Venue { id } ?"
+      },
+      "detail": {
+        "title": "Venue"
+      },
+      "id": "ID",
+      "address": "Address",
+      "blackLogo": "Black Logo",
+      "country": "Country",
+      "crossStreet": "Cross Street",
+      "currencyCode": "Currency Code",
+      "externalVenueId": "External Venue Id",
+      "fullDiningBackend": "Full Dining Backend",
+      "gridEnabled": "Grid Enabled",
+      "venudId": "Venud Id",
+      "internalName": "Internal Name",
+      "membershipEnabled": "Membership Enabled",
+      "name": "Name",
+      "neighborhood": "Neighborhood",
+      "phoneNumber": "Phone Number",
+      "policy": "Policy",
+      "postalCode": "Postal Code",
+      "primaryColor": "Primary Color",
+      "secondaryColor": "Secondary Color",
+      "state": "State",
+      "uniqueConfirmationPrefix": "Unique Confirmation Prefix",
+      "venueClass": "Venue Class",
+      "venueGroupId": "Venue Group Id",
+      "venueGroupName": "Venue Group Name",
+      "venueUrlKey": "Venue Url Key",
+      "website": "Website",
+      "whiteLogo": "White Logo"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { defineComponent, provide } from 'vue';
 
+import VenueService from './venue/venue.service';
 import BookingNameService from './booking-name/booking-name.service';
 import ClientService from './client/client.service';
 import MemberGroupService from './member-group/member-group.service';
@@ -21,6 +22,7 @@ export default defineComponent({
   name: 'Entities',
   setup() {
     provide('userService', () => new UserService());
+    provide('venueService', () => new VenueService());
     provide('bookingNameService', () => new BookingNameService());
     provide('clientService', () => new ClientService());
     provide('memberGroupService', () => new MemberGroupService());

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <b-dropdown-item to="/venue">
+      <font-awesome-icon icon="asterisk" />
+      <span v-text="t$('global.menu.entities.venue')"></span>
+    </b-dropdown-item>
     <b-dropdown-item to="/booking-name">
       <font-awesome-icon icon="asterisk" />
       <span v-text="t$('global.menu.entities.bookingName')"></span>
