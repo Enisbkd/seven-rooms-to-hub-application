@@ -8,7 +8,7 @@
     -->
     <changeSet id="20231220093007-2" author="devteam">
 
-        <addForeignKeyConstraint baseColumnNames="resv_id"
+        <addForeignKeyConstraint baseColumnNames="reservation_id"
                                  baseTableName="svr_api_resv_tag"
                                  constraintName="fk_res_tag__reservation_id"
                                  referencedColumnNames="id"

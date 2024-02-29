@@ -17,7 +17,7 @@
             <column name="table_number" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="resv_id" type="bigint">
+            <column name="reservation_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="tech_lineage" type="varchar(255)">

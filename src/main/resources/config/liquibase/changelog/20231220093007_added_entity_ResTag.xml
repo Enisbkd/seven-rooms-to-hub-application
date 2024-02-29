@@ -44,7 +44,7 @@
             <column name="tech_comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="resv_id" type="bigint">
+            <column name="reservation_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="tag_search_query" type="varchar(255)">
