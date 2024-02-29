@@ -33,7 +33,7 @@ public class ClientTagResource {
 
     private static final String ENTITY_NAME = "clientTag";
 
-    @Value("${common.clientApp.name}")
+    @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final ClientTagService clientTagService;

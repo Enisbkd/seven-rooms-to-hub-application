@@ -20,7 +20,8 @@
         "resPosticketsItem": "Res Postickets Item",
         "resTag": "Res Tag",
         "resTable": "Res Table",
-        "bookingName": "Booking Name"
+        "bookingName": "Booking Name",
+        "venue": "Venue"
       },
       "account": {
         "main": "Compte",
