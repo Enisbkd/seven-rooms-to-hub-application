@@ -14,7 +14,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="large" type="varchar(255)">
+            <column name="large" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
             <column name="large_height" type="integer">
@@ -23,7 +23,7 @@
             <column name="large_width" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="medium" type="varchar(255)">
+            <column name="medium" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
             <column name="medium_height" type="integer">
@@ -32,7 +32,7 @@
             <column name="medium_width" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="small" type="varchar(255)">
+            <column name="small" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
             <column name="small_height" type="integer">
@@ -41,13 +41,19 @@
             <column name="small_width" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="photo_raw" type="varchar(255)">
+            <column name="photo_raw" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
-            <column name="cropx" type="integer">
+            <column name="raw_height" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="cropy" type="integer">
+            <column name="raw_width" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="cropx" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="cropy" type="double">
                 <constraints nullable="true" />
             </column>
             <column name="crop_height" type="double">

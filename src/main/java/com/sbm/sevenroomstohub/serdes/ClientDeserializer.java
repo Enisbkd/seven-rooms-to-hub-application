@@ -97,8 +97,8 @@ public class ClientDeserializer<ClientPayload> implements Deserializer<ClientPay
     private static void photoCropDeserializer(JsonNode clientEntity, Client client) {
         JsonNode photoCropNode = clientEntity.get("photo_crop_info");
         if (photoCropNode != null && !photoCropNode.isNull() && !photoCropNode.isEmpty()) {
-            Integer cropX = (photoCropNode.get("x") == null) ? null : Integer.parseInt(String.valueOf(photoCropNode.get("x")));
-            Integer cropY = (photoCropNode.get("y") == null) ? null : Integer.parseInt(String.valueOf(photoCropNode.get("y")));
+            Double cropX = (photoCropNode.get("x") == null) ? null : Double.valueOf(String.valueOf(photoCropNode.get("x")));
+            Double cropY = (photoCropNode.get("y") == null) ? null : Double.valueOf(String.valueOf(photoCropNode.get("y")));
             Double cropHeight = (photoCropNode.get("height") == null) ? null : Double.valueOf(String.valueOf(photoCropNode.get("height")));
             Double cropWidth = (photoCropNode.get("width") == null) ? null : Double.valueOf(String.valueOf(photoCropNode.get("width")));
 

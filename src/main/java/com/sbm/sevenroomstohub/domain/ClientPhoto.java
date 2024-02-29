@@ -67,16 +67,24 @@ public class ClientPhoto extends AbstractAuditingEntitySBM<Long> {
     private Integer smallWidth;
 
     @Column(name = "photo_raw", length = 1000)
-    @JsonProperty("raw_width")
+    @JsonProperty("raw")
     private String raw;
+
+    @Column(name = "raw_width")
+    @JsonProperty("raw_width")
+    private Integer rawWidth;
+
+    @Column(name = "raw_height")
+    @JsonProperty("raw_height")
+    private Integer rawHeight;
 
     @Column(name = "cropx")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
-    private Integer cropx;
+    private Double cropx;
 
     @Column(name = "cropy")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
-    private Integer cropy;
+    private Double cropy;
 
     @Column(name = "crop_height")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
@@ -90,7 +98,25 @@ public class ClientPhoto extends AbstractAuditingEntitySBM<Long> {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "clientPhoto")
     private Client client;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public Integer getRawWidth() {
+        return rawWidth;
+    }
+
+    public void setRawWidth(Integer rawWidth) {
+        this.rawWidth = rawWidth;
+    }
+
+    public Integer getRawHeight() {
+        return rawHeight;
+    }
+
+    public void setRawHeight(Integer rawHeight) {
+        this.rawHeight = rawHeight;
+    }
 
     public Long getId() {
         return this.id;
@@ -235,29 +261,29 @@ public class ClientPhoto extends AbstractAuditingEntitySBM<Long> {
         this.raw = raw;
     }
 
-    public Integer getCropx() {
+    public Double getCropx() {
         return this.cropx;
     }
 
-    public ClientPhoto cropx(Integer cropx) {
+    public ClientPhoto cropx(Double cropx) {
         this.setCropx(cropx);
         return this;
     }
 
-    public void setCropx(Integer cropx) {
+    public void setCropx(Double cropx) {
         this.cropx = cropx;
     }
 
-    public Integer getCropy() {
+    public Double getCropy() {
         return this.cropy;
     }
 
-    public ClientPhoto cropy(Integer cropy) {
+    public ClientPhoto cropy(Double cropy) {
         this.setCropy(cropy);
         return this;
     }
 
-    public void setCropy(Integer cropy) {
+    public void setCropy(Double cropy) {
         this.cropy = cropy;
     }
 
@@ -306,8 +332,6 @@ public class ClientPhoto extends AbstractAuditingEntitySBM<Long> {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -321,7 +345,8 @@ public class ClientPhoto extends AbstractAuditingEntitySBM<Long> {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -329,21 +354,21 @@ public class ClientPhoto extends AbstractAuditingEntitySBM<Long> {
     @Override
     public String toString() {
         return "ClientPhoto{" +
-            "id=" + getId() +
-            ", large='" + getLarge() + "'" +
-            ", largeHeight=" + getLargeHeight() +
-            ", largeWidth=" + getLargeWidth() +
-            ", medium='" + getMedium() + "'" +
-            ", mediumHeight=" + getMediumHeight() +
-            ", mediumWidth=" + getMediumWidth() +
-            ", small='" + getSmall() + "'" +
-            ", smallHeight=" + getSmallHeight() +
-            ", smallWidth=" + getSmallWidth() +
-            ", raw='" + getRaw() + "'" +
-            ", cropx=" + getCropx() +
-            ", cropy=" + getCropy() +
-            ", cropHeight=" + getCropHeight() +
-            ", cropWidth=" + getCropWidth() +
-            "}";
+                "id=" + getId() +
+                ", large='" + getLarge() + "'" +
+                ", largeHeight=" + getLargeHeight() +
+                ", largeWidth=" + getLargeWidth() +
+                ", medium='" + getMedium() + "'" +
+                ", mediumHeight=" + getMediumHeight() +
+                ", mediumWidth=" + getMediumWidth() +
+                ", small='" + getSmall() + "'" +
+                ", smallHeight=" + getSmallHeight() +
+                ", smallWidth=" + getSmallWidth() +
+                ", raw='" + getRaw() + "'" +
+                ", cropx=" + getCropx() +
+                ", cropy=" + getCropy() +
+                ", cropHeight=" + getCropHeight() +
+                ", cropWidth=" + getCropWidth() +
+                "}";
     }
 }
