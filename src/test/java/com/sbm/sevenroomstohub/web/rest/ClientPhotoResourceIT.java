@@ -61,11 +61,11 @@ class ClientPhotoResourceIT {
     private static final String DEFAULT_RAW = "AAAAAAAAAA";
     private static final String UPDATED_RAW = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_CROPX = 1;
-    private static final Integer UPDATED_CROPX = 2;
+    private static final Double DEFAULT_CROPX = 1D;
+    private static final Double UPDATED_CROPX = 2D;
 
-    private static final Integer DEFAULT_CROPY = 1;
-    private static final Integer UPDATED_CROPY = 2;
+    private static final Double DEFAULT_CROPY = 1D;
+    private static final Double UPDATED_CROPY = 2D;
 
     private static final Double DEFAULT_CROP_HEIGHT = 1D;
     private static final Double UPDATED_CROP_HEIGHT = 2D;

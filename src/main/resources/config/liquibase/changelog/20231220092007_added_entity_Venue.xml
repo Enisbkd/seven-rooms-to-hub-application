@@ -9,8 +9,8 @@
     <!--
         Added the entity Venue.
     -->
-    <changeSet id="20231220092007-1" author="jhipster">
-        <createTable tableName="venue">
+    <changeSet id="20231220092007-1" author="devteam">
+        <createTable tableName="svr_api_venue">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -56,7 +56,7 @@
             <column name="phone_number" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="policy" type="varchar(255)">
+            <column name="policy" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
             <column name="postal_code" type="varchar(255)">
@@ -106,11 +106,11 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20231220092007-1-data" author="jhipster" context="faker">
+    <changeSet id="20231220092007-1-data" author="devteam" context="faker">
         <loadData
                   file="config/liquibase/fake-data/venue.csv"
                   separator=";"
-                  tableName="venue"
+                  tableName="svr_api_venue"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="address" type="string"/>

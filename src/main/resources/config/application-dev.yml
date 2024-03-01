@@ -51,6 +51,8 @@ spring:
     topics:
       client-topic: data-7rooms-client
       reservation-topic: data-7rooms-reservation
+      venue-topic: data-7rooms-venue
+      venue-dead-letters-topic: data-7rooms-venue-deadletters
       client-dead-letters-topic: data-7rooms-client-deadletters
       reservation-dead-letters-topic: data-7rooms-reservation-deadletters
       logs-topic: log-7rooms-app

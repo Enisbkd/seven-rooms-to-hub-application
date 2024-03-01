@@ -24,8 +24,8 @@ public class ClientPhotoTestSamples {
             .smallHeight(1)
             .smallWidth(1)
             .raw("raw1")
-            .cropx(1)
-            .cropy(1);
+            .cropx(1D)
+            .cropy(1D);
     }
 
     public static ClientPhoto getClientPhotoSample2() {
@@ -41,8 +41,8 @@ public class ClientPhotoTestSamples {
             .smallHeight(2)
             .smallWidth(2)
             .raw("raw2")
-            .cropx(2)
-            .cropy(2);
+            .cropx(2D)
+            .cropy(2D);
     }
 
     public static ClientPhoto getClientPhotoRandomSampleGenerator() {
@@ -58,7 +58,7 @@ public class ClientPhotoTestSamples {
             .smallHeight(intCount.incrementAndGet())
             .smallWidth(intCount.incrementAndGet())
             .raw(UUID.randomUUID().toString())
-            .cropx(intCount.incrementAndGet())
-            .cropy(intCount.incrementAndGet());
+            .cropx((double) intCount.incrementAndGet())
+            .cropy((double) intCount.incrementAndGet());
     }
 }

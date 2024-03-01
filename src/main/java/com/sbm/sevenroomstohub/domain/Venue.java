@@ -1,5 +1,6 @@
 package com.sbm.sevenroomstohub.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -11,7 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A Venue.
  */
 @Entity
-@Table(name = "venue")
+@Table(name = "svr_api_venue")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,6 +23,7 @@ public class Venue implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @JsonIgnore
     @Column(name = "id")
     private Long id;
 
@@ -29,7 +31,6 @@ public class Venue implements Serializable {
     private String address;
 
     @Column(name = "black_logo")
-    @JsonProperty("black_logo")
     private String blackLogo;
 
     @Column(name = "country")
@@ -56,7 +57,7 @@ public class Venue implements Serializable {
     private Boolean gridEnabled;
 
     @Column(name = "venue_id")
-    @JsonProperty("venue_id")
+    @JsonProperty("id")
     private String venueId;
 
     @Column(name = "internal_name")
@@ -119,13 +120,68 @@ public class Venue implements Serializable {
     private String website;
 
     @Column(name = "white_logo")
-    @JsonProperty("white_logo")
     private String whiteLogo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
         return this.id;
+    }
+
+    public Venue(
+        String address,
+        String blackLogo,
+        String country,
+        String crossStreet,
+        String currencyCode,
+        String externalVenueId,
+        Boolean fullDiningBackend,
+        Boolean gridEnabled,
+        String venueId,
+        String internalName,
+        Boolean membershipEnabled,
+        String name,
+        String neighborhood,
+        String phoneNumber,
+        String policy,
+        String postalCode,
+        String primaryColor,
+        String secondaryColor,
+        String state,
+        String uniqueConfirmationPrefix,
+        String venueClass,
+        String venueGroupId,
+        String venueGroupName,
+        String venueUrlKey,
+        String website,
+        String whiteLogo
+    ) {
+        this.address = address;
+        this.blackLogo = blackLogo;
+        this.country = country;
+        this.crossStreet = crossStreet;
+        this.currencyCode = currencyCode;
+        this.externalVenueId = externalVenueId;
+        this.fullDiningBackend = fullDiningBackend;
+        this.gridEnabled = gridEnabled;
+        this.venueId = venueId;
+        this.internalName = internalName;
+        this.membershipEnabled = membershipEnabled;
+        this.name = name;
+        this.neighborhood = neighborhood;
+        this.phoneNumber = phoneNumber;
+        this.policy = policy;
+        this.postalCode = postalCode;
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
+        this.state = state;
+        this.uniqueConfirmationPrefix = uniqueConfirmationPrefix;
+        this.venueClass = venueClass;
+        this.venueGroupId = venueGroupId;
+        this.venueGroupName = venueGroupName;
+        this.venueUrlKey = venueUrlKey;
+        this.website = website;
+        this.whiteLogo = whiteLogo;
     }
 
     public Venue id(Long id) {
@@ -475,8 +531,7 @@ public class Venue implements Serializable {
         this.whiteLogo = whiteLogo;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
-    // setters here
+    public Venue() {}
 
     @Override
     public boolean equals(Object o) {

@@ -4,6 +4,7 @@ import com.sbm.sevenroomstohub.domain.ClientPayload;
 import com.sbm.sevenroomstohub.domain.ReservationPayload;
 import com.sbm.sevenroomstohub.domain.Venue;
 import com.sbm.sevenroomstohub.serdes.CustomSerdes;
+import com.sbm.sevenroomstohub.serdes.VenueDeserializer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -56,7 +57,7 @@ public class StreamsProcessor {
         );
         reservationStream.foreach((key, value) -> reservationsProcessor(value));
 
-        KStream<String, Venue> venueStream = streamsBuilder.stream(reservationTopic, Consumed.with(STRING_SERDE, VENUE_PAYLOAD_SERDE));
+        KStream<String, Venue> venueStream = streamsBuilder.stream(venueTopic, Consumed.with(STRING_SERDE, VENUE_PAYLOAD_SERDE));
         venueStream.foreach((key, value) -> venuesProcessor(value));
     }
 
@@ -77,7 +78,7 @@ public class StreamsProcessor {
             if (reservationPayload != null) {
                 reservationPersistenceService.upsertReservation(reservationPayload);
             } else {
-                logger.info("ClientPayload Empty , Aborting ...");
+                logger.info("ReservationPayload Empty , Aborting ...");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e.getClass());

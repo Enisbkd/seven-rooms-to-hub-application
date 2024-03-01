@@ -3,28 +3,31 @@ package com.sbm.sevenroomstohub.serdes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sbm.sevenroomstohub.domain.Venue;
 import java.util.Map;
-import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VenueDeserializer implements Deserializer<Venue> {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger log = LoggerFactory.getLogger(VenueDeserializer.class);
+
+    public static Map<String, String> nonDefaultSettings(ObjectMapper objectMapper) {
+        return JacksonDeserializerConfig.nonDefaultSettings(objectMapper);
+    }
 
     @Override
-    public void configure(Map<String, ?> configs, boolean isKey) {}
+    public void configure(Map<String, ?> settings, boolean isKey) {}
 
     @Override
-    public Venue deserialize(String topic, byte[] data) {
+    public Venue deserialize(String arg0, byte[] arg1) {
+        ObjectMapper mapper = new ObjectMapper();
+        Venue venue = null;
         try {
-            if (data == null) {
-                System.out.println("Null received at deserializing");
-                return null;
-            }
-            System.out.println("Deserializing...");
-            return objectMapper.readValue(new String(data, "UTF-8"), Venue.class);
+            venue = mapper.readValue(arg1, Venue.class);
         } catch (Exception e) {
-            throw new SerializationException("Error when deserializing byte[] to MessageDto");
+            log.error("Error while deserializing Venue : ", e.getMessage());
         }
+        return venue;
     }
 
     @Override
